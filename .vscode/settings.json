@@ -1,0 +1,6 @@
+{
+  "files.associations": {
+    "*.gd": "gdscript"
+  },
+  "godotTools.editorPath.godot4": "/Applications/Godot.app"
+}
