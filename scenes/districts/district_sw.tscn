@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://7uhpil3eabjn"]
+
+[ext_resource type="Script" path="res://scripts/district.gd" id="1_8sfth"]
+[ext_resource type="Texture2D" uid="uid://b2bv2s0heiq2m" path="res://assets/map.png" id="2_6b84x"]
+[ext_resource type="PackedScene" uid="uid://bue8o2mrnetun" path="res://scenes/pois/poi_static.tscn" id="3_luq2h"]
+
+[node name="District_SW" type="Area2D"]
+script = ExtResource("1_8sfth")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_6b84x")
+centered = false
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(772, 429, 1053, 719, 868, 875, 795, 851, 707, 855, 690, 804, 615, 822, 603, 799, 513, 844, 432, 771, 399, 701, 390, 616, 540, 611, 528, 561, 571, 555, 756, 428)
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+
+[node name="pois" type="Node2D" parent="."]
+
+[node name="Poi_Static" parent="pois" instance=ExtResource("3_luq2h")]
+position = Vector2(745, 498)
+poi_static_name = "Cathedral"
+poi_static_description = "This is the PoI of the Cathedral"
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

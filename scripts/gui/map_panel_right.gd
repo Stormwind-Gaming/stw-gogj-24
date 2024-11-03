@@ -1,0 +1,19 @@
+extends Control
+
+func _ready() -> void:
+	$MarginContainer2/RightVBoxContainer/PanelContainer/MarginContainer/VBoxContainer/DistrictName.text = ""
+	$MarginContainer2/RightVBoxContainer/PanelContainer/MarginContainer/VBoxContainer/DistrictDescription.text = ""
+	$MarginContainer2/RightVBoxContainer/PanelContainer2/MarginContainer/VBoxContainer/PoIName.text = ""
+	$MarginContainer2/RightVBoxContainer/PanelContainer2/MarginContainer/VBoxContainer/PoIDescription.text = ""
+
+func set_district_details(district: District) -> void:
+	$MarginContainer2/RightVBoxContainer/PanelContainer/MarginContainer/VBoxContainer/DistrictName.text = district.district_name
+	$MarginContainer2/RightVBoxContainer/PanelContainer/MarginContainer/VBoxContainer/DistrictDescription.text = district.district_description
+
+func set_poi_details(poi: PointOfInterest = null) -> void:
+	if poi == null:
+		$MarginContainer2/RightVBoxContainer/PanelContainer2/MarginContainer/VBoxContainer/PoIName.text = ""
+		$MarginContainer2/RightVBoxContainer/PanelContainer2/MarginContainer/VBoxContainer/PoIDescription.text = ""
+		return
+	$MarginContainer2/RightVBoxContainer/PanelContainer2/MarginContainer/VBoxContainer/PoIName.text = poi.poi_name
+	$MarginContainer2/RightVBoxContainer/PanelContainer2/MarginContainer/VBoxContainer/PoIDescription.text = poi.poi_description

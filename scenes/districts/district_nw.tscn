@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://du8jt6aj4g1wb"]
+
+[ext_resource type="Script" path="res://scripts/district.gd" id="1_epqjp"]
+[ext_resource type="Texture2D" uid="uid://b2bv2s0heiq2m" path="res://assets/map.png" id="2_c1odn"]
+[ext_resource type="PackedScene" uid="uid://bue8o2mrnetun" path="res://scenes/pois/poi_static.tscn" id="3_q2x2d"]
+
+[node name="District_NW" type="Area2D"]
+script = ExtResource("1_epqjp")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_c1odn")
+centered = false
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(759, 424, 624, 519, 571, 553, 528, 561, 539, 610, 389, 615, 370, 428, 466, 412, 364, 292, 399, 212, 447, 158, 519, 113, 570, 97, 594, 158, 632, 253, 682, 324, 739, 391)
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+
+[node name="pois" type="Node2D" parent="."]
+
+[node name="Poi_Static" parent="pois" instance=ExtResource("3_q2x2d")]
+position = Vector2(664, 395)
+poi_static_name = "Town Hall"
+poi_static_description = "This is the PoI of the Town Hall"
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
