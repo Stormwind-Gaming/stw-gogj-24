@@ -1,27 +1,34 @@
-[gd_scene load_steps=4 format=3 uid="uid://7uhpil3eabjn"]
+[gd_scene load_steps=4 format=3 uid="uid://bnshi2p8ra26w"]
 
-[ext_resource type="Script" path="res://scripts/district.gd" id="1_8sfth"]
-[ext_resource type="Texture2D" uid="uid://b2bv2s0heiq2m" path="res://assets/map.png" id="2_6b84x"]
-[ext_resource type="PackedScene" uid="uid://bue8o2mrnetun" path="res://scenes/pois/poi_static.tscn" id="3_luq2h"]
+[ext_resource type="Script" path="res://scripts/district.gd" id="1_cj7mk"]
+[ext_resource type="Texture2D" uid="uid://cuyfkmlgcpdhb" path="res://assets/city.svg" id="2_e87vd"]
+[ext_resource type="PackedScene" uid="uid://bue8o2mrnetun" path="res://scenes/pois/poi_static.tscn" id="3_i5b2o"]
 
 [node name="District_SW" type="Area2D"]
-script = ExtResource("1_8sfth")
+script = ExtResource("1_cj7mk")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_6b84x")
-centered = false
+position = Vector2(800, 450)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("2_e87vd")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PackedVector2Array(772, 429, 1053, 719, 868, 875, 795, 851, 707, 855, 690, 804, 615, 822, 603, 799, 513, 844, 432, 771, 399, 701, 390, 616, 540, 611, 528, 561, 571, 555, 756, 428)
+top_level = true
+polygon = PackedVector2Array(626, 464, 578, 484, 518, 496, 486, 497, 453, 495, 380, 488, 311, 483, 278, 478, 194, 483, 180, 549, 182, 566, 287, 814, 619, 877, 685, 876, 781, 850, 892, 683, 864, 661, 842, 646, 800, 626, 768, 612, 726, 597, 688, 565, 646, 541, 665, 523, 667, 504)
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 
-[node name="pois" type="Node2D" parent="."]
+[node name="FocusPoint" type="Node2D" parent="."]
+position = Vector2(522, 668)
 
-[node name="Poi_Static" parent="pois" instance=ExtResource("3_luq2h")]
+[node name="pois" type="Node2D" parent="."]
+visible = false
+
+[node name="Poi_Static" parent="pois" instance=ExtResource("3_i5b2o")]
 position = Vector2(745, 498)
 poi_static_name = "Cathedral"
 poi_static_description = "This is the PoI of the Cathedral"
 
+[connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

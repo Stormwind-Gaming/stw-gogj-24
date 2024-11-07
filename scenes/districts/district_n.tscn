@@ -1,0 +1,34 @@
+[gd_scene load_steps=4 format=3 uid="uid://b1vvls3nbthm6"]
+
+[ext_resource type="Script" path="res://scripts/district.gd" id="1_epqjp"]
+[ext_resource type="Texture2D" uid="uid://cuyfkmlgcpdhb" path="res://assets/city.svg" id="2_3kiu6"]
+[ext_resource type="PackedScene" uid="uid://bue8o2mrnetun" path="res://scenes/pois/poi_static.tscn" id="3_q2x2d"]
+
+[node name="District_N" type="Area2D"]
+script = ExtResource("1_epqjp")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(800, 450)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("2_3kiu6")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+top_level = true
+polygon = PackedVector2Array(598, 391, 566, 368, 513, 314, 472, 274, 445, 239, 413, 184, 397, 117, 479, 25, 519, -1, 612, -75, 635, -57, 661, -15, 662, 8, 691, 31, 667, 64, 677, 69, 722, 106, 751, 139, 767, 177, 755, 187, 791, 248, 813, 288, 839, 335, 847, 350, 832, 372, 814, 382, 758, 395, 704, 400, 664, 402)
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+
+[node name="FocusPoint" type="Node2D" parent="."]
+position = Vector2(611, 196)
+
+[node name="pois" type="Node2D" parent="."]
+visible = false
+
+[node name="Poi_Static" parent="pois" instance=ExtResource("3_q2x2d")]
+position = Vector2(745, 498)
+poi_static_name = "Cathedral"
+poi_static_description = "This is the PoI of the Cathedral"
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

@@ -1,34 +1,44 @@
-[gd_scene load_steps=9 format=3 uid="uid://c7y1ejxri1bfk"]
+[gd_scene load_steps=11 format=3 uid="uid://c7y1ejxri1bfk"]
 
 [ext_resource type="Script" path="res://scripts/map.gd" id="1_ppup2"]
-[ext_resource type="PackedScene" uid="uid://ge128g2eywwo" path="res://scenes/districts/district_ne.tscn" id="2_0iskn"]
-[ext_resource type="Texture2D" uid="uid://b2bv2s0heiq2m" path="res://assets/map.png" id="3_tqws1"]
-[ext_resource type="PackedScene" uid="uid://dow8w8o37nqk2" path="res://scenes/districts/district_se.tscn" id="4_yabho"]
+[ext_resource type="Texture2D" uid="uid://cuyfkmlgcpdhb" path="res://assets/city.svg" id="2_b3fwo"]
+[ext_resource type="Script" path="res://scripts/map_background.gd" id="3_p1mv1"]
+[ext_resource type="Texture2D" uid="uid://cymt3ntm6bmk0" path="res://assets/map_panels.png" id="4_k5atg"]
 [ext_resource type="PackedScene" uid="uid://bx5tric4sp02h" path="res://scenes/gui/map_panel_left.tscn" id="4_yt3a5"]
-[ext_resource type="PackedScene" uid="uid://du8jt6aj4g1wb" path="res://scenes/districts/district_nw.tscn" id="5_3fmr3"]
 [ext_resource type="PackedScene" uid="uid://krwk7aduwjom" path="res://scenes/gui/map_panel_right.tscn" id="5_dgovt"]
-[ext_resource type="PackedScene" uid="uid://7uhpil3eabjn" path="res://scenes/districts/district_sw.tscn" id="6_wtlpm"]
+[ext_resource type="PackedScene" uid="uid://b1vvls3nbthm6" path="res://scenes/districts/district_n.tscn" id="5_ony1k"]
+[ext_resource type="PackedScene" uid="uid://cdhfja2nolmpl" path="res://scenes/districts/district_c.tscn" id="6_5acc7"]
+[ext_resource type="PackedScene" uid="uid://bnshi2p8ra26w" path="res://scenes/districts/district_sw.tscn" id="7_dde3t"]
+[ext_resource type="PackedScene" uid="uid://dpqgqrfoqchlu" path="res://scenes/districts/district_cw.tscn" id="9_jaoy6"]
 
-[node name="Map" type="Node2D" node_paths=PackedStringArray("district_N_E", "district_S_E", "district_S_W", "district_N_W")]
+[node name="Map" type="Node2D" node_paths=PackedStringArray("district_N", "district_C_W", "district_C", "district_S_W")]
 script = ExtResource("1_ppup2")
-district_N_E = NodePath("Districts/District_NE")
-district_S_E = NodePath("Districts/District_SE")
-district_S_W = NodePath("Districts/District_SW")
-district_N_W = NodePath("Districts/District_NW")
+district_N = NodePath("Node2D/Districts/District_N")
+district_C_W = NodePath("Node2D/Districts/District_CW")
+district_C = NodePath("Node2D/Districts/District_C")
+district_S_W = NodePath("Node2D/Districts/District_SW")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("3_tqws1")
+[node name="Node2D" type="Node2D" parent="."]
+script = ExtResource("3_p1mv1")
+
+[node name="map_background" type="Sprite2D" parent="Node2D"]
+position = Vector2(800, 450)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("2_b3fwo")
+
+[node name="Districts" type="Node2D" parent="Node2D"]
+
+[node name="District_CW" parent="Node2D/Districts" instance=ExtResource("9_jaoy6")]
+
+[node name="District_N" parent="Node2D/Districts" instance=ExtResource("5_ony1k")]
+
+[node name="District_C" parent="Node2D/Districts" instance=ExtResource("6_5acc7")]
+
+[node name="District_SW" parent="Node2D/Districts" instance=ExtResource("7_dde3t")]
+
+[node name="map_panels" type="Sprite2D" parent="."]
+texture = ExtResource("4_k5atg")
 centered = false
-
-[node name="Districts" type="Node2D" parent="."]
-
-[node name="District_NE" parent="Districts" instance=ExtResource("2_0iskn")]
-
-[node name="District_SE" parent="Districts" instance=ExtResource("4_yabho")]
-
-[node name="District_NW" parent="Districts" instance=ExtResource("5_3fmr3")]
-
-[node name="District_SW" parent="Districts" instance=ExtResource("6_wtlpm")]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

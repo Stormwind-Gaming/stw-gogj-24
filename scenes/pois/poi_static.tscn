@@ -7,6 +7,7 @@
 radius = 20.2237
 
 [node name="Poi_Static" type="Area2D"]
+top_level = true
 script = ExtResource("1_okdc4")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
