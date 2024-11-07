@@ -60,6 +60,13 @@ theme_override_font_sizes/font_size = 10
 text = "<District desc>"
 autowrap_mode = 3
 
+[node name="Rumour" type="Label" parent="MarginContainer2/RightVBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "<District desc>"
+autowrap_mode = 3
+
 [node name="PanelContainer2" type="PanelContainer" parent="MarginContainer2/RightVBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3

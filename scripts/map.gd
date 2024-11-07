@@ -35,7 +35,11 @@ func _set_district_details(district: District) -> void:
 	# remove this district name from the list
 	Globals.district_names.erase(Globals.district_names.find(district_name))
 	var district_description = "This is the district of " + district_name + "."
-	district.set_district_details(district_name, district_description)
+	
+	# Generate a random rumour
+	var rumour:Intel = IntelFactory.create_rumour(25,25,25,25)
+	
+	district.set_district_details(district_name, district_description, rumour.description)
 
 	district.connect("district_hovered", _on_district_hovered)
 	district.connect("district_unhovered", _on_district_unhovered)

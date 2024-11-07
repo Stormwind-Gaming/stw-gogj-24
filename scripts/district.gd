@@ -3,6 +3,7 @@ class_name District
 
 var district_name: String = ""
 var district_description: String = ""
+var rumour_text: String = ""
 
 var heat: float = 0
 
@@ -41,9 +42,10 @@ func _ready() -> void:
 
 #region District
 
-func set_district_details(district_name_arg: String, district_description_arg: String) -> void:
+func set_district_details(district_name_arg: String, district_description_arg: String, rumour_text_arg: String) -> void:
 	district_name = district_name_arg
 	district_description = district_description_arg
+	rumour_text = rumour_text_arg
 
 func _on_mouse_entered() -> void:
 	emit_signal("district_hovered", self)
