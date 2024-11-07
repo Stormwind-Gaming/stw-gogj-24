@@ -11,6 +11,9 @@ var highlight_color = Color(1, 1, 1, 0.5) # Orange color
 signal poi_hovered
 signal poi_unhovered
 
+func _ready() -> void:
+	GlobalRegistry.register_object(GlobalRegistry.Registry_Category.POI, self)
+
 func setup_poi():
 	$Polygon2D.position = self.get_global_position()
 	$Polygon2D.polygon = $CollisionPolygon2D.polygon
