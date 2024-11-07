@@ -10,4 +10,4 @@ func _on_close_requested():
 	queue_free()
 
 func set_character(name : String):
-	character = GlobalRegistry.get_object('characters', name)
+	character = GlobalRegistry.get_object(GlobalRegistry.Registry_Category.CHARACTER, name)

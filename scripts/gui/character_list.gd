@@ -8,7 +8,7 @@ func _ready():
 	connect("close_requested", Callable(self, "_on_close_requested"))
 	
 	# Fetch characters from the GlobalRegistry and populate the list
-	var characters = GlobalRegistry.get_all_objects("characters")
+	var characters = GlobalRegistry.get_all_objects(GlobalRegistry.Registry_Category.CHARACTER)
 	populate_character_list(characters)
 
 func _on_close_requested():
