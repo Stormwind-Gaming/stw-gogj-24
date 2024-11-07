@@ -2,6 +2,7 @@ extends Node2D
 
 class_name Character
 
+var id : String
 var gender: Enums.CharacterGender
 var nationality: Enums.CharacterNationality
 var picture : String
@@ -31,7 +32,7 @@ func _init(profile:Dictionary):
 	
 	self.sympathy = _generateStat(1,100)
 	
-	GlobalRegistry.register_object(GlobalRegistry.Registry_Category.CHARACTER, self, self.first_name + '_' + self.last_name)
+	self.id = GlobalRegistry.register_object(GlobalRegistry.Registry_Category.CHARACTER, self, self.first_name + '_' + self.last_name)
 
 func _generateStat(min:int, max:int) -> int:
 	return randi() % max + min 

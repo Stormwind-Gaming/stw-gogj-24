@@ -19,8 +19,8 @@ func _ready() -> void:
 	
 	# add 4 characters 
 	for i in range(4):
-		var character = GlobalRegistry.register_object(GlobalRegistry.Registry_Category.CHARACTER, CharacterFactory.create_character())
-		$CanvasLayer/Map_Panel_Left.add_character_card(character)
+		var character = CharacterFactory.create_character()
+		$CanvasLayer/Map_Panel_Left.add_character_card(character.id)
 
 #region Districts
 

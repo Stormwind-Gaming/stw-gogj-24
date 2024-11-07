@@ -15,8 +15,9 @@ func _on_close_requested():
 	queue_free()
 
 func populate_character_list(characters):
-	# Clear existing children in the container
-	#character_list_container.clear_children()
+	# Clear existing children in the container by freeing them
+	for child in character_list_container.get_children():
+		child.queue_free()
 
 	# Iterate over the dictionary to create buttons
 	for name in characters.keys():
@@ -29,6 +30,7 @@ func populate_character_list(characters):
 		# Use Callable to pass the function and arguments
 		button.connect("pressed", Callable(self, "_on_character_button_pressed").bind(name, character_node))
 		character_list_container.add_child(button)
+
 
 func _on_character_button_pressed(name, character_node):
 	# Handle character button press
