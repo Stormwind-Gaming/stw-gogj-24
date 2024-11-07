@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b4hf8xqfb63vc"]
+
+[ext_resource type="Script" path="res://scripts/gui/character_profile.gd" id="1_gy3rw"]
+
+[node name="CharacterProfile" type="Window"]
+script = ExtResource("1_gy3rw")

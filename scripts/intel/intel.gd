@@ -2,13 +2,11 @@ extends Object
 
 class_name Intel
 
-const Constants = preload("res://scripts/enums.gd")
-
-var level: Constants.IntelLevel
-var type: Constants.IntelType
+var level: Enums.IntelLevel
+var type: Enums.IntelType
 var description: String
 
-func _init(level: Constants.IntelLevel, type: Constants.IntelType, description: String):
+func _init(level: Enums.IntelLevel, type: Enums.IntelType, description: String):
 	
 	self.level = level
 	self.type = type

@@ -19,6 +19,8 @@ func _ready() -> void:
 	_set_district_details(district_C)
 	_set_district_details(district_C_W)
 	_set_district_details(district_S_W)
+	
+	_generate_population()
 
 func _process(delta: float) -> void:
 	if district_focused != null:
@@ -71,5 +73,9 @@ func _on_poi_hovered(poi: PointOfInterest) -> void:
 
 func _on_poi_unhovered() -> void:
 	$CanvasLayer/Map_Panel_Right.set_poi_details()
+	
+func _generate_population() -> void:
+	for i in range(10):
+		CharacterFactory.create_character()
 
 #endregion Districts

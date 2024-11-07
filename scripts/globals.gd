@@ -3,14 +3,22 @@ extends Node
 var load_csvs = {
 	"town_names": "res://data/town_names.csv",
 	"district_names": "res://data/district_names.csv",
-	"first_names": "res://data/first_names.csv",
-	"last_names": "res://data/last_names.csv"
+	"belgian_male_first_names": "res://data/belgian_male_first_names.csv",
+	"belgian_female_first_names": "res://data/belgian_female_first_names.csv",
+	"belgian_last_names": "res://data/belgian_last_names.csv",
+	"german_male_first_names": "res://data/german_male_first_names.csv",
+	"german_female_first_names": "res://data/german_female_first_names.csv",
+	"german_last_names": "res://data/german_last_names.csv",
 }
 
 var town_names = []
 var district_names = []
-var first_names = []
-var last_names = []
+var belgian_male_first_names = []
+var belgian_female_first_names = []
+var belgian_last_names = []
+var german_male_first_names = []
+var german_female_first_names = []
+var german_last_names = []
 
 func _ready() -> void:
 	for key_name in load_csvs.keys():

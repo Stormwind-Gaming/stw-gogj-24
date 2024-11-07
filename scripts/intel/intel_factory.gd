@@ -2,13 +2,11 @@ extends Object
 
 class_name IntelFactory
 
-const Constants = preload("res://scripts/enums.gd")
-
 static func create_rumour(who_chance: int, where_chance: int, what_chance: int, when_chance: int) -> Intel:
 	print("Creating rumour...")
 	
-	var level: Constants.IntelLevel
-	var type: Constants.IntelType
+	var level: Enums.IntelLevel
+	var type: Enums.IntelType
 	var description: String
 	
 	# Calculate the total chances
@@ -37,21 +35,21 @@ static func create_rumour(who_chance: int, where_chance: int, what_chance: int, 
 
 	# Determine the type of rumour based on the random value and chances
 	if random_value < who_chance:
-		type = Constants.IntelType.WHO
+		type = Enums.IntelType.WHO
 		description = "A rumour about who is involved."
 	elif random_value < who_chance + where_chance:
-		type = Constants.IntelType.WHERE
+		type = Enums.IntelType.WHERE
 		description = "A rumour about where it happened."
 	elif random_value < who_chance + where_chance + what_chance:
-		type = Constants.IntelType.WHAT
+		type = Enums.IntelType.WHAT
 		description = "A rumour about what happened."
 	else:
-		type = Constants.IntelType.WHEN
+		type = Enums.IntelType.WHEN
 		description = "A rumour about when it happened."
 
 	print("Rumour created: Type: ", type, ", Description: ", description)
 	
-	return Intel.new(Constants.IntelLevel.RUMOUR, type, description)
+	return Intel.new(Enums.IntelLevel.RUMOUR, type, description)
 
 func combine_rumours(rumours:Array):
 	print("Combining rumour...")
