@@ -21,6 +21,9 @@ func _ready() -> void:
 	for i in range(4):
 		var character = CharacterFactory.create_character()
 		$CanvasLayer/Map_Panel_Left.add_character_card(character.id)
+	
+	var pois = GlobalRegistry.get_all_objects(GlobalRegistry.Registry_Category.POI)
+	var characters = GlobalRegistry.get_all_objects(GlobalRegistry.Registry_Category.CHARACTER)
 
 #region Districts
 
