@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bl81hrje54l06"
-path="res://.godot/imported/german-male-2.png-cf60f73c721a263ed101b545f53b8664.ctex"
+uid="uid://nawril15qq82"
+path="res://.godot/imported/belgian-male-1.png-3bf33c6270cdc818c9bc0bb080e1e684.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://resources/images/profile_pictures/german/male/german-male-2.png"
-dest_files=["res://.godot/imported/german-male-2.png-cf60f73c721a263ed101b545f53b8664.ctex"]
+source_file="res://assets/profile_pictures/belgian/male/belgian-male-1.png"
+dest_files=["res://.godot/imported/belgian-male-1.png-3bf33c6270cdc818c9bc0bb080e1e684.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://nawril15qq82"
-path="res://.godot/imported/belgian-male-1.png-d611bd4ffc9c0c1d89fe745cdd32e3ca.ctex"
+uid="uid://blcy6pmcnv4rp"
+path="res://.godot/imported/belgian-female-1.png-eb36cb189b04c8f8c0b93e9a0bcec517.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://resources/images/profile_pictures/belgian/male/belgian-male-1.png"
-dest_files=["res://.godot/imported/belgian-male-1.png-d611bd4ffc9c0c1d89fe745cdd32e3ca.ctex"]
+source_file="res://assets/profile_pictures/belgian/female/belgian-female-1.png"
+dest_files=["res://.godot/imported/belgian-female-1.png-eb36cb189b04c8f8c0b93e9a0bcec517.ctex"]
 
 [params]
 

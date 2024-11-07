@@ -12,21 +12,30 @@ static func generate_random_profile() -> Dictionary:
 	var last_name_bag: Array
 	var first_name_bag: Array
 	
-	match(nationality + gender):
-		Enums.CharacterNationality.BELGIAN + Enums.CharacterGender.MALE:
-			last_name_bag = Globals.belgian_last_names
-			first_name_bag = Globals.belgian_male_first_names
-		Enums.CharacterNationality.BELGIAN + Enums.CharacterGender.FEMALE:
-			last_name_bag = Globals.belgian_last_names
-			first_name_bag = Globals.belgian_female_first_names 
-		Enums.CharacterNationality.GERMAN + Enums.CharacterGender.MALE:
-			last_name_bag = Globals.german_last_names
-			first_name_bag = Globals.german_male_first_names 
-		Enums.CharacterNationality.GERMAN + Enums.CharacterGender.FEMALE:
-			last_name_bag = Globals.german_last_names
-			first_name_bag = Globals.german_female_first_names 
+	match nationality:
+		Enums.CharacterNationality.BELGIAN:
+			match gender:
+				Enums.CharacterGender.MALE:
+					last_name_bag = Globals.belgian_last_names
+					first_name_bag = Globals.belgian_male_first_names
+				Enums.CharacterGender.FEMALE:
+					last_name_bag = Globals.belgian_last_names
+					first_name_bag = Globals.belgian_female_first_names
+				_:
+					last_name_bag = Globals.default_last_names
+					first_name_bag = Globals.default_first_names
+		Enums.CharacterNationality.GERMAN:
+			match gender:
+				Enums.CharacterGender.MALE:
+					last_name_bag = Globals.german_last_names
+					first_name_bag = Globals.german_male_first_names
+				Enums.CharacterGender.FEMALE:
+					last_name_bag = Globals.german_last_names
+					first_name_bag = Globals.german_female_first_names
+				_:
+					last_name_bag = Globals.default_last_names
+					first_name_bag = Globals.default_first_names
 		_:
-			# Handle unexpected cases
 			last_name_bag = Globals.default_last_names
 			first_name_bag = Globals.default_first_names
 	
@@ -37,10 +46,12 @@ static func generate_random_profile() -> Dictionary:
 	# Determine image path based on nationality and gender
 	var nationality_str = _get_nationality_string(nationality)
 	var gender_str = _get_gender_string(gender)
-	var image_directory = "res://resources/images/profile_pictures/%s/%s/" % [nationality_str, gender_str]
-	
+	var image_directory = "res://assets/profile_pictures/%s/%s/" % [nationality_str, gender_str]
+
 	# Select a random image from the directory
 	var selected_image = _get_random_image_from_path(image_directory)
+	
+	print('Chose ' + selected_image)
 	
 	return {
 		"first_name": first_name, 
@@ -65,7 +76,7 @@ static func _get_nationality_string(nationality: int) -> String:
 			return "german"
 		_:
 			return "default"
-
+			
 # Helper function to convert gender enum to string
 static func _get_gender_string(gender: int) -> String:
 	match gender:
@@ -83,12 +94,17 @@ static func _get_random_image_from_path(path: String) -> String:
 		push_error("Cannot open directory: " + path)
 		return ""
 	
+	# Initialize directory listing
+	dir.list_dir_begin() # Skip hidden files and don't follow symlinks
+	
 	var files = []
 	var file = dir.get_next()
 	while file != "":
-		if not dir.current_is_directory() and _is_image_file(file):
+		if not dir.current_is_dir() and _is_image_file(file):
 			files.append(file)
 		file = dir.get_next()
+	
+	dir.list_dir_end() # Clean up after listing
 	
 	if files.size() == 0:
 		push_error("No images found in directory: " + path)
@@ -96,6 +112,7 @@ static func _get_random_image_from_path(path: String) -> String:
 	
 	var random_index = randi() % files.size()
 	return path + files[random_index]
+
 
 # Helper function to check if a file is an image
 static func _is_image_file(file: String) -> bool:

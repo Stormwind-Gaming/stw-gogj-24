@@ -21,10 +21,8 @@ func _on_show_character_list_button_pressed():
 	character_list_instance.popup_centered()
 	
 func add_character_card(character_id: String) -> void:
-	# get character from store
-	var local_character = GlobalRegistry.get_object(GlobalRegistry.Registry_Category.CHARACTER, character_id)
 	var agent_card = Globals.agent_card_scene.instantiate()
-	agent_card.character_id = character_id
-	agent_card.character_name = local_character.get_full_name()
+	agent_card.set_character(character_id)
+
 	$MarginContainer/LeftVBoxContainer/PanelContainer2/MarginContainer/GridContainer.add_child(agent_card)
 	
