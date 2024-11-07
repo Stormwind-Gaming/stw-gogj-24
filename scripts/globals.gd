@@ -1,5 +1,7 @@
 extends Node
 
+var agent_card_scene = preload("res://scenes/gui/agent_card.tscn")
+
 var load_csvs = {
 	"town_names": "res://data/town_names.csv",
 	"district_names": "res://data/district_names.csv",

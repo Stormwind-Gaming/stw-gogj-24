@@ -10,7 +10,7 @@ var heat: float = 0
 var pois: Array[PointOfInterest] = []
 
 # Colors for normal and highlight states
-var normal_color = Color(0, 0, 0, 0) # No color
+var no_color = Color(0, 0, 0, 0) # No color
 var highlight_color = Color(1, 0.5, 0, 0.2) # Orange color
 # Red color for heat
 var heat_color = Color(1, 0, 0, 0.0)
@@ -39,6 +39,7 @@ func _ready() -> void:
 	for poi in pois:
 		poi.connect("poi_hovered", _on_poi_hovered)
 		poi.connect("poi_unhovered", _on_poi_unhovered)
+		poi.setup_poi()
 
 #region District
 
@@ -68,6 +69,8 @@ func set_highlight_color() -> void:
 func remove_highlight_color() -> void:
 	$Polygon2D.color = heat_color
 
+func set_focus_color() -> void:
+	$Polygon2D.color = no_color
 #endregion District
 
 #region POIs

@@ -1,21 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://bue8o2mrnetun"]
+[gd_scene load_steps=3 format=3 uid="uid://bue8o2mrnetun"]
 
 [ext_resource type="Script" path="res://scripts/pois/poi_static.gd" id="1_okdc4"]
 [ext_resource type="Texture2D" uid="uid://dniextr4kn1uv" path="res://assets/PoI.png" id="2_lxyk4"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_u01j8"]
-radius = 20.2237
 
 [node name="Poi_Static" type="Area2D"]
 top_level = true
 script = ExtResource("1_okdc4")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("2_lxyk4")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_u01j8")
+[node name="Polygon2D" type="Polygon2D" parent="."]
+top_level = true
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

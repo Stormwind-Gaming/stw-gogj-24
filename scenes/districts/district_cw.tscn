@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://dpqgqrfoqchlu"]
+[gd_scene load_steps=3 format=3 uid="uid://dpqgqrfoqchlu"]
 
 [ext_resource type="Script" path="res://scripts/district.gd" id="1_0s8ny"]
 [ext_resource type="Texture2D" uid="uid://cuyfkmlgcpdhb" path="res://assets/city.svg" id="2_yncyt"]
-[ext_resource type="PackedScene" uid="uid://bue8o2mrnetun" path="res://scenes/pois/poi_static.tscn" id="3_qy0x6"]
 
 [node name="District_CW" type="Area2D"]
 script = ExtResource("1_0s8ny")
@@ -23,11 +22,6 @@ position = Vector2(361, 385)
 
 [node name="pois" type="Node2D" parent="."]
 visible = false
-
-[node name="Poi_Static" parent="pois" instance=ExtResource("3_qy0x6")]
-position = Vector2(745, 498)
-poi_static_name = "Cathedral"
-poi_static_description = "This is the PoI of the Cathedral"
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

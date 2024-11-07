@@ -31,7 +31,11 @@ func _init(profile:Dictionary):
 	
 	self.sympathy = _generateStat(1,100)
 	
-	GlobalRegistry.register_object('characters', self, self.first_name + '_' + self.last_name)
+	GlobalRegistry.register_object(GlobalRegistry.Registry_Category.CHARACTER, self, self.first_name + '_' + self.last_name)
 
 func _generateStat(min:int, max:int) -> int:
 	return randi() % max + min 
+	GlobalRegistry.register_object(GlobalRegistry.Registry_Category.CHARACTER, self, self.first_name + ' ' + self.last_name)
+
+func get_full_name() -> String:
+	return first_name + ' ' + last_name

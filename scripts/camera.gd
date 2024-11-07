@@ -1,10 +1,9 @@
 extends Node2D
 
-@export var parallax_strength_x: float = -400.0  # Strength of the parallax effect in the x direction
-@export var parallax_strength_y: float = -400.0  # Strength of the parallax effect in the y direction
+@export var parallax_strength_x: float = 400.0  # Strength of the parallax effect in the x direction
+@export var parallax_strength_y: float = 400.0  # Strength of the parallax effect in the y direction
 @export var max_offset_x: float = 300.0  # Maximum distance the image can move horizontally
 @export var max_offset_y: float = 300.0  # Maximum distance the image can move vertically
-@export var lerp_speed: float = 3.0  # Smoothing speed for the lerp
 
 var enabled: bool = true
 
@@ -36,5 +35,11 @@ func _process(delta):
 		target_position.y = initial_position.y + target_y
 		
 		# Smoothly move the position towards the target position using lerp
-		position.x = lerp(position.x, target_position.x, lerp_speed * delta)
-		position.y = lerp(position.y, target_position.y, lerp_speed * delta)
+		position.x = target_position.x
+		position.y = target_position.y
+		# position.x = lerp(position.x, target_position.x, lerp_speed * delta)
+		# position.y = lerp(position.y, target_position.y, lerp_speed * delta)
+	else:
+		var point_to_focus_on = get_parent().district_focused.get_district_centerpoint() - Vector2(800, 450)
+		if self.position.distance_to(point_to_focus_on) > 1:
+			position = point_to_focus_on

@@ -42,27 +42,34 @@ Example:
 	GlobalRegistry.unregister_object("characters", character_name)
 """
 
+enum Registry_Category {
+	CHARACTER,
+	DISTRICT,
+	POI,
+	INTEL,
+}
+
 var registered_objects = {}
 
-func register_object(category: String, obj: Object, name = null) -> String:
+func register_object(category: Registry_Category, obj: Object, object_name = null) -> String:
 	if category not in registered_objects:
 		registered_objects[category] = {}
 		
 	# Generate a random name if not provided
-	if name == null:
-		name = str(randf_range(0, 1000000))  # Generates a random number as a name
-	registered_objects[category][name] = obj
+	if object_name == null:
+		object_name = str(randi())  # Generates a random number as a name
+	registered_objects[category][object_name] = obj
 
-	return name
+	return object_name
 
-func get_object(category: String, name: String) -> Object:
-	return registered_objects.get(category, {}).get(name, null)
+func get_object(category: Registry_Category, object_name: String) -> Object:
+	return registered_objects.get(category, {}).get(object_name, null)
 
-func get_all_objects(category: String) -> Dictionary:
+func get_all_objects(category: Registry_Category) -> Dictionary:
 	return registered_objects.get(category, {})
 
-func unregister_object(category: String, name: String) -> void:
+func unregister_object(category: Registry_Category, object_name: String) -> void:
 	if category in registered_objects:
-		registered_objects[category].erase(name)
+		registered_objects[category].erase(object_name)
 		if registered_objects[category].empty():
 			registered_objects.erase(category)
