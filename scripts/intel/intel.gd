@@ -14,7 +14,7 @@ func _init(level: Constants.IntelLevel, type: Constants.IntelType, description: 
 	self.type = type
 	self.description = description
 	
-	GlobalRegistry.register_object('intel', self)
+	GlobalRegistry.register_object(GlobalRegistry.Registry_Category.INTEL, self)
 
 
 func gather():

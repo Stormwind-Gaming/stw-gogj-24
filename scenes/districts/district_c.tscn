@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://cdhfja2nolmpl"]
+[gd_scene load_steps=5 format=3 uid="uid://cdhfja2nolmpl"]
 
 [ext_resource type="Script" path="res://scripts/district.gd" id="1_segdj"]
 [ext_resource type="Texture2D" uid="uid://cuyfkmlgcpdhb" path="res://assets/city.svg" id="2_gyqnt"]
 [ext_resource type="PackedScene" uid="uid://bue8o2mrnetun" path="res://scenes/pois/poi_static.tscn" id="3_bhahb"]
+[ext_resource type="PackedScene" uid="uid://b8whiyhmyjogs" path="res://scenes/pois/poi_variable.tscn" id="4_ouxf6"]
 
 [node name="District_C" type="Area2D"]
 script = ExtResource("1_segdj")
@@ -22,12 +23,28 @@ polygon = PackedVector2Array(858, 357, 896, 443, 920, 522, 957, 556, 977, 585, 9
 position = Vector2(841, 545)
 
 [node name="pois" type="Node2D" parent="."]
-visible = false
 
 [node name="Poi_Static" parent="pois" instance=ExtResource("3_bhahb")]
-position = Vector2(745, 498)
 poi_static_name = "Cathedral"
 poi_static_description = "This is the PoI of the Cathedral"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi_Static"]
+polygon = PackedVector2Array(691, 417, 717, 400, 748, 447, 722, 465)
+
+[node name="Poi_Variable" parent="pois" instance=ExtResource("4_ouxf6")]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi_Variable"]
+polygon = PackedVector2Array(759, 424, 775, 424, 774, 398, 761, 401)
+
+[node name="Poi_Variable2" parent="pois" instance=ExtResource("4_ouxf6")]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi_Variable2"]
+polygon = PackedVector2Array(775, 424, 790, 424, 788, 394, 774, 397)
+
+[node name="Poi_Variable3" parent="pois" instance=ExtResource("4_ouxf6")]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi_Variable3"]
+polygon = PackedVector2Array(770, 490, 754, 483, 756, 462, 776, 462)
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

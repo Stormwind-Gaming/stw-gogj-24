@@ -1,5 +1,4 @@
 extends Object
-
 class_name CharacterFactory
 
 static func generate_random_name() -> Dictionary:
