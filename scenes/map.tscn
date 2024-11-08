@@ -27,6 +27,7 @@ offset_bottom = 500.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(2, 2)
+mouse_filter = 2
 color = Color(0.996078, 0.94902, 0.784314, 1)
 
 [node name="Node2D" type="Node2D" parent="."]
