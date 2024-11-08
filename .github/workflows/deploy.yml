@@ -28,10 +28,13 @@ jobs:
         run: |
           ./godot/Godot_v4.3-stable_linux.x86_64 --headless --export-pack "Web"
 
+      - name: Zip exported files
+        run: zip -r builds ${{ github.ref_name }}
+
       - name: Upload to itch.io
         uses: robpc/itchio-upload-action@v1
         with:
-          path: builds/game.zip
+          path: ${{ github.ref_name }}.zip
           project: tintuna/classifiedtopsecret
           channel: html5
           version: ${{ github.ref_name }}
