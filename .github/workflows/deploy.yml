@@ -12,10 +12,14 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
 
-      - name: Set up Godot
-        uses: firebelley/godot-export-action@v1
+      - name: Export Godot Project
+        uses: firebelley/godot-export@v6.0.0
         with:
-          godot-executable: godot  # The Godot executable name or path if you need to specify it.
+          godot_executable_download_url: https://downloads.tuxfamily.org/godotengine/4.0/Godot_v4.0-stable_linux.x86_64.zip
+          godot_export_templates_download_url: https://downloads.tuxfamily.org/godotengine/4.0/Godot_v4.0-stable_export_templates.tpz
+          relative_project_path: ./
+          archive_output: true
+
 
       - name: Build Godot Project
         run: |
