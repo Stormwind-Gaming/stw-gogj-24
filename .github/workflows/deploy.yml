@@ -15,21 +15,15 @@ jobs:
       - name: Export Godot Project
         uses: firebelley/godot-export@v6.0.0
         with:
-          godot_executable_download_url: https://downloads.tuxfamily.org/godotengine/4.3/Godot_v4.3-stable_linux.x86_64.zip
-          godot_export_templates_download_url: https://downloads.tuxfamily.org/godotengine/4.3/Godot_v4.3-stable_export_templates.tpz
+          godot_executable_download_url: https://downloads.tuxfamily.org/godotengine/4.0/Godot_v4.0-stable_linux.x86_64.zip
+          godot_export_templates_download_url: https://downloads.tuxfamily.org/godotengine/4.0/Godot_v4.0-stable_export_templates.tpz
           relative_project_path: ./
           archive_output: true
-
-
-      - name: Build Godot Project
-        run: |
-          mkdir -p build
-          godot --export "HTML5" build/index.html --path godot.project
 
       - name: Upload to itch.io
         uses: robpc/itchio-upload-action@v1
         with:
-          path: build/
+          path: builds/  # Adjust this to the actual output directory from the export
           project: Stormwind-Gaming/stw-gogj-24
           channel: html5
           version: ${{ github.ref_name }}
