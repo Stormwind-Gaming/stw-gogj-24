@@ -12,18 +12,26 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
 
-      - name: Export Godot Project
-        uses: firebelley/godot-export@v6.0.0
-        with:
-          godot_executable_download_url: https://downloads.tuxfamily.org/godotengine/4.0/Godot_v4.0-stable_linux.x86_64.zip
-          godot_export_templates_download_url: https://downloads.tuxfamily.org/godotengine/4.0/Godot_v4.0-stable_export_templates.tpz
-          relative_project_path: ./
-          archive_output: true
+      - name: Download Godot 4.3 Executable
+        run: |
+          wget https://downloads.tuxfamily.org/godotengine/4.3/Godot_v4.3-stable_linux.x86_64.zip
+          unzip Godot_v4.3-stable_linux.x86_64.zip -d godot
+          chmod +x godot/Godot_v4.3-stable_linux.x86_64
+
+      - name: Download Godot 4.3 Export Templates
+        run: |
+          wget https://downloads.tuxfamily.org/godotengine/4.3/Godot_v4.3-stable_export_templates.tpz
+          mkdir -p ~/.local/share/godot/templates/4.3
+          unzip Godot_v4.3-stable_export_templates.tpz -d ~/.local/share/godot/templates/4.3
+
+      - name: Export Godot Project to ZIP
+        run: |
+          ./godot/Godot_v4.3-stable_linux.x86_64 --export-pack "Web" ./builds/${{ github.ref_name}}.zip
 
       - name: Upload to itch.io
         uses: robpc/itchio-upload-action@v1
         with:
-          path: builds/  # Adjust this to the actual output directory from the export
+          path: builds/game.zip
           project: tintuna/classifiedtopsecret
           channel: html5
           version: ${{ github.ref_name }}
