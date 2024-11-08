@@ -42,22 +42,26 @@ func process_turn() -> void:
 		match action.action_type:
 			ActionType.ESPIONAGE:
 				print("Action: ", action.poi, action.character)
-				log_message = "Processing ESPIONAGE action at " + str(action.poi) + " by " + str(action.character)
+				log_message = "Processing ESPIONAGE action at " + str(action.poi.poi_name) + " by " + str(action.character.first_name + " " + action.character.last_name)
 				current_turn_log.append(log_message)
 				
-				# TODO: Implement ESPIONAGE logic here
-				if(_bounded_sigmoid_check(action.character.subtlety)):
-					log_message = "Succeeded subtlety check..."
+				var subtle_roll = _bounded_sigmoid_check(action.character.subtlety, true)
+				
+				if(subtle_roll.success):
+					log_message = "Succeeded subtlety check..." + str(subtle_roll)
 					current_turn_log.append(log_message)
 					
 					match action.poi.stat_check_type:
 						Enums.StatCheckType.SMARTS:
-							if(_bounded_sigmoid_check(action.character.smarts)):
-								log_message = "Succeeded smarts check..."
+							
+							var smarts_roll = _bounded_sigmoid_check(action.character.smarts, true)
+							
+							if(smarts_roll.success):
+								log_message = "Succeeded smarts check..." + str(smarts_roll)
 								current_turn_log.append(log_message)
 								success = true
 							else: 
-								log_message = "Failed smarts check..."
+								log_message = "Failed smarts check..." + str(smarts_roll)
 								current_turn_log.append(log_message)
 						Enums.StatCheckType.CHARM:
 							if(_bounded_sigmoid_check(action.character.charm)):
@@ -67,6 +71,9 @@ func process_turn() -> void:
 							else: 
 								log_message = "Failed charm check..."
 								current_turn_log.append(log_message)
+				else:
+					log_message = "Failed subtlety check..." + str(subtle_roll)
+					current_turn_log.append(log_message)
 				
 				
 		if success:
@@ -93,7 +100,7 @@ func get_turn_log(turn: int) -> Array:
 		return []
 	return turn_logs[turn - 1]  # Return the log for the specified turn
 	
-func _bounded_sigmoid_check(stat: int, bottom_bound: float = 20.0, upper_bound: float = 80.0) -> bool:
+func _bounded_sigmoid_check(stat: int, detailed: bool = false, bottom_bound: float = 20.0, upper_bound: float = 80.0) -> Variant:
 	# Calculate the sigmoid-based success chance
 	var k = 1.0  # Steepness of the curve
 	var m = 5.0  # Midpoint of the curve
@@ -101,7 +108,21 @@ func _bounded_sigmoid_check(stat: int, bottom_bound: float = 20.0, upper_bound: 
 	
 	# Scale the raw chance to fit within the bottom and upper bounds
 	var success_chance = bottom_bound + (upper_bound - bottom_bound) * (raw_chance / 100)
-
-	# Roll a random number between 0 and 100 and compare to the success chance
+	
+	# Roll a random number between 0 and 100
 	var roll = randf() * 100
-	return roll < success_chance
+	
+	# Determine success
+	var is_success = roll < success_chance
+	
+	# Return based on the 'detailed' flag
+	if detailed:
+		return {
+			"success": is_success,
+			"stat": stat,
+			"raw_chance": raw_chance,
+			"success_chance": success_chance,
+			"roll": roll
+		}
+	else:
+		return is_success

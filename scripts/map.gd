@@ -26,7 +26,6 @@ func _ready() -> void:
 	var characters = GlobalRegistry.get_all_objects(GlobalRegistry.Registry_Category.CHARACTER)
 
 	GameController.add_action(pois[pois.keys().front()], characters[characters.keys().front()], GameController.ActionType.ESPIONAGE)
-	GameController.process_turn()
 
 #region Districts
 
