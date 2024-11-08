@@ -49,12 +49,20 @@ func set_district_details(district_name_arg: String, district_description_arg: S
 	rumour_text = rumour_text_arg
 
 func _on_mouse_entered() -> void:
+	# check if we have a radial menu instance, if so, don't expand
+	if GameController.radial_menu_open != null:
+		return
+		
 	emit_signal("district_hovered", self)
 	
 func _on_mouse_exited():
 	emit_signal("district_unhovered", self)
 
 func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+	# check if we have a radial menu instance, if so, don't expand
+	if GameController.radial_menu_open != null:
+		return
+
 	if event is InputEventMouseButton:
 		var mouse_event = event as InputEventMouseButton
 		if mouse_event.button_index == MOUSE_BUTTON_LEFT and mouse_event.pressed:

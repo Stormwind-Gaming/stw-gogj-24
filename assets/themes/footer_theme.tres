@@ -1,0 +1,69 @@
+[gd_resource type="Theme" load_steps=11 format=3 uid="uid://b4qdww0jic2xr"]
+
+[ext_resource type="Texture2D" uid="uid://idbpgpsxg2hj" path="res://assets/sprites/folder_tab.png" id="1_ipaax"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2qade"]
+texture = ExtResource("1_ipaax")
+texture_margin_left = 20.0
+texture_margin_right = 30.0
+modulate_color = Color(0.521141, 0.521141, 0.521141, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1l4vb"]
+texture = ExtResource("1_ipaax")
+texture_margin_left = 20.0
+texture_margin_right = 30.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8ybr5"]
+texture = ExtResource("1_ipaax")
+texture_margin_left = 20.0
+texture_margin_right = 30.0
+modulate_color = Color(0.838897, 0.838897, 0.838897, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_58ipn"]
+texture = ExtResource("1_ipaax")
+texture_margin_left = 20.0
+texture_margin_right = 30.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fmi0j"]
+texture = ExtResource("1_ipaax")
+texture_margin_left = 20.0
+texture_margin_right = 30.0
+modulate_color = Color(0.277529, 0.277527, 0.277527, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_egn7a"]
+texture = ExtResource("1_ipaax")
+texture_margin_left = 20.0
+texture_margin_right = 30.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_a0nuh"]
+texture = ExtResource("1_ipaax")
+texture_margin_left = 20.0
+texture_margin_right = 30.0
+modulate_color = Color(0.817521, 0.817521, 0.817521, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5pdmu"]
+texture = ExtResource("1_ipaax")
+texture_margin_left = 20.0
+texture_margin_right = 30.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f3fnb"]
+texture = ExtResource("1_ipaax")
+texture_margin_left = 20.0
+texture_margin_right = 30.0
+
+[resource]
+Button/colors/font_color = Color(1, 1, 1, 1)
+Button/colors/font_focus_color = Color(1, 1, 1, 1)
+Button/colors/font_hover_color = Color(1, 1, 1, 1)
+Button/colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+Button/styles/disabled = SubResource("StyleBoxTexture_2qade")
+Button/styles/focus = SubResource("StyleBoxTexture_1l4vb")
+Button/styles/hover = SubResource("StyleBoxTexture_8ybr5")
+Button/styles/normal = SubResource("StyleBoxTexture_58ipn")
+Button/styles/pressed = SubResource("StyleBoxTexture_fmi0j")
+TabBar/colors/font_selected_color = Color(1, 1, 1, 1)
+TabBar/colors/font_unselected_color = Color(1, 1, 1, 1)
+TabBar/styles/tab_focus = SubResource("StyleBoxTexture_egn7a")
+TabBar/styles/tab_hovered = SubResource("StyleBoxTexture_a0nuh")
+TabBar/styles/tab_selected = SubResource("StyleBoxTexture_5pdmu")
+TabBar/styles/tab_unselected = SubResource("StyleBoxTexture_f3fnb")

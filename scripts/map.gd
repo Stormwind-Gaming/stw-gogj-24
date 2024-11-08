@@ -5,8 +5,6 @@ var town_name = ""
 
 @export var districts: Array[District] = []
 
-var district_focused: District = null
-
 func _ready() -> void:
 	_generate_population()
 
@@ -22,10 +20,16 @@ func _ready() -> void:
 		var character = CharacterFactory.create_character()
 		$CanvasLayer/Map_Panel_Left.add_character_card(character.id)
 	
-	var pois = GlobalRegistry.get_all_objects(GlobalRegistry.Registry_Category.POI)
-	var characters = GlobalRegistry.get_all_objects(GlobalRegistry.Registry_Category.CHARACTER)
+	# var pois = GlobalRegistry.get_all_objects(GlobalRegistry.Registry_Category.POI)
+	# var characters = GlobalRegistry.get_all_objects(GlobalRegistry.Registry_Category.CHARACTER)
 
-	GameController.add_action(pois[pois.keys().front()], characters[characters.keys().front()], GameController.ActionType.ESPIONAGE)
+	# GameController.add_action(pois[pois.keys().front()], characters[characters.keys().front()], Enums.ActionType.ESPIONAGE)
+
+func _process(delta: float) -> void:
+	if GameController.district_focused != null:
+		if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
+			GameController.set_district_focused()
+			$Camera2D.enabled = true
 
 #region Districts
 
@@ -44,39 +48,32 @@ func _set_district_details(district: District) -> void:
 	district.connect("poi_unhovered", _on_poi_unhovered)
 
 func _on_district_hovered(district: District) -> void:
-	if district_focused == null:
+	if GameController.district_focused == null:
 		$CanvasLayer/Map_Panel_Right.set_district_details(district)
 		district.set_highlight_color()
 	
 func _on_district_unhovered(district: District) -> void:
 	# remove highlight color if not focused
-	if district_focused == null:
+	if GameController.district_focused == null:
 		district.remove_highlight_color()
 
-func _on_district_clicked(district: District) -> void:
-	if district_focused != null:
-		district_focused = null
-		$Camera2D.enabled = true
-		district.set_highlight_color()
-		
-		return
-	
+func _on_district_clicked(district: District) -> void:	
 	for d in districts:
 		d.remove_highlight_color()
 	
 	district.set_focus_color()
 
 	$Camera2D.enabled = false
-	district_focused = district
+	GameController.set_district_focused(district)
 
 func _on_poi_hovered(poi: PointOfInterest) -> void:
 	$CanvasLayer/Map_Panel_Right.set_poi_details(poi)
 
 func _on_poi_unhovered() -> void:
 	$CanvasLayer/Map_Panel_Right.set_poi_details()
-	
+
+#endregion Districts
+
 func _generate_population() -> void:
 	for i in range(10):
 		CharacterFactory.create_character()
-
-#endregion Districts

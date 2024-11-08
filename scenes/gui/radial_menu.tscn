@@ -1,0 +1,46 @@
+[gd_scene load_steps=4 format=3 uid="uid://b8bqeoiwunxro"]
+
+[ext_resource type="Texture2D" uid="uid://dniextr4kn1uv" path="res://assets/PoI.png" id="1_2stv7"]
+[ext_resource type="Script" path="res://scripts/gui/radial_menu.gd" id="1_dcp7t"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_03ohq"]
+radius = 128.0
+
+[node name="RadialMenu" type="Control"]
+z_index = 100
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dcp7t")
+background_color = Color(0, 0, 0, 0.6)
+line_color = Color(1, 1, 1, 1)
+highlight_color = Color(1, 1, 1, 0.501961)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_2stv7")
+stretch_mode = 3
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_03ohq")
+
+[connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]

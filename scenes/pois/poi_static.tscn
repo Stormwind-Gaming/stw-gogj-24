@@ -15,5 +15,6 @@ texture = ExtResource("2_lxyk4")
 [node name="Polygon2D" type="Polygon2D" parent="."]
 top_level = true
 
+[connection signal="input_event" from="." to="." method="_on_poi_clicked"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

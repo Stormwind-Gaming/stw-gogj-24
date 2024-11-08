@@ -32,3 +32,10 @@ enum StatCheckType {
 	SMARTS,
 	CHARM
 }
+
+enum ActionType {
+	NONE,
+	ESPIONAGE,
+	ASSASSINATION,
+	PROPAGANDA
+}
