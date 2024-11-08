@@ -25,6 +25,9 @@ func _ready() -> void:
 	var pois = GlobalRegistry.get_all_objects(GlobalRegistry.Registry_Category.POI)
 	var characters = GlobalRegistry.get_all_objects(GlobalRegistry.Registry_Category.CHARACTER)
 
+	GameController.add_action(pois[pois.keys().front()], characters[characters.keys().front()], GameController.ActionType.ESPIONAGE)
+	GameController.process_turn()
+
 #region Districts
 
 func _set_district_details(district: District) -> void:
@@ -33,10 +36,7 @@ func _set_district_details(district: District) -> void:
 	Globals.district_names.erase(Globals.district_names.find(district_name))
 	var district_description = "This is the district of " + district_name + "."
 	
-	# Generate a random rumour
-	var rumour: Intel = IntelFactory.create_rumour(25,25,25,25)
-	
-	district.set_district_details(district_name, district_description, rumour.description)
+	district.set_district_details(district_name, district_description, "")
 
 	district.connect("district_hovered", _on_district_hovered)
 	district.connect("district_unhovered", _on_district_unhovered)

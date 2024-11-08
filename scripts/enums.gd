@@ -26,3 +26,9 @@ enum IntelType {
 	WHERE,
 	WHEN
 }
+
+enum StatCheckType {
+	SUBTLETY,
+	SMARTS,
+	CHARM
+}

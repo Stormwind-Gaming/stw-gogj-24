@@ -26,17 +26,23 @@ func _init(profile:Dictionary):
 	self.gender = profile['gender']
 	self.picture = profile['image_path']
 	
-	self.charm = _generateStat(1,10)
-	self.subtlety = _generateStat(1,10)
-	self.smarts = _generateStat(1,10)
+	self.charm = _generateBellCurveStat()
+	self.subtlety = _generateBellCurveStat()
+	self.smarts = _generateBellCurveStat()
 	
-	self.sympathy = _generateStat(1,100)
+	self.sympathy = _generateLinearStat(1,100)
 	
 	self.id = GlobalRegistry.register_object(GlobalRegistry.Registry_Category.CHARACTER, self, self.first_name + '_' + self.last_name)
 
-func _generateStat(min:int, max:int) -> int:
+func _generateLinearStat(min:int, max:int) -> int:
 	return randi() % max + min 
 	GlobalRegistry.register_object(GlobalRegistry.Registry_Category.CHARACTER, self, self.first_name + ' ' + self.last_name)
+
+func _generateBellCurveStat() -> int:
+	var total = 0
+	for i in range(3):
+		total += randi() % 4 + 1
+	return total - 2
 
 func get_full_name() -> String:
 	return first_name + ' ' + last_name

@@ -1,4 +1,4 @@
-extends Object
+extends Node
 
 # Enum for the types of actions
 enum ActionType { ESPIONAGE } 
@@ -26,8 +26,10 @@ var turn_logs: Array = []
 
 # Method to add an action
 func add_action(poi: PointOfInterest, character: Character, action_type: ActionType, additional_info: Dictionary = {}) -> void:
+	print("Adding action:", poi, character, action_type)
 	var new_action = Action.new(poi, character, action_type, additional_info)
 	actions.append(new_action)
+
 
 # Method to process a turn
 func process_turn() -> void:
@@ -36,14 +38,49 @@ func process_turn() -> void:
 
 	for action in actions:
 		var log_message: String
+		var success: bool = false
 		match action.action_type:
 			ActionType.ESPIONAGE:
+				print("Action: ", action.poi, action.character)
 				log_message = "Processing ESPIONAGE action at " + str(action.poi) + " by " + str(action.character)
-				if "second_character" in action.additional_info:
-					log_message += ". Involves second character: " + str(action.additional_info["second_character"])
-				# Implement ESPIONAGE logic here
 				current_turn_log.append(log_message)
-				print(log_message)  # Output to the console
+				
+				# TODO: Implement ESPIONAGE logic here
+				if(_bounded_sigmoid_check(action.character.subtlety)):
+					log_message = "Succeeded subtlety check..."
+					current_turn_log.append(log_message)
+					
+					match action.poi.stat_check_type:
+						Enums.StatCheckType.SMARTS:
+							if(_bounded_sigmoid_check(action.character.smarts)):
+								log_message = "Succeeded smarts check..."
+								current_turn_log.append(log_message)
+								success = true
+							else: 
+								log_message = "Failed smarts check..."
+								current_turn_log.append(log_message)
+						Enums.StatCheckType.CHARM:
+							if(_bounded_sigmoid_check(action.character.charm)):
+								log_message = "Succeeded charm check..."
+								current_turn_log.append(log_message)
+								success = true
+							else: 
+								log_message = "Failed charm check..."
+								current_turn_log.append(log_message)
+				
+				
+		if success:
+			log_message = "The mission was a success!"
+			current_turn_log.append(log_message)
+			IntelFactory.create_rumour(action.poi.rumour_config)
+		else:
+			log_message = "The mission was a failure! :("
+			current_turn_log.append(log_message)
+
+		
+	# Output current turn log to the console		
+	for each_log_message in current_turn_log:
+		print(each_log_message)  
 
 	# Store the logs for this turn
 	turn_logs.append(current_turn_log)
@@ -55,3 +92,16 @@ func get_turn_log(turn: int) -> Array:
 	if turn < 1 or turn > turn_logs.size():
 		return []
 	return turn_logs[turn - 1]  # Return the log for the specified turn
+	
+func _bounded_sigmoid_check(stat: int, bottom_bound: float = 20.0, upper_bound: float = 80.0) -> bool:
+	# Calculate the sigmoid-based success chance
+	var k = 1.0  # Steepness of the curve
+	var m = 5.0  # Midpoint of the curve
+	var raw_chance = 100 / (1 + exp(-k * (stat - m)))
+	
+	# Scale the raw chance to fit within the bottom and upper bounds
+	var success_chance = bottom_bound + (upper_bound - bottom_bound) * (raw_chance / 100)
+
+	# Roll a random number between 0 and 100 and compare to the success chance
+	var roll = randf() * 100
+	return roll < success_chance

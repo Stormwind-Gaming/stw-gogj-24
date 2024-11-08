@@ -13,7 +13,3 @@ func _init(level: Enums.IntelLevel, type: Enums.IntelType, description: String):
 	self.description = description
 	
 	GlobalRegistry.register_object(GlobalRegistry.Registry_Category.INTEL, self)
-
-
-func gather():
-	print("Gathering intel: " + description)
