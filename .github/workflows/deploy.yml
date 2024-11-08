@@ -24,7 +24,7 @@ jobs:
         uses: robpc/itchio-upload-action@v1
         with:
           path: builds/  # Adjust this to the actual output directory from the export
-          project: Stormwind-Gaming/stw-gogj-24
+          project: tintuna/classifiedtopsecret
           channel: html5
           version: ${{ github.ref_name }}
           api-key: ${{ secrets.BUTLER_API_KEY }}
