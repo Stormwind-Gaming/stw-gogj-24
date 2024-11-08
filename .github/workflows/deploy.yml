@@ -31,7 +31,7 @@ jobs:
       - name: Upload to itch.io
         uses: robpc/itchio-upload-action@v1
         with:
-          path: builds/game.zip
+          path: builds/${{ github.ref_name }}
           project: tintuna/classifiedtopsecret
           channel: html5
           version: ${{ github.ref_name }}
