@@ -26,12 +26,12 @@ jobs:
 
       - name: Export Godot Project to ZIP
         run: |
-          ./godot/Godot_v4.3-stable_linux.x86_64 --headless --export-pack "Web" ./builds/${{ github.ref_name}}.zip
+          ./godot/Godot_v4.3-stable_linux.x86_64 --headless --export-pack "Web"
 
       - name: Upload to itch.io
         uses: robpc/itchio-upload-action@v1
         with:
-          path: builds/${{ github.ref_name }}
+          path: builds/game.zip
           project: tintuna/classifiedtopsecret
           channel: html5
           version: ${{ github.ref_name }}
