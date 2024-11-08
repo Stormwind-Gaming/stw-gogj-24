@@ -36,16 +36,16 @@ static func create_rumour(who_chance: int, where_chance: int, what_chance: int, 
 	# Determine the type of rumour based on the random value and chances
 	if random_value < who_chance:
 		type = Enums.IntelType.WHO
-		description = "A rumour about who is involved."
+		description = "A WHO rumour."
 	elif random_value < who_chance + where_chance:
 		type = Enums.IntelType.WHERE
-		description = "A rumour about where it happened."
+		description = "A WHERE rumour."
 	elif random_value < who_chance + where_chance + what_chance:
 		type = Enums.IntelType.WHAT
-		description = "A rumour about what happened."
+		description = "A WHAT rumour."
 	else:
 		type = Enums.IntelType.WHEN
-		description = "A rumour about when it happened."
+		description = "A WHEN rumour."
 
 	print("Rumour created: Type: ", type, ", Description: ", description)
 	

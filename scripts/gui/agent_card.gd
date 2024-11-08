@@ -3,8 +3,6 @@ extends PanelContainer
 var character : Character
 
 func _ready():
-	print(character.picture)  # Debug: Check the image path
-
 	$MarginContainer/VBoxContainer/Label.text = character.first_name + " " + character.last_name
 	
 	var picture_texture = load(character.picture)

@@ -51,8 +51,6 @@ static func generate_random_profile() -> Dictionary:
 	# Select a random image from the directory
 	var selected_image = _get_random_image_from_path(image_directory)
 	
-	print('Chose ' + selected_image)
-	
 	return {
 		"first_name": first_name, 
 		"last_name": last_name, 
