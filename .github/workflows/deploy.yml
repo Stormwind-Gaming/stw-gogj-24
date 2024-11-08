@@ -1,0 +1,32 @@
+name: Deploy Godot Project to itch.io
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Set up Godot
+        uses: firebelley/godot-export-action@v1
+        with:
+          godot-executable: godot  # The Godot executable name or path if you need to specify it.
+
+      - name: Build Godot Project
+        run: |
+          mkdir -p build
+          godot --export "HTML5" build/index.html --path godot.project
+
+      - name: Upload to itch.io
+        uses: robpc/itchio-upload-action@v1
+        with:
+          path: build/
+          project: Stormwind-Gaming/stw-gogj-24
+          channel: html5
+          version: ${{ github.ref_name }}
+          api-key: ${{ secrets.BUTLER_API_KEY }}
