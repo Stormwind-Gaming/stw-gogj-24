@@ -1,17 +1,22 @@
 extends Node
 
-# Enum for the types of actions
-enum ActionType { ESPIONAGE } 
+var district_focused: District = null
+
+var poi_for_radial: PointOfInterest
+var radial_menu_open: RadialMenu
+
+signal end_turn(num: int)
+signal district_just_focused(district: District)
 
 # Structure to store each action
 class Action:
 	var poi: PointOfInterest  # Point of Interest
 	var character: Character  # Character involved
-	var action_type: ActionType  # Type of action
+	var action_type: Enums.ActionType  # Type of action
 	var additional_info: Dictionary = {}  # Optional additional information, e.g., a second character
 
 	# Constructor for the Action class
-	func _init(poi: PointOfInterest, character: Character, action_type: ActionType, additional_info: Dictionary = {}):
+	func _init(poi: PointOfInterest, character: Character, action_type: Enums.ActionType, additional_info: Dictionary = {}):
 		self.poi = poi
 		self.character = character
 		self.action_type = action_type
@@ -25,7 +30,7 @@ var turn_number: int = 0
 var turn_logs: Array = []
 
 # Method to add an action
-func add_action(poi: PointOfInterest, character: Character, action_type: ActionType, additional_info: Dictionary = {}) -> void:
+func add_action(poi: PointOfInterest, character: Character, action_type: Enums.ActionType, additional_info: Dictionary = {}) -> void:
 	print("Adding action:", poi, character, action_type)
 	var new_action = Action.new(poi, character, action_type, additional_info)
 	actions.append(new_action)
@@ -40,7 +45,7 @@ func process_turn() -> void:
 		var log_message: String
 		var success: bool = false
 		match action.action_type:
-			ActionType.ESPIONAGE:
+			Enums.ActionType.ESPIONAGE:
 				print("Action: ", action.poi, action.character)
 				log_message = "Processing ESPIONAGE action at " + str(action.poi.poi_name) + " by " + str(action.character.first_name + " " + action.character.last_name)
 				current_turn_log.append(log_message)
@@ -94,6 +99,9 @@ func process_turn() -> void:
 	# Clear the actions list for the next turn
 	actions.clear()
 
+	# Emit the signal to end the turn
+	emit_signal("end_turn", turn_number)
+
 # Method to get the log for a specific turn
 func get_turn_log(turn: int) -> Array:
 	if turn < 1 or turn > turn_logs.size():
@@ -126,3 +134,30 @@ func _bounded_sigmoid_check(stat: int, detailed: bool = false, bottom_bound: flo
 		}
 	else:
 		return is_success
+
+#region District and PoIs
+
+func set_district_focused(district: District = null) -> void:
+	if district_focused == district:
+		return
+	district_focused = district
+	emit_signal("district_just_focused", district)
+
+func open_radial_menu(radial_menu: RadialMenu, poi: PointOfInterest) -> void:
+	if radial_menu_open:
+		return
+	radial_menu_open = radial_menu
+	poi_for_radial = poi
+	radial_menu.connect('selected_radial_option', _on_radial_option_selected)
+
+func _on_radial_option_selected(option: Enums.ActionType) -> void:
+	if option != Enums.ActionType.NONE:
+		var characters = GlobalRegistry.get_all_objects(GlobalRegistry.Registry_Category.CHARACTER)
+		GameController.add_action(poi_for_radial, characters[characters.keys().front()], option)
+
+	radial_menu_open.queue_free()
+	# create a tiny timer to get around erroneous clickthroughs
+	await get_tree().create_timer(0.1).timeout
+	radial_menu_open = null
+
+#endregion

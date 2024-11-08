@@ -1,6 +1,9 @@
 extends Area2D
 class_name PointOfInterest
 
+var enabled: bool = false
+var parent_district: District
+
 #TODO: Dynamically change rumour_config for each POI, currently this gives all POI an equal chance of every rumour type
 var rumour_config : IntelFactory.RumourConfig = IntelFactory.RumourConfig.new(25,25,25,25)
 #TODO: Dynamically change stat_check_type for each POI, currently this gives all POI SMARTS type checks
@@ -16,23 +19,31 @@ signal poi_hovered
 signal poi_unhovered
 
 func _ready() -> void:
+	parent_district = get_parent().get_parent()
 	GlobalRegistry.register_object(GlobalRegistry.Registry_Category.POI, self)
+	GameController.connect("district_just_focused", _on_district_just_focused)
 
 func setup_poi():
 	$Polygon2D.position = self.get_global_position()
 	$Polygon2D.polygon = $CollisionPolygon2D.polygon
 	$Polygon2D.color = no_color
 
-func set_poi_details(poi_name_arg: String, poi_description_arg: String) -> void:
+func set_poi_details(parent_district_arg: District, poi_name_arg: String, poi_description_arg: String) -> void:
+	parent_district = parent_district_arg
 	poi_name = poi_name_arg
 	poi_description = poi_description_arg
 
 # Function to expand on mouse hover
 func _on_mouse_entered():
+	if not enabled:
+		return
+
+	# check if we have a radial menu instance, if so, don't expand
+	if GameController.radial_menu_open != null:
+		return
+
 	# check if parent is focused
-	# get parent of parent i.e. the root District
-	var district = get_parent().get_parent()
-	if get_tree().get_root().get_node('Map').district_focused != district:
+	if GameController.district_focused != parent_district:
 		return
 	$Polygon2D.color = highlight_color
 	emit_signal("poi_hovered", self)
@@ -41,3 +52,33 @@ func _on_mouse_entered():
 func _on_mouse_exited():
 	$Polygon2D.color = no_color
 	emit_signal("poi_unhovered")
+
+func _on_poi_clicked(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+	if not enabled:
+		return
+	# if mouse left clicked
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			# if we already have an instance of the radial_menu_instance, don't create a new one
+			if GameController.radial_menu_open != null:
+				return
+			
+			# check if parent is focused
+			if GameController.district_focused != parent_district:
+				return
+			# create a radial menu
+			var radial_menu_instance = Globals.radial_menu_scene.instantiate()
+			radial_menu_instance.position = get_local_mouse_position()
+			add_child(radial_menu_instance)
+
+			GameController.open_radial_menu(radial_menu_instance, self)
+
+func _on_district_just_focused(district: District) -> void:
+	if district == parent_district:
+		# helper timer to get around erroneous clickthroughs
+		await get_tree().create_timer(0.1).timeout
+		enabled = true
+	else:
+		enabled = false
+	
+	

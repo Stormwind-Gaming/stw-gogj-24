@@ -8,7 +8,6 @@ var log_list_scene = preload("res://scenes/gui/log_list.tscn")
 @onready var show_intel_list_button = $HBoxContainer/PanelContainer3/HBoxContainer/IntelListButton
 @onready var show_log_list_button = $HBoxContainer/PanelContainer3/HBoxContainer/LogListButton
 @onready var turn_button = $HBoxContainer/PanelContainer/TurnButton
-@onready var date = $HBoxContainer/PanelContainer2/HBoxContainer/Date
 
 func _ready():
 	# Connect the button's "pressed" signal to a function using Callable
@@ -19,7 +18,26 @@ func _ready():
 	turn_button.connect("pressed", Callable(self, "_on_turn_button_pressed"))
 
 
+func _on_tab_bar_tab_clicked(tab: int) -> void:
+	match tab:
+		0:
+			# _on_show_team_list_button_pressed()
+			pass
+		1:
+			_on_show_intel_list_button_pressed()
+		2:
+			_on_show_character_list_button_pressed()
+		3:
+			_on_show_log_list_button_pressed()
+		_:
+			pass
+
+
 func _on_show_intel_list_button_pressed():
+	# if we already have an instance of the intel list, don't create a new one
+	if get_node("IntelList") != null:
+		return
+	
 	# Instance the intel list scene
 	var intel_list_instance = intel_list_scene.instantiate()
 	
@@ -31,6 +49,10 @@ func _on_show_intel_list_button_pressed():
 
 
 func _on_show_character_list_button_pressed():
+	# if we already have an instance of the character list, don't create a new one
+	if get_node("CharacterList") != null:
+		return
+	
 	# Instance the character list scene
 	var character_list_instance = character_list_scene.instantiate()
 	
@@ -41,6 +63,10 @@ func _on_show_character_list_button_pressed():
 	character_list_instance.popup_centered()
 	
 func _on_show_log_list_button_pressed():
+	# if we already have an instance of the log list, don't create a new one
+	if get_node("LogList") != null:
+		return
+
 	# Instance the log list scene
 	var log_list_instance = log_list_scene.instantiate()
 	
@@ -53,7 +79,4 @@ func _on_show_log_list_button_pressed():
 func _on_turn_button_pressed():
 	GameController.process_turn()
 	_on_show_log_list_button_pressed()
-	var num = 13 + GameController.turn_number
-	
-	date.text = "Current Date: " + str(num) + " January 1942"
-	
+	var num = 13 + GameController.turn_number	
