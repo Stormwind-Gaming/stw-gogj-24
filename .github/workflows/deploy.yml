@@ -21,8 +21,9 @@ jobs:
       - name: Download Godot 4.3 Export Templates
         run: |
           wget https://downloads.tuxfamily.org/godotengine/4.3/Godot_v4.3-stable_export_templates.tpz
-          mkdir -p ~/.local/share/godot/templates/4.3.stable
-          unzip Godot_v4.3-stable_export_templates.tpz -d ~/.local/share/godot/templates/4.3.stable
+          mkdir -p ~/.local/share/godot/export_templates/4.3.stable
+          unzip Godot_v4.3-stable_export_templates.tpz
+          mv templates/* ~/.local/share/godot/export_templates/4.3.stable/
 
       - name: Export Godot Project to ZIP
         run: |
@@ -41,3 +42,4 @@ jobs:
           channel: html5
           version: ${{ github.ref_name }}
           api-key: ${{ secrets.BUTLER_API_KEY }}
+
