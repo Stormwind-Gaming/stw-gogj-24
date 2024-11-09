@@ -5,13 +5,13 @@
 [ext_resource type="Texture2D" uid="uid://cymt3ntm6bmk0" path="res://assets/map_panels.png" id="4_k5atg"]
 [ext_resource type="PackedScene" uid="uid://bx5tric4sp02h" path="res://scenes/gui/map_panel_left.tscn" id="4_yt3a5"]
 [ext_resource type="PackedScene" uid="uid://krwk7aduwjom" path="res://scenes/gui/map_panel_right.tscn" id="5_dgovt"]
-[ext_resource type="PackedScene" uid="uid://b1vvls3nbthm6" path="res://scenes/districts/district_n.tscn" id="5_ony1k"]
-[ext_resource type="PackedScene" uid="uid://cdhfja2nolmpl" path="res://scenes/districts/district_c.tscn" id="6_5acc7"]
+[ext_resource type="PackedScene" path="res://scenes/districts/district_n.tscn" id="5_ony1k"]
+[ext_resource type="PackedScene" path="res://scenes/districts/district_c.tscn" id="6_5acc7"]
 [ext_resource type="PackedScene" uid="uid://bnshi2p8ra26w" path="res://scenes/districts/district_sw.tscn" id="7_dde3t"]
 [ext_resource type="Script" path="res://scripts/camera.gd" id="7_f0cgf"]
-[ext_resource type="PackedScene" uid="uid://dpqgqrfoqchlu" path="res://scenes/districts/district_cw.tscn" id="9_jaoy6"]
+[ext_resource type="PackedScene" path="res://scenes/districts/district_cw.tscn" id="9_jaoy6"]
 [ext_resource type="PackedScene" uid="uid://bv860whpjsldd" path="res://scenes/gui/footer.tscn" id="11_4nem0"]
-[ext_resource type="PackedScene" uid="uid://kgy3mx1cyya" path="res://scenes/gui/header.tscn" id="12_gdl2t"]
+[ext_resource type="PackedScene" path="res://scenes/gui/header.tscn" id="12_gdl2t"]
 
 [node name="Map" type="Node2D" node_paths=PackedStringArray("districts")]
 script = ExtResource("1_ppup2")

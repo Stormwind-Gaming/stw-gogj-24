@@ -12,7 +12,6 @@ enum CharacterNationality {
 
 enum IntelLevel {
 	RUMOUR,
-	LEAD,
 	PLAN,
 	STRATEGEM
 }
@@ -21,7 +20,8 @@ enum IntelType {
 	WHO,
 	WHAT,
 	WHERE,
-	WHEN
+	WHEN,
+	COMPLETE
 }
 
 enum StatCheckType {

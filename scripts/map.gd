@@ -23,6 +23,13 @@ func _ready() -> void:
 		var character = CharacterFactory.create_character()
 		$CanvasLayer/Map_Panel_Left.add_character_card(character.id)
 	
+		#var whoR = IntelFactory.create_rumour(IntelFactory.RumourConfig.new(100,0,0,0))
+		#var whereR = IntelFactory.create_rumour(IntelFactory.RumourConfig.new(0,100,0,0))
+		#var whatR = IntelFactory.create_rumour(IntelFactory.RumourConfig.new(0,0,100,0))
+		#var whenR = IntelFactory.create_rumour(IntelFactory.RumourConfig.new(0,0,0,100))
+
+	#var plan = IntelFactory.combine_rumours([whoR, whereR, whatR, whenR])
+	
 	# var pois = GlobalRegistry.get_all_objects(GlobalRegistry.Registry_Category.POI)
 	# var characters = GlobalRegistry.get_all_objects(GlobalRegistry.Registry_Category.CHARACTER)
 

@@ -83,6 +83,7 @@ func process_turn() -> void:
 				
 		if success:
 			log_message = "The mission was a success!"
+			print(IntelFactory)
 			current_turn_log.append(log_message)
 			IntelFactory.create_rumour(action.poi.rumour_config)
 		else:

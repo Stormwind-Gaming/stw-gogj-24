@@ -3,15 +3,172 @@
 [ext_resource type="Script" path="res://scripts/gui/intel_list.gd" id="1_4b1gi"]
 
 [node name="IntelList" type="Window"]
-size = Vector2i(200, 400)
+position = Vector2i(0, 36)
+size = Vector2i(500, 700)
 script = ExtResource("1_4b1gi")
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 31.0
+grow_horizontal = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+[node name="TabContainer" type="TabContainer" parent="VBoxContainer"]
+layout_mode = 2
+current_tab = 0
+
+[node name="Rumours" type="PanelContainer" parent="VBoxContainer/TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/TabContainer/Rumours"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer"]
 layout_mode = 2
 
-[node name="IntelListContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+[node name="MarginContainerL" type="MarginContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="IntelListContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerL"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="WhoContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerL/IntelListContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerL/IntelListContainer/WhoContainer"]
+layout_mode = 2
+text = "Who Rumours"
+
+[node name="WhoBtnGrpContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerL/IntelListContainer/WhoContainer"]
+layout_mode = 2
+
+[node name="WhatContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerL/IntelListContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerL/IntelListContainer/WhatContainer"]
+layout_mode = 2
+text = "What Rumours"
+
+[node name="WhatBtnGrpContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerL/IntelListContainer/WhatContainer"]
+layout_mode = 2
+
+[node name="WhereContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerL/IntelListContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerL/IntelListContainer/WhereContainer"]
+layout_mode = 2
+text = "Where Rumours"
+
+[node name="WhereBtnGrpContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerL/IntelListContainer/WhereContainer"]
+layout_mode = 2
+
+[node name="WhenContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerL/IntelListContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerL/IntelListContainer/WhenContainer"]
+layout_mode = 2
+text = "When Rumours"
+
+[node name="WhenBtnGrpContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerL/IntelListContainer/WhenContainer"]
+layout_mode = 2
+
+[node name="MarginContainerR" type="MarginContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="CraftingContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerR"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerR/CraftingContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerR/CraftingContainer/MarginContainer"]
+layout_mode = 2
+text = "Plan Crafting"
+
+[node name="WhoContainer" type="HBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerR/CraftingContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerR/CraftingContainer/WhoContainer"]
+layout_mode = 2
+text = "Who:"
+
+[node name="WhoDescription" type="Label" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerR/CraftingContainer/WhoContainer"]
+layout_mode = 2
+
+[node name="WhatContainer" type="HBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerR/CraftingContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerR/CraftingContainer/WhatContainer"]
+layout_mode = 2
+text = "Where:"
+
+[node name="WhatDescription" type="Label" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerR/CraftingContainer/WhatContainer"]
+layout_mode = 2
+
+[node name="WhereContainer" type="HBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerR/CraftingContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerR/CraftingContainer/WhereContainer"]
+layout_mode = 2
+text = "What:"
+
+[node name="WhereDescription" type="Label" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerR/CraftingContainer/WhereContainer"]
+layout_mode = 2
+
+[node name="WhenContainer" type="HBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerR/CraftingContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerR/CraftingContainer/WhenContainer"]
+layout_mode = 2
+text = "When:"
+
+[node name="WhenDescription" type="Label" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerR/CraftingContainer/WhenContainer"]
+layout_mode = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerR/CraftingContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 10
+
+[node name="CreatePlanBtn" type="Button" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerR/CraftingContainer/MarginContainer2"]
+visible = false
+layout_mode = 2
+text = "Create Plan"
+
+[node name="Plans" type="PanelContainer" parent="VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/TabContainer/Plans"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Plans/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/TabContainer/Plans/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Plans"
+
+[node name="PlanListContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Plans/MarginContainer/VBoxContainer"]
 layout_mode = 2
