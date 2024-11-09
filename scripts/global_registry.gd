@@ -71,5 +71,5 @@ func get_all_objects(category: Registry_Category) -> Dictionary:
 func unregister_object(category: Registry_Category, object_name: String) -> void:
 	if category in registered_objects:
 		registered_objects[category].erase(object_name)
-		if registered_objects[category].empty():
+		if registered_objects[category].is_empty():  # Changed from empty() to is_empty()
 			registered_objects.erase(category)

@@ -34,7 +34,7 @@ class RumourConfig:
 				self.when_chance = int(self.when_chance * scale_factor)
 				
 				print("Scaled chances to 100%: Who: %d, Where: %d, What: %d, When: %d" % 
-					  [self.who_chance, self.where_chance, self.what_chance, self.when_chance])
+						[self.who_chance, self.where_chance, self.what_chance, self.when_chance])
 
 static func create_rumour(config: RumourConfig) -> Intel:
 	print("Creating rumour...")
@@ -49,20 +49,43 @@ static func create_rumour(config: RumourConfig) -> Intel:
 	# Determine the type of rumour based on the random value and chances
 	if random_value < config.who_chance:
 		type = Enums.IntelType.WHO
-		description = "A WHO rumour."
+		description = "A WHO rumour." + str(random_value)
 	elif random_value < config.who_chance + config.where_chance:
 		type = Enums.IntelType.WHERE
-		description = "A WHERE rumour."
+		description = "A WHERE rumour." + str(random_value)
 	elif random_value < config.who_chance + config.where_chance + config.what_chance:
 		type = Enums.IntelType.WHAT
-		description = "A WHAT rumour."
+		description = "A WHAT rumour." + str(random_value)
 	else:
 		type = Enums.IntelType.WHEN
-		description = "A WHEN rumour."
+		description = "A WHEN rumour." + str(random_value)
 
 	print("Rumour created: Type: ", type, ", Description: ", description)
 	
 	return Intel.new(Enums.IntelLevel.RUMOUR, type, description)
 
-func combine_rumours(rumours: Array):
-	print("Combining rumours...")
+static func combine_rumours(rumours: Array) -> Intel:
+		# Verify we have exactly 4 rumours
+		if rumours.size() != 4:
+				push_error("Need exactly 4 rumours to combine")
+				return null
+				
+		# Check each rumour is unique type and RUMOUR level
+		var type_check = {}
+		for rumour in rumours:
+				if not rumour is Intel or rumour.level != Enums.IntelLevel.RUMOUR:
+						push_error("Can only combine RUMOUR level intel")
+						return null
+				if rumour.type in type_check:
+						push_error("Cannot combine duplicate rumour types") 
+						return null
+				type_check[rumour.type] = true
+		
+		# Create new PLAN level intel
+		var plan = Intel.new(Enums.IntelLevel.PLAN, Enums.IntelType.COMPLETE, "Here is a PLAN")
+		
+		# Destroy rumours by freeing them
+		for rumour in rumours:
+				rumour.free()
+		
+		return plan
