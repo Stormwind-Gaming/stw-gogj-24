@@ -33,11 +33,11 @@ func _init(profile:Dictionary):
 	
 	self.sympathy = _generateLinearStat(1,100)
 	
-	self.id = GlobalRegistry.register_object(GlobalRegistry.Registry_Category.CHARACTER, self, self.first_name + '_' + self.last_name)
+	self.id = GlobalRegistry.register_object(Enums.Registry_Category.CHARACTER, self, self.first_name + '_' + self.last_name)
 
 func _generateLinearStat(min:int, max:int) -> int:
 	return randi() % max + min 
-	GlobalRegistry.register_object(GlobalRegistry.Registry_Category.CHARACTER, self, self.first_name + ' ' + self.last_name)
+	GlobalRegistry.register_object(Enums.Registry_Category.CHARACTER, self, self.first_name + ' ' + self.last_name)
 
 func _generateBellCurveStat() -> int:
 	var total = 0

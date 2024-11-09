@@ -1,9 +1,5 @@
 extends Control
 
-var character_list_scene = preload("res://scenes/gui/character_list.tscn")
-var intel_list_scene = preload("res://scenes/gui/intel_list.tscn")
-var log_list_scene = preload("res://scenes/gui/log_list.tscn")
-
 @export var show_character_list_button: Button
 @export var show_intel_list_button: Button
 @export var show_log_list_button: Button
@@ -40,7 +36,7 @@ func _on_show_intel_list_button_pressed():
 		return
 	
 	# Instance the intel list scene
-	var intel_list_instance = intel_list_scene.instantiate()
+	var intel_list_instance = Globals.intel_list_scene.instantiate()
 	
 		# Add the instance to the scene tree
 	add_child(intel_list_instance)
@@ -55,7 +51,7 @@ func _on_show_character_list_button_pressed():
 		return
 	
 	# Instance the character list scene
-	var character_list_instance = character_list_scene.instantiate()
+	var character_list_instance = Globals.character_list_scene.instantiate()
 	
 		# Add the instance to the scene tree
 	add_child(character_list_instance)
@@ -69,7 +65,7 @@ func _on_show_log_list_button_pressed():
 		return
 
 	# Instance the log list scene
-	var log_list_instance = log_list_scene.instantiate()
+	var log_list_instance = Globals.log_list_scene.instantiate()
 	
 	# Add the instance to the scene tree
 	add_child(log_list_instance)

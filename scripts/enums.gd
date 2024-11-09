@@ -70,3 +70,10 @@ enum POIType {
 	ANTI_AIR_EMPLACEMENT,
 	GESTAPO_POST,
 }
+
+enum Registry_Category {
+	CHARACTER,
+	DISTRICT,
+	POI,
+	INTEL,
+}

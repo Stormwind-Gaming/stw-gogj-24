@@ -30,8 +30,8 @@ func _ready() -> void:
 
 	#var plan = IntelFactory.combine_rumours([whoR, whereR, whatR, whenR])
 	
-	# var pois = GlobalRegistry.get_all_objects(GlobalRegistry.Registry_Category.POI)
-	# var characters = GlobalRegistry.get_all_objects(GlobalRegistry.Registry_Category.CHARACTER)
+	# var pois = GlobalRegistry.get_all_objects(Enums.Registry_Category.POI)
+	# var characters = GlobalRegistry.get_all_objects(Enums.Registry_Category.CHARACTER)
 
 	# GameController.add_action(pois[pois.keys().front()], characters[characters.keys().front()], Enums.ActionType.ESPIONAGE)
 

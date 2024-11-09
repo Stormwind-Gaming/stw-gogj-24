@@ -17,5 +17,5 @@ func _on_TextureButton_pressed():
 func _on_TextureButton_released():
 	$MarginContainer/VBoxContainer/Panel.visible = false  # Hide the border when released
 
-func set_character(character_id:String):
-	character = GlobalRegistry.get_object(GlobalRegistry.Registry_Category.CHARACTER, character_id)
+func set_character(character_id: String):
+	character = GlobalRegistry.get_object(Enums.Registry_Category.CHARACTER, character_id)

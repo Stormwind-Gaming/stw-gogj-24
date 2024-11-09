@@ -42,16 +42,9 @@ Example:
 	GlobalRegistry.unregister_object("characters", character_name)
 """
 
-enum Registry_Category {
-	CHARACTER,
-	DISTRICT,
-	POI,
-	INTEL,
-}
-
 var registered_objects = {}
 
-func register_object(category: Registry_Category, obj: Object, object_name = null) -> String:
+func register_object(category: Enums.Registry_Category, obj: Object, object_name = null) -> String:
 	if category not in registered_objects:
 		registered_objects[category] = {}
 		
@@ -62,13 +55,13 @@ func register_object(category: Registry_Category, obj: Object, object_name = nul
 
 	return object_name
 
-func get_object(category: Registry_Category, object_name: String) -> Object:
+func get_object(category: Enums.Registry_Category, object_name: String) -> Object:
 	return registered_objects.get(category, {}).get(object_name, null)
 
-func get_all_objects(category: Registry_Category) -> Dictionary:
+func get_all_objects(category: Enums.Registry_Category) -> Dictionary:
 	return registered_objects.get(category, {})
 
-func unregister_object(category: Registry_Category, object_name: String) -> void:
+func unregister_object(category: Enums.Registry_Category, object_name: String) -> void:
 	if category in registered_objects:
 		registered_objects[category].erase(object_name)
 		if registered_objects[category].is_empty():  # Changed from empty() to is_empty()

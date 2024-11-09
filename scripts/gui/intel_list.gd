@@ -34,7 +34,7 @@ func _ready():
 	tab_container.tab_changed.connect(_on_tab_changed)
 	
 	# Fetch intel from the GlobalRegistry and populate the list
-	var intel = GlobalRegistry.get_all_objects(GlobalRegistry.Registry_Category.INTEL)
+	var intel = GlobalRegistry.get_all_objects(Enums.Registry_Category.INTEL)
 	populate_intel_list(intel)
 	populate_plan_list(intel)
 
@@ -119,7 +119,7 @@ func _on_create_plan_btn_pressed():
 
 func _on_tab_changed(tab_index):
 	# Re-run both populate_plan_list and populate_intel_list when the tab changes
-	var intel = GlobalRegistry.get_all_objects(GlobalRegistry.Registry_Category.INTEL)
+	var intel = GlobalRegistry.get_all_objects(Enums.Registry_Category.INTEL)
 	_reset()
 	populate_intel_list(intel)
 	populate_plan_list(intel)
