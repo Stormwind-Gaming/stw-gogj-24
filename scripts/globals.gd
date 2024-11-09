@@ -10,7 +10,8 @@ var load_csvs = {
 	"last_names": "res://data/last_names.csv",
 	"poi_types": "res://data/poi_types.csv",
 	"poi_names": "res://data/poi_names.csv",
-	"rumour_text": "res://data/rumour_text.csv"
+	"rumour_text": "res://data/rumour_text.csv",
+	"items": "res://data/items.csv"
 }
 
 var town_names = []
@@ -20,6 +21,7 @@ var last_names = []
 var poi_types = []
 var poi_names = []
 var rumour_text = []
+var items = []
 
 func _ready() -> void:
 	_load_town_names(load_csvs["town_names"])
@@ -28,9 +30,14 @@ func _ready() -> void:
 	_load_last_names(load_csvs["last_names"])
 	_load_poi_types(load_csvs["poi_types"])
 	_load_poi_names(load_csvs["poi_names"])
+	_load_rumour_text(load_csvs["rumour_text"])
+	_load_items(load_csvs["items"])
 
 #region Loaders
-	_load_rumour_text(load_csvs["rumour_text"])
+func _load_items(path: String) -> void:
+	var csv_data = load(path)
+	for record in csv_data.records:
+		items.append(record["item"])
 
 func _load_town_names(path: String) -> void:
 	var csv_data = load(path)

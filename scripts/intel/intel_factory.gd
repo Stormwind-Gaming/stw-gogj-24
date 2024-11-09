@@ -76,9 +76,14 @@ static func create_rumour(config: RumourConfig) -> Intel:
 		
 		
 	elif random_value < config.who_chance + config.where_chance + config.what_chance:
+
 		type = Enums.IntelType.WHAT
+		var item = ItemFactory.create_item()
 		var rumour_text = Globals.get_rumour_text(type)
-		description = rumour_text.text
+
+		var replacements = {"item": item.item_name}
+		description = rumour_text.text.format(replacements)
+
 	else:
 		type = Enums.IntelType.WHEN
 		var rumour_text = Globals.get_rumour_text(type)

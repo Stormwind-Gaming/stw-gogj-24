@@ -10,6 +10,7 @@ var id: String
 #TODO: How do we store related time & thing? Maybe store the turn that its going to relate to as an int?
 var related_character : Character
 var related_poi : PointOfInterest
+var related_item : Item
 
 func _init(level: Enums.IntelLevel, type: Enums.IntelType, description: String):
 	

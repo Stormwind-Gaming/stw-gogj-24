@@ -28,6 +28,7 @@ func _ready() -> void:
 		var whatR = IntelFactory.create_rumour(IntelFactory.RumourConfig.new(0,0,100,0))
 		var whenR = IntelFactory.create_rumour(IntelFactory.RumourConfig.new(0,0,0,100))
 
+
 	#var plan = IntelFactory.combine_rumours([whoR, whereR, whatR, whenR])
 	
 	# var pois = GlobalRegistry.get_all_objects(GlobalRegistry.Registry_Category.POI)

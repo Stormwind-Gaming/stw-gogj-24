@@ -47,6 +47,7 @@ enum Registry_Category {
 	DISTRICT,
 	POI,
 	INTEL,
+	ITEM
 }
 
 var registered_objects = {}
