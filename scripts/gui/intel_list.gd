@@ -71,6 +71,7 @@ func populate_intel_list(intel):
 			var check_button = CheckButton.new()
 			check_button.text = intel_node.description
 			check_button.set_button_group(button_group)
+			check_button.set_autowrap_mode(TextServer.AUTOWRAP_WORD_SMART)
 
 			# Use a lambda to update selected intel and toggle button visibility
 			check_button.toggled.connect(func(pressed):

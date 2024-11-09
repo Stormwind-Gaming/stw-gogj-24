@@ -1,0 +1,21 @@
+type,text
+WHO,Our informant believes {character} might be working for the enemy. We need to keep an eye on them.
+WHO,Some of our people say {character} has been quietly helping the resistance. Could they be an ally?
+WHO,We’ve received word that {character} knows something vital. A meeting might be worth arranging.
+WHO,It’s rumored that {character} has a hidden agenda. We should find out whose side they’re really on.
+WHO,There’s a suspicion among our ranks that {character} might turn traitor under pressure. Stay alert.
+WHAT,I’ve heard the {item} we need for the next operation is hidden nearby. We must secure it before the enemy does.
+WHAT,"They say the {item} is in enemy hands, but a raid could change that."
+WHAT,Rumor has it that the {item} holds the codes to a critical enemy communication channel.
+WHAT,Our scouts claim the {item} could turn the tide of our efforts. It’s too important to ignore.
+WHAT,There’s talk of the {item} being used in a resistance scheme. We need to act fast to claim it.
+WHERE,There’s talk that {poi} is a prime spot for a resistance hideout. We should investigate.
+WHERE,Our contacts have said {poi} is crawling with enemy patrols. Proceed with caution.
+WHERE,I heard {poi} is where secret supplies are being stored. We might be able to make a strike.
+WHERE,Rumor has it that a key resistance meeting will take place at {poi}. Security is paramount.
+WHERE,They say {poi} has been compromised. We may need to abandon our plans there.
+WHEN,Our allies mentioned that something big is happening at {time}. We should be ready.
+WHEN,They say the enemy will make a move at {time}. We have a narrow window to counter.
+WHEN,Word is that something crucial for our efforts will be set in motion at {time}. We must be prepared to act.
+WHEN,"Word is spreading that by {time}, the town will be under heavy watch. We must act before then."
+WHEN,"They’re expecting us to strike after {time}, but perhaps we should catch them off guard."

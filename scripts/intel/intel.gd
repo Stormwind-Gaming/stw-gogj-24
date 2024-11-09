@@ -7,6 +7,10 @@ var type: Enums.IntelType
 var description: String
 var id: String
 
+#TODO: How do we store related time & thing? Maybe store the turn that its going to relate to as an int?
+var related_character : Character
+var related_poi : PointOfInterest
+
 func _init(level: Enums.IntelLevel, type: Enums.IntelType, description: String):
 	
 	self.level = level
@@ -17,6 +21,6 @@ func _init(level: Enums.IntelLevel, type: Enums.IntelType, description: String):
 	print("Added intel to global registry")
 
 func _notification(what: int) -> void:
-		if what == NOTIFICATION_PREDELETE:
-				GlobalRegistry.unregister_object(Enums.Registry_Category.INTEL, self.id)
-				print("Removed intel from global registry")
+	if what == NOTIFICATION_PREDELETE:
+		GlobalRegistry.unregister_object(Enums.Registry_Category.INTEL, self.id)
+		print("Removed intel from global registry")
