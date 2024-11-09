@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/gui/character_list.gd" id="1_dabvh"]
 
 [node name="CharacterList" type="Window"]
-size = Vector2i(200, 400)
+size = Vector2i(180, 500)
 script = ExtResource("1_dabvh")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
