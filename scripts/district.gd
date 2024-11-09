@@ -26,8 +26,6 @@ func _ready() -> void:
 	# Give the district a random type
 	district_type = randi() % Enums.DistrictType.size() as Enums.DistrictType
 
-	print("District Type: %s" % district_type)
-
 	# set heat random 20-80
 	heat = randi() % 80 + 21
 
@@ -106,7 +104,6 @@ func _ready() -> void:
 		# get the poi name by type
 		var poi_name = Globals.get_poi_name(selected_poi_type["poi_type"])
 
-		print("%s - %s" % [poi_name, selected_poi_type["poi_name"]])
 		# set the poi details
 		poi.set_poi_details(self, selected_poi_type["poi_type"], "%s - %s" % [poi_name, selected_poi_type["poi_name"]], selected_poi_type["poi_description"])
 

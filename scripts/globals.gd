@@ -221,3 +221,18 @@ var rumour_map = {
 }
 
 #endregion
+
+#region Enum to friendly string
+
+func get_action_type_string(action_type: Enums.ActionType) -> String:
+	match action_type:
+		Enums.ActionType.NONE:
+			return "None"
+		Enums.ActionType.ESPIONAGE:
+			return "Espionage"
+		Enums.ActionType.ASSASSINATION:
+			return "Assassination"
+		Enums.ActionType.PROPAGANDA:
+			return "Propaganda"
+		_:
+			return "Unknown"

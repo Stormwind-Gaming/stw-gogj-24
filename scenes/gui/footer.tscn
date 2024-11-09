@@ -1,8 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://bv860whpjsldd"]
+[gd_scene load_steps=13 format=3 uid="uid://bv860whpjsldd"]
 
 [ext_resource type="Script" path="res://scripts/gui/footer.gd" id="1_hd6ji"]
 [ext_resource type="Theme" uid="uid://b4qdww0jic2xr" path="res://assets/themes/footer_theme.tres" id="2_3ln20"]
+[ext_resource type="Texture2D" uid="uid://b2hdby02wjeow" path="res://assets/sprites/footer_folder.png" id="2_u8sgt"]
 [ext_resource type="Texture2D" uid="uid://idbpgpsxg2hj" path="res://assets/sprites/folder_tab.png" id="3_w01wa"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lo3jd"]
+texture = ExtResource("2_u8sgt")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2ecj2"]
 texture = ExtResource("3_w01wa")
@@ -13,6 +17,62 @@ modulate_color = Color(0.695503, 0.695503, 0.695503, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qsspa"]
 bg_color = Color(0, 0, 0, 1)
 
+[sub_resource type="Animation" id="Animation_1ejaj"]
+resource_name = "scroll_out"
+length = 0.25
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PanelContainer:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Vector2(0, -30), Vector2(0, -200)]
+}
+
+[sub_resource type="Animation" id="Animation_06ebt"]
+resource_name = "scroll_in"
+length = 0.25
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PanelContainer:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Vector2(0, -200), Vector2(0, -30)]
+}
+
+[sub_resource type="Animation" id="Animation_sj32q"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PanelContainer:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -30)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ywb36"]
+_data = {
+"RESET": SubResource("Animation_sj32q"),
+"scroll_in": SubResource("Animation_06ebt"),
+"scroll_out": SubResource("Animation_1ejaj")
+}
+
 [node name="Footer" type="Control" node_paths=PackedStringArray("show_character_list_button", "show_intel_list_button", "show_log_list_button", "show_agents_list_button", "turn_button")]
 layout_mode = 3
 anchors_preset = 12
@@ -22,61 +82,86 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 0
 script = ExtResource("1_hd6ji")
-show_character_list_button = NodePath("HBoxContainer/PanelContainer3/HBoxContainer/CharacterListButton")
-show_intel_list_button = NodePath("HBoxContainer/PanelContainer3/HBoxContainer/IntelListButton")
-show_log_list_button = NodePath("HBoxContainer/PanelContainer3/HBoxContainer/LogListButton")
-show_agents_list_button = NodePath("HBoxContainer/PanelContainer3/HBoxContainer/AgentsListButton")
-turn_button = NodePath("HBoxContainer/PanelContainer/TurnButton")
+show_character_list_button = NodePath("PanelContainer/VBoxContainer/HBoxContainer/PanelContainer3/HBoxContainer/CharacterListButton")
+show_intel_list_button = NodePath("PanelContainer/VBoxContainer/HBoxContainer/PanelContainer3/HBoxContainer/IntelListButton")
+show_log_list_button = NodePath("PanelContainer/VBoxContainer/HBoxContainer/PanelContainer3/HBoxContainer/LogListButton")
+show_agents_list_button = NodePath("PanelContainer/VBoxContainer/HBoxContainer/PanelContainer3/HBoxContainer/AgentsListButton")
+turn_button = NodePath("PanelContainer2/TurnButton")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="PanelContainer" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(1600, 200)
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -31.0
+offset_top = -30.0
+offset_bottom = 170.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxTexture_lo3jd")
 
-[node name="PanelContainer3" type="PanelContainer" parent="HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="PanelContainer3" type="PanelContainer" parent="PanelContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("2_3ln20")
 theme_override_styles/panel = SubResource("StyleBoxTexture_2ecj2")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/PanelContainer3"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer/HBoxContainer/PanelContainer3"]
 layout_mode = 2
 theme = ExtResource("2_3ln20")
 
-[node name="AgentsListButton" type="Button" parent="HBoxContainer/PanelContainer3/HBoxContainer"]
+[node name="AgentsListButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer/PanelContainer3/HBoxContainer"]
 layout_mode = 2
 focus_mode = 0
 disabled = true
 text = "Agents"
 
-[node name="IntelListButton" type="Button" parent="HBoxContainer/PanelContainer3/HBoxContainer"]
+[node name="IntelListButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer/PanelContainer3/HBoxContainer"]
 layout_mode = 2
 focus_mode = 0
 text = "Intel"
 
-[node name="CharacterListButton" type="Button" parent="HBoxContainer/PanelContainer3/HBoxContainer"]
+[node name="CharacterListButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer/PanelContainer3/HBoxContainer"]
 layout_mode = 2
 focus_mode = 0
 text = "Characters"
 
-[node name="LogListButton" type="Button" parent="HBoxContainer/PanelContainer3/HBoxContainer"]
+[node name="LogListButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer/PanelContainer3/HBoxContainer"]
 layout_mode = 2
 focus_mode = 0
 text = "Log"
 
-[node name="VSeparator" type="VSeparator" parent="HBoxContainer"]
+[node name="VSeparator" type="VSeparator" parent="PanelContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/separator = SubResource("StyleBoxEmpty_uc521")
 
-[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer"]
-layout_mode = 2
+[node name="PanelContainer2" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -118.0
+offset_top = -31.0
+grow_horizontal = 0
+grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_qsspa")
 
-[node name="TurnButton" type="Button" parent="HBoxContainer/PanelContainer"]
+[node name="TurnButton" type="Button" parent="PanelContainer2"]
 layout_mode = 2
 text = "Progress Time"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ywb36")
+}

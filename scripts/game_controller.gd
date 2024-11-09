@@ -144,6 +144,7 @@ func set_district_focused(district: District = null) -> void:
 	district_focused = district
 	emit_signal("district_just_focused", district)
 
+
 func open_radial_menu(radial_menu: RadialMenu, poi: PointOfInterest) -> void:
 	if radial_menu_open:
 		return
@@ -153,6 +154,14 @@ func open_radial_menu(radial_menu: RadialMenu, poi: PointOfInterest) -> void:
 
 func _on_radial_option_selected(option: Enums.ActionType) -> void:
 	radial_menu_open.hide()
+
+	if option == Enums.ActionType.NONE:
+		return
+	
+	if option == Enums.ActionType.INFO:
+		print("Showing info for POI: ", poi_for_radial)
+		# poi_for_radial.show_info()
+		return
 
 	# popup a post_radial_assignment menu
 	var post_radial_assignment = Globals.post_radial_assignment_scene.instantiate()

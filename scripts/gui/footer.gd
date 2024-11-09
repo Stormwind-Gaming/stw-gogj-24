@@ -6,6 +6,8 @@ extends Control
 @export var show_agents_list_button: Button
 @export var turn_button: Button
 
+var footer_tray_open: bool = false
+
 func _ready():
 	# Connect the button's "pressed" signal to a function using Callable
 	show_character_list_button.connect("pressed", Callable(self, "_on_show_character_list_button_pressed"))
@@ -13,6 +15,8 @@ func _ready():
 	show_log_list_button.connect("pressed", Callable(self, "_on_show_log_list_button_pressed"))
 
 	turn_button.connect("pressed", Callable(self, "_on_turn_button_pressed"))
+
+	GameController.connect("district_just_focused", _on_district_just_focused)
 
 
 func _on_tab_bar_tab_clicked(tab: int) -> void:
@@ -77,3 +81,12 @@ func _on_turn_button_pressed():
 	GameController.process_turn()
 	_on_show_log_list_button_pressed()
 	var num = 13 + GameController.turn_number	
+
+func _on_district_just_focused(district: District) -> void:
+	if footer_tray_open:
+		return
+	footer_tray_open = true
+	# $AnimationPlayer.play("scroll_out")
+
+func _on_scroll_out_animation_finished():
+	pass

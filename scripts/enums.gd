@@ -32,6 +32,7 @@ enum StatCheckType {
 
 enum ActionType {
 	NONE,
+	INFO,
 	ESPIONAGE,
 	ASSASSINATION,
 	PROPAGANDA

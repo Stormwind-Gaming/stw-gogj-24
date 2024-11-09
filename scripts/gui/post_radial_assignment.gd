@@ -10,6 +10,9 @@ func set_option(option_attr: Enums.ActionType) -> void:
 	self.option = option_attr
 
 func _ready():
+	# set title
+	title = '%s Task' % Globals.get_action_type_string(option)
+
 	# Connect the close_requested signal
 	close_requested.connect(_on_close_requested)
 	
