@@ -27,7 +27,7 @@ jobs:
 
       - name: Export Godot Project to ZIP
         run: |
-          ./godot/Godot_v4.3-stable_linux.x86_64 --headless --export-debug "Web"
+          ./godot/Godot_v4.3-stable_linux.x86_64 --headless --export-release "Web"
 
       - name: Zip exported files
         run: |
