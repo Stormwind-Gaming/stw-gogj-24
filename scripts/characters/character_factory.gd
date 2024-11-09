@@ -16,32 +16,32 @@ static func generate_random_profile() -> Dictionary:
 		Enums.CharacterNationality.BELGIAN:
 			match gender:
 				Enums.CharacterGender.MALE:
-					last_name_bag = Globals.belgian_last_names
-					first_name_bag = Globals.belgian_male_first_names
+					last_name_bag = Globals.get_all_last_names(Enums.CharacterNationality.BELGIAN)
+					first_name_bag = Globals.get_all_first_names(Enums.CharacterGender.MALE, Enums.CharacterNationality.BELGIAN)
 				Enums.CharacterGender.FEMALE:
-					last_name_bag = Globals.belgian_last_names
-					first_name_bag = Globals.belgian_female_first_names
+					last_name_bag = Globals.get_all_last_names(Enums.CharacterNationality.BELGIAN)
+					first_name_bag = Globals.get_all_first_names(Enums.CharacterGender.FEMALE, Enums.CharacterNationality.BELGIAN)
 				_:
-					last_name_bag = Globals.default_last_names
-					first_name_bag = Globals.default_first_names
+					last_name_bag = Globals.get_all_last_names(Enums.CharacterNationality.BELGIAN)
+					first_name_bag = Globals.get_all_first_names(Enums.CharacterGender.MALE, Enums.CharacterNationality.BELGIAN)
 		Enums.CharacterNationality.GERMAN:
 			match gender:
 				Enums.CharacterGender.MALE:
-					last_name_bag = Globals.german_last_names
-					first_name_bag = Globals.german_male_first_names
+					last_name_bag = Globals.get_all_last_names(Enums.CharacterNationality.GERMAN)
+					first_name_bag = Globals.get_all_first_names(Enums.CharacterGender.MALE, Enums.CharacterNationality.GERMAN)
 				Enums.CharacterGender.FEMALE:
-					last_name_bag = Globals.german_last_names
-					first_name_bag = Globals.german_female_first_names
+					last_name_bag = Globals.get_all_last_names(Enums.CharacterNationality.GERMAN)
+					first_name_bag = Globals.get_all_first_names(Enums.CharacterGender.FEMALE, Enums.CharacterNationality.GERMAN)
 				_:
-					last_name_bag = Globals.default_last_names
-					first_name_bag = Globals.default_first_names
+					last_name_bag = Globals.get_all_last_names(Enums.CharacterNationality.GERMAN)
+					first_name_bag = Globals.get_all_first_names(Enums.CharacterGender.MALE, Enums.CharacterNationality.GERMAN)
 		_:
-			last_name_bag = Globals.default_last_names
-			first_name_bag = Globals.default_first_names
+			last_name_bag = Globals.get_all_last_names(Enums.CharacterNationality.BELGIAN)
+			first_name_bag = Globals.get_all_first_names(Enums.CharacterGender.MALE, Enums.CharacterNationality.BELGIAN)
 	
 	# Randomize name
-	var last_name: String = last_name_bag[randi() % last_name_bag.size()]
-	var first_name: String = first_name_bag[randi() % first_name_bag.size()]
+	var last_name: String = last_name_bag[randi() % last_name_bag.size()].last_name
+	var first_name: String = first_name_bag[randi() % first_name_bag.size()].first_name
 	
 	# Determine image path based on nationality and gender
 	var nationality_str = _get_nationality_string(nationality)
