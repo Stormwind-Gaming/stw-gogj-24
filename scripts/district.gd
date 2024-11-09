@@ -1,6 +1,7 @@
 extends Node
 class_name District
 
+var district_type: Enums.DistrictType
 var district_name: String = ""
 var district_description: String = ""
 var rumour_text: String = ""
@@ -22,8 +23,13 @@ signal poi_hovered(poi: PointOfInterest)
 signal poi_unhovered
 
 func _ready() -> void:
-	# set heat random 1-100
-	heat = randi() % 100 + 1
+	# Give the district a random type
+	district_type = randi() % Enums.DistrictType.size() as Enums.DistrictType
+
+	print("District Type: %s" % district_type)
+
+	# set heat random 20-80
+	heat = randi() % 80 + 21
 
 	# set heat color alpha based on heat between 0 and 0.5
 	heat_color.a = heat / 200
@@ -37,9 +43,72 @@ func _ready() -> void:
 		pois.append(poi)
 
 	for poi in pois:
+		# connect signals
 		poi.connect("poi_hovered", _on_poi_hovered)
 		poi.connect("poi_unhovered", _on_poi_unhovered)
-		poi.setup_poi()
+		# setup visuals
+		poi.setup_poi_visuals()
+
+		if poi.poi_static:
+			poi.set_poi_details(self, Enums.POIType.NONE, "", "")
+			print("%s - %s" % [poi.poi_name, poi.poi_type])
+			continue
+
+		# get a random poi type
+		var poi_types = Globals.get_poi_types(district_type)
+
+		# if a POI has a spawn chance of 100, it will always spawn, so we need to check if we already have the max of that type
+		var guaranteed_poi_types = poi_types.filter(
+			func(poi_type):
+				return poi_type["spawn_chance"] == 100
+		).filter(
+			func(poi_type):
+				return pois.filter(
+					func(poi_to_filter):
+						return poi_to_filter.poi_type == poi_type["poi_type"]
+				).size() < poi_type["max_spawn_quantity"]
+		)
+		
+		var selected_poi_type = null
+		if guaranteed_poi_types.size() > 0:
+			selected_poi_type = guaranteed_poi_types[0]
+		else:
+			# filter poi types by if they have a max_spawn_quantity and if we already have the max of that type
+			var filtered_poi_types = poi_types.filter(
+				func(poi_type):
+					if poi_type["max_spawn_quantity"] == -1:
+						return true
+					else:
+						return pois.filter(
+							func(poi_to_filter):
+								return poi_to_filter.poi_type == poi_type["poi_type"]
+						).size() < poi_type["max_spawn_quantity"]
+			)
+			# get a random poi type from the filtered list based on spawn_chance by adding all spawn chances together
+			var total_spawn_chance = 0
+			for poi_type in filtered_poi_types:
+				total_spawn_chance += poi_type["spawn_chance"]
+			var random_spawn_chance = randi_range(0, total_spawn_chance)
+
+			# get the poi type based on the random spawn chance
+			var current_spawn_chance = 0
+			for poi_type in filtered_poi_types:
+				current_spawn_chance += poi_type["spawn_chance"]
+				if random_spawn_chance <= current_spawn_chance:
+					selected_poi_type = poi_type
+					break
+
+		# if we didn't find a poi type, return
+		if selected_poi_type == null:
+			print("No poi type found")
+			return
+		
+		# get the poi name by type
+		var poi_name = Globals.get_poi_name(selected_poi_type["poi_type"])
+
+		print("%s - %s" % [poi_name, selected_poi_type["poi_name"]])
+		# set the poi details
+		poi.set_poi_details(self, selected_poi_type["poi_type"], "%s - %s" % [poi_name, selected_poi_type["poi_name"]], selected_poi_type["poi_description"])
 
 #region District
 

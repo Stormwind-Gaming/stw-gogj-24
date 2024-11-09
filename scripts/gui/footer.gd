@@ -4,10 +4,11 @@ var character_list_scene = preload("res://scenes/gui/character_list.tscn")
 var intel_list_scene = preload("res://scenes/gui/intel_list.tscn")
 var log_list_scene = preload("res://scenes/gui/log_list.tscn")
 
-@onready var show_character_list_button = $HBoxContainer/PanelContainer3/HBoxContainer/CharacterListButton
-@onready var show_intel_list_button = $HBoxContainer/PanelContainer3/HBoxContainer/IntelListButton
-@onready var show_log_list_button = $HBoxContainer/PanelContainer3/HBoxContainer/LogListButton
-@onready var turn_button = $HBoxContainer/PanelContainer/TurnButton
+@export var show_character_list_button: Button
+@export var show_intel_list_button: Button
+@export var show_log_list_button: Button
+@export var show_agents_list_button: Button
+@export var turn_button: Button
 
 func _ready():
 	# Connect the button's "pressed" signal to a function using Callable
@@ -21,7 +22,7 @@ func _ready():
 func _on_tab_bar_tab_clicked(tab: int) -> void:
 	match tab:
 		0:
-			# _on_show_team_list_button_pressed()
+			# _on_show_agents_list_button_pressed()
 			pass
 		1:
 			_on_show_intel_list_button_pressed()

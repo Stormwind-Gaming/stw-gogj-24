@@ -6,6 +6,9 @@ var town_name = ""
 @export var districts: Array[District] = []
 
 func _ready() -> void:
+	# get random seed
+	randomize()
+
 	_generate_population()
 
 	town_name = Globals.town_names[randi() % Globals.town_names.size()]

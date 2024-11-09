@@ -8,18 +8,26 @@ var load_csvs = {
 	"district_names": "res://data/district_names.csv",
 	"first_names": "res://data/first_names.csv",
 	"last_names": "res://data/last_names.csv",
+	"poi_types": "res://data/poi_types.csv",
+	"poi_names": "res://data/poi_names.csv"
 }
 
 var town_names = []
 var district_names = []
 var first_names = []
 var last_names = []
+var poi_types = []
+var poi_names = []
 
 func _ready() -> void:
 	_load_town_names(load_csvs["town_names"])
 	_load_district_names(load_csvs["district_names"])
 	_load_first_names(load_csvs["first_names"])
 	_load_last_names(load_csvs["last_names"])
+	_load_poi_types(load_csvs["poi_types"])
+	_load_poi_names(load_csvs["poi_names"])
+
+#region Loaders
 
 func _load_town_names(path: String) -> void:
 	var csv_data = load(path)
@@ -50,6 +58,33 @@ func _load_last_names(path: String) -> void:
 			"last_name": record["last_name"],
 			"nationality": nationality
 		})
+
+func _load_poi_types(path: String) -> void:
+	var csv_data = load(path)
+	for record in csv_data.records:
+		var poi_type = poi_type_map[record["poi_name"].to_upper()]
+		var district_type = district_type_map[record["district_type"].to_upper()]
+		poi_types.append({
+			"poi_type": poi_type,
+			"poi_name": record["poi_name"],
+			"poi_description": record["poi_description"],
+			"district_type": district_type,
+			"spawn_chance": record["spawn_chance"],
+			"max_spawn_quantity": record["max_spawn_quantity"]
+		})
+	
+func _load_poi_names(path: String) -> void:
+	var csv_data = load(path)
+	for record in csv_data.records:
+		var poi_type = poi_type_map[record["poi_type"].to_upper()]
+		poi_names.append({
+			"poi_type": poi_type,
+			"poi_name": record["poi_name"],
+		})
+
+#endregion
+
+#region getters
 
 func get_new_town_name() -> String:
 	return town_names[randi() % town_names.size()]
@@ -83,6 +118,27 @@ func get_all_last_names(nationality: Enums.CharacterNationality) -> Array:
 			return last_name != null and last_name.nationality == nationality
 	)
 
+func get_poi_types(district: Enums.DistrictType) -> Array:
+	return poi_types.filter(
+		func(poi_type):
+			return poi_type != null and poi_type.district_type == district
+	)
+
+func get_poi_name(poi_type: Enums.POIType) -> String:
+	var filtered_poi_names = poi_names.filter(
+		func(poi_name):
+			return poi_name != null and poi_name.poi_type == poi_type
+	)
+	return filtered_poi_names[randi() % filtered_poi_names.size()]["poi_name"]
+
+func get_all_poi_names(poi_type: Enums.POIType) -> Array:
+	return poi_names.filter(
+		func(poi_name):
+			return poi_name != null and poi_name.poi_type == poi_type
+	)
+
+#endregion
+
 #region EnumMaps
 
 var gender_map = {
@@ -93,6 +149,46 @@ var gender_map = {
 var nationality_map = {
 	"GERMAN": Enums.CharacterNationality.GERMAN,
 	"BELGIAN": Enums.CharacterNationality.BELGIAN
+}
+
+var poi_type_map = {
+	"CINEMA": Enums.POIType.CINEMA,
+	"GROCER": Enums.POIType.GROCER,
+	"SHOP": Enums.POIType.SHOP,
+	"PUB": Enums.POIType.PUB,
+	"RESTAURANT": Enums.POIType.RESTAURANT,
+	"RESIDENCE": Enums.POIType.RESIDENCE,
+	"FACTORY": Enums.POIType.FACTORY,
+	"WORKSHOP": Enums.POIType.WORKSHOP,
+	"WAREHOUSE": Enums.POIType.WAREHOUSE,
+	"OFFICE": Enums.POIType.OFFICE,
+	"ANTI_AIR_EMPLACEMENT": Enums.POIType.ANTI_AIR_EMPLACEMENT,
+	"ANTI AIR EMPLACEMENT": Enums.POIType.ANTI_AIR_EMPLACEMENT,
+	"CHURCH": Enums.POIType.CHURCH,
+	"GESTAPO_POST": Enums.POIType.GESTAPO_POST,
+	"GESTAPO POST": Enums.POIType.GESTAPO_POST,
+	"CAFE": Enums.POIType.CAFE,
+	"GESTAPO_HQ": Enums.POIType.GESTAPO_HQ,
+	"GESTAPO HQ": Enums.POIType.GESTAPO_HQ,
+	"TOWN_HALL": Enums.POIType.TOWN_HALL,
+	"PARK": Enums.POIType.PARK,
+	"POST_OFFICE": Enums.POIType.POST_OFFICE,
+	"POST OFFICE": Enums.POIType.POST_OFFICE,
+	"POLICE_STATION": Enums.POIType.POLICE_STATION,
+	"POLICE STATION": Enums.POIType.POLICE_STATION,
+	"TRAIN_STATION": Enums.POIType.TRAIN_STATION,
+	"TRAIN STATION": Enums.POIType.TRAIN_STATION,
+	"DOCKS": Enums.POIType.DOCKS,
+	"BROTHEL": Enums.POIType.BROTHEL,
+	"SUBMARINE_PEN": Enums.POIType.SUBMARINE_PEN,
+	"SUBMARINE PEN": Enums.POIType.SUBMARINE_PEN,
+	"CATHEDRAL": Enums.POIType.CATHEDRAL
+}
+
+var district_type_map = {
+	"SHOPPING": Enums.DistrictType.SHOPPING,
+	"INDUSTRIAL": Enums.DistrictType.INDUSTRIAL,
+	"RESIDENTIAL": Enums.DistrictType.RESIDENTIAL
 }
 
 #endregion

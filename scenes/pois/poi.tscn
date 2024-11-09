@@ -1,16 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://b8whiyhmyjogs"]
+[gd_scene load_steps=3 format=3 uid="uid://bue8o2mrnetun"]
 
-[ext_resource type="Script" path="res://scripts/pois/poi.gd" id="1_dl23m"]
-[ext_resource type="Texture2D" uid="uid://dniextr4kn1uv" path="res://assets/PoI.png" id="2_20hx0"]
+[ext_resource type="Script" path="res://scripts/pois/poi.gd" id="1_cwy0w"]
+[ext_resource type="Texture2D" uid="uid://dniextr4kn1uv" path="res://assets/PoI.png" id="2_y8567"]
 
-[node name="Poi_Variable" type="Area2D"]
+[node name="Poi" type="Area2D"]
 top_level = true
-script = ExtResource("1_dl23m")
+script = ExtResource("1_cwy0w")
+poi_static = false
+poi_static_type = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 visible = false
 scale = Vector2(0.3, 0.3)
-texture = ExtResource("2_20hx0")
+texture = ExtResource("2_y8567")
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 top_level = true

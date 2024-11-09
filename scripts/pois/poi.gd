@@ -1,6 +1,13 @@
 extends Area2D
 class_name PointOfInterest
 
+@export var poi_static := true
+
+@export_group("Static Variables")
+@export var poi_static_type: Enums.POIType
+@export var poi_static_name: String = ""
+@export_multiline var poi_static_description: String = ""
+
 var enabled: bool = false
 var parent_district: District
 
@@ -8,6 +15,7 @@ var parent_district: District
 var rumour_config : IntelFactory.RumourConfig = IntelFactory.RumourConfig.new(25,25,25,25)
 #TODO: Dynamically change stat_check_type for each POI, currently this gives all POI SMARTS type checks
 var stat_check_type: Enums.StatCheckType = Enums.StatCheckType.SMARTS
+var poi_type: Enums.POIType
 var poi_name: String = ""
 var poi_description: String = ""
 
@@ -23,15 +31,21 @@ func _ready() -> void:
 	GlobalRegistry.register_object(GlobalRegistry.Registry_Category.POI, self)
 	GameController.connect("district_just_focused", _on_district_just_focused)
 
-func setup_poi():
+func setup_poi_visuals():
 	$Polygon2D.position = self.get_global_position()
 	$Polygon2D.polygon = $CollisionPolygon2D.polygon
 	$Polygon2D.color = no_color
 
-func set_poi_details(parent_district_arg: District, poi_name_arg: String, poi_description_arg: String) -> void:
+func set_poi_details(parent_district_arg: District, poi_type_arg: Enums.POIType, poi_name_arg: String, poi_description_arg: String) -> void:
 	parent_district = parent_district_arg
-	poi_name = poi_name_arg
-	poi_description = poi_description_arg
+	if poi_static:
+		poi_type = poi_static_type
+		poi_name = poi_static_name
+		poi_description = poi_static_description
+	else:
+		poi_type = poi_type_arg
+		poi_name = poi_name_arg
+		poi_description = poi_description_arg
 
 # Function to expand on mouse hover
 func _on_mouse_entered():
