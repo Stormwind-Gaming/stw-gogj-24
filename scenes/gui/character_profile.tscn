@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://vmb13yddjaj5" path="res://assets/agent_profile_71.png" id="2_5xvgi"]
 
 [node name="CharacterProfile" type="Window"]
-size = Vector2i(400, 600)
+size = Vector2i(400, 650)
 script = ExtResource("1_gy3rw")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
