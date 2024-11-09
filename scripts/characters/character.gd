@@ -17,6 +17,7 @@ var smarts: int
 
 # Hidden stats
 var sympathy: int # 1-99 how likely is this character to join the resistance?
+var recruited: bool = false
 
 func _init(profile:Dictionary):
 	
