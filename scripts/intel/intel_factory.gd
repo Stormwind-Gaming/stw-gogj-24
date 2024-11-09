@@ -87,7 +87,17 @@ static func create_rumour(config: RumourConfig) -> Intel:
 	else:
 		type = Enums.IntelType.WHEN
 		var rumour_text = Globals.get_rumour_text(type)
-		description = rumour_text.text
+
+		var times = [
+			"1-2 days",
+			"3-4 days",
+			"5-6 days",
+		]
+
+		var time = times[randi() % times.size()]
+
+		var replacements = {"time": time}
+		description = rumour_text.text.format(replacements)
 
 	print("Rumour created: Type: ", type, ", Description: ", description)
 	

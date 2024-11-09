@@ -14,8 +14,8 @@ WHERE,Our contacts have said {poi} is crawling with enemy patrols. Proceed with 
 WHERE,I heard {poi} is where secret supplies are being stored. We might be able to make a strike.
 WHERE,Rumor has it that a key resistance meeting will take place at {poi}. Security is paramount.
 WHERE,They say {poi} has been compromised. We may need to abandon our plans there.
-WHEN,Our allies mentioned that something big is happening at {time}. We should be ready.
-WHEN,They say the enemy will make a move at {time}. We have a narrow window to counter.
-WHEN,Word is that something crucial for our efforts will be set in motion at {time}. We must be prepared to act.
-WHEN,"Word is spreading that by {time}, the town will be under heavy watch. We must act before then."
+WHEN,Our allies mentioned that something big is happening in {time}. We should be ready.
+WHEN,They say the enemy will make a move in {time}. We have a narrow window to counter.
+WHEN,Word is that something crucial for our efforts will be set in motion in {time}. We must be prepared to act.
+WHEN,"Word is spreading that in {time}, the town will be under heavy watch. We must act before then."
 WHEN,"They’re expecting us to strike after {time}, but perhaps we should catch them off guard."
