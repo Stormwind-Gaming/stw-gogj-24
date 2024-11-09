@@ -8,7 +8,7 @@ extends Window
 @export var smarts_label: Label
 
 var option: Enums.ActionType
-var max_agents: int = 2
+var max_agents: int = 1
 
 var selected_agents: Array[Character] = []
 
@@ -79,3 +79,8 @@ func _calculate_stats():
 	assigned_agents_label.text = ''
 	for agent in selected_agents:
 		assigned_agents_label.text += agent.get_full_name() + '\n'
+
+
+func _on_button_pressed() -> void:
+	emit_signal('post_radial_assignment_option', option, selected_agents, [])
+	queue_free()

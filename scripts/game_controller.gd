@@ -31,6 +31,13 @@ var turn_logs: Array = []
 
 # Method to add an action
 func add_action(poi: PointOfInterest, character: Character, action_type: Enums.ActionType, additional_info: Dictionary = {}) -> void:
+	# check if this character is already assigned to an action
+	for action in actions:
+		if action.character == character:
+			# delete the previous action
+			actions.erase(action)
+			print("Deleting previous action for character:", character)
+
 	print("Adding action:", poi, character, action_type)
 	var new_action = Action.new(poi, character, action_type, additional_info)
 	actions.append(new_action)
@@ -169,10 +176,9 @@ func _on_radial_option_selected(option: Enums.ActionType) -> void:
 	post_radial_assignment.connect('post_radial_assignment_option', _on_post_radial_assignment_option_selected)
 	add_child(post_radial_assignment)
 
-func _on_post_radial_assignment_option_selected(option: Enums.ActionType) -> void:
-	if option != Enums.ActionType.NONE:
-		var characters = GlobalRegistry.get_all_objects(Enums.Registry_Category.CHARACTER)
-		GameController.add_action(poi_for_radial, characters[characters.keys().front()], option)
+func _on_post_radial_assignment_option_selected(option: Enums.ActionType, selected_agents: Array[Character], additions: Array) -> void:
+	if option != Enums.ActionType.NONE and option != Enums.ActionType.INFO:
+		GameController.add_action(poi_for_radial, selected_agents[0], option)
 
 	# create a tiny timer to get around erroneous clickthroughs
 	await get_tree().create_timer(0.1).timeout

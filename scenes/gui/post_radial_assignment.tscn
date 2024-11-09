@@ -159,3 +159,5 @@ text = "Smarts: 0"
 layout_mode = 2
 focus_mode = 0
 text = "Assign Task"
+
+[connection signal="pressed" from="PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/Button" to="." method="_on_button_pressed"]
