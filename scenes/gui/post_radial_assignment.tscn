@@ -7,11 +7,12 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7d8bq"]
 
-[node name="Post Radial Assignment" type="Window" node_paths=PackedStringArray("agent_card_grid", "asigned_label", "assigned_agents_label", "charm_label", "subtlety_label", "smarts_label")]
+[node name="Post Radial Assignment" type="Window" node_paths=PackedStringArray("continue_button", "agent_card_grid", "asigned_label", "assigned_agents_label", "charm_label", "subtlety_label", "smarts_label")]
 title = "<type of plan>"
 position = Vector2i(500, 250)
 size = Vector2i(600, 400)
 script = ExtResource("1_2cqh1")
+continue_button = NodePath("PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/Button")
 agent_card_grid = NodePath("PanelContainer/MarginContainer/HBoxContainer/LeftPanelContainer/MarginContainer/HBoxContainer/ScrollContainer/GridContainer")
 asigned_label = NodePath("PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer/Label")
 assigned_agents_label = NodePath("PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer/AssignedAgents")
@@ -158,6 +159,7 @@ text = "Smarts: 0"
 [node name="Button" type="Button" parent="PanelContainer/MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 focus_mode = 0
+disabled = true
 text = "Assign Task"
 
 [connection signal="pressed" from="PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/Button" to="." method="_on_button_pressed"]

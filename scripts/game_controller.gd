@@ -11,35 +11,37 @@ signal district_just_focused(district: District)
 # Structure to store each action
 class Action:
 	var poi: PointOfInterest  # Point of Interest
-	var character: Character  # Character involved
+	var characters: Array[Character]  # Character involved
 	var action_type: Enums.ActionType  # Type of action
 	var additional_info: Dictionary = {}  # Optional additional information, e.g., a second character
 
 	# Constructor for the Action class
-	func _init(poi: PointOfInterest, character: Character, action_type: Enums.ActionType, additional_info: Dictionary = {}):
+	func _init(poi: PointOfInterest, characters: Array[Character], action_type: Enums.ActionType, additional_info: Dictionary = {}):
 		self.poi = poi
-		self.character = character
+		self.characters = characters
 		self.action_type = action_type
 		self.additional_info = additional_info
 
 # List to store all actions for the current turn
-var actions: Array = []
+var actions: Array[Action] = []
 # Variable to track the current turn number
 var turn_number: int = 0
 # Multidimensional array to log the output of each turn
 var turn_logs: Array = []
 
 # Method to add an action
-func add_action(poi: PointOfInterest, character: Character, action_type: Enums.ActionType, additional_info: Dictionary = {}) -> void:
+func add_action(poi: PointOfInterest, characters: Array[Character], action_type: Enums.ActionType, additional_info: Dictionary = {}) -> void:
 	# check if this character is already assigned to an action
 	for action in actions:
-		if action.character == character:
-			# delete the previous action
-			actions.erase(action)
-			print("Deleting previous action for character:", character)
+		for existing_action_character in action.characters:
+			for new_action_character in characters:
+				if existing_action_character == new_action_character:
+					# delete the previous action
+					actions.erase(action)
+					print("Deleting previous action for character:", new_action_character.get_full_name())
 
-	print("Adding action:", poi, character, action_type)
-	var new_action = Action.new(poi, character, action_type, additional_info)
+	print("Adding action:", poi, characters, action_type)
+	var new_action = Action.new(poi, characters, action_type, additional_info)
 	actions.append(new_action)
 
 
@@ -53,11 +55,22 @@ func process_turn() -> void:
 		var success: bool = false
 		match action.action_type:
 			Enums.ActionType.ESPIONAGE:
-				print("Action: ", action.poi, action.character)
-				log_message = "Processing ESPIONAGE action at " + str(action.poi.poi_name) + " by " + str(action.character.first_name + " " + action.character.last_name)
+				print("Action: ", action.poi, action.characters)
+				log_message = "Processing ESPIONAGE action at [b]" + str(action.poi.poi_name) + "[/b] by "
+				for character in action.characters:
+					log_message += "[b]" + character.first_name + " " + character.last_name + "[/b], "
 				current_turn_log.append(log_message)
+
+				var combined_subtlety = 0
+				var combined_smarts = 0
+				var combined_charm = 0
+
+				for character in action.characters:
+					combined_subtlety += character.subtlety
+					combined_smarts += character.smarts
+					combined_charm += character.charm
 				
-				var subtle_roll = _bounded_sigmoid_check(action.character.subtlety, true)
+				var subtle_roll = _bounded_sigmoid_check(combined_subtlety, true)
 				
 				if(subtle_roll.success):
 					log_message = "Succeeded subtlety check..." + str(subtle_roll)
@@ -66,7 +79,7 @@ func process_turn() -> void:
 					match action.poi.stat_check_type:
 						Enums.StatCheckType.SMARTS:
 							
-							var smarts_roll = _bounded_sigmoid_check(action.character.smarts, true)
+							var smarts_roll = _bounded_sigmoid_check(combined_smarts, true)
 							
 							if(smarts_roll.success):
 								log_message = "Succeeded smarts check..." + str(smarts_roll)
@@ -76,7 +89,7 @@ func process_turn() -> void:
 								log_message = "Failed smarts check..." + str(smarts_roll)
 								current_turn_log.append(log_message)
 						Enums.StatCheckType.CHARM:
-							if(_bounded_sigmoid_check(action.character.charm)):
+							if(_bounded_sigmoid_check(combined_charm)):
 								log_message = "Succeeded charm check..."
 								current_turn_log.append(log_message)
 								success = true
@@ -89,12 +102,12 @@ func process_turn() -> void:
 				
 				
 		if success:
-			log_message = "The mission was a success!"
+			log_message = "[color=green]The mission was a success![/color]"
 			print(IntelFactory)
 			current_turn_log.append(log_message)
 			IntelFactory.create_rumour(action.poi.rumour_config)
 		else:
-			log_message = "The mission was a failure! :("
+			log_message = "[color=red]The mission was a failure! :([/color]"
 			current_turn_log.append(log_message)
 
 		
@@ -162,12 +175,22 @@ func open_radial_menu(radial_menu: RadialMenu, poi: PointOfInterest) -> void:
 func _on_radial_option_selected(option: Enums.ActionType) -> void:
 	radial_menu_open.hide()
 
+	# if quit, do nothing
 	if option == Enums.ActionType.NONE:
+		# create a tiny timer to get around erroneous clickthroughs
+		await get_tree().create_timer(0.1).timeout
+		radial_menu_open.queue_free()
+		radial_menu_open = null
 		return
 	
+	# if info, show info
 	if option == Enums.ActionType.INFO:
 		print("Showing info for POI: ", poi_for_radial)
 		# poi_for_radial.show_info()
+		# create a tiny timer to get around erroneous clickthroughs
+		await get_tree().create_timer(0.1).timeout
+		radial_menu_open.queue_free()
+		radial_menu_open = null
 		return
 
 	# popup a post_radial_assignment menu
@@ -178,7 +201,7 @@ func _on_radial_option_selected(option: Enums.ActionType) -> void:
 
 func _on_post_radial_assignment_option_selected(option: Enums.ActionType, selected_agents: Array[Character], additions: Array) -> void:
 	if option != Enums.ActionType.NONE and option != Enums.ActionType.INFO:
-		GameController.add_action(poi_for_radial, selected_agents[0], option)
+		GameController.add_action(poi_for_radial, selected_agents, option)
 
 	# create a tiny timer to get around erroneous clickthroughs
 	await get_tree().create_timer(0.1).timeout

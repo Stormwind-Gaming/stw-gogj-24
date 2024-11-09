@@ -21,6 +21,7 @@ var poi_description: String = ""
 
 # Variables for scale animation
 var no_color = Color(0, 0, 0, 0) # No color
+var selectable_color = Color(0, 1, 0, 0.5) # No color
 var highlight_color = Color(1, 1, 1, 0.5) # Orange color
 
 signal poi_hovered
@@ -64,7 +65,11 @@ func _on_mouse_entered():
 
 # Function to return to normal size on mouse exit
 func _on_mouse_exited():
-	$Polygon2D.color = no_color
+	if not enabled:
+		$Polygon2D.color = no_color
+		return
+	else:
+		$Polygon2D.color = selectable_color
 	emit_signal("poi_unhovered")
 
 func _on_poi_clicked(viewport: Node, event: InputEvent, shape_idx: int) -> void:
@@ -89,10 +94,13 @@ func _on_poi_clicked(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 
 func _on_district_just_focused(district: District) -> void:
 	if district == parent_district:
+		# set color to selectable
+		$Polygon2D.color = selectable_color
 		# helper timer to get around erroneous clickthroughs
 		await get_tree().create_timer(0.1).timeout
 		enabled = true
 	else:
+		$Polygon2D.color = no_color
 		enabled = false
 	
 	

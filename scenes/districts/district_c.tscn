@@ -26,7 +26,7 @@ position = Vector2(841, 545)
 [node name="Poi" parent="pois" instance=ExtResource("3_bhahb")]
 poi_static = true
 poi_static_type = 10
-poi_static_name = "Test C"
+poi_static_name = "Static PoI"
 poi_static_description = "Test Static"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi"]

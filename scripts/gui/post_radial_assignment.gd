@@ -1,5 +1,6 @@
 extends Window
 
+@export var continue_button: Button
 @export var agent_card_grid: GridContainer
 @export var asigned_label: Label
 @export var assigned_agents_label: Label
@@ -37,6 +38,8 @@ func _ready():
 		agent_instance.connect('agent_card_selected', _on_agent_card_selected)
 		agent_card_grid.add_child(agent_instance)
 	
+	# set max agents to 1 or 2
+	max_agents = randi() % 2 + 1
 	asigned_label.text = 'Assigned Agents (0/%s):' % max_agents
 
 func _on_close_requested():
@@ -49,7 +52,15 @@ func _on_agent_card_selected(agent: Character, selected: bool):
 		# enable all cards
 		for child in agent_card_grid.get_children():
 			child.enable_card()
+		
+		# if no cards are selected, disable the button
+		if selected_agents.size() == 0:
+			continue_button.disabled = true
 	else:
+		# enable the button
+		continue_button.disabled = false
+		
+		# add the agent to the selected agents
 		selected_agents.append(agent)
 		if selected_agents.size() >= max_agents:
 			# disable all other agents
