@@ -9,7 +9,8 @@ var load_csvs = {
 	"first_names": "res://data/first_names.csv",
 	"last_names": "res://data/last_names.csv",
 	"poi_types": "res://data/poi_types.csv",
-	"poi_names": "res://data/poi_names.csv"
+	"poi_names": "res://data/poi_names.csv",
+	"rumour_text": "res://data/rumour_text.csv"
 }
 
 var town_names = []
@@ -18,6 +19,7 @@ var first_names = []
 var last_names = []
 var poi_types = []
 var poi_names = []
+var rumour_text = []
 
 func _ready() -> void:
 	_load_town_names(load_csvs["town_names"])
@@ -28,6 +30,7 @@ func _ready() -> void:
 	_load_poi_names(load_csvs["poi_names"])
 
 #region Loaders
+	_load_rumour_text(load_csvs["rumour_text"])
 
 func _load_town_names(path: String) -> void:
 	var csv_data = load(path)
@@ -85,6 +88,21 @@ func _load_poi_names(path: String) -> void:
 #endregion
 
 #region getters
+func _load_rumour_text(path: String) -> void:
+	var csv_data = load(path)
+	for record in csv_data.records:
+		var type = rumour_map[record["type"].to_upper()]
+		rumour_text.append({
+			"text": record["text"],
+			"type": type
+		})
+
+func get_rumour_text(type: Enums.IntelType) -> Dictionary:
+	var filtered_rumour_text = rumour_text.filter(
+		func(record):
+			return record.type == type
+	)
+	return filtered_rumour_text[randi() % filtered_rumour_text.size()]
 
 func get_new_town_name() -> String:
 	return town_names[randi() % town_names.size()]
@@ -189,6 +207,13 @@ var district_type_map = {
 	"SHOPPING": Enums.DistrictType.SHOPPING,
 	"INDUSTRIAL": Enums.DistrictType.INDUSTRIAL,
 	"RESIDENTIAL": Enums.DistrictType.RESIDENTIAL
+}
+
+var rumour_map = {
+	"WHO": Enums.IntelType.WHO,
+	"WHAT": Enums.IntelType.WHAT,
+	"WHERE": Enums.IntelType.WHERE,
+	"WHEN": Enums.IntelType.WHEN
 }
 
 #endregion

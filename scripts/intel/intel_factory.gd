@@ -49,16 +49,40 @@ static func create_rumour(config: RumourConfig) -> Intel:
 	# Determine the type of rumour based on the random value and chances
 	if random_value < config.who_chance:
 		type = Enums.IntelType.WHO
-		description = "A WHO rumour." + str(random_value)
+		var rumour_text = Globals.get_rumour_text(type)
+		
+		var characters = GlobalRegistry.get_all_objects(GlobalRegistry.Registry_Category.CHARACTER)
+		var filtered = []
+		for key in characters:
+			var value = characters[key]
+			if !value.recruited:
+				filtered.append(value)
+		
+		var subject = filtered[randi() % filtered.size()]
+		var replacements = {"character": subject.first_name + " " + subject.last_name}
+		description = rumour_text.text.format(replacements)
 	elif random_value < config.who_chance + config.where_chance:
 		type = Enums.IntelType.WHERE
-		description = "A WHERE rumour." + str(random_value)
+		var rumour_text = Globals.get_rumour_text(type)
+		var pois = GlobalRegistry.get_all_objects(GlobalRegistry.Registry_Category.POI)
+		var filtered = []
+		for key in pois:
+			var value = pois[key]
+			filtered.append(value)
+		
+		var subject = filtered[randi() % filtered.size()]
+		var replacements = {"poi": subject.poi_name}
+		description = rumour_text.text.format(replacements)
+		
+		
 	elif random_value < config.who_chance + config.where_chance + config.what_chance:
 		type = Enums.IntelType.WHAT
-		description = "A WHAT rumour." + str(random_value)
+		var rumour_text = Globals.get_rumour_text(type)
+		description = rumour_text.text
 	else:
 		type = Enums.IntelType.WHEN
-		description = "A WHEN rumour." + str(random_value)
+		var rumour_text = Globals.get_rumour_text(type)
+		description = rumour_text.text
 
 	print("Rumour created: Type: ", type, ", Description: ", description)
 	

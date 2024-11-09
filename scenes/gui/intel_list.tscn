@@ -4,7 +4,8 @@
 
 [node name="IntelList" type="Window"]
 position = Vector2i(0, 36)
-size = Vector2i(500, 700)
+size = Vector2i(800, 600)
+unresizable = true
 script = ExtResource("1_4b1gi")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
@@ -31,7 +32,12 @@ theme_override_constants/margin_bottom = 10
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer"]
 layout_mode = 2
 
-[node name="MarginContainerL" type="MarginContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer"]
+[node name="LeftScroll" type="ScrollContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(400, 560)
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="MarginContainerL" type="MarginContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/margin_left = 10
@@ -39,48 +45,54 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="IntelListContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerL"]
+[node name="IntelListContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="WhoContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerL/IntelListContainer"]
+[node name="WhoContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerL/IntelListContainer/WhoContainer"]
+[node name="Label" type="Label" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer/WhoContainer"]
 layout_mode = 2
 text = "Who Rumours"
 
-[node name="WhoBtnGrpContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerL/IntelListContainer/WhoContainer"]
+[node name="WhoBtnGrpContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer/WhoContainer"]
 layout_mode = 2
 
-[node name="WhatContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerL/IntelListContainer"]
+[node name="CheckButton" type="CheckButton" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer/WhoContainer/WhoBtnGrpContainer"]
+visible = false
+layout_mode = 2
+text = "Our informant believes {character} might be working for the enemy. We need to keep an eye on them."
+autowrap_mode = 3
+
+[node name="WhatContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerL/IntelListContainer/WhatContainer"]
+[node name="Label" type="Label" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer/WhatContainer"]
 layout_mode = 2
 text = "What Rumours"
 
-[node name="WhatBtnGrpContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerL/IntelListContainer/WhatContainer"]
+[node name="WhatBtnGrpContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer/WhatContainer"]
 layout_mode = 2
 
-[node name="WhereContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerL/IntelListContainer"]
+[node name="WhereContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerL/IntelListContainer/WhereContainer"]
+[node name="Label" type="Label" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer/WhereContainer"]
 layout_mode = 2
 text = "Where Rumours"
 
-[node name="WhereBtnGrpContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerL/IntelListContainer/WhereContainer"]
+[node name="WhereBtnGrpContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer/WhereContainer"]
 layout_mode = 2
 
-[node name="WhenContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerL/IntelListContainer"]
+[node name="WhenContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerL/IntelListContainer/WhenContainer"]
+[node name="Label" type="Label" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer/WhenContainer"]
 layout_mode = 2
 text = "When Rumours"
 
-[node name="WhenBtnGrpContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerL/IntelListContainer/WhenContainer"]
+[node name="WhenBtnGrpContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer/WhenContainer"]
 layout_mode = 2
 
 [node name="MarginContainerR" type="MarginContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer"]
@@ -110,7 +122,9 @@ layout_mode = 2
 text = "Who:"
 
 [node name="WhoDescription" type="Label" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerR/CraftingContainer/WhoContainer"]
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
+autowrap_mode = 2
 
 [node name="WhatContainer" type="HBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerR/CraftingContainer"]
 layout_mode = 2
@@ -120,7 +134,9 @@ layout_mode = 2
 text = "Where:"
 
 [node name="WhatDescription" type="Label" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerR/CraftingContainer/WhatContainer"]
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
+autowrap_mode = 3
 
 [node name="WhereContainer" type="HBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerR/CraftingContainer"]
 layout_mode = 2
@@ -130,7 +146,9 @@ layout_mode = 2
 text = "What:"
 
 [node name="WhereDescription" type="Label" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerR/CraftingContainer/WhereContainer"]
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
+autowrap_mode = 3
 
 [node name="WhenContainer" type="HBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerR/CraftingContainer"]
 layout_mode = 2
@@ -140,7 +158,9 @@ layout_mode = 2
 text = "When:"
 
 [node name="WhenDescription" type="Label" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerR/CraftingContainer/WhenContainer"]
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
+autowrap_mode = 3
 
 [node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerR/CraftingContainer"]
 layout_mode = 2
