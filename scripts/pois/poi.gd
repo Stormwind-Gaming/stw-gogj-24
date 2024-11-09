@@ -67,6 +67,9 @@ func _on_mouse_entered():
 func _on_mouse_exited():
 	if not enabled:
 		$Polygon2D.color = no_color
+		await get_tree().create_timer(0.1).timeout
+		if enabled:
+			_on_mouse_exited()
 		return
 	else:
 		$Polygon2D.color = selectable_color

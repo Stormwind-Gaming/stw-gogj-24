@@ -35,17 +35,17 @@ polygon = PackedVector2Array(691, 417, 717, 400, 748, 447, 722, 465)
 [node name="Poi2" parent="pois" instance=ExtResource("3_bhahb")]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi2"]
-polygon = PackedVector2Array(762, 449, 766, 423, 791, 425, 788, 453)
+polygon = PackedVector2Array(762, 402, 759, 425, 757, 425, 755, 443, 758, 443, 757, 453, 772, 453, 772, 452, 790, 452, 790, 442, 783, 441, 783, 424, 789, 424, 787, 393)
 
 [node name="Poi3" parent="pois" instance=ExtResource("3_bhahb")]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi3"]
-polygon = PackedVector2Array(742, 487, 715, 509, 762, 525, 764, 500)
+polygon = PackedVector2Array(772, 503, 734, 485, 727, 493, 733, 498, 727, 502, 742, 523, 751, 516, 747, 511, 755, 505, 762, 510)
 
 [node name="Poi4" parent="pois" instance=ExtResource("3_bhahb")]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi4"]
-polygon = PackedVector2Array(798, 472, 789, 501, 838, 501, 843, 471)
+polygon = PackedVector2Array(777, 462, 770, 490, 754, 483, 756, 461)
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
