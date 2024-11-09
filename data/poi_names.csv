@@ -1,0 +1,126 @@
+poi_name,poi_type
+Luchtafweer van Noordhoek,ANTI_AIR_EMPLACEMENT
+De Stalen Ring,ANTI_AIR_EMPLACEMENT
+Bergkade Verdediging,ANTI_AIR_EMPLACEMENT
+Luchtscherm van Zuid,ANTI_AIR_EMPLACEMENT
+Hoogtoren Batterij,ANTI_AIR_EMPLACEMENT
+De Rode Roos,BROTHEL
+Het Fluwelen Huis,BROTHEL
+De Nachtbloem,BROTHEL
+Het Verloren Licht,BROTHEL
+De Zoete Schaduw,BROTHEL
+Koffiehuis Van Den Broek,CAFE
+De Koperen Kettle,CAFE
+Visserskaai Café,CAFE
+Brood en Meer,CAFE
+Havenkaffee Het Anker,CAFE
+Kathedraal van St. Bonifatius,CATHEDRAL
+De Grote Dom,CATHEDRAL
+Kathedraal van Licht,CATHEDRAL
+St. Jans Toren,CATHEDRAL
+Kathedraal van de Rivier,CATHEDRAL
+Kerk van St. Andries,CHURCH
+De Kleine Kapel,CHURCH
+St. Clara’s Gebedshuis,CHURCH
+Heilige Hart Kerk,CHURCH
+Kapel aan de Heuvel,CHURCH
+Het Oude Scherm,CINEMA
+Cinema Sterrenlicht,CINEMA
+De Zilveren Lantaarn,CINEMA
+Stadsbioscoop van Kasteelwijk,CINEMA
+Filmhuis Vlaerebeek,CINEMA
+Zuidhaven Docks,DOCKS
+De Zoute Kaai,DOCKS
+Lijnebeek Handelshaven,DOCKS
+Grootelinde Zeehoek,DOCKS
+Stadskade Noord,DOCKS
+De IJzeren Werkplaats,FACTORY
+Het Grote Raderwerk,FACTORY
+Staal & Stoom,FACTORY
+Veldwerk Fabriek,FACTORY
+Machinefabriek Noord,FACTORY
+Post van de Zwarte Helm,GESTAPO_POST
+Bureau van de Donkere Hand,GESTAPO_POST
+Gestapo Hoofdpost West,GESTAPO_POST
+Het IJzeren Oog,GESTAPO_POST
+Kantoor van de Grijze Mantel,GESTAPO_POST
+De Verse Mand,GROCER
+Het Groene Blad,GROCER
+Kruid & Koorn,GROCER
+Tafel van ’t Land,GROCER
+Grootmoeders Keus,GROCER
+Kantoor van de Stad,OFFICE
+Het Handelsgebouw,OFFICE
+Bureau aan de Haven,OFFICE
+Werkplein ’t Spaarvarken,OFFICE
+Administratiehuis,OFFICE
+Park der Vrijheid,PARK
+De Bomenhof,PARK
+Het Stille Weide,PARK
+Kasteeltuin van Rust,PARK
+Rivierenpark,PARK
+Politiehuis van Vrede,POLICE_STATION
+Wijkpost De Zilveren Helm,POLICE_STATION
+Het Wachtstation,POLICE_STATION
+Politiecentrale Noordpoort,POLICE_STATION
+De Blauwe Wacht,POLICE_STATION
+Postkantoor Het Oude Briefje,POST_OFFICE
+Stadsbrieven Bureau,POST_OFFICE
+Post van de Drie Bruggen,POST_OFFICE
+De Rode Posttoren,POST_OFFICE
+Marktplein Post,POST_OFFICE
+De Gouden Beker,PUB
+Het Brouwhuis,PUB
+Brasserie ’t Oude Vaatje,PUB
+Het Verloren Schaap,PUB
+De Groene Gans,PUB
+De Scheve Toren,PUB
+Villa aan de Rivier,RESIDENCE
+Het Blauwe Erf,RESIDENCE
+Huize van der Linden,RESIDENCE
+De Rode Poort,RESIDENCE
+Landhuis aan ’t Veld,RESIDENCE
+De Gouden Lepel,RESTAURANT
+Brasserie de Zilveren Maagd,RESTAURANT
+De Groene Tafel,RESTAURANT
+Het Vuur & De Vork,RESTAURANT
+Café de Stadskeuken,RESTAURANT
+Bakkerij De Smaak,SHOP
+Frituur De Belhamel,SHOP
+Maison du Fromage,SHOP
+Wijnen en Wijnen,SHOP
+De Zoete Hap,SHOP
+Molenhoek Apotheker,SHOP
+Antiek en Curiosa,SHOP
+Brouwerij de Bruine Beer,SHOP
+Modehuis Elize,SHOP
+Het Kleine Boekje,SHOP
+Meubels op Maat,SHOP
+De Zoute Zeemeermin,SHOP
+Atelier van de Klok,SHOP
+Fleur en Veld,SHOP
+Het Notenhuis,SHOP
+De Zilveren Spiegel,SHOP
+Boekhandel ’t Oude Verhaal,SHOP
+Wafelhuis de Lekkerbek,SHOP
+Veldbloemen en Vaassen,SHOP
+Basis Diepzee,SUBMARINE_PEN
+Onderzeehaven Noord,SUBMARINE_PEN
+Pen van de Zwarte Golf,SUBMARINE_PEN
+Marinebunker Zuid,SUBMARINE_PEN
+Rivierdijk Diepte,SUBMARINE_PEN
+Station van Dendeloft,TRAIN_STATION
+Spoorhaven Zoldergem,TRAIN_STATION
+Rijshagen Centraal,TRAIN_STATION
+Hoogspoor Brusselbroek,TRAIN_STATION
+Grootelinde Spoorplein,TRAIN_STATION
+Magazijn Zuidpoort,WAREHOUSE
+Opslag Het Volle Vat,WAREHOUSE
+De Grote Opslag,WAREHOUSE
+Houtloods Oost,WAREHOUSE
+Koelhuis West,WAREHOUSE
+Werkplaats van de Oude Smid,WORKSHOP
+Meesterwerk Atelier,WORKSHOP
+Klokkenmakerij van Waas,WORKSHOP
+Het Houten Wiel,WORKSHOP
+De Zilveren Schaar,WORKSHOP

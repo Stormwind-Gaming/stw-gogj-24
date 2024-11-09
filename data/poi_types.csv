@@ -1,0 +1,19 @@
+poi_name,poi_description,district_type,spawn_chance,max_spawn_quantity
+Cinema,,shopping,100,1
+Grocer,,shopping,75,-1
+Shop,,shopping,75,-1
+Pub,,shopping,50,-1
+Restaurant,,shopping,50,-1
+Residence,,shopping,25,-1
+Factory,,industrial,75,-1
+Workshop,,industrial,75,-1
+Warehouse,,industrial,75,-1
+Office,,industrial,50,-1
+Anti Air Emplacement,,industrial,50,-1
+Residence,,residential,75,-1
+Pub,,residential,50,3
+Cafe,,residential,50,3
+Shop,,residential,50,3
+Church,,residential,50,2
+Restaurant,,residential,25,3
+Gestapo Post,,residential,25,3

@@ -1,8 +1,5 @@
 extends Node
 
-# enum DistrictType {District_NE, District_NW, District_SE, District_SW}
-enum POIType {}
-
 enum CharacterGender {
 	MALE,
 	FEMALE
@@ -38,4 +35,38 @@ enum ActionType {
 	ESPIONAGE,
 	ASSASSINATION,
 	PROPAGANDA
+}
+
+enum DistrictType {
+	SHOPPING,
+	INDUSTRIAL,
+	RESIDENTIAL,
+}
+
+enum POIType {
+	NONE,
+	GESTAPO_HQ,
+	TOWN_HALL,
+	PARK,
+	POST_OFFICE,
+	POLICE_STATION,
+	TRAIN_STATION,
+	DOCKS,
+	BROTHEL,
+	SUBMARINE_PEN,
+	CATHEDRAL,
+	CINEMA,
+	GROCER,
+	SHOP,
+	OFFICE,
+	CHURCH,
+	PUB,
+	CAFE,
+	FACTORY,
+	WAREHOUSE,
+	RESIDENCE,
+	RESTAURANT,
+	WORKSHOP,
+	ANTI_AIR_EMPLACEMENT,
+	GESTAPO_POST,
 }

@@ -13,7 +13,7 @@ modulate_color = Color(0.695503, 0.695503, 0.695503, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qsspa"]
 bg_color = Color(0, 0, 0, 1)
 
-[node name="Footer" type="Control"]
+[node name="Footer" type="Control" node_paths=PackedStringArray("show_character_list_button", "show_intel_list_button", "show_log_list_button", "show_agents_list_button", "turn_button")]
 layout_mode = 3
 anchors_preset = 12
 anchor_top = 1.0
@@ -22,6 +22,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 0
 script = ExtResource("1_hd6ji")
+show_character_list_button = NodePath("HBoxContainer/PanelContainer3/HBoxContainer/CharacterListButton")
+show_intel_list_button = NodePath("HBoxContainer/PanelContainer3/HBoxContainer/IntelListButton")
+show_log_list_button = NodePath("HBoxContainer/PanelContainer3/HBoxContainer/LogListButton")
+show_agents_list_button = NodePath("HBoxContainer/PanelContainer3/HBoxContainer/AgentsListButton")
+turn_button = NodePath("HBoxContainer/PanelContainer/TurnButton")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -42,11 +47,11 @@ theme_override_styles/panel = SubResource("StyleBoxTexture_2ecj2")
 layout_mode = 2
 theme = ExtResource("2_3ln20")
 
-[node name="TeamListButton" type="Button" parent="HBoxContainer/PanelContainer3/HBoxContainer"]
+[node name="AgentsListButton" type="Button" parent="HBoxContainer/PanelContainer3/HBoxContainer"]
 layout_mode = 2
 focus_mode = 0
 disabled = true
-text = "Team"
+text = "Agents"
 
 [node name="IntelListButton" type="Button" parent="HBoxContainer/PanelContainer3/HBoxContainer"]
 layout_mode = 2
@@ -63,19 +68,6 @@ layout_mode = 2
 focus_mode = 0
 text = "Log"
 
-[node name="TabBar" type="TabBar" parent="HBoxContainer/PanelContainer3/HBoxContainer"]
-visible = false
-layout_mode = 2
-current_tab = 0
-clip_tabs = false
-scrolling_enabled = false
-scroll_to_selected = false
-tab_count = 4
-tab_0/title = "Team"
-tab_1/title = "Intel"
-tab_2/title = "Characters"
-tab_3/title = "Log"
-
 [node name="VSeparator" type="VSeparator" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -88,5 +80,3 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_qsspa")
 [node name="TurnButton" type="Button" parent="HBoxContainer/PanelContainer"]
 layout_mode = 2
 text = "Progress Time"
-
-[connection signal="tab_clicked" from="HBoxContainer/PanelContainer3/HBoxContainer/TabBar" to="." method="_on_tab_bar_tab_clicked"]
