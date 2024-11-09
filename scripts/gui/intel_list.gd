@@ -77,7 +77,7 @@ func populate_intel_list(intel):
 			check_button.toggled.connect(func(pressed):
 				if pressed:
 					selected_intel[intel_node.type] = intel_node
-					description_label.text = intel_node.description
+					description_label.text = intel_node.effect
 				else:
 					selected_intel[intel_node.type] = null
 				_check_create_plan_visibility()

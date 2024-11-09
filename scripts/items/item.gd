@@ -9,6 +9,6 @@ func _init(profile:Dictionary):
 	
 	self.item_name = profile['item_name']
 
-	self.id = GlobalRegistry.register_object(GlobalRegistry.Registry_Category.ITEM, self)
+	self.id = GlobalRegistry.register_object(Enums.Registry_Category.ITEM, self)
 
 	print("Item created: " + self.item_name + " with id: " + self.id)

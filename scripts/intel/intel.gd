@@ -5,6 +5,7 @@ class_name Intel
 var level: Enums.IntelLevel
 var type: Enums.IntelType
 var description: String
+var effect : String = "Example effect: 5%"
 var id: String
 
 #TODO: How do we store related time & thing? Maybe store the turn that its going to relate to as an int?
