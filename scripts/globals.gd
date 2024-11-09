@@ -2,6 +2,10 @@ extends Node
 
 var agent_card_scene = preload("res://scenes/gui/agent_card.tscn")
 var radial_menu_scene = preload("res://scenes/gui/radial_menu.tscn")
+var character_list_scene = preload("res://scenes/gui/character_list.tscn")
+var intel_list_scene = preload("res://scenes/gui/intel_list.tscn")
+var log_list_scene = preload("res://scenes/gui/log_list.tscn")
+var post_radial_assignment_scene = preload("res://scenes/gui/post_radial_assignment.tscn")
 
 var load_csvs = {
 	"town_names": "res://data/town_names.csv",
@@ -224,3 +228,18 @@ var rumour_map = {
 }
 
 #endregion
+
+#region Enum to friendly string
+
+func get_action_type_string(action_type: Enums.ActionType) -> String:
+	match action_type:
+		Enums.ActionType.NONE:
+			return "None"
+		Enums.ActionType.ESPIONAGE:
+			return "Espionage"
+		Enums.ActionType.ASSASSINATION:
+			return "Assassination"
+		Enums.ActionType.PROPAGANDA:
+			return "Propaganda"
+		_:
+			return "Unknown"

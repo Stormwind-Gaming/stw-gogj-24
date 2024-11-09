@@ -144,6 +144,7 @@ func set_district_focused(district: District = null) -> void:
 	district_focused = district
 	emit_signal("district_just_focused", district)
 
+
 func open_radial_menu(radial_menu: RadialMenu, poi: PointOfInterest) -> void:
 	if radial_menu_open:
 		return
@@ -152,13 +153,30 @@ func open_radial_menu(radial_menu: RadialMenu, poi: PointOfInterest) -> void:
 	radial_menu.connect('selected_radial_option', _on_radial_option_selected)
 
 func _on_radial_option_selected(option: Enums.ActionType) -> void:
+	radial_menu_open.hide()
+
+	if option == Enums.ActionType.NONE:
+		return
+	
+	if option == Enums.ActionType.INFO:
+		print("Showing info for POI: ", poi_for_radial)
+		# poi_for_radial.show_info()
+		return
+
+	# popup a post_radial_assignment menu
+	var post_radial_assignment = Globals.post_radial_assignment_scene.instantiate()
+	post_radial_assignment.set_option(option)
+	post_radial_assignment.connect('post_radial_assignment_option', _on_post_radial_assignment_option_selected)
+	add_child(post_radial_assignment)
+
+func _on_post_radial_assignment_option_selected(option: Enums.ActionType) -> void:
 	if option != Enums.ActionType.NONE:
-		var characters = GlobalRegistry.get_all_objects(GlobalRegistry.Registry_Category.CHARACTER)
+		var characters = GlobalRegistry.get_all_objects(Enums.Registry_Category.CHARACTER)
 		GameController.add_action(poi_for_radial, characters[characters.keys().front()], option)
 
-	radial_menu_open.queue_free()
 	# create a tiny timer to get around erroneous clickthroughs
 	await get_tree().create_timer(0.1).timeout
+	radial_menu_open.queue_free()
 	radial_menu_open = null
 
 #endregion

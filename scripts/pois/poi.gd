@@ -28,7 +28,7 @@ signal poi_unhovered
 
 func _ready() -> void:
 	parent_district = get_parent().get_parent()
-	GlobalRegistry.register_object(GlobalRegistry.Registry_Category.POI, self)
+	GlobalRegistry.register_object(Enums.Registry_Category.POI, self)
 	GameController.connect("district_just_focused", _on_district_just_focused)
 
 func setup_poi_visuals():

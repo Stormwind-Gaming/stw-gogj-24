@@ -11,6 +11,9 @@ func _init(type: Enums.ActionType) -> void:
 		Enums.ActionType.NONE:
 			radial_option_name = "Close"
 			region = Rect2(0, 0, 32, 32)
+		Enums.ActionType.INFO:
+			radial_option_name = "Info"
+			region = Rect2(128, 0, 32, 32)
 		Enums.ActionType.ESPIONAGE:
 			radial_option_name = "Espionage"
 			region = Rect2(32, 0, 32, 32)

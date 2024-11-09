@@ -51,7 +51,7 @@ static func create_rumour(config: RumourConfig) -> Intel:
 		type = Enums.IntelType.WHO
 		var rumour_text = Globals.get_rumour_text(type)
 		
-		var characters = GlobalRegistry.get_all_objects(GlobalRegistry.Registry_Category.CHARACTER)
+		var characters = GlobalRegistry.get_all_objects(Enums.Registry_Category.CHARACTER)
 		var filtered = []
 		for key in characters:
 			var value = characters[key]
@@ -64,7 +64,7 @@ static func create_rumour(config: RumourConfig) -> Intel:
 	elif random_value < config.who_chance + config.where_chance:
 		type = Enums.IntelType.WHERE
 		var rumour_text = Globals.get_rumour_text(type)
-		var pois = GlobalRegistry.get_all_objects(GlobalRegistry.Registry_Category.POI)
+		var pois = GlobalRegistry.get_all_objects(Enums.Registry_Category.POI)
 		var filtered = []
 		for key in pois:
 			var value = pois[key]

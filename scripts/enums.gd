@@ -32,6 +32,7 @@ enum StatCheckType {
 
 enum ActionType {
 	NONE,
+	INFO,
 	ESPIONAGE,
 	ASSASSINATION,
 	PROPAGANDA
@@ -69,4 +70,11 @@ enum POIType {
 	WORKSHOP,
 	ANTI_AIR_EMPLACEMENT,
 	GESTAPO_POST,
+}
+
+enum Registry_Category {
+	CHARACTER,
+	DISTRICT,
+	POI,
+	INTEL,
 }

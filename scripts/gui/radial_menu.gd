@@ -21,7 +21,9 @@ signal selected_radial_option(option: Enums.ActionType)
 func _init(options_attr: Array[Enums.ActionType] = []) -> void:
 	options = []
 	options_attr.append(Enums.ActionType.NONE)
+	options_attr.append(Enums.ActionType.INFO)
 	options_attr.append(Enums.ActionType.ESPIONAGE)
+	options_attr.append(Enums.ActionType.PROPAGANDA)
 	for option in options_attr:
 		options.append(RadialOption.new(option))
 
