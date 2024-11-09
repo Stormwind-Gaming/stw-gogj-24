@@ -47,3 +47,7 @@ func _generateBellCurveStat() -> int:
 
 func get_full_name() -> String:
 	return first_name + ' ' + last_name
+
+func set_agent() -> void:
+	# Set the character as an agent
+	recruited = true

@@ -11,6 +11,12 @@ func _ready() -> void:
 
 	_generate_population()
 
+	# set 4 of the population to be agents
+	for i in range(4):
+		var character = CharacterFactory.create_character()
+		character.set_agent()
+
+
 	town_name = Globals.town_names[randi() % Globals.town_names.size()]
 	$CanvasLayer/Map_Panel_Left.set_town_name(town_name)
 

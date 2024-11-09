@@ -1,24 +1,39 @@
-[gd_scene load_steps=5 format=3 uid="uid://dv6koqcesevck"]
+[gd_scene load_steps=9 format=3 uid="uid://dv6koqcesevck"]
 
 [ext_resource type="Script" path="res://scripts/gui/agent_card.gd" id="1_dtlic"]
-[ext_resource type="Texture2D" uid="uid://r8gpng3t2o2n" path="res://assets/agent_profile_71_w.png" id="3_cbmfa"]
 [ext_resource type="Texture2D" uid="uid://vmb13yddjaj5" path="res://assets/agent_profile_71.png" id="4_eqpp8"]
-[ext_resource type="Texture2D" uid="uid://luajg7d1mys0" path="res://assets/agent_profile_71_b.png" id="4_n0xgr"]
+[ext_resource type="Texture2D" uid="uid://csqwxwqhukb2d" path="res://assets/icons/charm.png" id="5_yrgtv"]
+[ext_resource type="Texture2D" uid="uid://dotbv717adkpq" path="res://assets/icons/subtlety.png" id="6_3tmkm"]
+[ext_resource type="Texture2D" uid="uid://dh8vgv4wcbmdu" path="res://assets/bars_71_w.png" id="6_8tc4x"]
+[ext_resource type="Texture2D" uid="uid://kmxekyb2gpex" path="res://assets/icons/smarts.png" id="7_ofuay"]
+[ext_resource type="Texture2D" uid="uid://b6duigij8dwqt" path="res://assets/bars_71_b.png" id="7_rp18j"]
 
-[node name="AgentCard" type="PanelContainer"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mm4m2"]
+bg_color = Color(0.929412, 0.85098, 0.713726, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="AgentCard" type="PanelContainer" node_paths=PackedStringArray("character_texture", "charm_label", "subtlety_label", "smarts_label")]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -25.0
-offset_top = -27.5
-offset_right = 25.0
-offset_bottom = 27.5
+offset_left = -35.5
+offset_top = -46.0
+offset_right = 35.5
+offset_bottom = 46.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_mm4m2")
 script = ExtResource("1_dtlic")
+character_texture = NodePath("MarginContainer/VBoxContainer/TextureRect")
+charm_label = NodePath("MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/CharmHBoxContainer/Label")
+subtlety_label = NodePath("MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/SubtletyHBoxContainer/Label")
+smarts_label = NodePath("MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/SmartsHBoxContainer/Label")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -32,18 +47,88 @@ theme_override_constants/separation = 0
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
 size_flags_vertical = 6
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 10
 text = "<Name>"
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="TextureButton" type="TextureButton" parent="MarginContainer/VBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("4_eqpp8")
+expand_mode = 4
+stretch_mode = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="CharmHBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/CharmHBoxContainer"]
+layout_mode = 2
+texture = ExtResource("5_yrgtv")
+expand_mode = 3
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/CharmHBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "0"
+
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="SubtletyHBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/SubtletyHBoxContainer"]
+layout_mode = 2
+texture = ExtResource("6_3tmkm")
+expand_mode = 3
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/SubtletyHBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "0"
+
+[node name="VSeparator2" type="VSeparator" parent="MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="SmartsHBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/SmartsHBoxContainer"]
+layout_mode = 2
+texture = ExtResource("7_ofuay")
+expand_mode = 3
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/SmartsHBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "0"
+
+[node name="TextureButton" type="TextureButton" parent="."]
 custom_minimum_size = Vector2(71, 78)
 layout_mode = 2
 toggle_mode = true
-texture_normal = ExtResource("4_eqpp8")
-texture_pressed = ExtResource("3_cbmfa")
-texture_hover = ExtResource("4_n0xgr")
-texture_disabled = ExtResource("4_eqpp8")
+texture_pressed = ExtResource("6_8tc4x")
+texture_hover = ExtResource("7_rp18j")
 ignore_texture_size = true
 stretch_mode = 0
+
+[connection signal="toggled" from="TextureButton" to="." method="_on_texture_button_toggled"]

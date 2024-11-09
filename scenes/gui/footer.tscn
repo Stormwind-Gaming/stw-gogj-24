@@ -17,10 +17,8 @@ modulate_color = Color(0.695503, 0.695503, 0.695503, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qsspa"]
 bg_color = Color(0, 0, 0, 1)
 
-[sub_resource type="Animation" id="Animation_1ejaj"]
-resource_name = "scroll_out"
-length = 0.25
-step = 0.25
+[sub_resource type="Animation" id="Animation_sj32q"]
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -28,10 +26,10 @@ tracks/0/path = NodePath("PanelContainer:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.25),
-"transitions": PackedFloat32Array(0.5, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, -30), Vector2(0, -200)]
+"values": [Vector2(0, -30)]
 }
 
 [sub_resource type="Animation" id="Animation_06ebt"]
@@ -51,8 +49,10 @@ tracks/0/keys = {
 "values": [Vector2(0, -200), Vector2(0, -30)]
 }
 
-[sub_resource type="Animation" id="Animation_sj32q"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_1ejaj"]
+resource_name = "scroll_out"
+length = 0.25
+step = 0.25
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -60,10 +60,10 @@ tracks/0/path = NodePath("PanelContainer:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(0.5, 1),
 "update": 0,
-"values": [Vector2(0, -30)]
+"values": [Vector2(0, -30), Vector2(0, -200)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ywb36"]
