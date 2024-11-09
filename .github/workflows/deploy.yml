@@ -26,10 +26,12 @@ jobs:
 
       - name: Export Godot Project to ZIP
         run: |
-          ./godot/Godot_v4.3-stable_linux.x86_64 --headless --export-pack "Web"
+          ./godot/Godot_v4.3-stable_linux.x86_64 --headless --export-release "Web"
 
       - name: Zip exported files
-        run: zip -r builds ${{ github.ref_name }}
+        run: |
+          cd builds
+          zip -r ../${{ github.ref_name }}.zip ./*
 
       - name: Upload to itch.io
         uses: robpc/itchio-upload-action@v1
