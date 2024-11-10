@@ -1,10 +1,17 @@
 extends Control
 
-@onready var date = $HBoxContainer/PanelContainer2/MarginContainer/HBoxContainer/Date
+@export var date: Label
+@export var heat_bar: ProgressBar
+@export var resistance_bar: ProgressBar
 
 func _ready():
-	GameController.connect("end_turn", update_date)
+	GameController.connect("end_turn_complete", update_gui)
+	resistance_bar.value = GameController.get_resistance_level()
+	date.text = GameController.calendar.get_date_string()
 
-func update_date(num: int) -> void:
-	date.text = str(num) + " January 1942"
+func update_gui(num: int) -> void:
+	date.text = GameController.calendar.get_date_string()
+	resistance_bar.value = GameController.get_resistance_level()
+	# heat_bar.value = GameController.get_heat_level()
+
 	

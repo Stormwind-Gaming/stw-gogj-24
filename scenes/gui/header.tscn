@@ -1,7 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://kgy3mx1cyya"]
+[gd_scene load_steps=7 format=3 uid="uid://kgy3mx1cyya"]
 
 [ext_resource type="Script" path="res://scripts/gui/header.gd" id="1_o6s7c"]
+[ext_resource type="Texture2D" uid="uid://dwnt8ugq4jcn8" path="res://assets/sprites/top_left_panel.png" id="2_8eh0m"]
 [ext_resource type="Texture2D" uid="uid://tgu677tfbe0p" path="res://assets/sprites/header_background.png" id="2_j3hlc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f85mb"]
+bg_color = Color(0.839216, 0, 0.121569, 0.529412)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0b7d3"]
+bg_color = Color(0.290196, 0.709804, 0, 0.505882)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nxk20"]
 texture = ExtResource("2_j3hlc")
@@ -9,18 +16,60 @@ texture_margin_left = 30.0
 texture_margin_right = 30.0
 texture_margin_bottom = 30.0
 
-[node name="Header" type="Control"]
+[node name="Header" type="Control" node_paths=PackedStringArray("date", "heat_bar", "resistance_bar")]
 layout_mode = 3
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
+anchors_preset = 10
+anchor_right = 1.0
 grow_horizontal = 2
 script = ExtResource("1_o6s7c")
+date = NodePath("HBoxContainer/PanelContainer2/MarginContainer/HBoxContainer/Date")
+heat_bar = NodePath("TextureRect/MarginContainer/HBoxContainer/HeatProgressBar")
+resistance_bar = NodePath("TextureRect/MarginContainer/HBoxContainer/ResistanceProgressBar")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_8eh0m")
+
+[node name="MarginContainer" type="MarginContainer" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 184
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 128
+theme_override_constants/margin_bottom = 210
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TextureRect/MarginContainer"]
+layout_mode = 2
+
+[node name="HeatProgressBar" type="ProgressBar" parent="TextureRect/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_styles/fill = SubResource("StyleBoxFlat_f85mb")
+step = 1.0
+value = 50.0
+
+[node name="ResistanceProgressBar" type="ProgressBar" parent="TextureRect/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_styles/fill = SubResource("StyleBoxFlat_0b7d3")
+step = 1.0
+value = 50.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -127.0
+offset_right = 127.0
 offset_bottom = 53.0
 grow_horizontal = 2
 

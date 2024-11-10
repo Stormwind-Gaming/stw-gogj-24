@@ -63,4 +63,3 @@ func set_agent() -> void:
 
 func set_known() -> void:
 	known = true
-
