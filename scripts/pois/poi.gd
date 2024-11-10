@@ -18,6 +18,7 @@ var stat_check_type: Enums.StatCheckType = Enums.StatCheckType.SMARTS
 var poi_type: Enums.POIType
 var poi_name: String = ""
 var poi_description: String = ""
+var poi_owner:Character
 
 # Variables for scale animation
 var no_color = Color(0, 0, 0, 0) # No color
@@ -31,6 +32,9 @@ func _ready() -> void:
 	parent_district = get_parent().get_parent()
 	GlobalRegistry.register_object(Enums.Registry_Category.POI, self)
 	GameController.connect("district_just_focused", _on_district_just_focused)
+	
+	# Create the owner of the POI
+	self.poi_owner = CharacterFactory.create_character()
 
 func setup_poi_visuals():
 	$Polygon2D.position = self.get_global_position()

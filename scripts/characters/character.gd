@@ -18,6 +18,7 @@ var smarts: int
 # Hidden stats
 var sympathy: int # 1-99 how likely is this character to join the resistance?
 var recruited: bool = false
+var known: bool = false
 
 func _init(profile:Dictionary):
 	
@@ -47,7 +48,19 @@ func _generateBellCurveStat() -> int:
 
 func get_full_name() -> String:
 	return first_name + ' ' + last_name
+	
+func get_stats() -> Dictionary:
+	return {
+		"subtlety": self.subtlety if self.known else "??",
+		"charm": self.charm if self.known else "??",
+		"smarts": self.smarts if self.known else "??",
+	}
 
 func set_agent() -> void:
 	# Set the character as an agent
 	recruited = true
+	known = true
+
+func set_known() -> void:
+	known = true
+

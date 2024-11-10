@@ -9,36 +9,15 @@ func _ready() -> void:
 	# get random seed
 	randomize()
 
-	_generate_population()
-
-	# set 4 of the population to be agents
-	for i in range(4):
-		var character = CharacterFactory.create_character()
-		character.set_agent()
-
-
 	town_name = Globals.town_names[randi() % Globals.town_names.size()]
 	$CanvasLayer/Map_Panel_Left.set_town_name(town_name)
 
 	# _set_district_details on all districts
 	for district in districts:
 		_set_district_details(district)
-	
-	# add 4 characters 
-	for i in range(4):
-		# var whoR = IntelFactory.create_rumour(IntelFactory.RumourConfig.new(100,0,0,0))
-		# var whereR = IntelFactory.create_rumour(IntelFactory.RumourConfig.new(0,100,0,0))
-		# var whatR = IntelFactory.create_rumour(IntelFactory.RumourConfig.new(0,0,100,0))
-		# var whenR = IntelFactory.create_rumour(IntelFactory.RumourConfig.new(0,0,0,100))
-		pass
+		
+	_setup_agents()
 
-
-	#var plan = IntelFactory.combine_rumours([whoR, whereR, whatR, whenR])
-	
-	# var pois = GlobalRegistry.get_all_objects(Enums.Registry_Category.POI)
-	# var characters = GlobalRegistry.get_all_objects(Enums.Registry_Category.CHARACTER)
-
-	# GameController.add_action(pois[pois.keys().front()], characters[characters.keys().front()], Enums.ActionType.ESPIONAGE)
 
 func _process(delta: float) -> void:
 	if GameController.district_focused != null:
@@ -92,3 +71,23 @@ func _on_poi_unhovered() -> void:
 func _generate_population() -> void:
 	for i in range(10):
 		CharacterFactory.create_character()
+		
+func _setup_agents() -> void:
+	var population = GlobalRegistry.get_all_objects(Enums.Registry_Category.CHARACTER)
+	var keys = population.keys()
+	
+	# Pick the first random key
+	var random_key1 = keys[randi() % keys.size()]
+
+	# Remove the first random key from the keys array to avoid picking it again
+	keys.erase(random_key1)
+
+	# Pick the second random key
+	var random_key2 = keys[randi() % keys.size()]
+
+	# Access the values using the random keys
+	var agent1 = population[random_key1]
+	var agent2 = population[random_key2]
+	
+	agent1.set_agent()
+	agent2.set_agent()
