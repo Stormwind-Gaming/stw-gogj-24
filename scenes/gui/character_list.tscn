@@ -1,17 +1,60 @@
-[gd_scene load_steps=2 format=3 uid="uid://5oqcliii8tmx"]
+[gd_scene load_steps=5 format=3 uid="uid://5oqcliii8tmx"]
 
 [ext_resource type="Script" path="res://scripts/gui/character_list.gd" id="1_dabvh"]
+[ext_resource type="Texture2D" uid="uid://cymum3g0jnd7l" path="res://assets/sprites/popup_panel_background_75.png" id="2_a4sd7"]
+[ext_resource type="Texture2D" uid="uid://ctiq8sa8m5iv" path="res://assets/sprites/close_ribbon_black.png" id="3_mderh"]
+[ext_resource type="Texture2D" uid="uid://5vk04yychida" path="res://assets/sprites/close_ribbon_white.png" id="4_gafdp"]
 
 [node name="CharacterList" type="Window"]
-size = Vector2i(180, 500)
+initial_position = 2
+size = Vector2i(800, 700)
 script = ExtResource("1_dabvh")
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_a4sd7")
+patch_margin_left = 90
+patch_margin_top = 53
+patch_margin_right = 138
+patch_margin_bottom = 26
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="NinePatchRect"]
+layout_mode = 2
+offset_right = 750.0
+offset_bottom = 600.0
+theme_override_constants/margin_left = 90
+theme_override_constants/margin_top = 53
+theme_override_constants/margin_right = 96
+theme_override_constants/margin_bottom = -72
+
+[node name="PanelContainer" type="PanelContainer" parent="NinePatchRect/MarginContainer"]
 layout_mode = 2
 
-[node name="CharacterListContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="NinePatchRect/MarginContainer/PanelContainer"]
 layout_mode = 2
+
+[node name="CharacterListContainer" type="VBoxContainer" parent="NinePatchRect/MarginContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -100.0
+offset_bottom = 100.0
+grow_horizontal = 0
+theme_override_constants/margin_right = 20
+
+[node name="TextureButton" type="TextureButton" parent="MarginContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+focus_mode = 0
+texture_normal = ExtResource("3_mderh")
+texture_pressed = ExtResource("3_mderh")
+texture_hover = ExtResource("4_gafdp")
+
+[connection signal="pressed" from="MarginContainer/TextureButton" to="." method="_on_close_button_pressed"]

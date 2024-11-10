@@ -11,9 +11,6 @@ func _ready():
 	var characters = GlobalRegistry.get_all_objects(Enums.Registry_Category.CHARACTER)
 	populate_character_list(characters)
 
-func _on_close_requested():
-	queue_free()
-
 func populate_character_list(characters):
 	# Clear existing children in the container by freeing them
 	for child in character_list_container.get_children():
@@ -46,3 +43,7 @@ func _on_character_button_pressed(name, character_node):
 
 	# Center the window on the screen using popup_centered()
 	character_profile_instance.popup_centered()
+
+
+func _on_close_button_pressed() -> void:
+	queue_free()

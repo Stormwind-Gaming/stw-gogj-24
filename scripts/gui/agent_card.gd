@@ -63,6 +63,7 @@ func _on_texture_button_toggled(toggled_on: bool) -> void:
 	emit_signal('agent_card_selected', character, toggled_on)
 
 func _set_status_overlay(status: Enums.CharacterStatus) -> void:
+	self.modulate = Color(1, 1, 1)
 	if status == Enums.CharacterStatus.NONE or status == Enums.CharacterStatus.AVAILABLE:
 		status_overlay.visible = false
 		return
