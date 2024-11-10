@@ -5,24 +5,42 @@ class_name Intel
 var level: Enums.IntelLevel
 var type: Enums.IntelType
 var description: String
-var effect : String = "Example effect: 5%"
+var effect = [Enums.IntelEffect.NONE]
 var id: String
 
-#TODO: How do we store related time & thing? Maybe store the turn that its going to relate to as an int?
 var related_character : Character
 var related_poi : PointOfInterest
-var related_item : Item
+var related_duration: int
+var related_expiry: int
 
-func _init(level: Enums.IntelLevel, type: Enums.IntelType, description: String):
-	
-	self.level = level
-	self.type = type
-	self.description = description
+var expires_on_turn : int
+
+func _init(profile: Dictionary):
+	for key in profile:
+		if profile.has(key):
+			if key == "effect":
+				self.effect = profile[key]
+			else:
+				set(key, profile[key])
+
+	expires_on_turn = GameController.turn_number + 3
+		
+	# Register the object after setting properties
 	self.id = GlobalRegistry.register_object(Enums.Registry_Category.INTEL, self)
+
+	# Listen to turn end
+	GameController.end_turn_complete.connect(_expire_intel)
 	
 	print("Added intel to global registry")
+
+# func _ready():
+# 	GameController.end_turn_complete.connect(expire_intel)
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE:
 		GlobalRegistry.unregister_object(Enums.Registry_Category.INTEL, self.id)
 		print("Removed intel from global registry")
+
+func _expire_intel(num: int) -> void:
+	if expires_on_turn <= GameController.turn_number:
+		self.call_deferred("free")

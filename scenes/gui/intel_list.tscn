@@ -54,25 +54,9 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer/WhoContainer"]
 layout_mode = 2
-text = "Who Rumours"
+text = "Missions"
 
-[node name="WhoBtnGrpContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer/WhoContainer"]
-layout_mode = 2
-
-[node name="CheckButton" type="CheckButton" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer/WhoContainer/WhoBtnGrpContainer"]
-visible = false
-layout_mode = 2
-text = "Our informant believes {character} might be working for the enemy. We need to keep an eye on them."
-autowrap_mode = 3
-
-[node name="WhatContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer/WhatContainer"]
-layout_mode = 2
-text = "What Rumours"
-
-[node name="WhatBtnGrpContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer/WhatContainer"]
+[node name="WhoWhatBtnGrpContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer/WhoContainer"]
 layout_mode = 2
 
 [node name="WhereContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer"]
@@ -80,7 +64,7 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer/WhereContainer"]
 layout_mode = 2
-text = "Where Rumours"
+text = "Locations"
 
 [node name="WhereBtnGrpContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer/WhereContainer"]
 layout_mode = 2
@@ -90,7 +74,7 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer/WhenContainer"]
 layout_mode = 2
-text = "When Rumours"
+text = "Timings"
 
 [node name="WhenBtnGrpContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer/WhenContainer"]
 layout_mode = 2
@@ -114,36 +98,24 @@ layout_mode = 2
 layout_mode = 2
 text = "Plan Crafting"
 
-[node name="WhoContainer" type="HBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerR/CraftingContainer"]
+[node name="WhoWhatContainer" type="HBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerR/CraftingContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerR/CraftingContainer/WhoContainer"]
+[node name="Label" type="Label" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerR/CraftingContainer/WhoWhatContainer"]
 layout_mode = 2
-text = "Who:"
+text = "Mission:"
 
-[node name="WhoDescription" type="Label" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerR/CraftingContainer/WhoContainer"]
+[node name="WhoWhatDescription" type="Label" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerR/CraftingContainer/WhoWhatContainer"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 autowrap_mode = 2
-
-[node name="WhatContainer" type="HBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerR/CraftingContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerR/CraftingContainer/WhatContainer"]
-layout_mode = 2
-text = "Where:"
-
-[node name="WhatDescription" type="Label" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerR/CraftingContainer/WhatContainer"]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-autowrap_mode = 3
 
 [node name="WhereContainer" type="HBoxContainer" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerR/CraftingContainer"]
 layout_mode = 2
 
 [node name="Label" type="Label" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerR/CraftingContainer/WhereContainer"]
 layout_mode = 2
-text = "What:"
+text = "Location:"
 
 [node name="WhereDescription" type="Label" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerR/CraftingContainer/WhereContainer"]
 custom_minimum_size = Vector2(200, 0)
@@ -155,7 +127,7 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerR/CraftingContainer/WhenContainer"]
 layout_mode = 2
-text = "When:"
+text = "Timing:"
 
 [node name="WhenDescription" type="Label" parent="VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/MarginContainerR/CraftingContainer/WhenContainer"]
 custom_minimum_size = Vector2(200, 0)

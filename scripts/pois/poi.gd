@@ -12,7 +12,7 @@ var enabled: bool = false
 var parent_district: District
 
 #TODO: Dynamically change rumour_config for each POI, currently this gives all POI an equal chance of every rumour type
-var rumour_config : IntelFactory.RumourConfig = IntelFactory.RumourConfig.new(25,25,25,25)
+var rumour_config : IntelFactory.RumourConfig = IntelFactory.RumourConfig.new(25,25,25)
 #TODO: Dynamically change stat_check_type for each POI, currently this gives all POI SMARTS type checks
 var stat_check_type: Enums.StatCheckType = Enums.StatCheckType.SMARTS
 var poi_type: Enums.POIType

@@ -54,7 +54,8 @@ func add_action(poi: PointOfInterest, characters: Array[Character], action_type:
 
 # Method to process a turn
 func process_turn() -> void:
-	emit_signal("end_turn_initiated", turn_number)  # Emit the end turn signal
+	end_turn_initiated.emit(turn_number)  # Emit the end turn signal
+
 	turn_number += 1  # Increment the turn number
 	calendar.increment_day()  # Increment the day
 	var current_turn_log: Array = []  # Array to store logs for this turn
@@ -130,7 +131,7 @@ func process_turn() -> void:
 	actions.clear()
 
 	# Emit the signal to end the turn
-	emit_signal("end_turn_complete", turn_number)
+	end_turn_complete.emit(turn_number)
 
 # Method to get the log for a specific turn
 func get_turn_log(turn: int) -> Array:
