@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c7y1ejxri1bfk"]
+[gd_scene load_steps=13 format=3 uid="uid://c7y1ejxri1bfk"]
 
 [ext_resource type="Script" path="res://scripts/map.gd" id="1_ppup2"]
 [ext_resource type="Texture2D" uid="uid://cuyfkmlgcpdhb" path="res://assets/city.svg" id="2_b3fwo"]
@@ -12,7 +12,6 @@
 [ext_resource type="PackedScene" uid="uid://dpqgqrfoqchlu" path="res://scenes/districts/district_cw.tscn" id="9_jaoy6"]
 [ext_resource type="PackedScene" uid="uid://bv860whpjsldd" path="res://scenes/gui/footer.tscn" id="11_4nem0"]
 [ext_resource type="PackedScene" uid="uid://kgy3mx1cyya" path="res://scenes/gui/header.tscn" id="12_gdl2t"]
-[ext_resource type="PackedScene" uid="uid://b16krdr76iks3" path="res://scenes/gui/newspaper.tscn" id="13_mdtso"]
 
 [node name="Map" type="Node2D" node_paths=PackedStringArray("districts")]
 script = ExtResource("1_ppup2")
@@ -71,6 +70,3 @@ centered = false
 [node name="Footer" parent="CanvasLayer2" instance=ExtResource("11_4nem0")]
 
 [node name="Header" parent="CanvasLayer2" instance=ExtResource("12_gdl2t")]
-
-[node name="Newspaper" parent="." instance=ExtResource("13_mdtso")]
-size = Vector2i(1714, 900)
