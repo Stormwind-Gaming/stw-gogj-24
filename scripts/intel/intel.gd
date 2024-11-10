@@ -33,9 +33,6 @@ func _init(profile: Dictionary):
 	
 	print("Added intel to global registry")
 
-# func _ready():
-# 	GameController.end_turn_complete.connect(expire_intel)
-
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE:
 		GlobalRegistry.unregister_object(Enums.Registry_Category.INTEL, self.id)

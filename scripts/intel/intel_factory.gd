@@ -72,6 +72,7 @@ static func create_rumour(config: RumourConfig) -> Intel:
 						}
 
 						profile['description'] = rumour_text.text.format(replacements)
+						profile['related_character'] = subject_character
 				else:
 						profile['description'] = rumour_text.text
 
@@ -97,6 +98,7 @@ static func create_rumour(config: RumourConfig) -> Intel:
 						}
 
 						profile['description'] = rumour_text.text.format(replacements)
+						profile['related_poi'] = subject_poi
 				else:
 						profile['description'] = rumour_text.text
 
@@ -108,56 +110,126 @@ static func create_rumour(config: RumourConfig) -> Intel:
 				profile['description'] = rumour_text.text
 				profile['effect'] = [rumour_text.effect]
 
+				match rumour_text.effect:
+						Enums.IntelEffect.D_ONE_E_ONE:
+								profile['related_duration'] = 1
+								profile['related_expiry'] = 1
+						Enums.IntelEffect.D_ONE_E_TWO:
+								profile['related_duration'] = 1
+								profile['related_expiry'] = 2
+						Enums.IntelEffect.D_ONE_E_THREE:
+								profile['related_duration'] = 1
+								profile['related_expiry'] = 3
+						Enums.IntelEffect.D_ONE_E_FOUR:
+								profile['related_duration'] = 1
+								profile['related_expiry'] = 4
+						Enums.IntelEffect.D_TWO_E_ONE:
+								profile['related_duration'] = 2
+								profile['related_expiry'] = 1
+						Enums.IntelEffect.D_TWO_E_TWO:
+								profile['related_duration'] = 2
+								profile['related_expiry'] = 2
+						Enums.IntelEffect.D_TWO_E_THREE:
+								profile['related_duration'] = 2
+								profile['related_expiry'] = 3
+						Enums.IntelEffect.D_TWO_E_FOUR:
+								profile['related_duration'] = 2
+								profile['related_expiry'] = 4
+						Enums.IntelEffect.D_THREE_E_ONE:
+								profile['related_duration'] = 3
+								profile['related_expiry'] = 1
+						Enums.IntelEffect.D_THREE_E_TWO:
+								profile['related_duration'] = 3
+								profile['related_expiry'] = 2
+						Enums.IntelEffect.D_THREE_E_THREE:
+								profile['related_duration'] = 3
+								profile['related_expiry'] = 3
+						Enums.IntelEffect.D_THREE_E_FOUR:
+								profile['related_duration'] = 3
+								profile['related_expiry'] = 4
+						Enums.IntelEffect.D_FOUR_E_ONE:
+								profile['related_duration'] = 4
+								profile['related_expiry'] = 1
+						Enums.IntelEffect.D_FOUR_E_TWO:
+								profile['related_duration'] = 4
+								profile['related_expiry'] = 2
+						Enums.IntelEffect.D_FOUR_E_THREE:
+								profile['related_duration'] = 4
+								profile['related_expiry'] = 3
+						Enums.IntelEffect.D_FOUR_E_FOUR:
+								profile['related_duration'] = 4
+								profile['related_expiry'] = 4
+						# Handle other IntelEffects if necessary
+						_:
+								profile['related_duration'] = 0
+								profile['related_expiry'] = 0
+
+
 		print("Rumour created: Type: ", profile.type, ", Description: ", profile.description)
 
 		return Intel.new(profile)
 
 
 static func combine_rumours(rumours: Array) -> Intel:
+	
+	# Initialize variables to hold related data
+	var related_character = null
+	var related_poi = null
+	var related_duration = 0
+	var related_expiry = 0
 
-		var profile = {
-			"level": Enums.IntelLevel.PLAN,
-			"type": Enums.IntelType.COMPLETE,
-		}
+	var profile = {
+		"level": Enums.IntelLevel.PLAN,
+		"type": Enums.IntelType.COMPLETE,
+	}
 
-		# Verify we have exactly 3 rumours (whowhat, where, when)
-		if rumours.size() != 3:
-				push_error("Need exactly 3 rumours to combine: WhoWhat, Where, When.")
-				return null
+	# Verify we have exactly 3 rumours (whowhat, where, when)
+	if rumours.size() != 3:
+		push_error("Need exactly 3 rumours to combine: WhoWhat, Where, When.")
+		return null
 
-		# Check each rumour is unique type and RUMOUR level
-		var type_check = {}
-		for rumour in rumours:
-				if not rumour is Intel or rumour.level != Enums.IntelLevel.RUMOUR:
-						push_error("Can only combine RUMOUR level intel.")
-						return null
-				if rumour.type in type_check:
-						push_error("Cannot combine duplicate rumour types.")
-						return null
-				type_check[rumour.type] = true
+	# Check each rumour is unique type and RUMOUR level
+	var type_check = {}
+	for rumour in rumours:
+		if not rumour is Intel or rumour.level != Enums.IntelLevel.RUMOUR:
+			push_error("Can only combine RUMOUR level intel.")
+			return null
+		if rumour.type in type_check:
+			push_error("Cannot combine duplicate rumour types.")
+			return null
+		type_check[rumour.type] = true
 
-		# Ensure all required types are present
-		var required_types = [Enums.IntelType.WHOWHAT, Enums.IntelType.WHERE, Enums.IntelType.WHEN]
-		for req_type in required_types:
-				if req_type not in type_check:
-						push_error("Missing required rumour type: %s" % [req_type])
-						return null
+	# Ensure all required types are present
+	var required_types = [Enums.IntelType.WHOWHAT, Enums.IntelType.WHERE, Enums.IntelType.WHEN]
+	for req_type in required_types:
+		if req_type not in type_check:
+			push_error("Missing required rumour type: %s" % [req_type])
+			return null
 
-		# Create new PLAN level intel
-		profile['description'] = "Plan based on multiple rumours."
-		var plan = Intel.new(profile)
+	# Extract related data from each rumour
+	for rumour in rumours:
+		match rumour.type:
+			Enums.IntelType.WHOWHAT:
+				related_character = rumour.related_character
+			Enums.IntelType.WHERE:
+				related_poi = rumour.related_poi
+			Enums.IntelType.WHEN:
+				related_duration = rumour.related_duration
+				related_expiry = rumour.related_expiry
 
-		# Optional: Combine descriptions or add more details to the plan
-		# Example:
-		# plan.description = "Plan based on:\n" + 
-		#     "WhoWhat: " + rumours[0].description + "\n" +
-		#     "Where: " + rumours[1].description + "\n" +
-		#     "When: " + rumours[2].description
+	# Assign the extracted data to the plan's profile
+	profile['description'] = "Plan based on multiple rumours."
+	profile['related_character'] = related_character
+	profile['related_poi'] = related_poi
+	profile['related_duration'] = related_duration
+	profile['related_expiry'] = related_expiry
 
-		# Destroy rumours by freeing them
-		for rumour in rumours:
-				rumour.free()
+	# Create new PLAN level intel
+	var plan = Intel.new(profile)
 
-		print("Combined rumours into PLAN level intel.")
+	# Destroy rumours by freeing them
+	for rumour in rumours:
+		rumour.free()
 
-		return plan
+	print("Combined rumours into PLAN level intel.")
+	return plan

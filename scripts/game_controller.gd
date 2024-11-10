@@ -65,6 +65,7 @@ func process_turn() -> void:
 	for action in actions:
 		var log_message: String
 		var success: bool = false
+
 		match action.action_type:
 			Enums.ActionType.ESPIONAGE:
 				print("Action: ", action.poi, action.characters)
@@ -85,32 +86,39 @@ func process_turn() -> void:
 				var subtle_roll = _bounded_sigmoid_check(combined_subtlety, true)
 				
 				if(subtle_roll.success):
-					log_message = "Succeeded subtlety check..." + str(subtle_roll)
+					log_message = "Succeeded subtlety check..."
+					# log_message += str(subtle_roll)
+					current_turn_log.append(log_message)
+
+				else:
+					log_message = "Failed subtlety check... heat increased"
+					# log_message += str(subtle_roll)
+					action.poi.parent_district.heat += 5
 					current_turn_log.append(log_message)
 					
-					match action.poi.stat_check_type:
-						Enums.StatCheckType.SMARTS:
-							
-							var smarts_roll = _bounded_sigmoid_check(combined_smarts, true)
-							
-							if(smarts_roll.success):
-								log_message = "Succeeded smarts check..." + str(smarts_roll)
-								current_turn_log.append(log_message)
-								success = true
-							else: 
-								log_message = "Failed smarts check..." + str(smarts_roll)
-								current_turn_log.append(log_message)
-						Enums.StatCheckType.CHARM:
-							if(_bounded_sigmoid_check(combined_charm)):
-								log_message = "Succeeded charm check..."
-								current_turn_log.append(log_message)
-								success = true
-							else: 
-								log_message = "Failed charm check..."
-								current_turn_log.append(log_message)
-				else:
-					log_message = "Failed subtlety check..." + str(subtle_roll)
-					current_turn_log.append(log_message)
+				match action.poi.stat_check_type:
+					Enums.StatCheckType.SMARTS:
+						
+						var smarts_roll = _bounded_sigmoid_check(combined_smarts, true)
+						
+						if(smarts_roll.success):
+							log_message = "Succeeded smarts check..."
+						# log_message += str(smarts_roll)
+							current_turn_log.append(log_message)
+							success = true
+						else: 
+							log_message = "Failed smarts check..."
+						# log_message += str(smarts_roll)
+							current_turn_log.append(log_message)
+
+					Enums.StatCheckType.CHARM:
+						if(_bounded_sigmoid_check(combined_charm)):
+							log_message = "Succeeded charm check..."
+							current_turn_log.append(log_message)
+							success = true
+						else: 
+							log_message = "Failed charm check..."
+							current_turn_log.append(log_message)
 				
 				
 		if success:
