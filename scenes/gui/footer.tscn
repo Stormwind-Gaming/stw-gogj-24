@@ -1,16 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://bv860whpjsldd"]
+[gd_scene load_steps=5 format=3 uid="uid://bv860whpjsldd"]
 
 [ext_resource type="Script" path="res://scripts/gui/footer.gd" id="1_hd6ji"]
 [ext_resource type="Theme" uid="uid://b4qdww0jic2xr" path="res://assets/themes/footer_theme.tres" id="2_3ln20"]
-[ext_resource type="Texture2D" uid="uid://idbpgpsxg2hj" path="res://assets/sprites/folder_tab.png" id="3_w01wa"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g4xvg"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2ecj2"]
-texture = ExtResource("3_w01wa")
-modulate_color = Color(0.695503, 0.695503, 0.695503, 1)
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uc521"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qsspa"]
 bg_color = Color(0, 0, 0, 1)
@@ -24,10 +17,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 0
 script = ExtResource("1_hd6ji")
-show_character_list_button = NodePath("PanelContainer/VBoxContainer/HBoxContainer/PanelContainer3/HBoxContainer/CharacterListButton")
-show_intel_list_button = NodePath("PanelContainer/VBoxContainer/HBoxContainer/PanelContainer3/HBoxContainer/IntelListButton")
-show_log_list_button = NodePath("PanelContainer/VBoxContainer/HBoxContainer/PanelContainer3/HBoxContainer/LogListButton")
-show_agents_list_button = NodePath("PanelContainer/VBoxContainer/HBoxContainer/PanelContainer3/HBoxContainer/AgentsListButton")
+show_character_list_button = NodePath("PanelContainer/HBoxContainer/HBoxContainer/CharacterListButton")
+show_intel_list_button = NodePath("PanelContainer/HBoxContainer/HBoxContainer/IntelListButton")
+show_log_list_button = NodePath("PanelContainer/HBoxContainer/HBoxContainer/LogListButton")
+show_agents_list_button = NodePath("PanelContainer/HBoxContainer/HBoxContainer/AgentsListButton")
 turn_button = NodePath("PanelContainer2/TurnButton")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
@@ -41,48 +34,45 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_g4xvg")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer"]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
+size_flags_horizontal = 0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 30)
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/HBoxContainer"]
 layout_mode = 2
-
-[node name="PanelContainer3" type="PanelContainer" parent="PanelContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
+size_flags_vertical = 8
 theme = ExtResource("2_3ln20")
-theme_override_styles/panel = SubResource("StyleBoxTexture_2ecj2")
+theme_override_constants/separation = -8
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer/HBoxContainer/PanelContainer3"]
-layout_mode = 2
-theme = ExtResource("2_3ln20")
-
-[node name="AgentsListButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer/PanelContainer3/HBoxContainer"]
+[node name="AgentsListButton" type="Button" parent="PanelContainer/HBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 focus_mode = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 disabled = true
 text = "Agents"
 
-[node name="IntelListButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer/PanelContainer3/HBoxContainer"]
+[node name="IntelListButton" type="Button" parent="PanelContainer/HBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 focus_mode = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Intel"
 
-[node name="CharacterListButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer/PanelContainer3/HBoxContainer"]
+[node name="CharacterListButton" type="Button" parent="PanelContainer/HBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 focus_mode = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Characters"
 
-[node name="LogListButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer/PanelContainer3/HBoxContainer"]
+[node name="LogListButton" type="Button" parent="PanelContainer/HBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 focus_mode = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Log"
-
-[node name="VSeparator" type="VSeparator" parent="PanelContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_styles/separator = SubResource("StyleBoxEmpty_uc521")
 
 [node name="PanelContainer2" type="PanelContainer" parent="."]
 layout_mode = 1

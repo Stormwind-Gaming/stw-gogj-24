@@ -56,7 +56,8 @@ static func generate_random_profile() -> Dictionary:
 		"last_name": last_name, 
 		"nationality": nationality,
 		"gender": gender,
-		"image_path": selected_image
+		"image_path": selected_image,
+		"national_id_number": randi() % 1000000
 	}
 
 static func create_character() -> Character:

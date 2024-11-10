@@ -1,53 +1,53 @@
 [gd_resource type="Theme" load_steps=11 format=3 uid="uid://b4qdww0jic2xr"]
 
-[ext_resource type="Texture2D" uid="uid://idbpgpsxg2hj" path="res://assets/sprites/folder_tab.png" id="1_ipaax"]
+[ext_resource type="Texture2D" uid="uid://dyjq4mifv1vl6" path="res://assets/sprites/folder_tab_2.png" id="2_62gwg"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2qade"]
-texture = ExtResource("1_ipaax")
+texture = ExtResource("2_62gwg")
 texture_margin_left = 20.0
 texture_margin_right = 30.0
 modulate_color = Color(0.521141, 0.521141, 0.521141, 1)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1l4vb"]
-texture = ExtResource("1_ipaax")
+texture = ExtResource("2_62gwg")
 texture_margin_left = 20.0
 texture_margin_right = 30.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8ybr5"]
-texture = ExtResource("1_ipaax")
+texture = ExtResource("2_62gwg")
 texture_margin_left = 20.0
 texture_margin_right = 30.0
 modulate_color = Color(0.838897, 0.838897, 0.838897, 1)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_58ipn"]
-texture = ExtResource("1_ipaax")
+texture = ExtResource("2_62gwg")
 texture_margin_left = 20.0
 texture_margin_right = 30.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fmi0j"]
-texture = ExtResource("1_ipaax")
+texture = ExtResource("2_62gwg")
 texture_margin_left = 20.0
 texture_margin_right = 30.0
 modulate_color = Color(0.277529, 0.277527, 0.277527, 1)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_egn7a"]
-texture = ExtResource("1_ipaax")
+texture = ExtResource("2_62gwg")
 texture_margin_left = 20.0
 texture_margin_right = 30.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_a0nuh"]
-texture = ExtResource("1_ipaax")
+texture = ExtResource("2_62gwg")
 texture_margin_left = 20.0
 texture_margin_right = 30.0
 modulate_color = Color(0.817521, 0.817521, 0.817521, 1)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5pdmu"]
-texture = ExtResource("1_ipaax")
+texture = ExtResource("2_62gwg")
 texture_margin_left = 20.0
 texture_margin_right = 30.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f3fnb"]
-texture = ExtResource("1_ipaax")
+texture = ExtResource("2_62gwg")
 texture_margin_left = 20.0
 texture_margin_right = 30.0
 

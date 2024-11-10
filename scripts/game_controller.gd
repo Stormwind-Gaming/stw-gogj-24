@@ -4,11 +4,13 @@ var district_focused: District = null
 
 var poi_for_radial: PointOfInterest
 var radial_menu_open: RadialMenu
+var districts: Array[District] = []
 var calendar: Calendar
 
 signal end_turn_initiated(num: int)
 signal end_turn_complete(num: int)
 signal district_just_focused(district: District)
+signal new_district_registered(district: District)
 
 func _ready() -> void:
 	calendar = Calendar.new()
@@ -165,6 +167,10 @@ func _bounded_sigmoid_check(stat: int, detailed: bool = false, bottom_bound: flo
 
 #region District and PoIs
 
+func register_district(district: District) -> void:
+	districts.append(district)
+	emit_signal("new_district_registered")
+
 func set_district_focused(district: District = null) -> void:
 	if district_focused == district:
 		return
@@ -207,6 +213,7 @@ func _on_radial_option_selected(option: Enums.ActionType) -> void:
 	add_child(post_radial_assignment)
 
 func _on_post_radial_assignment_option_selected(option: Enums.ActionType, selected_agents: Array[Character], additions: Array) -> void:
+	print("_on_post_radial_assignment_option_selected")
 	if option != Enums.ActionType.NONE and option != Enums.ActionType.INFO:
 		GameController.add_action(poi_for_radial, selected_agents, option)
 
@@ -227,3 +234,12 @@ func get_resistance_level() -> int:
 		resistance_level += character.sympathy
 
 	return resistance_level / keys.size()
+
+func get_heat_level() -> int:
+	if districts.size() == 0:
+		return 0
+	var heat = 0
+	for district in districts:
+		heat += district.heat
+	
+	return floor(heat / districts.size())

@@ -15,13 +15,14 @@ func _ready() -> void:
 	# _set_district_details on all districts
 	for district in districts:
 		_set_district_details(district)
+		GameController.register_district(district)
 		
 	_setup_agents()
 
 
 func _process(delta: float) -> void:
 	if GameController.district_focused != null:
-		if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
+		if Input.is_mouse_button_pressed(MOUSE_BUTTON_MIDDLE):
 			GameController.set_district_focused()
 			$Camera2D.enabled = true
 

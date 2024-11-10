@@ -1,6 +1,13 @@
 extends PanelContainer
 
 @export var character_texture: TextureRect
+
+@export var gender_label: Label
+@export var dob_label: Label
+@export var profession_label: Label
+@export var national_id_label: Label
+@export var sympathy_progress: ProgressBar
+
 @export var charm_label: Label
 @export var subtlety_label: Label
 @export var smarts_label: Label
@@ -14,6 +21,22 @@ func _ready():
 	
 	var picture_texture = load(character.picture)
 	character_texture.texture = picture_texture
+
+	var gender = ''
+	match character.gender:
+		Enums.CharacterGender.MALE:
+			gender = 'Male'
+			pass
+		Enums.CharacterGender.FEMALE:
+			gender = 'Female'
+			pass
+		_:
+			pass
+	gender_label.text = gender
+	dob_label.text = character.dob
+	profession_label.text = character.profession
+	national_id_label.text = str(character.national_id_number)
+	sympathy_progress.value = character.sympathy
 
 func _on_TextureButton_pressed():
 	$MarginContainer/VBoxContainer/Panel.visible = true  # Show the border on press

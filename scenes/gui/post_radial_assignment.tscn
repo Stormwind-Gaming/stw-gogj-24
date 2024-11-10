@@ -1,165 +1,212 @@
-[gd_scene load_steps=6 format=3 uid="uid://boskl008sic56"]
+[gd_scene load_steps=13 format=3 uid="uid://boskl008sic56"]
 
 [ext_resource type="Script" path="res://scripts/gui/post_radial_assignment.gd" id="1_2cqh1"]
+[ext_resource type="Texture2D" uid="uid://ugplfwcgi724" path="res://assets/sprites/popup_panel_background.png" id="2_7wx6u"]
+[ext_resource type="Texture2D" uid="uid://cymum3g0jnd7l" path="res://assets/sprites/popup_panel_background_75.png" id="2_kog7f"]
 [ext_resource type="Texture2D" uid="uid://csqwxwqhukb2d" path="res://assets/icons/charm.png" id="2_p7nfs"]
 [ext_resource type="Texture2D" uid="uid://dotbv717adkpq" path="res://assets/icons/subtlety.png" id="3_ksjn2"]
 [ext_resource type="Texture2D" uid="uid://kmxekyb2gpex" path="res://assets/icons/smarts.png" id="4_dfhkm"]
+[ext_resource type="Texture2D" uid="uid://ctiq8sa8m5iv" path="res://assets/sprites/close_ribbon_black.png" id="7_a7quo"]
+[ext_resource type="Texture2D" uid="uid://5vk04yychida" path="res://assets/sprites/close_ribbon_white.png" id="8_iwpau"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_n3dqk"]
+texture = ExtResource("2_7wx6u")
+texture_margin_right = 50.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_11yuh"]
+bg_color = Color(0.780392, 0.678431, 0.498039, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h1ejo"]
+bg_color = Color(0.780392, 0.678431, 0.498039, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7d8bq"]
 
 [node name="Post Radial Assignment" type="Window" node_paths=PackedStringArray("continue_button", "agent_card_grid", "asigned_label", "assigned_agents_label", "charm_label", "subtlety_label", "smarts_label")]
-title = "<type of plan>"
-position = Vector2i(500, 250)
-size = Vector2i(600, 400)
+transparent_bg = true
+initial_position = 1
+size = Vector2i(800, 700)
+borderless = true
+always_on_top = true
 script = ExtResource("1_2cqh1")
-continue_button = NodePath("PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/Button")
-agent_card_grid = NodePath("PanelContainer/MarginContainer/HBoxContainer/LeftPanelContainer/MarginContainer/HBoxContainer/ScrollContainer/GridContainer")
-asigned_label = NodePath("PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer/Label")
-assigned_agents_label = NodePath("PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer/AssignedAgents")
-charm_label = NodePath("PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/CharmHBoxContainer/Label")
-subtlety_label = NodePath("PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/SubtletyHBoxContainer/Label")
-smarts_label = NodePath("PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/SmartsHBoxContainer/Label")
+continue_button = NodePath("NinePatchRect/MarginContainer/HBoxContainer/VBoxContainer/Button")
+agent_card_grid = NodePath("NinePatchRect/MarginContainer/HBoxContainer/LeftPanelContainer/MarginContainer/HBoxContainer/ScrollContainer/GridContainer")
+asigned_label = NodePath("NinePatchRect/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer/Label")
+assigned_agents_label = NodePath("NinePatchRect/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer/AssignedAgents")
+charm_label = NodePath("NinePatchRect/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/CharmHBoxContainer/Label")
+subtlety_label = NodePath("NinePatchRect/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/SubtletyHBoxContainer/Label")
+smarts_label = NodePath("NinePatchRect/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/SmartsHBoxContainer/Label")
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+texture = ExtResource("2_kog7f")
+patch_margin_left = 90
+patch_margin_top = 53
+patch_margin_right = 138
+patch_margin_bottom = 26
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="NinePatchRect"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_n3dqk")
+
+[node name="MarginContainer" type="MarginContainer" parent="NinePatchRect"]
+layout_mode = 2
+offset_right = 750.0
+offset_bottom = 600.0
+theme_override_constants/margin_left = 90
+theme_override_constants/margin_top = 53
+theme_override_constants/margin_right = 96
+theme_override_constants/margin_bottom = -72
+
+[node name="HBoxContainer" type="HBoxContainer" parent="NinePatchRect/MarginContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer"]
-layout_mode = 2
-
-[node name="LeftPanelContainer" type="PanelContainer" parent="PanelContainer/MarginContainer/HBoxContainer"]
+[node name="LeftPanelContainer" type="PanelContainer" parent="NinePatchRect/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_11yuh")
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer/HBoxContainer/LeftPanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="NinePatchRect/MarginContainer/HBoxContainer/LeftPanelContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/HBoxContainer/LeftPanelContainer/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="NinePatchRect/MarginContainer/HBoxContainer/LeftPanelContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/MarginContainer/HBoxContainer/LeftPanelContainer/MarginContainer/HBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="NinePatchRect/MarginContainer/HBoxContainer/LeftPanelContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
 
-[node name="GridContainer" type="GridContainer" parent="PanelContainer/MarginContainer/HBoxContainer/LeftPanelContainer/MarginContainer/HBoxContainer/ScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-columns = 2
-
-[node name="VSeparator" type="VSeparator" parent="PanelContainer/MarginContainer/HBoxContainer/LeftPanelContainer/MarginContainer/HBoxContainer"]
-visible = false
-layout_mode = 2
-
-[node name="GridContainer" type="GridContainer" parent="PanelContainer/MarginContainer/HBoxContainer/LeftPanelContainer/MarginContainer/HBoxContainer"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="RightPanelContainer" type="PanelContainer" parent="PanelContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="GridContainer" type="GridContainer" parent="NinePatchRect/MarginContainer/HBoxContainer/LeftPanelContainer/MarginContainer/HBoxContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="NinePatchRect/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RightPanelContainer" type="PanelContainer" parent="NinePatchRect/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_h1ejo")
+
+[node name="MarginContainer" type="MarginContainer" parent="NinePatchRect/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="NinePatchRect/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="NinePatchRect/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
 text = "Assigned:"
 autowrap_mode = 2
 
-[node name="AssignedAgents" type="Label" parent="PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer"]
+[node name="AssignedAgents" type="Label" parent="NinePatchRect/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Separator" type="HSeparator" parent="PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer"]
+[node name="Separator" type="HSeparator" parent="NinePatchRect/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 0
 theme_override_styles/separator = SubResource("StyleBoxEmpty_7d8bq")
 
-[node name="HBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer"]
+[node name="HBoxContainer" type="VBoxContainer" parent="NinePatchRect/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="CharmHBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="CharmHBoxContainer" type="HBoxContainer" parent="NinePatchRect/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 5
 
-[node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/CharmHBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="NinePatchRect/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/CharmHBoxContainer"]
 layout_mode = 2
 texture = ExtResource("2_p7nfs")
 expand_mode = 3
 
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/CharmHBoxContainer"]
+[node name="Label" type="Label" parent="NinePatchRect/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/CharmHBoxContainer"]
 layout_mode = 2
 text = "Charm: 0"
 
-[node name="Separator" type="HSeparator" parent="PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="Separator" type="HSeparator" parent="NinePatchRect/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="SubtletyHBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="SubtletyHBoxContainer" type="HBoxContainer" parent="NinePatchRect/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 5
 
-[node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/SubtletyHBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="NinePatchRect/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/SubtletyHBoxContainer"]
 layout_mode = 2
 texture = ExtResource("3_ksjn2")
 expand_mode = 3
 
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/SubtletyHBoxContainer"]
+[node name="Label" type="Label" parent="NinePatchRect/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/SubtletyHBoxContainer"]
 layout_mode = 2
 text = "Subtlety: 0"
 
-[node name="Separator2" type="HSeparator" parent="PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="Separator2" type="HSeparator" parent="NinePatchRect/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="SmartsHBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="SmartsHBoxContainer" type="HBoxContainer" parent="NinePatchRect/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 5
 
-[node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/SmartsHBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="NinePatchRect/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/SmartsHBoxContainer"]
 layout_mode = 2
 texture = ExtResource("4_dfhkm")
 expand_mode = 3
 
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/SmartsHBoxContainer"]
+[node name="Label" type="Label" parent="NinePatchRect/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/SmartsHBoxContainer"]
 layout_mode = 2
 text = "Smarts: 0"
 
-[node name="Button" type="Button" parent="PanelContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="Button" type="Button" parent="NinePatchRect/MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 focus_mode = 0
 disabled = true
 text = "Assign Task"
 
-[connection signal="pressed" from="PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/Button" to="." method="_on_button_pressed"]
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -100.0
+offset_bottom = 100.0
+grow_horizontal = 0
+theme_override_constants/margin_right = 20
+
+[node name="TextureButton" type="TextureButton" parent="MarginContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+focus_mode = 0
+texture_normal = ExtResource("7_a7quo")
+texture_pressed = ExtResource("7_a7quo")
+texture_hover = ExtResource("8_iwpau")
+
+[connection signal="pressed" from="NinePatchRect/MarginContainer/HBoxContainer/VBoxContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="MarginContainer/TextureButton" to="." method="_on_close_button_pressed"]

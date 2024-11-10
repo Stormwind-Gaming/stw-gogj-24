@@ -9,6 +9,10 @@ var picture : String
 
 var first_name: String
 var last_name: String
+var dob: String
+var national_id_number: int
+var profession: String
+var associated_poi: PointOfInterest
 
 # Stats
 var charm: int
@@ -20,13 +24,15 @@ var sympathy: int # 1-99 how likely is this character to join the resistance?
 var recruited: bool = false
 var known: bool = false
 
-func _init(profile:Dictionary):
-	
+func _init(profile: Dictionary):
 	self.first_name = profile['first_name']
 	self.last_name = profile['last_name']
 	self.nationality = profile['nationality']
 	self.gender = profile['gender']
 	self.picture = profile['image_path']
+	self.national_id_number = profile['national_id_number']
+	self.dob = GameController.calendar.get_new_birthdate()
+	self.profession = 'unknown'
 	
 	self.charm = _generateBellCurveStat()
 	self.subtlety = _generateBellCurveStat()

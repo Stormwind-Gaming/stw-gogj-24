@@ -22,9 +22,6 @@ func _ready():
 	# set title
 	title = '%s Task' % Globals.get_action_type_string(option)
 
-	# Connect the close_requested signal
-	close_requested.connect(_on_close_requested)
-	
 	# populate the agents list
 	var agents = []
 	for character in GlobalRegistry.get_all_objects(Enums.Registry_Category.CHARACTER):
@@ -41,9 +38,6 @@ func _ready():
 	# set max agents to 1 or 2
 	max_agents = randi() % 2 + 1
 	asigned_label.text = 'Assigned Agents (0/%s):' % max_agents
-
-func _on_close_requested():
-	queue_free()
 
 func _on_agent_card_selected(agent: Character, selected: bool):
 	# check if the agent is already selected
@@ -94,4 +88,9 @@ func _calculate_stats():
 
 func _on_button_pressed() -> void:
 	emit_signal('post_radial_assignment_option', option, selected_agents, [])
+	queue_free()
+
+
+func _on_close_button_pressed() -> void:
+	emit_signal('post_radial_assignment_option', Enums.ActionType.NONE, selected_agents, [])
 	queue_free()
