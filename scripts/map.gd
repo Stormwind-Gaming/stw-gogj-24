@@ -10,13 +10,12 @@ func _ready() -> void:
 	randomize()
 
 	town_name = Globals.town_names[randi() % Globals.town_names.size()]
-	$CanvasLayer/Map_Panel_Left.set_town_name(town_name)
 
 	# _set_district_details on all districts
 	for district in districts:
 		_set_district_details(district)
 		GameController.register_district(district)
-		
+
 	_setup_agents()
 
 	IntelFactory.create_rumour(IntelFactory.RumourConfig.new(100,0,0))
@@ -48,7 +47,6 @@ func _set_district_details(district: District) -> void:
 
 func _on_district_hovered(district: District) -> void:
 	if GameController.district_focused == null:
-		$CanvasLayer/Map_Panel_Right.set_district_details(district)
 		district.set_highlight_color()
 	
 func _on_district_unhovered(district: District) -> void:
@@ -66,10 +64,10 @@ func _on_district_clicked(district: District) -> void:
 	GameController.set_district_focused(district)
 
 func _on_poi_hovered(poi: PointOfInterest) -> void:
-	$CanvasLayer/Map_Panel_Right.set_poi_details(poi)
+	pass
 
 func _on_poi_unhovered() -> void:
-	$CanvasLayer/Map_Panel_Right.set_poi_details()
+	pass
 
 #endregion Districts
 
@@ -94,5 +92,7 @@ func _setup_agents() -> void:
 	var agent1 = population[random_key1]
 	var agent2 = population[random_key2]
 	
+	agent1.sympathy = 80
 	agent1.set_agent()
+	agent2.sympathy = 80
 	agent2.set_agent()

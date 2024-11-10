@@ -21,9 +21,6 @@ var selected_intel = {
 }
 
 func _ready():
-	# Connect the close_requested signal
-	close_requested.connect(_on_close_requested)
-
 	create_plan_btn.visible = false
 	create_plan_btn.pressed.connect(_on_create_plan_btn_pressed)
 	
@@ -35,9 +32,6 @@ func _ready():
 	populate_intel_list(intel)
 	populate_plan_list(intel)
 
-func _on_close_requested():
-	queue_free()
-	
 func clear_container(container):
 	while container.get_child_count() > 0:
 		container.remove_child(container.get_child(0))
@@ -139,3 +133,7 @@ func _reset():
 	when_description.text = ""
 	
 	create_plan_btn.visible = false
+
+
+func _on_close_button_pressed() -> void:
+	queue_free()

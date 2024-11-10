@@ -1,14 +1,27 @@
-[gd_scene load_steps=5 format=3 uid="uid://5oqcliii8tmx"]
+[gd_scene load_steps=7 format=3 uid="uid://5oqcliii8tmx"]
 
 [ext_resource type="Script" path="res://scripts/gui/character_list.gd" id="1_dabvh"]
 [ext_resource type="Texture2D" uid="uid://cymum3g0jnd7l" path="res://assets/sprites/popup_panel_background_75.png" id="2_a4sd7"]
+[ext_resource type="Theme" uid="uid://dexax20p2eewp" path="res://assets/themes/base_theme.tres" id="3_7dsct"]
 [ext_resource type="Texture2D" uid="uid://ctiq8sa8m5iv" path="res://assets/sprites/close_ribbon_black.png" id="3_mderh"]
 [ext_resource type="Texture2D" uid="uid://5vk04yychida" path="res://assets/sprites/close_ribbon_white.png" id="4_gafdp"]
 
-[node name="CharacterList" type="Window"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vt46n"]
+
+[node name="CharacterList" type="Window" node_paths=PackedStringArray("all_character_list_container", "sympathiser_list_container", "agent_list_container", "agents_label")]
+transparent_bg = true
 initial_position = 2
 size = Vector2i(800, 700)
+unresizable = true
+borderless = true
+always_on_top = true
+transparent = true
+theme = ExtResource("3_7dsct")
 script = ExtResource("1_dabvh")
+all_character_list_container = NodePath("NinePatchRect/MarginContainer/TabContainer/Known Characters/MarginContainer/AllGridContainer")
+sympathiser_list_container = NodePath("NinePatchRect/MarginContainer/TabContainer/Sympathisers/MarginContainer/HBoxContainer/VBoxContainer2/SympathiserContainer")
+agent_list_container = NodePath("NinePatchRect/MarginContainer/TabContainer/Sympathisers/MarginContainer/HBoxContainer/VBoxContainer/AgentVBoxContainer")
+agents_label = NodePath("NinePatchRect/MarginContainer/TabContainer/Sympathisers/MarginContainer/HBoxContainer/VBoxContainer/Label")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
 anchors_preset = 15
@@ -26,19 +39,73 @@ patch_margin_bottom = 26
 layout_mode = 2
 offset_right = 750.0
 offset_bottom = 600.0
-theme_override_constants/margin_left = 90
-theme_override_constants/margin_top = 53
-theme_override_constants/margin_right = 96
-theme_override_constants/margin_bottom = -72
+theme_override_constants/margin_left = 89
+theme_override_constants/margin_top = 19
+theme_override_constants/margin_right = 78
+theme_override_constants/margin_bottom = -84
 
-[node name="PanelContainer" type="PanelContainer" parent="NinePatchRect/MarginContainer"]
+[node name="TabContainer" type="TabContainer" parent="NinePatchRect/MarginContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_vt46n")
+current_tab = 0
+
+[node name="Sympathisers" type="PanelContainer" parent="NinePatchRect/MarginContainer/TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="NinePatchRect/MarginContainer/TabContainer/Sympathisers"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="NinePatchRect/MarginContainer/TabContainer/Sympathisers/MarginContainer"]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="NinePatchRect/MarginContainer/PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="NinePatchRect/MarginContainer/TabContainer/Sympathisers/MarginContainer/HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
 
-[node name="CharacterListContainer" type="VBoxContainer" parent="NinePatchRect/MarginContainer/PanelContainer/MarginContainer"]
+[node name="Label" type="Label" parent="NinePatchRect/MarginContainer/TabContainer/Sympathisers/MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
+text = "Agents"
+
+[node name="AgentVBoxContainer" type="VBoxContainer" parent="NinePatchRect/MarginContainer/TabContainer/Sympathisers/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VSeparator" type="VSeparator" parent="NinePatchRect/MarginContainer/TabContainer/Sympathisers/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="NinePatchRect/MarginContainer/TabContainer/Sympathisers/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="NinePatchRect/MarginContainer/TabContainer/Sympathisers/MarginContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Sympathisers"
+
+[node name="SympathiserContainer" type="GridContainer" parent="NinePatchRect/MarginContainer/TabContainer/Sympathisers/MarginContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Known Characters" type="PanelContainer" parent="NinePatchRect/MarginContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="NinePatchRect/MarginContainer/TabContainer/Known Characters"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="AllGridContainer" type="GridContainer" parent="NinePatchRect/MarginContainer/TabContainer/Known Characters/MarginContainer"]
+layout_mode = 2
+columns = 5
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchors_preset = 1

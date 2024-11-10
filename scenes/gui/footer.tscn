@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://bv860whpjsldd"]
 
-[ext_resource type="Theme" uid="uid://c78hoq7n7ae54" path="res://assets/themes/typewriter_label_theme.tres" id="1_1x5cj"]
+[ext_resource type="Theme" uid="uid://dexax20p2eewp" path="res://assets/themes/base_theme.tres" id="1_6mvh2"]
 [ext_resource type="Script" path="res://scripts/gui/footer.gd" id="1_hd6ji"]
 [ext_resource type="Theme" uid="uid://b4qdww0jic2xr" path="res://assets/themes/footer_theme.tres" id="2_3ln20"]
 [ext_resource type="FontFile" uid="uid://djwj10bhtdik" path="res://assets/fonts/veteran typewriter.ttf" id="4_kygcg"]
@@ -18,7 +18,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 0
-theme = ExtResource("1_1x5cj")
+theme = ExtResource("1_6mvh2")
 script = ExtResource("1_hd6ji")
 show_character_list_button = NodePath("PanelContainer/HBoxContainer/HBoxContainer/CharacterListButton")
 show_intel_list_button = NodePath("PanelContainer/HBoxContainer/HBoxContainer/IntelListButton")

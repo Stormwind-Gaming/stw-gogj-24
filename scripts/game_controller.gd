@@ -7,6 +7,8 @@ var radial_menu_open: RadialMenu
 var districts: Array[District] = []
 var calendar: Calendar
 
+var max_agents: int = 2
+
 signal end_turn_initiated(num: int)
 signal end_turn_complete(num: int)
 signal district_just_focused(district: District)

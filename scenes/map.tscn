@@ -1,10 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://c7y1ejxri1bfk"]
+[gd_scene load_steps=10 format=3 uid="uid://c7y1ejxri1bfk"]
 
 [ext_resource type="Script" path="res://scripts/map.gd" id="1_ppup2"]
 [ext_resource type="Texture2D" uid="uid://cuyfkmlgcpdhb" path="res://assets/city.svg" id="2_b3fwo"]
-[ext_resource type="Texture2D" uid="uid://cymt3ntm6bmk0" path="res://assets/map_panels.png" id="4_k5atg"]
-[ext_resource type="PackedScene" uid="uid://bx5tric4sp02h" path="res://scenes/gui/map_panel_left.tscn" id="4_yt3a5"]
-[ext_resource type="PackedScene" uid="uid://krwk7aduwjom" path="res://scenes/gui/map_panel_right.tscn" id="5_dgovt"]
 [ext_resource type="PackedScene" uid="uid://b1vvls3nbthm6" path="res://scenes/districts/district_n.tscn" id="5_ony1k"]
 [ext_resource type="PackedScene" uid="uid://cdhfja2nolmpl" path="res://scenes/districts/district_c.tscn" id="6_5acc7"]
 [ext_resource type="PackedScene" uid="uid://bnshi2p8ra26w" path="res://scenes/districts/district_sw.tscn" id="7_dde3t"]
@@ -53,17 +50,6 @@ anchor_mode = 0
 position_smoothing_enabled = true
 position_smoothing_speed = 4.0
 script = ExtResource("7_f0cgf")
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-visible = false
-
-[node name="map_panels" type="Sprite2D" parent="CanvasLayer"]
-texture = ExtResource("4_k5atg")
-centered = false
-
-[node name="Map_Panel_Left" parent="CanvasLayer" instance=ExtResource("4_yt3a5")]
-
-[node name="Map_Panel_Right" parent="CanvasLayer" instance=ExtResource("5_dgovt")]
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="."]
 

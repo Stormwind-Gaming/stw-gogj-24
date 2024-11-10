@@ -13,9 +13,13 @@ extends PanelContainer
 @export var subtlety_label: Label
 @export var smarts_label: Label
 
+@export var assignment_button: TextureButton
+@export var character_page_button: TextureButton
+
 var character : Character
 
 signal agent_card_selected(character: Character)
+signal character_card_pressed(character: Character)
 
 func _ready():
 	$MarginContainer/VBoxContainer/Label.text = character.first_name + " " + character.last_name
@@ -41,12 +45,6 @@ func _ready():
 
 	_set_status_overlay(character.current_status)
 
-func _on_TextureButton_pressed():
-	$MarginContainer/VBoxContainer/Panel.visible = true  # Show the border on press
-
-func _on_TextureButton_released():
-	$MarginContainer/VBoxContainer/Panel.visible = false  # Hide the border when released
-
 func set_character(character_id: String):
 	character = GlobalRegistry.get_object(Enums.Registry_Category.CHARACTER, character_id)
 	charm_label.text = str(character.charm)
@@ -54,12 +52,12 @@ func set_character(character_id: String):
 	smarts_label.text = str(character.smarts)
 
 func disable_card() -> void:
-	$TextureButton.disabled = true
+	assignment_button.disabled = true
 
 func enable_card() -> void:
-	$TextureButton.disabled = false
+	assignment_button.disabled = false
 
-func _on_texture_button_toggled(toggled_on: bool) -> void:
+func _on_assignment_button_toggled(toggled_on: bool) -> void:
 	emit_signal('agent_card_selected', character, toggled_on)
 
 func _set_status_overlay(status: Enums.CharacterStatus) -> void:
@@ -84,3 +82,12 @@ func check_assignment_selection(poi: PointOfInterest, option: Enums.ActionType) 
 				$TextureButton.button_pressed = true
 			else:
 				self.modulate = Color(0.5, 0.5, 0.5)
+
+func on_character_list_page() -> void:
+	# this function disables the normal click functionality of the card and enables the character list page functionality
+	assignment_button.visible = false
+	character_page_button.visible = true
+	pass
+
+func _on_character_page_button_pressed() -> void:
+	emit_signal('character_card_pressed', character)

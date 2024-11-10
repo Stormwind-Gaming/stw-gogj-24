@@ -40,8 +40,11 @@ func _init(profile: Dictionary):
 	self.smarts = _generateBellCurveStat()
 	
 	self.sympathy = _generateLinearStat(1,100)
+
+	if self.sympathy > 80:
+		self.current_status = Enums.CharacterStatus.SYMPATHISER
 	
-	self.id = GlobalRegistry.register_object(Enums.Registry_Category.CHARACTER, self, self.first_name + '_' + self.last_name)
+	self.id = GlobalRegistry.register_object(Enums.Registry_Category.CHARACTER, self, self.first_name + '_' + self.last_name + '_' + str(self.national_id_number))
 
 func _generateLinearStat(min:int, max:int) -> int:
 	return randi() % max + min 
