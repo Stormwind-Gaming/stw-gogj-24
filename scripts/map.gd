@@ -18,6 +18,10 @@ func _ready() -> void:
 		
 	_setup_agents()
 
+	IntelFactory.create_rumour(IntelFactory.RumourConfig.new(100,0,0))
+	IntelFactory.create_rumour(IntelFactory.RumourConfig.new(0,100,0))
+	IntelFactory.create_rumour(IntelFactory.RumourConfig.new(0,0,100))
+
 
 func _process(delta: float) -> void:
 	if GameController.district_focused != null:

@@ -4,127 +4,160 @@ class_name IntelFactory
 
 # Structure to store each action
 class RumourConfig:
-	var who_chance: int
-	var where_chance: int
-	var what_chance: int
-	var when_chance: int
+		var whowhat_chance: int
+		var where_chance: int
+		var when_chance: int
 
-	# Constructor for the RumourConfig class
-	func _init(who_chance: int, where_chance: int, what_chance: int, when_chance: int):
-		self.who_chance = who_chance
-		self.where_chance = where_chance
-		self.what_chance = what_chance
-		self.when_chance = when_chance
+		# Constructor for the RumourConfig class
+		func _init(whowhat_chance: int, where_chance: int, when_chance: int):
+				self.whowhat_chance = whowhat_chance
+				self.where_chance = where_chance
+				self.when_chance = when_chance
 
-		# Calculate the total chances
-		var total_chances = self.who_chance + self.where_chance + self.what_chance + self.when_chance
-		
-		# If the total is not 100, scale the chances proportionally
-		if total_chances != 100:
-			if total_chances == 0:
-				push_error("Error: All chances are zero. Cannot generate a rumour.")
-			else:
-				# Calculate the scaling factor
-				var scale_factor = 100.0 / total_chances
-				
-				# Scale the chances
-				self.who_chance = int(self.who_chance * scale_factor)
-				self.where_chance = int(self.where_chance * scale_factor)
-				self.what_chance = int(self.what_chance * scale_factor)
-				self.when_chance = int(self.when_chance * scale_factor)
-				
-				print("Scaled chances to 100%: Who: %d, Where: %d, What: %d, When: %d" % 
-						[self.who_chance, self.where_chance, self.what_chance, self.when_chance])
+				# Calculate the total chances
+				var total_chances = self.whowhat_chance + self.where_chance + self.when_chance
+
+				# If the total is not 100, scale the chances proportionally
+				if total_chances != 100:
+						if total_chances == 0:
+								push_error("Error: All chances are zero. Cannot generate a rumour.")
+						else:
+								# Calculate the scaling factor
+								var scale_factor = 100.0 / total_chances
+
+								# Scale the chances
+								self.whowhat_chance = int(self.whowhat_chance * scale_factor)
+								self.where_chance = int(self.where_chance * scale_factor)
+								self.when_chance = int(self.when_chance * scale_factor)
+
+								# Adjust for any rounding errors to ensure total is exactly 100
+								var adjusted_total = self.whowhat_chance + self.where_chance + self.when_chance
+								if adjusted_total != 100:
+										self.whowhat_chance += 100 - adjusted_total
+
+								print("Scaled chances to 100%: WhoWhat: %d, Where: %d, When: %d" % 
+												[self.whowhat_chance, self.where_chance, self.when_chance])
+
 
 static func create_rumour(config: RumourConfig) -> Intel:
-	print("Creating rumour...")
-	
-	var level: Enums.IntelLevel
-	var type: Enums.IntelType
-	var description: String
+		print("Creating rumour...")
 
-	# Generate a random number between 0 and 100
-	var random_value = randi() % 100
+		var profile = {
+			"level": Enums.IntelLevel.RUMOUR,
+		}
 
-	# Determine the type of rumour based on the random value and chances
-	if random_value < config.who_chance:
-		type = Enums.IntelType.WHO
-		var rumour_text = Globals.get_rumour_text(type)
-		
-		var characters = GlobalRegistry.get_all_objects(Enums.Registry_Category.CHARACTER)
-		var filtered = []
-		for key in characters:
-			var value = characters[key]
-			if !value.recruited:
-				filtered.append(value)
-		
-		var subject = filtered[randi() % filtered.size()]
-		var replacements = {"character": subject.first_name + " " + subject.last_name}
-		description = rumour_text.text.format(replacements)
-	elif random_value < config.who_chance + config.where_chance:
-		type = Enums.IntelType.WHERE
-		var rumour_text = Globals.get_rumour_text(type)
-		var pois = GlobalRegistry.get_all_objects(Enums.Registry_Category.POI)
-		var filtered = []
-		for key in pois:
-			var value = pois[key]
-			filtered.append(value)
-		
-		var subject = filtered[randi() % filtered.size()]
-		var replacements = {"poi": subject.poi_name}
-		description = rumour_text.text.format(replacements)
-		
-		
-	elif random_value < config.who_chance + config.where_chance + config.what_chance:
+		# Generate a random number between 0 and 99
+		var random_value = randi() % 100
 
-		type = Enums.IntelType.WHAT
-		var item = ItemFactory.create_item()
-		var rumour_text = Globals.get_rumour_text(type)
+		# Determine the type of rumour based on the random value and chances
+		if random_value < config.whowhat_chance:
+				profile['type'] = Enums.IntelType.WHOWHAT
+				var rumour_text = Globals.get_rumour_text(profile.type)
 
-		var replacements = {"item": item.item_name}
-		description = rumour_text.text.format(replacements)
+				profile['effect'] = [rumour_text.effect]
 
-	else:
-		type = Enums.IntelType.WHEN
-		var rumour_text = Globals.get_rumour_text(type)
+				# TODO: Rejig this with enums
+				if(rumour_text.subject == 'CHARACTER'):
+						var characters = GlobalRegistry.get_all_objects(Enums.Registry_Category.CHARACTER)
 
-		var times = [
-			"1-2 days",
-			"3-4 days",
-			"5-6 days",
-		]
+						var filtered_characters = []
+						for key in characters:
+								var value = characters[key]
+								if !value.recruited:
+										filtered_characters.append(value)
 
-		var time = times[randi() % times.size()]
+						var subject_character = filtered_characters[randi() % filtered_characters.size()]
+						var replacements = {
+								"character": subject_character.get_full_name(),
+						}
 
-		var replacements = {"time": time}
-		description = rumour_text.text.format(replacements)
+						profile['description'] = rumour_text.text.format(replacements)
+				else:
+						profile['description'] = rumour_text.text
 
-	print("Rumour created: Type: ", type, ", Description: ", description)
-	
-	return Intel.new(Enums.IntelLevel.RUMOUR, type, description)
+		elif random_value < config.whowhat_chance + config.where_chance:
+				profile['type'] = Enums.IntelType.WHERE
+				var rumour_text = Globals.get_rumour_text(profile.type)
+
+				profile['description'] = rumour_text.text
+				profile['effect'] = [rumour_text.effect]
+
+				# TODO: Rejig this with enums
+				if(rumour_text.subject == 'POI'):
+						var pois = GlobalRegistry.get_all_objects(Enums.Registry_Category.POI)
+
+						var filtered_pois = []
+						for key in pois:
+								var value = pois[key]
+								filtered_pois.append(value)
+
+						var subject_poi = filtered_pois[randi() % filtered_pois.size()]
+						var replacements = {
+								"poi": subject_poi.poi_name,
+						}
+
+						profile['description'] = rumour_text.text.format(replacements)
+				else:
+						profile['description'] = rumour_text.text
+
+		else:
+				profile['type'] = Enums.IntelType.WHEN
+
+				var rumour_text = Globals.get_rumour_text(profile.type)
+
+				profile['description'] = rumour_text.text
+				profile['effect'] = [rumour_text.effect]
+
+		print("Rumour created: Type: ", profile.type, ", Description: ", profile.description)
+
+		return Intel.new(profile)
+
 
 static func combine_rumours(rumours: Array) -> Intel:
-		# Verify we have exactly 4 rumours
-		if rumours.size() != 4:
-				push_error("Need exactly 4 rumours to combine")
+
+		var profile = {
+			"level": Enums.IntelLevel.PLAN,
+			"type": Enums.IntelType.COMPLETE,
+		}
+
+		# Verify we have exactly 3 rumours (whowhat, where, when)
+		if rumours.size() != 3:
+				push_error("Need exactly 3 rumours to combine: WhoWhat, Where, When.")
 				return null
-				
+
 		# Check each rumour is unique type and RUMOUR level
 		var type_check = {}
 		for rumour in rumours:
 				if not rumour is Intel or rumour.level != Enums.IntelLevel.RUMOUR:
-						push_error("Can only combine RUMOUR level intel")
+						push_error("Can only combine RUMOUR level intel.")
 						return null
 				if rumour.type in type_check:
-						push_error("Cannot combine duplicate rumour types") 
+						push_error("Cannot combine duplicate rumour types.")
 						return null
 				type_check[rumour.type] = true
-		
+
+		# Ensure all required types are present
+		var required_types = [Enums.IntelType.WHOWHAT, Enums.IntelType.WHERE, Enums.IntelType.WHEN]
+		for req_type in required_types:
+				if req_type not in type_check:
+						push_error("Missing required rumour type: %s" % [req_type])
+						return null
+
 		# Create new PLAN level intel
-		var plan = Intel.new(Enums.IntelLevel.PLAN, Enums.IntelType.COMPLETE, "Here is a PLAN")
-		
+		profile['description'] = "Plan based on multiple rumours."
+		var plan = Intel.new(profile)
+
+		# Optional: Combine descriptions or add more details to the plan
+		# Example:
+		# plan.description = "Plan based on:\n" + 
+		#     "WhoWhat: " + rumours[0].description + "\n" +
+		#     "Where: " + rumours[1].description + "\n" +
+		#     "When: " + rumours[2].description
+
 		# Destroy rumours by freeing them
 		for rumour in rumours:
 				rumour.free()
-		
+
+		print("Combined rumours into PLAN level intel.")
+
 		return plan

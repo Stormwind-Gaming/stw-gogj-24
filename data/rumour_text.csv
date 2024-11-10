@@ -1,21 +1,27 @@
-type,text
-WHO,Our informant believes {character} might be working for the enemy. We need to keep an eye on them.
-WHO,Some of our people say {character} has been quietly helping the resistance. Could they be an ally?
-WHO,We’ve received word that {character} knows something vital. A meeting might be worth arranging.
-WHO,It’s rumored that {character} has a hidden agenda. We should find out whose side they’re really on.
-WHO,There’s a suspicion among our ranks that {character} might turn traitor under pressure. Stay alert.
-WHAT,I’ve heard the {item} we need for the next operation is hidden nearby. We must secure it before the enemy does.
-WHAT,"They say the {item} is in enemy hands, but a raid could change that."
-WHAT,Rumor has it that the {item} holds the codes to a critical enemy communication channel.
-WHAT,Our scouts claim the {item} could turn the tide of our efforts. It’s too important to ignore.
-WHAT,There’s talk of the {item} being used in a resistance scheme. We need to act fast to claim it.
-WHERE,There’s talk that {poi} is a prime spot for a resistance hideout. We should investigate.
-WHERE,Our contacts have said {poi} is crawling with enemy patrols. Proceed with caution.
-WHERE,I heard {poi} is where secret supplies are being stored. We might be able to make a strike.
-WHERE,Rumor has it that a key resistance meeting will take place at {poi}. Security is paramount.
-WHERE,They say {poi} has been compromised. We may need to abandon our plans there.
-WHEN,Our allies mentioned that something big is happening in {time}. We should be ready.
-WHEN,They say the enemy will make a move in {time}. We have a narrow window to counter.
-WHEN,Word is that something crucial for our efforts will be set in motion in {time}. We must be prepared to act.
-WHEN,"Word is spreading that in {time}, the town will be under heavy watch. We must act before then."
-WHEN,"They’re expecting us to strike after {time}, but perhaps we should catch them off guard."
+type,text,effect,subject
+WHOWHAT,"{character} particularly likes Rocheval Rouge, a fine local wine which we happen to have a case of. ",BUILD_SYMPATHY,CHARACTER
+WHOWHAT,Word is the Germans are planning a harsh crackdown on the old Rocheval traditions. People will resent this and remember what it means to be free.,BUILD_SYMPATHY_ALL,NONE
+WHOWHAT,"They say there’s going to be a mandatory census soon. Everyone will have to come out, like it or not.",DISCOVER_ALL,NONE
+WHOWHAT,"I’ve heard the British are preparing a major drop. More supplies, more hope—if we can hold on.",ADD_AGENT_SLOT,NONE
+WHOWHAT,"Someone claims to have seen {character} alive, sneaking around near the old safehouse. There’s still hope.",RESCUE_AGENT,CHARACTER
+WHOWHAT,"There’s talk of a hidden dossier with details that could change everything, if we’re brave enough to grab it.",WILDCARD_INTEL,NONE
+WHOWHAT,"The latest? Power cuts all over the district. Searches won’t be as effective in the dark, that's for sure.",REDUCE_HEAT,NONE
+WHOWHAT,Something major has gone down in Brussels. They say forces are being pulled from everywhere to deal with it.,REDUCE_HEAT_ALL,NONE
+WHERE,There’s talk that {poi} is a prime spot for a resistance hideout. We should investigate.,REDUCE_DIFFICULTY,POI
+WHERE,Our contacts have said {poi} is crawling with enemy patrols. Proceed with caution.,INCREASE_DIFFICULTY,POI
+WHEN,"They say we have one chance to make this work, and we must act now or lose the opportunity entirely.",D_ONE_E_ONE,NONE
+WHEN,Rumor has it the window is short and we’ll only have one day once we begin. We should be ready soon.,D_ONE_E_TWO,NONE
+WHEN,"Whispers suggest we’ll need to act fast when we do move, but we’ve got a few days to prepare.",D_ONE_E_THREE,NONE
+WHEN,"There’s urgency in the air; the mission will be over in a day, but we can wait a while before committing.",D_ONE_E_FOUR,NONE
+WHEN,"We’ll need two days to pull this off, and the opportunity won’t wait—it’s now or never.",D_TWO_E_ONE,NONE
+WHEN,"Time is short; the mission will last two days, and we’ve got a slim window before the chance is gone.",D_TWO_E_TWO,NONE
+WHEN,"We’ve heard the mission will take two days, but there’s still time to strategize before it’s too late.",D_TWO_E_THREE,NONE
+WHEN,"Insiders say we’ll need two days to see this through, though we can wait a bit before beginning.",D_TWO_E_FOUR,NONE
+WHEN,"The task will stretch over three days, but we must act now or miss out on this vital opportunity.",D_THREE_E_ONE,NONE
+WHEN,"The mission will be a three-day endeavor, and the window to act is closing faster than we’d like.",D_THREE_E_TWO,NONE
+WHEN,"It’ll take three days to complete, but we have a reasonable window to decide when to start.",D_THREE_E_THREE,NONE
+WHEN,"There’s talk of a three-day mission on the horizon. We have a bit of time to prepare, but not forever.",D_THREE_E_FOUR,NONE
+WHEN,"This mission is a four-day commitment, but the chance to act will pass us by if we don’t jump on it immediately.",D_FOUR_E_ONE,NONE
+WHEN,"We’ll need four days to finish this, and there isn’t much time to make up our minds before it’s too late.",D_FOUR_E_TWO,NONE
+WHEN,"A four-day effort lies ahead, but we’ve got some time before we’re forced to act.",D_FOUR_E_THREE,NONE
+WHEN,"It’ll take four days from start to finish, but for now, we can choose when to set things in motion.",D_FOUR_E_FOUR,NONE

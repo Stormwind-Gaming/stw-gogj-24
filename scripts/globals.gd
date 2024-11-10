@@ -25,7 +25,6 @@ var last_names = []
 var poi_types = []
 var poi_names = []
 var rumour_text = []
-var items = []
 
 func _ready() -> void:
 	_load_town_names(load_csvs["town_names"])
@@ -35,13 +34,8 @@ func _ready() -> void:
 	_load_poi_types(load_csvs["poi_types"])
 	_load_poi_names(load_csvs["poi_names"])
 	_load_rumour_text(load_csvs["rumour_text"])
-	_load_items(load_csvs["items"])
 
 #region Loaders
-func _load_items(path: String) -> void:
-	var csv_data = load(path)
-	for record in csv_data.records:
-		items.append(record["item"])
 
 func _load_town_names(path: String) -> void:
 	var csv_data = load(path)
@@ -105,7 +99,9 @@ func _load_rumour_text(path: String) -> void:
 		var type = rumour_map[record["type"].to_upper()]
 		rumour_text.append({
 			"text": record["text"],
-			"type": type
+			"type": type,
+			"effect": intel_effect_map[record['effect'].to_upper()],
+			"subject": record['subject'],
 		})
 
 func get_rumour_text(type: Enums.IntelType) -> Dictionary:
@@ -221,10 +217,39 @@ var district_type_map = {
 }
 
 var rumour_map = {
-	"WHO": Enums.IntelType.WHO,
-	"WHAT": Enums.IntelType.WHAT,
+	"WHOWHAT": Enums.IntelType.WHOWHAT,
 	"WHERE": Enums.IntelType.WHERE,
 	"WHEN": Enums.IntelType.WHEN
+}
+
+var intel_effect_map = {
+	"ADD_AGENT_SLOT": Enums.IntelEffect.ADD_AGENT_SLOT,
+	"BUILD_SYMPATHY": Enums.IntelEffect.BUILD_SYMPATHY,
+	"BUILD_SYMPATHY_ALL": Enums.IntelEffect.BUILD_SYMPATHY_ALL,
+	"DISCOVER_ALL": Enums.IntelEffect.DISCOVER_ALL,
+	"INCREASE_DIFFICULTY": Enums.IntelEffect.INCREASE_DIFFICULTY,
+	"REDUCE_DIFFICULTY": Enums.IntelEffect.REDUCE_DIFFICULTY,
+	"REDUCE_HEAT": Enums.IntelEffect.REDUCE_HEAT,
+	"REDUCE_HEAT_ALL": Enums.IntelEffect.REDUCE_HEAT_ALL,
+	"RESCUE_AGENT": Enums.IntelEffect.RESCUE_AGENT,
+	"WILDCARD_INTEL": Enums.IntelEffect.WILDCARD_INTEL,
+	"D_ONE_E_ONE": Enums.IntelEffect.D_ONE_E_ONE,
+	"D_ONE_E_TWO": Enums.IntelEffect.D_ONE_E_TWO,
+	"D_ONE_E_THREE": Enums.IntelEffect.D_ONE_E_THREE,
+	"D_ONE_E_FOUR": Enums.IntelEffect.D_ONE_E_FOUR,
+	"D_TWO_E_ONE": Enums.IntelEffect.D_TWO_E_ONE,
+	"D_TWO_E_TWO": Enums.IntelEffect.D_TWO_E_TWO,
+	"D_TWO_E_THREE": Enums.IntelEffect.D_TWO_E_THREE,
+	"D_TWO_E_FOUR": Enums.IntelEffect.D_TWO_E_FOUR,
+	"D_THREE_E_ONE": Enums.IntelEffect.D_THREE_E_ONE,
+	"D_THREE_E_TWO": Enums.IntelEffect.D_THREE_E_TWO,
+	"D_THREE_E_THREE": Enums.IntelEffect.D_THREE_E_THREE,
+	"D_THREE_E_FOUR": Enums.IntelEffect.D_THREE_E_FOUR,
+	"D_FOUR_E_ONE": Enums.IntelEffect.D_FOUR_E_ONE,
+	"D_FOUR_E_TWO": Enums.IntelEffect.D_FOUR_E_TWO,
+	"D_FOUR_E_THREE": Enums.IntelEffect.D_FOUR_E_THREE,
+	"D_FOUR_E_FOUR": Enums.IntelEffect.D_FOUR_E_FOUR,
+	"NONE": Enums.IntelEffect.NONE
 }
 
 #endregion
@@ -241,5 +266,66 @@ func get_action_type_string(action_type: Enums.ActionType) -> String:
 			return "Assassination"
 		Enums.ActionType.PROPAGANDA:
 			return "Propaganda"
+		_:
+			return "Unknown"
+
+func get_intel_effect_string(effects) -> String:
+	var effect = effects[0]
+
+	match effect:
+		Enums.IntelEffect.ADD_AGENT_SLOT:
+			return "+1 Agent Slot"
+		Enums.IntelEffect.BUILD_SYMPATHY:
+			return "+20 Character Sympathy"
+		Enums.IntelEffect.BUILD_SYMPATHY_ALL:
+			return "+5 Character Sympathy in District"
+		Enums.IntelEffect.DISCOVER_ALL:
+			return "Reveal all Characters in District"
+		Enums.IntelEffect.INCREASE_DIFFICULTY:
+			return "Increased Difficulty"
+		Enums.IntelEffect.REDUCE_DIFFICULTY:
+			return "Reduced Difficulty"
+		Enums.IntelEffect.REDUCE_HEAT:
+			return "-20 District Heat"
+		Enums.IntelEffect.REDUCE_HEAT_ALL:
+			return "-5 Heat in all District"
+		Enums.IntelEffect.RESCUE_AGENT:
+			return "Rescue MIA Agent"
+		Enums.IntelEffect.WILDCARD_INTEL:
+			return "+1 Wildcard Intel"
+		Enums.IntelEffect.D_ONE_E_ONE:
+			return "Duration: 1 Day, Expiry: 1 Day"
+		Enums.IntelEffect.D_ONE_E_TWO:
+			return "Duration: 1 Day, Expiry: 2 Days"
+		Enums.IntelEffect.D_ONE_E_THREE:
+			return "Duration: 1 Day, Expiry: 3 Days"
+		Enums.IntelEffect.D_ONE_E_FOUR:
+			return "Duration: 1 Day, Expiry: 4 Days"
+		Enums.IntelEffect.D_TWO_E_ONE:
+			return "Duration: 2 Days, Expiry: 1 Day"
+		Enums.IntelEffect.D_TWO_E_TWO:
+			return "Duration: 2 Days, Expiry: 2 Days"
+		Enums.IntelEffect.D_TWO_E_THREE:
+			return "Duration: 2 Days, Expiry: 3 Days"
+		Enums.IntelEffect.D_TWO_E_FOUR:
+			return "Duration: 2 Days, Expiry: 4 Days"
+		Enums.IntelEffect.D_THREE_E_ONE:
+			return "Duration: 3 Days, Expiry: 1 Day"
+		Enums.IntelEffect.D_THREE_E_TWO:
+			return "Duration: 3 Days, Expiry: 2 Days"
+		Enums.IntelEffect.D_THREE_E_THREE:
+			return "Duration: 3 Days, Expiry: 3 Days"
+		Enums.IntelEffect.D_THREE_E_FOUR:
+			return "Duration: 3 Days, Expiry: 4 Days"
+		Enums.IntelEffect.D_FOUR_E_ONE:
+			return "Duration: 4 Days, Expiry: 1 Day"
+		Enums.IntelEffect.D_FOUR_E_TWO:
+			return "Duration: 4 Days, Expiry: 2 Days"
+		Enums.IntelEffect.D_FOUR_E_THREE:
+			return "Duration: 4 Days, Expiry: 3 Days"
+		Enums.IntelEffect.D_FOUR_E_FOUR:
+			return "Duration: 4 Days, Expiry: 4 Days"
+		Enums.IntelEffect.NONE:
+			return "None"
 		_:
 			return "Unknown"
