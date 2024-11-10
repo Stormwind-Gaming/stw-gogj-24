@@ -1,14 +1,13 @@
-[gd_scene load_steps=12 format=3 uid="uid://dv6koqcesevck"]
+[gd_scene load_steps=11 format=3 uid="uid://cycbgoiurr4vt"]
 
-[ext_resource type="Script" path="res://scripts/gui/agent_card.gd" id="1_dtlic"]
-[ext_resource type="Theme" uid="uid://dyewy8pdt73k3" path="res://assets/themes/handwriting_label_theme.tres" id="2_wiqf1"]
-[ext_resource type="Texture2D" uid="uid://vmb13yddjaj5" path="res://assets/agent_profile_71.png" id="4_eqpp8"]
-[ext_resource type="Theme" uid="uid://c78hoq7n7ae54" path="res://assets/themes/typewriter_label_theme.tres" id="4_j67y3"]
-[ext_resource type="Texture2D" uid="uid://csqwxwqhukb2d" path="res://assets/icons/charm.png" id="5_yrgtv"]
-[ext_resource type="Texture2D" uid="uid://dotbv717adkpq" path="res://assets/icons/subtlety.png" id="6_3tmkm"]
-[ext_resource type="Texture2D" uid="uid://blme3dsuykhey" path="res://assets/character_status/assigned.png" id="6_6ampm"]
-[ext_resource type="Texture2D" uid="uid://kmxekyb2gpex" path="res://assets/icons/smarts.png" id="7_ofuay"]
-[ext_resource type="Texture2D" uid="uid://dym5qqj722706" path="res://assets/select_cover.png" id="7_pqda2"]
+[ext_resource type="Script" path="res://scripts/gui/agent_card.gd" id="1_s8gp7"]
+[ext_resource type="Theme" uid="uid://c78hoq7n7ae54" path="res://assets/themes/typewriter_label_theme.tres" id="2_0b4ob"]
+[ext_resource type="Texture2D" uid="uid://vmb13yddjaj5" path="res://assets/agent_profile_71.png" id="3_2g42x"]
+[ext_resource type="Theme" uid="uid://dyewy8pdt73k3" path="res://assets/themes/handwriting_label_theme.tres" id="4_pvda4"]
+[ext_resource type="Texture2D" uid="uid://csqwxwqhukb2d" path="res://assets/icons/charm.png" id="5_apt8c"]
+[ext_resource type="Texture2D" uid="uid://dotbv717adkpq" path="res://assets/icons/subtlety.png" id="6_i2jue"]
+[ext_resource type="Texture2D" uid="uid://kmxekyb2gpex" path="res://assets/icons/smarts.png" id="7_oqpej"]
+[ext_resource type="Texture2D" uid="uid://blme3dsuykhey" path="res://assets/character_status/assigned.png" id="8_bryry"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mm4m2"]
 bg_color = Color(0.929412, 0.85098, 0.713726, 1)
@@ -32,15 +31,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -35.5
-offset_top = -46.0
-offset_right = 160.5
-offset_bottom = 97.0
+offset_left = -65.0
+offset_top = -58.5
+offset_right = 65.0
+offset_bottom = 58.5
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_mm4m2")
-script = ExtResource("1_dtlic")
+script = ExtResource("1_s8gp7")
 character_texture = NodePath("MarginContainer/VBoxContainer/HBoxContainer/TextureRect")
 status_overlay = NodePath("StatusOverlay")
 gender_label = NodePath("MarginContainer/VBoxContainer/HBoxContainer/FluffVBoxContainer/HBoxContainer/Gender")
@@ -48,9 +46,9 @@ dob_label = NodePath("MarginContainer/VBoxContainer/HBoxContainer/FluffVBoxConta
 profession_label = NodePath("MarginContainer/VBoxContainer/HBoxContainer/FluffVBoxContainer/HBoxContainer2/Profession")
 national_id_label = NodePath("MarginContainer/VBoxContainer/HBoxContainer/FluffVBoxContainer/HBoxContainer4/IDNumber")
 sympathy_progress = NodePath("MarginContainer/VBoxContainer/HBoxContainer/FluffVBoxContainer/HBoxContainer5/ProgressBar")
-charm_label = NodePath("MarginContainer/VBoxContainer/StatsVBoxContainer/CharmHBoxContainer/Label")
-subtlety_label = NodePath("MarginContainer/VBoxContainer/StatsVBoxContainer/SubtletyHBoxContainer/Label")
-smarts_label = NodePath("MarginContainer/VBoxContainer/StatsVBoxContainer/SmartsHBoxContainer/Label")
+charm_label = NodePath("MarginContainer/VBoxContainer/HBoxContainer/StatsVBoxContainer/CharmHBoxContainer/Label")
+subtlety_label = NodePath("MarginContainer/VBoxContainer/HBoxContainer/StatsVBoxContainer/SubtletyHBoxContainer/Label")
+smarts_label = NodePath("MarginContainer/VBoxContainer/HBoxContainer/StatsVBoxContainer/SmartsHBoxContainer/Label")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -60,16 +58,14 @@ theme_override_constants/margin_bottom = 5
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-size_flags_stretch_ratio = 9.82
 theme_override_constants/separation = 0
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
-size_flags_vertical = 6
-theme = ExtResource("4_j67y3")
+theme = ExtResource("2_0b4ob")
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 12
 text = "<Name>"
 horizontal_alignment = 1
 autowrap_mode = 2
@@ -80,14 +76,73 @@ theme_override_constants/separation = 4
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-texture = ExtResource("4_eqpp8")
+texture = ExtResource("3_2g42x")
 expand_mode = 3
 stretch_mode = 5
 
+[node name="StatsVBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="CharmHBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/StatsVBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/StatsVBoxContainer/CharmHBoxContainer"]
+layout_mode = 2
+texture = ExtResource("5_apt8c")
+expand_mode = 3
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/StatsVBoxContainer/CharmHBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "0"
+
+[node name="Separator" type="HSeparator" parent="MarginContainer/VBoxContainer/HBoxContainer/StatsVBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="SubtletyHBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/StatsVBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/StatsVBoxContainer/SubtletyHBoxContainer"]
+layout_mode = 2
+texture = ExtResource("6_i2jue")
+expand_mode = 3
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/StatsVBoxContainer/SubtletyHBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "0"
+
+[node name="Separator2" type="HSeparator" parent="MarginContainer/VBoxContainer/HBoxContainer/StatsVBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="SmartsHBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/StatsVBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/StatsVBoxContainer/SmartsHBoxContainer"]
+layout_mode = 2
+texture = ExtResource("7_oqpej")
+expand_mode = 3
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/StatsVBoxContainer/SmartsHBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "0"
+
 [node name="FluffVBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = -5
@@ -100,7 +155,7 @@ theme_override_constants/separation = 0
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/FluffVBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 5
-theme = ExtResource("4_j67y3")
+theme = ExtResource("2_0b4ob")
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 10
 text = "Geschlecht: "
@@ -110,7 +165,7 @@ vertical_alignment = 1
 [node name="Gender" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/FluffVBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 5
-theme = ExtResource("2_wiqf1")
+theme = ExtResource("4_pvda4")
 theme_override_constants/line_spacing = 6
 theme_override_font_sizes/font_size = 17
 text = "<Gender>
@@ -124,7 +179,7 @@ theme_override_constants/separation = 0
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/FluffVBoxContainer/HBoxContainer3"]
 layout_mode = 2
-theme = ExtResource("4_j67y3")
+theme = ExtResource("2_0b4ob")
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 10
 text = "Geburtsdatum: "
@@ -133,7 +188,7 @@ vertical_alignment = 1
 
 [node name="DoB" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/FluffVBoxContainer/HBoxContainer3"]
 layout_mode = 2
-theme = ExtResource("2_wiqf1")
+theme = ExtResource("4_pvda4")
 theme_override_constants/line_spacing = 6
 theme_override_font_sizes/font_size = 17
 text = "<DoB>
@@ -147,7 +202,7 @@ theme_override_constants/separation = 0
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/FluffVBoxContainer/HBoxContainer2"]
 layout_mode = 2
-theme = ExtResource("4_j67y3")
+theme = ExtResource("2_0b4ob")
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 10
 text = "Beroep: "
@@ -156,7 +211,7 @@ vertical_alignment = 1
 
 [node name="Profession" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/FluffVBoxContainer/HBoxContainer2"]
 layout_mode = 2
-theme = ExtResource("2_wiqf1")
+theme = ExtResource("4_pvda4")
 theme_override_constants/line_spacing = 6
 theme_override_font_sizes/font_size = 17
 text = "<Profession>
@@ -170,7 +225,7 @@ theme_override_constants/separation = 0
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/FluffVBoxContainer/HBoxContainer4"]
 layout_mode = 2
-theme = ExtResource("4_j67y3")
+theme = ExtResource("2_0b4ob")
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 10
 text = "Nationalregistrnr: "
@@ -179,7 +234,7 @@ vertical_alignment = 1
 
 [node name="IDNumber" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/FluffVBoxContainer/HBoxContainer4"]
 layout_mode = 2
-theme = ExtResource("2_wiqf1")
+theme = ExtResource("4_pvda4")
 theme_override_constants/line_spacing = 6
 theme_override_font_sizes/font_size = 17
 text = "<IDN>
@@ -193,7 +248,7 @@ theme_override_constants/separation = 0
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/FluffVBoxContainer/HBoxContainer5"]
 layout_mode = 2
-theme = ExtResource("4_j67y3")
+theme = ExtResource("2_0b4ob")
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 10
 text = "Sympathy
@@ -209,79 +264,9 @@ step = 1.0
 value = 50.0
 show_percentage = false
 
-[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 4
-
-[node name="StatsVBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="CharmHBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/StatsVBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-alignment = 1
-
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/StatsVBoxContainer/CharmHBoxContainer"]
-layout_mode = 2
-texture = ExtResource("5_yrgtv")
-expand_mode = 3
-
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/StatsVBoxContainer/CharmHBoxContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "0"
-
-[node name="Separator" type="HSeparator" parent="MarginContainer/VBoxContainer/StatsVBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="SubtletyHBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/StatsVBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-alignment = 1
-
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/StatsVBoxContainer/SubtletyHBoxContainer"]
-layout_mode = 2
-texture = ExtResource("6_3tmkm")
-expand_mode = 3
-
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/StatsVBoxContainer/SubtletyHBoxContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "0"
-
-[node name="Separator2" type="HSeparator" parent="MarginContainer/VBoxContainer/StatsVBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="SmartsHBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/StatsVBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-alignment = 1
-
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/StatsVBoxContainer/SmartsHBoxContainer"]
-layout_mode = 2
-texture = ExtResource("7_ofuay")
-expand_mode = 3
-
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/StatsVBoxContainer/SmartsHBoxContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "0"
-
-[node name="TextureButton" type="TextureButton" parent="."]
-custom_minimum_size = Vector2(71, 78)
-layout_mode = 2
-toggle_mode = true
-texture_pressed = ExtResource("6_6ampm")
-texture_hover = ExtResource("7_pqda2")
-ignore_texture_size = true
-stretch_mode = 0
-
 [node name="StatusOverlay" type="TextureRect" parent="."]
 visible = false
 layout_mode = 2
-texture = ExtResource("6_6ampm")
+texture = ExtResource("8_bryry")
 expand_mode = 3
-
-[connection signal="toggled" from="TextureButton" to="." method="_on_texture_button_toggled"]
+stretch_mode = 5

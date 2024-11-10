@@ -11,6 +11,9 @@ signal end_turn_initiated(num: int)
 signal end_turn_complete(num: int)
 signal district_just_focused(district: District)
 signal new_district_registered(district: District)
+signal agent_added(agent: Character)
+signal agent_removed(agent: Character)
+signal new_assignment(option: Enums.ActionType, poi: PointOfInterest, agents: Array[Character])
 
 func _ready() -> void:
 	calendar = Calendar.new()
@@ -44,8 +47,7 @@ func add_action(poi: PointOfInterest, characters: Array[Character], action_type:
 			for new_action_character in characters:
 				if existing_action_character == new_action_character:
 					# delete the previous action
-					actions.erase(action)
-					print("Deleting previous action for character:", new_action_character.get_full_name())
+					_remove_action(action)
 
 	print("Adding action:", poi, characters, action_type)
 	var new_action = Action.new(poi, characters, action_type, additional_info)
@@ -66,9 +68,9 @@ func process_turn() -> void:
 		match action.action_type:
 			Enums.ActionType.ESPIONAGE:
 				print("Action: ", action.poi, action.characters)
-				log_message = "Processing ESPIONAGE action at [b]" + str(action.poi.poi_name) + "[/b] by "
+				log_message = "Processing ESPIONAGE action at [u]" + str(action.poi.poi_name) + "[/u] by "
 				for character in action.characters:
-					log_message += "[b]" + character.first_name + " " + character.last_name + "[/b], "
+					log_message += "[u]" + character.first_name + " " + character.last_name + "[/u], "
 				current_turn_log.append(log_message)
 
 				var combined_subtlety = 0
@@ -170,7 +172,7 @@ func _bounded_sigmoid_check(stat: int, detailed: bool = false, bottom_bound: flo
 
 func register_district(district: District) -> void:
 	districts.append(district)
-	emit_signal("new_district_registered")
+	emit_signal("new_district_registered", district)
 
 func set_district_focused(district: District = null) -> void:
 	if district_focused == district:
@@ -217,11 +219,23 @@ func _on_post_radial_assignment_option_selected(option: Enums.ActionType, select
 	print("_on_post_radial_assignment_option_selected")
 	if option != Enums.ActionType.NONE and option != Enums.ActionType.INFO:
 		GameController.add_action(poi_for_radial, selected_agents, option)
+		# set all agents to assigned
+		for agent in selected_agents:
+			agent.current_status = Enums.CharacterStatus.ASSIGNED
+		new_assignment.emit(option, poi_for_radial, selected_agents)
 
 	# create a tiny timer to get around erroneous clickthroughs
 	await get_tree().create_timer(0.1).timeout
 	radial_menu_open.queue_free()
 	radial_menu_open = null
+
+func _remove_action(action: Action) -> void:
+	# set all agents back to available
+	for agent in action.characters:
+		agent.current_status = Enums.CharacterStatus.AVAILABLE
+
+	# remove the action from the list
+	actions.erase(action)
 
 #endregion
 
@@ -244,3 +258,9 @@ func get_heat_level() -> int:
 		heat += district.heat
 	
 	return floor(heat / districts.size())
+
+func add_agent(agent: Character) -> void:
+	agent_added.emit(agent)
+
+func remove_agent(agent: Character) -> void:
+	agent_removed.emit(agent)

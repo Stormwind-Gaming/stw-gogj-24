@@ -27,13 +27,19 @@ func _ready():
 	for character in GlobalRegistry.get_all_objects(Enums.Registry_Category.CHARACTER):
 		var character_instance = GlobalRegistry.get_object(Enums.Registry_Category.CHARACTER, character)
 		if character_instance.recruited:
-			agents.append(character)
+			if character_instance.current_status == Enums.CharacterStatus.AVAILABLE:
+				# if the character is available, add them to the list
+				agents.push_front(character)
+			if character_instance.current_status == Enums.CharacterStatus.ASSIGNED:
+				# if the character is assigned, put them to the bottom of the list
+				agents.push_back(character)
 
 	for agent in agents:
 		var agent_instance = Globals.agent_card_scene.instantiate()
 		agent_instance.set_character(agent)
 		agent_instance.connect('agent_card_selected', _on_agent_card_selected)
 		agent_card_grid.add_child(agent_instance)
+		agent_instance.check_assignment_selection(GameController.poi_for_radial, option)
 	
 	# set max agents to 1 or 2
 	max_agents = randi() % 2 + 1

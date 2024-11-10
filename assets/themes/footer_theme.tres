@@ -1,5 +1,6 @@
-[gd_resource type="Theme" load_steps=11 format=3 uid="uid://b4qdww0jic2xr"]
+[gd_resource type="Theme" load_steps=12 format=3 uid="uid://b4qdww0jic2xr"]
 
+[ext_resource type="FontFile" uid="uid://djwj10bhtdik" path="res://assets/fonts/veteran typewriter.ttf" id="1_a2tdr"]
 [ext_resource type="Texture2D" uid="uid://dyjq4mifv1vl6" path="res://assets/sprites/folder_tab_2.png" id="2_62gwg"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2qade"]
@@ -56,6 +57,7 @@ Button/colors/font_color = Color(1, 1, 1, 1)
 Button/colors/font_focus_color = Color(1, 1, 1, 1)
 Button/colors/font_hover_color = Color(1, 1, 1, 1)
 Button/colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+Button/fonts/font = ExtResource("1_a2tdr")
 Button/styles/disabled = SubResource("StyleBoxTexture_2qade")
 Button/styles/focus = SubResource("StyleBoxTexture_1l4vb")
 Button/styles/hover = SubResource("StyleBoxTexture_8ybr5")

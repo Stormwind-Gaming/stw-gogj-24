@@ -10,6 +10,16 @@ enum CharacterNationality {
 	GERMAN
 }
 
+enum CharacterStatus {
+	NONE,
+	SYMPATHISER,
+	AVAILABLE,
+	ASSIGNED,
+	MIA,
+	INCARCERATED,
+	DEAD
+}
+
 enum IntelLevel {
 	RUMOUR,
 	PLAN,

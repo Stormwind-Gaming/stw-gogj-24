@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://b1vvls3nbthm6"]
+[gd_scene load_steps=4 format=3 uid="uid://b1vvls3nbthm6"]
 
 [ext_resource type="Script" path="res://scripts/district.gd" id="1_epqjp"]
 [ext_resource type="Texture2D" uid="uid://cuyfkmlgcpdhb" path="res://assets/city.svg" id="2_3kiu6"]
+[ext_resource type="PackedScene" uid="uid://bue8o2mrnetun" path="res://scenes/pois/poi.tscn" id="3_g4xl4"]
 
 [node name="District_N" type="Area2D"]
 script = ExtResource("1_epqjp")
@@ -21,7 +22,11 @@ polygon = PackedVector2Array(598, 391, 566, 368, 513, 314, 472, 274, 445, 239, 4
 position = Vector2(611, 196)
 
 [node name="pois" type="Node2D" parent="."]
-visible = false
+
+[node name="Poi" parent="pois" instance=ExtResource("3_g4xl4")]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi"]
+polygon = PackedVector2Array(815, 379, 807, 350, 838, 338, 842, 348, 834, 352, 837, 360, 830, 364, 831, 369)
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

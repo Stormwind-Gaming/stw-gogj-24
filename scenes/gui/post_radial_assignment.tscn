@@ -1,17 +1,14 @@
 [gd_scene load_steps=13 format=3 uid="uid://boskl008sic56"]
 
 [ext_resource type="Script" path="res://scripts/gui/post_radial_assignment.gd" id="1_2cqh1"]
-[ext_resource type="Texture2D" uid="uid://ugplfwcgi724" path="res://assets/sprites/popup_panel_background.png" id="2_7wx6u"]
+[ext_resource type="Theme" uid="uid://c78hoq7n7ae54" path="res://assets/themes/typewriter_label_theme.tres" id="1_8rvmh"]
 [ext_resource type="Texture2D" uid="uid://cymum3g0jnd7l" path="res://assets/sprites/popup_panel_background_75.png" id="2_kog7f"]
 [ext_resource type="Texture2D" uid="uid://csqwxwqhukb2d" path="res://assets/icons/charm.png" id="2_p7nfs"]
 [ext_resource type="Texture2D" uid="uid://dotbv717adkpq" path="res://assets/icons/subtlety.png" id="3_ksjn2"]
 [ext_resource type="Texture2D" uid="uid://kmxekyb2gpex" path="res://assets/icons/smarts.png" id="4_dfhkm"]
+[ext_resource type="Theme" uid="uid://dyewy8pdt73k3" path="res://assets/themes/handwriting_label_theme.tres" id="5_b73pw"]
 [ext_resource type="Texture2D" uid="uid://ctiq8sa8m5iv" path="res://assets/sprites/close_ribbon_black.png" id="7_a7quo"]
 [ext_resource type="Texture2D" uid="uid://5vk04yychida" path="res://assets/sprites/close_ribbon_white.png" id="8_iwpau"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_n3dqk"]
-texture = ExtResource("2_7wx6u")
-texture_margin_right = 50.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_11yuh"]
 bg_color = Color(0.780392, 0.678431, 0.498039, 1)
@@ -27,6 +24,7 @@ initial_position = 1
 size = Vector2i(800, 700)
 borderless = true
 always_on_top = true
+theme = ExtResource("1_8rvmh")
 script = ExtResource("1_2cqh1")
 continue_button = NodePath("NinePatchRect/MarginContainer/HBoxContainer/VBoxContainer/Button")
 agent_card_grid = NodePath("NinePatchRect/MarginContainer/HBoxContainer/LeftPanelContainer/MarginContainer/HBoxContainer/ScrollContainer/GridContainer")
@@ -48,16 +46,6 @@ patch_margin_top = 53
 patch_margin_right = 138
 patch_margin_bottom = 26
 
-[node name="PanelContainer" type="PanelContainer" parent="NinePatchRect"]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_n3dqk")
-
 [node name="MarginContainer" type="MarginContainer" parent="NinePatchRect"]
 layout_mode = 2
 offset_right = 750.0
@@ -73,6 +61,7 @@ layout_mode = 2
 [node name="LeftPanelContainer" type="PanelContainer" parent="NinePatchRect/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.5
 theme_override_styles/panel = SubResource("StyleBoxFlat_11yuh")
 
 [node name="MarginContainer" type="MarginContainer" parent="NinePatchRect/MarginContainer/HBoxContainer/LeftPanelContainer"]
@@ -113,6 +102,7 @@ theme_override_constants/margin_bottom = 10
 
 [node name="VBoxContainer" type="VBoxContainer" parent="NinePatchRect/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer"]
 layout_mode = 2
+theme_override_constants/separation = 0
 
 [node name="Label" type="Label" parent="NinePatchRect/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(10, 10)
@@ -122,6 +112,8 @@ autowrap_mode = 2
 
 [node name="AssignedAgents" type="Label" parent="NinePatchRect/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme = ExtResource("5_b73pw")
+theme_override_font_sizes/font_size = 40
 
 [node name="Separator" type="HSeparator" parent="NinePatchRect/MarginContainer/HBoxContainer/VBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2

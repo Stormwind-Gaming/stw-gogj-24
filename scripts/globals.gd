@@ -1,6 +1,7 @@
 extends Node
 
 var agent_card_scene = preload("res://scenes/gui/agent_card.tscn")
+var mini_agent_card_scene = preload("res://scenes/gui/mini_agent_card.tscn")
 var radial_menu_scene = preload("res://scenes/gui/radial_menu.tscn")
 var character_list_scene = preload("res://scenes/gui/character_list.tscn")
 var intel_list_scene = preload("res://scenes/gui/intel_list.tscn")
@@ -329,3 +330,24 @@ func get_intel_effect_string(effects) -> String:
 			return "None"
 		_:
 			return "Unknown"
+
+func get_character_status_string(status: Enums.CharacterStatus) -> String:
+	match status:
+		Enums.CharacterStatus.NONE:
+			return "None"
+		Enums.CharacterStatus.SYMPATHISER:
+			return "Sympathiser"
+		Enums.CharacterStatus.AVAILABLE:
+			return "Available"
+		Enums.CharacterStatus.ASSIGNED:
+			return "Assigned"
+		Enums.CharacterStatus.MIA:
+			return "MIA"
+		Enums.CharacterStatus.INCARCERATED:
+			return "Incarcerated"
+		Enums.CharacterStatus.DEAD:
+			return "Dead"
+		_:
+			return "Unknown"
+		
+#endregion

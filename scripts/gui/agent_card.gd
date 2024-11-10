@@ -1,6 +1,7 @@
 extends PanelContainer
 
 @export var character_texture: TextureRect
+@export var status_overlay: TextureRect
 
 @export var gender_label: Label
 @export var dob_label: Label
@@ -38,6 +39,8 @@ func _ready():
 	national_id_label.text = str(character.national_id_number)
 	sympathy_progress.value = character.sympathy
 
+	_set_status_overlay(character.current_status)
+
 func _on_TextureButton_pressed():
 	$MarginContainer/VBoxContainer/Panel.visible = true  # Show the border on press
 
@@ -58,3 +61,25 @@ func enable_card() -> void:
 
 func _on_texture_button_toggled(toggled_on: bool) -> void:
 	emit_signal('agent_card_selected', character, toggled_on)
+
+func _set_status_overlay(status: Enums.CharacterStatus) -> void:
+	if status == Enums.CharacterStatus.NONE or status == Enums.CharacterStatus.AVAILABLE:
+		status_overlay.visible = false
+		return
+	var status_texture = load('res://assets/character_status/' + Globals.get_character_status_string(status).to_lower() + '.png')
+	status_overlay.texture = status_texture
+	status_overlay.visible = true
+	pass
+
+func check_assignment_selection(poi: PointOfInterest, option: Enums.ActionType) -> void:
+	# check this characters status
+	if character.current_status == Enums.CharacterStatus.ASSIGNED:
+		# if the character is assigned, we need to check if they are assigned to this poi and action
+		var actions = GameController.actions
+		for action in actions:
+			if action.characters.has(character) and action.poi == poi and action.action_type == option:
+				print('Character is already assigned to this action')
+				status_overlay.visible = false
+				$TextureButton.button_pressed = true
+			else:
+				self.modulate = Color(0.5, 0.5, 0.5)

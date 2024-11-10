@@ -23,6 +23,7 @@ var smarts: int
 var sympathy: int # 1-99 how likely is this character to join the resistance?
 var recruited: bool = false
 var known: bool = false
+var current_status: Enums.CharacterStatus = Enums.CharacterStatus.NONE
 
 func _init(profile: Dictionary):
 	self.first_name = profile['first_name']
@@ -65,7 +66,17 @@ func get_stats() -> Dictionary:
 func set_agent() -> void:
 	# Set the character as an agent
 	recruited = true
+	current_status = Enums.CharacterStatus.AVAILABLE
 	known = true
+	# tell the game controller that this character is now an agent
+	GameController.add_agent(self)
+
+func unset_agent() -> void:
+	# Unset the character as an agent
+	recruited = false
+	current_status = Enums.CharacterStatus.SYMPATHISER
+	# tell the game controller that this character is no longer an agent
+	GameController.remove_agent(self)
 
 func set_known() -> void:
 	known = true

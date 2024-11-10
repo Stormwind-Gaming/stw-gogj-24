@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://df2bgu8mt0dy7"
-path="res://.godot/imported/mia_overlay.png-0fafb72ca9903873827a9d880ef6ccd7.ctex"
+uid="uid://blme3dsuykhey"
+path="res://.godot/imported/assigned.png-4b9773a7162519f9a7c1a829e1228c99.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/mia_overlay.png"
-dest_files=["res://.godot/imported/mia_overlay.png-0fafb72ca9903873827a9d880ef6ccd7.ctex"]
+source_file="res://assets/character_status/assigned.png"
+dest_files=["res://.godot/imported/assigned.png-4b9773a7162519f9a7c1a829e1228c99.ctex"]
 
 [params]
 
