@@ -86,7 +86,6 @@ func _on_district_just_focused(district: District) -> void:
 	if footer_tray_open:
 		return
 	footer_tray_open = true
-	# $AnimationPlayer.play("scroll_out")
 
 func _on_scroll_out_animation_finished():
 	pass

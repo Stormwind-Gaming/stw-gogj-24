@@ -4,9 +4,14 @@ var district_focused: District = null
 
 var poi_for_radial: PointOfInterest
 var radial_menu_open: RadialMenu
+var calendar: Calendar
 
-signal end_turn(num: int)
+signal end_turn_initiated(num: int)
+signal end_turn_complete(num: int)
 signal district_just_focused(district: District)
+
+func _ready() -> void:
+	calendar = Calendar.new()
 
 # Structure to store each action
 class Action:
@@ -47,7 +52,9 @@ func add_action(poi: PointOfInterest, characters: Array[Character], action_type:
 
 # Method to process a turn
 func process_turn() -> void:
+	emit_signal("end_turn_initiated", turn_number)  # Emit the end turn signal
 	turn_number += 1  # Increment the turn number
+	calendar.increment_day()  # Increment the day
 	var current_turn_log: Array = []  # Array to store logs for this turn
 
 	for action in actions:
@@ -121,7 +128,7 @@ func process_turn() -> void:
 	actions.clear()
 
 	# Emit the signal to end the turn
-	emit_signal("end_turn", turn_number)
+	emit_signal("end_turn_complete", turn_number)
 
 # Method to get the log for a specific turn
 func get_turn_log(turn: int) -> Array:
