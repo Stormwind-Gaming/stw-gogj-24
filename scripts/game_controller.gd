@@ -209,3 +209,14 @@ func _on_post_radial_assignment_option_selected(option: Enums.ActionType, select
 	radial_menu_open = null
 
 #endregion
+
+func get_resistance_level() -> int:
+	var population = GlobalRegistry.get_all_objects(Enums.Registry_Category.CHARACTER)
+	var keys = population.keys()
+	var resistance_level = 0
+
+	for key in keys:
+		var character = population[key]
+		resistance_level += character.sympathy
+
+	return resistance_level / keys.size()
