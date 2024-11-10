@@ -130,6 +130,8 @@ func process_turn() -> void:
 			log_message = "[color=red]The mission was a failure! :([/color]"
 			current_turn_log.append(log_message)
 
+		current_turn_log.append("\n")
+
 		
 	# Output current turn log to the console		
 	for each_log_message in current_turn_log:
