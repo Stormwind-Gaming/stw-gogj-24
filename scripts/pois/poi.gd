@@ -103,8 +103,12 @@ func _on_poi_clicked(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 			var actions = [
 				Enums.ActionType.ESPIONAGE,
 				Enums.ActionType.PROPAGANDA,
-				Enums.ActionType.SURVEILLANCE
+				Enums.ActionType.SURVEILLANCE,
 			] as Array[Enums.ActionType]
+
+			if(_has_plan()):
+				actions.append(Enums.ActionType.PLAN)
+
 			radial_menu_instance.set_optional_actions(actions)
 			add_child(radial_menu_instance)
 
@@ -134,3 +138,10 @@ func _derive_poi_bonus() -> Enums.POIBonusType:
 	# 	_:
 	# 		return Enums.POIBonusType.NONE
 	return Enums.POIBonusType.NONE
+
+func _has_plan() -> bool:
+		var poi_plans = GlobalRegistry.get_all_objects(Enums.Registry_Category.INTEL).values().filter(
+				func(intel): return intel.level == Enums.IntelLevel.PLAN && intel.related_poi == self
+		)
+
+		return poi_plans.size() > 0

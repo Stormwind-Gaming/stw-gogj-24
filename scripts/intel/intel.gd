@@ -7,6 +7,7 @@ var type: Enums.IntelType
 var description: String
 var effect = [Enums.IntelEffect.NONE]
 var id: String
+var plan_name : String 
 
 var related_character : Character
 var related_poi : PointOfInterest
@@ -23,7 +24,11 @@ func _init(profile: Dictionary):
 			else:
 				set(key, profile[key])
 
-	expires_on_turn = GameController.turn_number + 3
+	if(level == Enums.IntelLevel.PLAN):
+		expires_on_turn = GameController.turn_number + related_expiry
+	else:
+		expires_on_turn = GameController.turn_number + 3
+	
 		
 	# Register the object after setting properties
 	self.id = GlobalRegistry.register_object(Enums.Registry_Category.INTEL, self)

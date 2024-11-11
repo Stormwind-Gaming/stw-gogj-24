@@ -107,8 +107,10 @@ func populate_plan_list(intel):
 	for name in intel.keys():
 		var intel_node = intel[name]
 		if intel_node.level == Enums.IntelLevel.PLAN:
-			var label = Label.new()
-			label.text = intel_node.description
+			var label = RichTextLabel.new()
+			label.bbcode_enabled = true
+			label.fit_content = true
+			label.text = "[u]" + intel_node.plan_name + "[/u]\n\n" + intel_node.description
 			plan_list_container.add_child(label)
 
 			label.set_autowrap_mode(TextServer.AUTOWRAP_WORD_SMART)
