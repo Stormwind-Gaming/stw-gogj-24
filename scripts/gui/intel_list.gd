@@ -35,6 +35,7 @@ func _ready():
 	# create a new plan
 	var new_plan_scene = Globals.plan_scene.instantiate()
 	new_plan_scene.set_new_plan_card()
+	new_plan_scene.toggle_enabled_button(false)
 	plan_holder.add_child(new_plan_scene)
 	plan_scene = new_plan_scene
 
@@ -118,10 +119,10 @@ func populate_plan_list(intel):
 func _check_create_plan_visibility():
 	# Check if all intel types have a selected intel node
 	if selected_intel[Enums.IntelType.WHOWHAT] and selected_intel[Enums.IntelType.WHERE] and selected_intel[Enums.IntelType.WHEN]:
-		# create_plan_btn.visible = true
+		plan_scene.toggle_enabled_button(true)
 		pass
 	else:
-		# create_plan_btn.visible = false
+		plan_scene.toggle_enabled_button(false)
 		pass
 
 func _on_create_plan_btn_pressed():
@@ -157,11 +158,11 @@ func _reset():
 		Enums.IntelType.WHEN: null
 	}
 	
-	whowhat_description.text = ""
-	where_description.text = ""
-	when_description.text = ""
+	plan_scene.set_mission_text('')
+	plan_scene.set_location_text('')
+	plan_scene.set_time_text('')
 	
-	# create_plan_btn.visible = false
+	plan_scene.toggle_enabled_button(false)
 
 
 func _on_close_button_pressed() -> void:

@@ -5,6 +5,7 @@ extends PanelContainer
 @export var location_label: RichTextLabel
 @export var mission_label: RichTextLabel
 @export var create_plan_button: TextureButton
+@export var green_star_stamp: Control
 
 var has_time_text: bool = false
 var has_location_text: bool = false
@@ -14,11 +15,14 @@ var type_effect_speed: float = 1.0
 
 var plan: Intel
 
+signal create_plan
+
 func set_existing_plan_card(plan_arg: Intel = null) -> void:
 	plan = plan_arg
 	timing_label.text = plan.timing
 	location_label.text = plan.location
 	mission_label.text = plan.mission
+	green_star_stamp.visible = true
 
 func set_new_plan_card() -> void:
 	timing_label.visible_ratio = 0
@@ -47,3 +51,9 @@ func set_mission_text(text: String) -> void:
 	mission_label.visible_ratio = 0
 	has_mission_text = true
 	mission_label.text = text
+
+func toggle_enabled_button(enabled: bool) -> void:
+	create_plan_button.disabled = !enabled
+
+func _on_create_plan_btn_pressed() -> void:
+	create_plan.emit()

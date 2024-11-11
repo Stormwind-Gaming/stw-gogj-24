@@ -1,13 +1,32 @@
-[gd_scene load_steps=4 format=3 uid="uid://c26h6uvgdpl7l"]
+[gd_scene load_steps=9 format=3 uid="uid://c26h6uvgdpl7l"]
 
+[ext_resource type="Theme" uid="uid://dexax20p2eewp" path="res://assets/themes/base_theme.tres" id="1_pfypv"]
 [ext_resource type="Texture2D" uid="uid://b2hufa4grdklc" path="res://assets/sprites/plan_sheet_background.png" id="1_v4sc6"]
 [ext_resource type="Script" path="res://scripts/gui/plan.gd" id="2_i785k"]
+[ext_resource type="Texture2D" uid="uid://dun0araox23b4" path="res://assets/sprites/approve_stamp.png" id="3_ny04q"]
+[ext_resource type="Texture2D" uid="uid://db4dufrobjxk2" path="res://assets/sprites/approve_stamp_dark.png" id="4_210nc"]
+[ext_resource type="Texture2D" uid="uid://ckgvy1jm1v5tb" path="res://assets/sprites/approve_stamp_white.png" id="5_4gih3"]
+[ext_resource type="Texture2D" uid="uid://ya4wdg5dlxcd" path="res://assets/sprites/green_star_stamp.png" id="7_nfj6u"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_l5yse"]
 texture = ExtResource("1_v4sc6")
 
-[node name="Plan" type="PanelContainer" node_paths=PackedStringArray("title_label", "timing_label", "location_label", "mission_label", "create_plan_button")]
+[node name="Plan" type="PanelContainer" node_paths=PackedStringArray("title_label", "timing_label", "location_label", "mission_label", "create_plan_button", "green_star_stamp")]
+clip_contents = true
+custom_minimum_size = Vector2(280, 618)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -88.0
+offset_top = -113.5
+offset_right = 88.0
+offset_bottom = 113.5
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 3
+theme = ExtResource("1_pfypv")
 theme_override_styles/panel = SubResource("StyleBoxTexture_l5yse")
 script = ExtResource("2_i785k")
 title_label = NodePath("MarginContainer/CraftingContainer/TitleMarginContainer/Label")
@@ -15,6 +34,7 @@ timing_label = NodePath("MarginContainer/CraftingContainer/WhenWhereMarginContai
 location_label = NodePath("MarginContainer/CraftingContainer/WhenWhereMarginContainer/WhenWhereContainer/WhereVBoxContainer/WhereDescription")
 mission_label = NodePath("MarginContainer/CraftingContainer/WhoMarginContainer/VBoxContainer/WhoWhatDescription")
 create_plan_button = NodePath("MarginContainer/CraftingContainer/MarginContainer2/CreatePlanBtn")
+green_star_stamp = NodePath("Control")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -113,3 +133,34 @@ layout_mode = 2
 
 [node name="CreatePlanBtn" type="TextureButton" parent="MarginContainer/CraftingContainer/MarginContainer2"]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_mode = 0
+texture_normal = ExtResource("3_ny04q")
+texture_pressed = ExtResource("3_ny04q")
+texture_hover = ExtResource("4_210nc")
+texture_disabled = ExtResource("5_4gih3")
+stretch_mode = 0
+
+[node name="Control" type="Control" parent="."]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="GreenStar" type="TextureRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.575
+offset_top = 93.265
+offset_right = 245.575
+offset_bottom = 345.265
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("7_nfj6u")
+stretch_mode = 5
+
+[connection signal="pressed" from="MarginContainer/CraftingContainer/MarginContainer2/CreatePlanBtn" to="." method="_on_create_plan_btn_pressed"]
