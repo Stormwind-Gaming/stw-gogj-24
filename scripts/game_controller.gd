@@ -86,33 +86,6 @@ func get_turn_log(turn: int) -> Array:
 		return []
 	return turn_logs[turn - 1]  # Return the log for the specified turn
 	
-func _bounded_sigmoid_check(stat: int, detailed: bool = false, bottom_bound: float = 20.0, upper_bound: float = 80.0) -> Variant:
-	# Calculate the sigmoid-based success chance
-	var k = 1.0  # Steepness of the curve
-	var m = 5.0  # Midpoint of the curve
-	var raw_chance = 100 / (1 + exp(-k * (stat - m)))
-	
-	# Scale the raw chance to fit within the bottom and upper bounds
-	var success_chance = bottom_bound + (upper_bound - bottom_bound) * (raw_chance / 100)
-	
-	# Roll a random number between 0 and 100
-	var roll = randf() * 100
-	
-	# Determine success
-	var is_success = roll < success_chance
-	
-	# Return based on the 'detailed' flag
-	if detailed:
-		return {
-			"success": is_success,
-			"stat": stat,
-			"raw_chance": raw_chance,
-			"success_chance": success_chance,
-			"roll": roll
-		}
-	else:
-		return is_success
-
 func remove_action(action: Action) -> void:
 	# set all agents back to available
 	for agent in action.characters:
@@ -246,7 +219,7 @@ func _espionage_action(action:Action) -> void:
 		combined_smarts += character.smarts
 		combined_charm += character.charm
 	
-	var subtle_roll = _bounded_sigmoid_check(combined_subtlety, true)
+	var subtle_roll = MathHelpers.bounded_sigmoid_check(combined_subtlety, true)
 	
 	if(subtle_roll.success):
 		log_message = "Succeeded subtlety check..."
@@ -262,7 +235,7 @@ func _espionage_action(action:Action) -> void:
 	match action.poi.stat_check_type:
 		Enums.StatCheckType.SMARTS:
 			
-			var smarts_roll = _bounded_sigmoid_check(combined_smarts, true)
+			var smarts_roll = MathHelpers.bounded_sigmoid_check(combined_smarts, true)
 			
 			if(smarts_roll.success):
 				log_message = "Succeeded smarts check..."
@@ -275,7 +248,7 @@ func _espionage_action(action:Action) -> void:
 				current_turn_log.append(log_message)
 
 		Enums.StatCheckType.CHARM:
-			if(_bounded_sigmoid_check(combined_charm)):
+			if(MathHelpers.bounded_sigmoid_check(combined_charm)):
 				log_message = "Succeeded charm check..."
 				current_turn_log.append(log_message)
 				success = true
@@ -314,7 +287,7 @@ func _surveillance_action(action:Action) -> void:
 		combined_smarts += character.smarts
 		combined_charm += character.charm
 	
-	var subtle_roll = _bounded_sigmoid_check(combined_subtlety, true)
+	var subtle_roll = MathHelpers.bounded_sigmoid_check(combined_subtlety, true)
 	
 	if(subtle_roll.success):
 		log_message = "Succeeded subtlety check..."
@@ -328,7 +301,7 @@ func _surveillance_action(action:Action) -> void:
 		current_turn_log.append(log_message)
 
 	
-	var smarts_roll = _bounded_sigmoid_check(combined_smarts, true)
+	var smarts_roll = MathHelpers.bounded_sigmoid_check(combined_smarts, true)
 	
 	if(smarts_roll.success):
 		log_message = "Succeeded smarts check..."
@@ -371,7 +344,7 @@ func _propaganda_action(action:Action) -> void:
 		combined_smarts += character.smarts
 		combined_charm += character.charm
 	
-	var subtle_roll = _bounded_sigmoid_check(combined_subtlety, true)
+	var subtle_roll = MathHelpers.bounded_sigmoid_check(combined_subtlety, true)
 	
 	if(subtle_roll.success):
 		log_message = "Succeeded subtlety check..."
@@ -384,7 +357,7 @@ func _propaganda_action(action:Action) -> void:
 		action.poi.parent_district.heat += 5
 		current_turn_log.append(log_message)
 
-	if(_bounded_sigmoid_check(combined_charm)):
+	if(MathHelpers.bounded_sigmoid_check(combined_charm)):
 		log_message = "Succeeded charm check..."
 		current_turn_log.append(log_message)
 		success = true

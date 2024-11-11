@@ -176,6 +176,7 @@ static func combine_rumours(rumours: Array) -> Intel:
 	var profile = {
 		"level": Enums.IntelLevel.PLAN,
 		"type": Enums.IntelType.COMPLETE,
+		"description": ""
 	}
 
 	# Verify we have exactly 3 rumours (whowhat, where, when)
@@ -206,18 +207,26 @@ static func combine_rumours(rumours: Array) -> Intel:
 		match rumour.type:
 			Enums.IntelType.WHOWHAT:
 				related_character = rumour.related_character
+				profile['description'] += "It has come to our attention that "
+				profile['description'] += rumour.description.substr(0, 1).to_lower() + rumour.description.substr(1)
 			Enums.IntelType.WHERE:
 				related_poi = rumour.related_poi
+				profile['description'] += " As a result, it is recommended that we use " + rumour.related_poi.poi_name + " as a base of operations. "
 			Enums.IntelType.WHEN:
 				related_duration = rumour.related_duration
 				related_expiry = rumour.related_expiry
+				profile['description'] += rumour.description
 
 	# Assign the extracted data to the plan's profile
-	profile['description'] = "Plan based on multiple rumours."
 	profile['related_character'] = related_character
 	profile['related_poi'] = related_poi
 	profile['related_duration'] = related_duration
 	profile['related_expiry'] = related_expiry
+
+	# Assemble the description
+	
+
+
 
 	# Create new PLAN level intel
 	var plan = Intel.new(profile)
