@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://bue8o2mrnetun"]
+[gd_scene load_steps=3 format=3 uid="uid://c0trxtgty6phy"]
 
 [ext_resource type="Script" path="res://scripts/pois/poi.gd" id="1_cwy0w"]
 [ext_resource type="Texture2D" uid="uid://dniextr4kn1uv" path="res://assets/PoI.png" id="2_y8567"]
@@ -9,8 +9,13 @@ script = ExtResource("1_cwy0w")
 poi_static = false
 poi_static_type = 3
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Label" type="Label" parent="."]
 visible = false
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Location Name"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("2_y8567")
 

@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bnshi2p8ra26w"]
+[gd_scene load_steps=4 format=3 uid="uid://bnshi2p8ra26w"]
 
 [ext_resource type="Script" path="res://scripts/district.gd" id="1_cj7mk"]
 [ext_resource type="Texture2D" uid="uid://cuyfkmlgcpdhb" path="res://assets/city.svg" id="2_e87vd"]
+[ext_resource type="PackedScene" path="res://scenes/pois/poi.tscn" id="3_c5tls"]
 
 [node name="District_SW" type="Area2D"]
 script = ExtResource("1_cj7mk")
@@ -21,7 +22,34 @@ polygon = PackedVector2Array(626, 464, 578, 484, 518, 496, 486, 497, 453, 495, 3
 position = Vector2(522, 668)
 
 [node name="pois" type="Node2D" parent="."]
-visible = false
+
+[node name="Poi" parent="pois" instance=ExtResource("3_c5tls")]
+poi_static = true
+poi_static_type = 1
+poi_static_name = "Gestapo HQ"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi"]
+polygon = PackedVector2Array(584, 665, 588, 780, 714, 767, 694, 694, 675, 679)
+
+[node name="Poi2" parent="pois" instance=ExtResource("3_c5tls")]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi2"]
+polygon = PackedVector2Array(574, 834, 576, 853, 597, 851, 595, 831)
+
+[node name="Poi3" parent="pois" instance=ExtResource("3_c5tls")]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi3"]
+polygon = PackedVector2Array(380, 643, 360, 661, 366, 667, 372, 662, 383, 672, 391, 664, 382, 655, 387, 650)
+
+[node name="Poi4" parent="pois" instance=ExtResource("3_c5tls")]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi4"]
+polygon = PackedVector2Array(413, 545, 416, 562, 425, 562, 428, 543)
+
+[node name="Poi5" parent="pois" instance=ExtResource("3_c5tls")]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi5"]
+polygon = PackedVector2Array(633, 582, 611, 596, 618, 606, 625, 608, 638, 587)
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

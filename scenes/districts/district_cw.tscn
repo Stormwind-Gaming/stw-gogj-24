@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://dpqgqrfoqchlu"]
+[gd_scene load_steps=4 format=3 uid="uid://d0a4qatowu8vq"]
 
 [ext_resource type="Script" path="res://scripts/district.gd" id="1_0s8ny"]
 [ext_resource type="Texture2D" uid="uid://cuyfkmlgcpdhb" path="res://assets/city.svg" id="2_yncyt"]
+[ext_resource type="PackedScene" path="res://scenes/pois/poi.tscn" id="3_w8n4q"]
 
 [node name="District_CW" type="Area2D"]
 script = ExtResource("1_0s8ny")
@@ -21,7 +22,34 @@ polygon = PackedVector2Array(427, 225, 451, 245, 474, 277, 513, 317, 554, 361, 5
 position = Vector2(361, 385)
 
 [node name="pois" type="Node2D" parent="."]
-visible = false
+
+[node name="Poi" parent="pois" instance=ExtResource("3_w8n4q")]
+poi_static = true
+poi_static_type = 2
+poi_static_name = "Town Hall"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi"]
+polygon = PackedVector2Array(376, 418, 354, 443, 350, 479, 443, 488, 447, 463)
+
+[node name="Poi2" parent="pois" instance=ExtResource("3_w8n4q")]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi2"]
+polygon = PackedVector2Array(358, 375, 348, 390, 356, 395, 367, 380)
+
+[node name="Poi3" parent="pois" instance=ExtResource("3_w8n4q")]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi3"]
+polygon = PackedVector2Array(261, 342, 255, 349, 262, 354, 246, 375, 252, 380, 276, 351)
+
+[node name="Poi4" parent="pois" instance=ExtResource("3_w8n4q")]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi4"]
+polygon = PackedVector2Array(412, 243, 418, 251, 409, 259, 416, 266, 431, 253, 418, 237)
+
+[node name="Poi5" parent="pois" instance=ExtResource("3_w8n4q")]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi5"]
+polygon = PackedVector2Array(572, 395, 565, 404, 577, 412, 584, 403)
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

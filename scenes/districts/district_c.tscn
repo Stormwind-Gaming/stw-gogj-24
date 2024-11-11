@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/district.gd" id="1_segdj"]
 [ext_resource type="Texture2D" uid="uid://cuyfkmlgcpdhb" path="res://assets/city.svg" id="2_gyqnt"]
-[ext_resource type="PackedScene" uid="uid://bue8o2mrnetun" path="res://scenes/pois/poi.tscn" id="3_bhahb"]
+[ext_resource type="PackedScene" path="res://scenes/pois/poi.tscn" id="3_bhahb"]
 
 [node name="District_C" type="Area2D"]
 script = ExtResource("1_segdj")
@@ -26,7 +26,7 @@ position = Vector2(841, 545)
 [node name="Poi" parent="pois" instance=ExtResource("3_bhahb")]
 poi_static = true
 poi_static_type = 10
-poi_static_name = "Static PoI"
+poi_static_name = "Cathedral"
 poi_static_description = "Test Static"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi"]
@@ -35,17 +35,22 @@ polygon = PackedVector2Array(691, 417, 717, 400, 748, 447, 722, 465)
 [node name="Poi2" parent="pois" instance=ExtResource("3_bhahb")]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi2"]
-polygon = PackedVector2Array(762, 402, 759, 425, 757, 425, 755, 443, 758, 443, 757, 453, 772, 453, 772, 452, 790, 452, 790, 442, 783, 441, 783, 424, 789, 424, 787, 393)
+polygon = PackedVector2Array(828, 401, 830, 421, 848, 417, 839, 397)
 
 [node name="Poi3" parent="pois" instance=ExtResource("3_bhahb")]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi3"]
-polygon = PackedVector2Array(772, 503, 734, 485, 727, 493, 733, 498, 727, 502, 742, 523, 751, 516, 747, 511, 755, 505, 762, 510)
+polygon = PackedVector2Array(749, 571, 743, 596, 767, 604, 772, 588, 759, 583, 761, 573)
 
 [node name="Poi4" parent="pois" instance=ExtResource("3_bhahb")]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi4"]
-polygon = PackedVector2Array(777, 462, 770, 490, 754, 483, 756, 461)
+polygon = PackedVector2Array(934, 620, 923, 630, 956, 654, 957, 645)
+
+[node name="Poi5" parent="pois" instance=ExtResource("3_bhahb")]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi5"]
+polygon = PackedVector2Array(845, 477, 845, 503, 866, 503, 863, 475)
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
