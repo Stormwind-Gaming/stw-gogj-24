@@ -97,6 +97,15 @@ func _on_poi_clicked(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 			# create a radial menu
 			var radial_menu_instance = Globals.radial_menu_scene.instantiate()
 			radial_menu_instance.position = get_local_mouse_position()
+
+			## ## TODO this should be based off the poi_type and take plans into account
+			# set the radial menu actions
+			var actions = [
+				Enums.ActionType.ESPIONAGE,
+				Enums.ActionType.PROPAGANDA,
+				Enums.ActionType.SURVEILLANCE
+			] as Array[Enums.ActionType]
+			radial_menu_instance.set_optional_actions(actions)
 			add_child(radial_menu_instance)
 
 			GameController.open_radial_menu(radial_menu_instance, self)

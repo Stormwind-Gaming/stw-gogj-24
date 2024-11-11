@@ -21,10 +21,10 @@ func _init(options_attr: Array[Enums.ActionType] = []) -> void:
 	options = []
 	options_attr.append(Enums.ActionType.NONE)
 	options_attr.append(Enums.ActionType.INFO)
-	options_attr.append(Enums.ActionType.ESPIONAGE)
-	options_attr.append(Enums.ActionType.PROPAGANDA)
-	options_attr.append(Enums.ActionType.SURVEILLANCE)
-	options_attr.append(Enums.ActionType.PLAN)
+	for option in options_attr:
+		options.append(RadialOption.new(option))
+
+func set_optional_actions(options_attr: Array[Enums.ActionType] = []) -> void:
 	for option in options_attr:
 		options.append(RadialOption.new(option))
 
