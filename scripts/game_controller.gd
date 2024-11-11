@@ -62,6 +62,8 @@ func process_turn() -> void:
 			Enums.ActionType.PROPAGANDA:
 				_propaganda_action(action)
 				
+			Enums.ActionType.PLAN:
+				_plan_action(action)
 				
 		# set all agents back to available
 		for agent in action.characters:
@@ -376,3 +378,26 @@ func _propaganda_action(action:Action) -> void:
 		current_turn_log.append(log_message)
 
 	current_turn_log.append("\n")
+
+func _plan_action(action:Action) -> void:
+
+	var log_message = "Processing PLAN action at [u]" + str(action.poi.poi_name) + "[/u] by "
+
+	var success = false
+
+	for character in action.characters:
+		log_message += "[u]" + character.first_name + " " + character.last_name + "[/u], "
+
+	current_turn_log.append(log_message)
+
+	var combined_subtlety = 0
+	var combined_smarts = 0
+	var combined_charm = 0
+
+	for character in action.characters:
+		combined_subtlety += character.subtlety
+		combined_smarts += character.smarts
+		combined_charm += character.charm
+
+	log_message = "oh god... how is this bit supposed to work?!"
+	current_turn_log.append(log_message)

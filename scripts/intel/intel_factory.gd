@@ -221,16 +221,25 @@ static func combine_rumours(rumours: Array) -> Intel:
 				related_expiry = rumour.related_expiry
 				profile['description'] += rumour.description
 
+	var plan_names = [
+		"Operation Ironclad",
+		"Operation Seagull",
+		"Operation Tempest",
+		"Operation Frostbite",
+		"Operation Lionheart",
+		"Operation Thunderstrike",
+		"Operation Wolfpack",
+		"Operation Whirlwind",
+		"Operation Valkyrie Shield",
+		"Operation Phoenix",
+	]
+
 	# Assign the extracted data to the plan's profile
 	profile['related_character'] = related_character
 	profile['related_poi'] = related_poi
 	profile['related_duration'] = related_duration
 	profile['related_expiry'] = related_expiry
-
-	# Assemble the description
-	
-
-
+	profile['plan_name'] = plan_names[randi() % plan_names.size()]
 
 	# Create new PLAN level intel
 	var plan = Intel.new(profile)

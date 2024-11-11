@@ -187,10 +187,6 @@ theme_override_constants/margin_bottom = 10
 [node name="VBoxContainer" type="VBoxContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Plans/MarginContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Plans/MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "Plans"
-
 [node name="PlanListContainer" type="VBoxContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Plans/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
@@ -210,5 +206,9 @@ focus_mode = 0
 texture_normal = ExtResource("4_kiccb")
 texture_pressed = ExtResource("4_kiccb")
 texture_hover = ExtResource("5_6a8ds")
+
+[node name="Label" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 21.0
 
 [connection signal="pressed" from="MarginContainer/TextureButton" to="." method="_on_close_button_pressed"]
