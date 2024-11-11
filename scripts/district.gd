@@ -49,7 +49,6 @@ func _ready() -> void:
 
 		if poi.poi_static:
 			poi.set_poi_details(self, Enums.POIType.NONE, "", "")
-			print("%s - %s" % [poi.poi_name, poi.poi_type])
 			continue
 
 		# get a random poi type

@@ -29,7 +29,6 @@ func _on_new_assignment(option: Enums.ActionType, poi: PointOfInterest, agents: 
 
 func _on_agents_changed(new_agent: Character) -> void:
 	# update the sidebar list of agents
-	print("Updating agents")
 	# get all agents
 	var agents = []
 	for character_id in GlobalRegistry.get_all_objects(Enums.Registry_Category.CHARACTER):

@@ -35,13 +35,11 @@ class RumourConfig:
 								if adjusted_total != 100:
 										self.whowhat_chance += 100 - adjusted_total
 
-								print("Scaled chances to 100%: WhoWhat: %d, Where: %d, When: %d" % 
-												[self.whowhat_chance, self.where_chance, self.when_chance])
+								# print("Scaled chances to 100%: WhoWhat: %d, Where: %d, When: %d" % 
+								# 				[self.whowhat_chance, self.where_chance, self.when_chance])
 
 
 static func create_rumour(config: RumourConfig) -> Intel:
-		print("Creating rumour...")
-
 		var profile = {
 			"level": Enums.IntelLevel.RUMOUR,
 		}
@@ -164,9 +162,6 @@ static func create_rumour(config: RumourConfig) -> Intel:
 								profile['related_duration'] = 0
 								profile['related_expiry'] = 0
 
-
-		print("Rumour created: Type: ", profile.type, ", Description: ", profile.description)
-
 		return Intel.new(profile)
 
 
@@ -230,6 +225,5 @@ static func combine_rumours(rumours: Array) -> Intel:
 	# Destroy rumours by freeing them
 	for rumour in rumours:
 		rumour.free()
-
-	print("Combined rumours into PLAN level intel.")
+		
 	return plan

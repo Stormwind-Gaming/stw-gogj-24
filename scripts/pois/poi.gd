@@ -18,7 +18,8 @@ var stat_check_type: Enums.StatCheckType = Enums.StatCheckType.SMARTS
 var poi_type: Enums.POIType
 var poi_name: String = ""
 var poi_description: String = ""
-var poi_owner:Character
+var poi_owner: Character
+var poi_bonus: Enums.POIBonusType = Enums.POIBonusType.NONE
 
 # Variables for scale animation
 var no_color = Color(0, 0, 0, 0) # No color
@@ -35,6 +36,7 @@ func _ready() -> void:
 	
 	# Create the owner of the POI
 	self.poi_owner = CharacterFactory.create_character()
+	self.poi_bonus = _derive_poi_bonus()
 
 func setup_poi_visuals():
 	$Polygon2D.position = self.get_global_position()
@@ -110,4 +112,16 @@ func _on_district_just_focused(district: District) -> void:
 		$Polygon2D.color = no_color
 		enabled = false
 	
-	
+func _derive_poi_bonus() -> Enums.POIBonusType:
+	## placeholder function for deriving the PoI bonus from the PoI type 
+
+	# match poi_type:
+	# 	Enums.POIType.GESTAPO_HQ:
+	# 		return Enums.POIBonusType.INCREASED_SUBTLETY
+	# 	Enums.POIType.TOWN_HALL:
+	# 		return Enums.POIBonusType.INCREASED_SMARTS
+	# 	Enums.POIType.PARK:
+	# 		return Enums.POIBonusType.INCREASED_CHARM
+	# 	_:
+	# 		return Enums.POIBonusType.NONE
+	return Enums.POIBonusType.NONE

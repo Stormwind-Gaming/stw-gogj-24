@@ -8,40 +8,8 @@ static func generate_random_profile() -> Dictionary:
 	var nationality = randi() % Enums.CharacterNationality.size()
 	var gender = randi() % Enums.CharacterGender.size()
 	
-	# Select the correct lists for naming based on nationality and gender
-	var last_name_bag: Array
-	var first_name_bag: Array
-	
-	match nationality:
-		Enums.CharacterNationality.BELGIAN:
-			match gender:
-				Enums.CharacterGender.MALE:
-					last_name_bag = Globals.get_all_last_names(Enums.CharacterNationality.BELGIAN)
-					first_name_bag = Globals.get_all_first_names(Enums.CharacterGender.MALE, Enums.CharacterNationality.BELGIAN)
-				Enums.CharacterGender.FEMALE:
-					last_name_bag = Globals.get_all_last_names(Enums.CharacterNationality.BELGIAN)
-					first_name_bag = Globals.get_all_first_names(Enums.CharacterGender.FEMALE, Enums.CharacterNationality.BELGIAN)
-				_:
-					last_name_bag = Globals.get_all_last_names(Enums.CharacterNationality.BELGIAN)
-					first_name_bag = Globals.get_all_first_names(Enums.CharacterGender.MALE, Enums.CharacterNationality.BELGIAN)
-		Enums.CharacterNationality.GERMAN:
-			match gender:
-				Enums.CharacterGender.MALE:
-					last_name_bag = Globals.get_all_last_names(Enums.CharacterNationality.GERMAN)
-					first_name_bag = Globals.get_all_first_names(Enums.CharacterGender.MALE, Enums.CharacterNationality.GERMAN)
-				Enums.CharacterGender.FEMALE:
-					last_name_bag = Globals.get_all_last_names(Enums.CharacterNationality.GERMAN)
-					first_name_bag = Globals.get_all_first_names(Enums.CharacterGender.FEMALE, Enums.CharacterNationality.GERMAN)
-				_:
-					last_name_bag = Globals.get_all_last_names(Enums.CharacterNationality.GERMAN)
-					first_name_bag = Globals.get_all_first_names(Enums.CharacterGender.MALE, Enums.CharacterNationality.GERMAN)
-		_:
-			last_name_bag = Globals.get_all_last_names(Enums.CharacterNationality.BELGIAN)
-			first_name_bag = Globals.get_all_first_names(Enums.CharacterGender.MALE, Enums.CharacterNationality.BELGIAN)
-	
-	# Randomize name
-	var last_name: String = last_name_bag[randi() % last_name_bag.size()].last_name
-	var first_name: String = first_name_bag[randi() % first_name_bag.size()].first_name
+	# Generate a random name
+	var name_arr = _generate_name(nationality, gender)
 	
 	# Determine image path based on nationality and gender
 	var nationality_str = _get_nationality_string(nationality)
@@ -52,13 +20,31 @@ static func generate_random_profile() -> Dictionary:
 	var selected_image = _get_random_image_from_path(image_directory)
 	
 	return {
-		"first_name": first_name, 
-		"last_name": last_name, 
+		"first_name": name_arr[0], 
+		"last_name": name_arr[1],
 		"nationality": nationality,
 		"gender": gender,
 		"image_path": selected_image,
-		"national_id_number": randi() % 1000000
+		"national_id_number": randi() % 10000000
 	}
+
+static func _generate_name(nationality: Enums.CharacterNationality, gender: Enums.CharacterGender) -> Array[String]:
+	# Select the correct lists for naming based on nationality and gender
+	var last_name_bag: Array
+	var first_name_bag: Array
+
+	if nationality and gender:
+		last_name_bag = Globals.get_all_last_names(nationality)
+		first_name_bag = Globals.get_all_first_names(gender, nationality)
+	else:
+		last_name_bag = Globals.get_all_last_names(Enums.CharacterNationality.BELGIAN)
+		first_name_bag = Globals.get_all_first_names(Enums.CharacterGender.MALE, Enums.CharacterNationality.BELGIAN)
+	
+	# Randomize name
+	var last_name: String = last_name_bag[randi() % last_name_bag.size()].last_name
+	var first_name: String = first_name_bag[randi() % first_name_bag.size()].first_name
+
+	return [first_name, last_name]
 
 static func create_character() -> Character:
 	var profile = generate_random_profile()
@@ -67,12 +53,16 @@ static func create_character() -> Character:
 	return new_character
 
 # Helper function to convert nationality enum to string
-static func _get_nationality_string(nationality: int) -> String:
+static func _get_nationality_string(nationality: Enums.CharacterNationality) -> String:
 	match nationality:
 		Enums.CharacterNationality.BELGIAN:
 			return "belgian"
 		Enums.CharacterNationality.GERMAN:
 			return "german"
+		Enums.CharacterNationality.BRITISH:
+			return "british"
+		Enums.CharacterNationality.FRENCH:
+			return "french"
 		_:
 			return "default"
 			

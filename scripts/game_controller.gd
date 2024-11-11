@@ -51,7 +51,7 @@ func add_action(poi: PointOfInterest, characters: Array[Character], action_type:
 					# delete the previous action
 					_remove_action(action)
 
-	print("Adding action:", poi, characters, action_type)
+	# print("Adding action:", poi, characters, action_type)
 	var new_action = Action.new(poi, characters, action_type, additional_info)
 	actions.append(new_action)
 
@@ -70,7 +70,6 @@ func process_turn() -> void:
 
 		match action.action_type:
 			Enums.ActionType.ESPIONAGE:
-				print("Action: ", action.poi, action.characters)
 				log_message = "Processing ESPIONAGE action at [u]" + str(action.poi.poi_name) + "[/u] by "
 				for character in action.characters:
 					log_message += "[u]" + character.first_name + " " + character.last_name + "[/u], "
@@ -125,7 +124,6 @@ func process_turn() -> void:
 				
 		if success:
 			log_message = "[color=green]The mission was a success![/color]"
-			print(IntelFactory)
 			current_turn_log.append(log_message)
 			IntelFactory.create_rumour(action.poi.rumour_config)
 		else:
@@ -139,11 +137,6 @@ func process_turn() -> void:
 			# do an assigned check here to futureproof agents getting set to other statuses during the action (e.g. captured / dead)
 			if agent.current_status == Enums.CharacterStatus.ASSIGNED:
 				agent.current_status = Enums.CharacterStatus.AVAILABLE
-
-		
-	# Output current turn log to the console		
-	for each_log_message in current_turn_log:
-		print(each_log_message)  
 
 	# Store the logs for this turn
 	turn_logs.append(current_turn_log)
@@ -247,7 +240,6 @@ func _on_radial_option_selected(option: Enums.ActionType) -> void:
 	add_child(post_radial_assignment)
 
 func _on_post_radial_assignment_option_selected(option: Enums.ActionType, selected_agents: Array[Character], additions: Array) -> void:
-	print("_on_post_radial_assignment_option_selected")
 	if option != Enums.ActionType.NONE and option != Enums.ActionType.INFO:
 		GameController.add_action(poi_for_radial, selected_agents, option)
 		# set all agents to assigned

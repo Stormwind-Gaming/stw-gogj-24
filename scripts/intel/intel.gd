@@ -30,13 +30,10 @@ func _init(profile: Dictionary):
 
 	# Listen to turn end
 	GameController.end_turn_complete.connect(_expire_intel)
-	
-	print("Added intel to global registry")
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE:
 		GlobalRegistry.unregister_object(Enums.Registry_Category.INTEL, self.id)
-		print("Removed intel from global registry")
 
 func _expire_intel(num: int) -> void:
 	if expires_on_turn <= GameController.turn_number:

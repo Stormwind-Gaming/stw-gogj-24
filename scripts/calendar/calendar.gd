@@ -47,8 +47,6 @@ func increment_day():
             month = 1
             year += 1
 
-    print("New date:", get_date_string())
-
 # Function to get a new birthdate for a character
 func get_new_birthdate() -> String:
     var birth_year = year - randi_range(18, 40)

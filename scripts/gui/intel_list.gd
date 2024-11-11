@@ -109,7 +109,8 @@ func _on_create_plan_btn_pressed():
 	
 	if plan:
 		# Optionally, you can add the new plan to the GlobalRegistry or handle it accordingly
-		print("Plan created successfully.")
+		# print("Plan created successfully.")
+		pass
 	
 	# Switch to the 'Plans' tab
 	tab_container.current_tab = 1

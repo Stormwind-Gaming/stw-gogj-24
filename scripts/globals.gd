@@ -53,6 +53,7 @@ func _load_first_names(path: String) -> void:
 	for record in csv_data.records:
 		var gender = gender_map[record["gender"].to_upper()]
 		var nationality = nationality_map[record["nationality"].to_upper()]
+		print(record["nationality"], nationality)
 		first_names.append({
 			"first_name": record["first_name"],
 			"gender": gender,
@@ -73,13 +74,17 @@ func _load_poi_types(path: String) -> void:
 	for record in csv_data.records:
 		var poi_type = poi_type_map[record["poi_name"].to_upper()]
 		var district_type = district_type_map[record["district_type"].to_upper()]
+		var skill_required = poi_skill_required_map[record["skill_required"].to_upper()]
+		var bonus_type = poi_bonus_map[record["bonus_type"].to_upper()]
 		poi_types.append({
 			"poi_type": poi_type,
 			"poi_name": record["poi_name"],
 			"poi_description": record["poi_description"],
 			"district_type": district_type,
 			"spawn_chance": record["spawn_chance"],
-			"max_spawn_quantity": record["max_spawn_quantity"]
+			"max_spawn_quantity": record["max_spawn_quantity"],
+			"skill_required": skill_required,
+			"bonus_type": bonus_type,
 		})
 	
 func _load_poi_names(path: String) -> void:
@@ -174,7 +179,9 @@ var gender_map = {
 
 var nationality_map = {
 	"GERMAN": Enums.CharacterNationality.GERMAN,
-	"BELGIAN": Enums.CharacterNationality.BELGIAN
+	"BELGIAN": Enums.CharacterNationality.BELGIAN,
+	"BRITISH": Enums.CharacterNationality.BRITISH,
+	"FRENCH": Enums.CharacterNationality.FRENCH
 }
 
 var poi_type_map = {
@@ -251,6 +258,17 @@ var intel_effect_map = {
 	"D_FOUR_E_THREE": Enums.IntelEffect.D_FOUR_E_THREE,
 	"D_FOUR_E_FOUR": Enums.IntelEffect.D_FOUR_E_FOUR,
 	"NONE": Enums.IntelEffect.NONE
+}
+
+var poi_skill_required_map = {
+	"SUBTLETY": Enums.POISkillRequired.SUBTLETY,
+	"SMARTS": Enums.POISkillRequired.SMARTS,
+	"CHARM": Enums.POISkillRequired.CHARM,
+	"NONE": Enums.POISkillRequired.NONE
+}
+
+var poi_bonus_map = {
+	"NONE": Enums.POIBonusType.NONE
 }
 
 #endregion

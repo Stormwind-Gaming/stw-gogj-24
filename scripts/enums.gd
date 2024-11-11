@@ -7,7 +7,9 @@ enum CharacterGender {
 
 enum CharacterNationality {
 	BELGIAN,
-	GERMAN
+	GERMAN,
+	BRITISH,
+	FRENCH
 }
 
 enum CharacterStatus {
@@ -79,6 +81,17 @@ enum POIType {
 	WORKSHOP,
 	ANTI_AIR_EMPLACEMENT,
 	GESTAPO_POST,
+}
+
+enum POIBonusType {
+	NONE
+}
+
+enum POISkillRequired {
+	NONE,
+	SUBTLETY,
+	SMARTS,
+	CHARM
 }
 
 enum Registry_Category {

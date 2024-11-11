@@ -44,9 +44,6 @@ func populate_character_lists(characters):
 
 
 func _on_character_button_pressed(character_node: Character) -> void:
-	# Handle character button press
-	print("Selected character: ", character_node.first_name, character_node.last_name)
-	
 	# if the character is an agent, remove them from the agent list
 	if character_node.recruited:
 		character_node.unset_agent()
