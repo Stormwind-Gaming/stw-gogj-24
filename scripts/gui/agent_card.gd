@@ -49,9 +49,11 @@ func _ready():
 
 func set_character(character_id: String):
 	character = GlobalRegistry.get_object(Enums.Registry_Category.CHARACTER, character_id)
-	charm_label.text = str(character.charm)
-	subtlety_label.text = str(character.subtlety)
-	smarts_label.text = str(character.smarts)
+
+	var stats = character.get_stats()
+	charm_label.text = str(stats.charm)
+	subtlety_label.text = str(stats.subtlety)
+	smarts_label.text = str(stats.smarts)
 
 func disable_card() -> void:
 	assignment_button.disabled = true
