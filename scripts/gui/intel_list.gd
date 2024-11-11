@@ -36,6 +36,7 @@ func _ready():
 	var new_plan_scene = Globals.plan_scene.instantiate()
 	new_plan_scene.set_new_plan_card()
 	new_plan_scene.toggle_enabled_button(false)
+	new_plan_scene.create_plan.connect(_on_create_plan_btn_pressed)
 	plan_holder.add_child(new_plan_scene)
 	plan_scene = new_plan_scene
 
