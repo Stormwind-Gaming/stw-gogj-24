@@ -365,8 +365,8 @@ func get_character_status_string(status: Enums.CharacterStatus) -> String:
 			return "MIA"
 		Enums.CharacterStatus.INCARCERATED:
 			return "Incarcerated"
-		Enums.CharacterStatus.DEAD:
-			return "Dead"
+		Enums.CharacterStatus.DECEASED:
+			return "Deceased"
 		_:
 			return "Unknown"
 		

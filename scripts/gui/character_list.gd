@@ -1,5 +1,7 @@
 extends Window
 
+@export var deceased_list_container: GridContainer
+@export var mia_list_container: GridContainer
 @export var all_character_list_container: GridContainer
 @export var sympathiser_list_container: GridContainer
 @export var agent_list_container: VBoxContainer
@@ -19,17 +21,14 @@ func populate_character_lists(characters):
 		child.queue_free()
 	for child in agent_list_container.get_children():
 		child.queue_free()
-
-	# Iterate over the dictionary to create buttons
+			
 	for name in characters.keys():
 		var character_node = characters[name]
-		var mini_agent_card_scene = Globals.mini_agent_card_scene.instantiate()
-		mini_agent_card_scene.set_character(character_node.id)
-		all_character_list_container.add_child(mini_agent_card_scene)
-	
-	for name in characters.keys():
-		var character_node = characters[name]
-		if character_node.recruited:
+		if character_node.current_status == Enums.CharacterStatus.NONE:
+			var mini_agent_card_scene = Globals.mini_agent_card_scene.instantiate()
+			mini_agent_card_scene.set_character(character_node.id)
+			all_character_list_container.add_child(mini_agent_card_scene)
+		elif character_node.recruited:
 			var agent_card_scene = Globals.agent_card_scene.instantiate()
 			agent_card_scene.on_character_list_page()
 			agent_card_scene.set_character(character_node.id)
@@ -41,6 +40,16 @@ func populate_character_lists(characters):
 			mini_agent_card_scene.set_character(character_node.id)
 			mini_agent_card_scene.connect("character_card_pressed", _on_character_button_pressed)
 			sympathiser_list_container.add_child(mini_agent_card_scene)
+		elif character_node.current_status == Enums.CharacterStatus.DECEASED:
+			var mini_agent_card_scene = Globals.mini_agent_card_scene.instantiate()
+			mini_agent_card_scene.set_character(character_node.id)
+			mini_agent_card_scene.connect("character_card_pressed", _on_character_button_pressed)
+			deceased_list_container.add_child(mini_agent_card_scene)
+		elif character_node.current_status == Enums.CharacterStatus.MIA:
+			var mini_agent_card_scene = Globals.mini_agent_card_scene.instantiate()
+			mini_agent_card_scene.set_character(character_node.id)
+			mini_agent_card_scene.connect("character_card_pressed", _on_character_button_pressed)
+			mia_list_container.add_child(mini_agent_card_scene)
 
 
 func _on_character_button_pressed(character_node: Character) -> void:
