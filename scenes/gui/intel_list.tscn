@@ -11,6 +11,7 @@ auto_translate_mode = 1
 transparent_bg = true
 initial_position = 2
 size = Vector2i(800, 700)
+exclusive = true
 unresizable = true
 borderless = true
 always_on_top = true

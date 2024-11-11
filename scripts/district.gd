@@ -1,6 +1,8 @@
 extends Node
 class_name District
 
+@export var district_popup: Window
+
 var district_type: Enums.DistrictType
 var district_name: String = ""
 var district_description: String = ""
@@ -15,6 +17,8 @@ var no_color = Color(0, 0, 0, 0) # No color
 var highlight_color = Color(1, 0.5, 0, 0.2) # Orange color
 # Red color for heat
 var heat_color = Color(1, 0, 0, 0.0)
+
+var hovered: bool = false
 
 signal district_hovered(district: District)
 signal district_unhovered(district: District)
@@ -106,6 +110,13 @@ func _ready() -> void:
 		# set the poi details
 		poi.set_poi_details(self, selected_poi_type["poi_type"], "%s - %s" % [poi_name, selected_poi_type["poi_name"]], selected_poi_type["poi_description"])
 
+func _process(delta: float) -> void:
+	if hovered and !GameController.district_focused:
+		district_popup.visible = true
+		district_popup.set_position(get_viewport().get_mouse_position() + Vector2(10, 10))
+	else:
+		district_popup.visible = false
+
 #region District
 
 func set_district_details(district_name_arg: String, district_description_arg: String, rumour_text_arg: String) -> void:
@@ -113,14 +124,19 @@ func set_district_details(district_name_arg: String, district_description_arg: S
 	district_description = district_description_arg
 	rumour_text = rumour_text_arg
 
+	district_popup.set_details(district_name, "%s\n\nType: %s\n%s Points of Interest\n\nHeat: [font_size=20]%s[/font_size]" % [district_description, Globals.get_district_type_string(district_type), str(pois.size()), str(heat)  + "%"])
+
 func _on_mouse_entered() -> void:
 	# check if we have a radial menu instance, if so, don't expand
 	if GameController.radial_menu_open != null:
 		return
+	
+	hovered = true
 		
 	emit_signal("district_hovered", self)
 	
 func _on_mouse_exited():
+	hovered = false
 	emit_signal("district_unhovered", self)
 
 func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:

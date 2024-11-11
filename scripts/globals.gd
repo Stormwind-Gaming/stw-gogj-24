@@ -427,4 +427,22 @@ func get_profession_string(profession: Enums.CharacterProfession) -> String:
 		_:
 			return "Unknown"
 
+func get_poi_bonus_string(bonus: Enums.POIBonusType) -> String:
+	match bonus:
+		Enums.POIBonusType.NONE:
+			return "None"
+		_:
+			return "Unknown"
+
+func get_district_type_string(district_type: Enums.DistrictType) -> String:
+	match district_type:
+		Enums.DistrictType.SHOPPING:
+			return "Shopping"
+		Enums.DistrictType.INDUSTRIAL:
+			return "Industrial"
+		Enums.DistrictType.RESIDENTIAL:
+			return "Residential"
+		_:
+			return "Unknown"
+
 #endregion

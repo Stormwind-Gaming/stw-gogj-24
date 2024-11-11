@@ -32,22 +32,31 @@ func set_new_plan_card() -> void:
 func _process(delta: float) -> void:
 	if !plan && has_time_text && timing_label.visible_ratio < 1:
 		timing_label.visible_ratio += delta * type_effect_speed
-	elif has_location_text && location_label.visible_ratio < 1:
+	if has_location_text && location_label.visible_ratio < 1:
 		location_label.visible_ratio += delta * type_effect_speed
-	elif has_mission_text && mission_label.visible_ratio < 1:
+	if has_mission_text && mission_label.visible_ratio < 1:
 		mission_label.visible_ratio += delta * type_effect_speed
 
 func set_time_text(text: String) -> void:
+	# if text is the same as the previous time text, don't show it
+	if timing_label.text == text:
+		return
 	timing_label.visible_ratio = 0
 	has_time_text = true
 	timing_label.text = text
 
 func set_location_text(text: String) -> void:
+	# if text is the same as the previous location text, don't show it
+	if location_label.text == text:
+		return
 	location_label.visible_ratio = 0
 	has_location_text = true
 	location_label.text = text
 
 func set_mission_text(text: String) -> void:
+	# if text is the same as the previous mission text, don't show it
+	if mission_label.text == text:
+		return
 	mission_label.visible_ratio = 0
 	has_mission_text = true
 	mission_label.text = text

@@ -1,11 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://b1vvls3nbthm6"]
+[gd_scene load_steps=5 format=3 uid="uid://b1vvls3nbthm6"]
 
 [ext_resource type="Script" path="res://scripts/district.gd" id="1_epqjp"]
 [ext_resource type="Texture2D" uid="uid://cuyfkmlgcpdhb" path="res://assets/city.svg" id="2_3kiu6"]
 [ext_resource type="PackedScene" uid="uid://c0trxtgty6phy" path="res://scenes/pois/poi.tscn" id="3_g4xl4"]
+[ext_resource type="PackedScene" uid="uid://cf5mn4nfhvkwj" path="res://scenes/gui/district_popup.tscn" id="3_g17pl"]
 
-[node name="District_N" type="Area2D"]
+[node name="District_N" type="Area2D" node_paths=PackedStringArray("district_popup")]
 script = ExtResource("1_epqjp")
+district_popup = NodePath("DistrictPopup")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(800, 450)
@@ -20,6 +22,9 @@ polygon = PackedVector2Array(598, 391, 566, 368, 513, 314, 472, 274, 445, 239, 4
 
 [node name="FocusPoint" type="Node2D" parent="."]
 position = Vector2(611, 196)
+
+[node name="DistrictPopup" parent="." instance=ExtResource("3_g17pl")]
+visible = false
 
 [node name="pois" type="Node2D" parent="."]
 

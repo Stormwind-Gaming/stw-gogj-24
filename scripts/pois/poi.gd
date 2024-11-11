@@ -1,6 +1,7 @@
 extends Area2D
 class_name PointOfInterest
 
+@export var poi_popup: Window
 @export var poi_static := true
 
 @export_group("Static Variables")
@@ -26,6 +27,8 @@ var no_color = Color(0, 0, 0, 0) # No color
 var selectable_color = Color(0, 1, 0, 0.5) # No color
 var highlight_color = Color(1, 1, 1, 0.5) # Orange color
 
+var hovered: bool = false
+
 signal poi_hovered
 signal poi_unhovered
 
@@ -37,6 +40,13 @@ func _ready() -> void:
 	# Create the owner of the POI
 	self.poi_owner = CharacterFactory.create_character()
 	self.poi_bonus = _derive_poi_bonus()
+
+func _process(delta: float) -> void:
+	if hovered and GameController.district_focused == parent_district:
+		poi_popup.visible = true
+		poi_popup.set_position(get_viewport().get_mouse_position() + Vector2(10, 10))
+	else:
+		poi_popup.visible = false
 
 func setup_poi_visuals():
 	$Polygon2D.position = self.get_global_position()
@@ -53,6 +63,15 @@ func set_poi_details(parent_district_arg: District, poi_type_arg: Enums.POIType,
 		poi_type = poi_type_arg
 		poi_name = poi_name_arg
 		poi_description = poi_description_arg
+	
+	var desc = ''
+	# desc += poi_description
+	# desc += '\n\n'
+	desc += 'Owner: ' + poi_owner.get_full_name()
+	desc += '\n'
+	desc += 'Bonus: ' + Globals.get_poi_bonus_string(poi_bonus)
+	
+	poi_popup.set_details(poi_name, desc)
 
 # Function to expand on mouse hover
 func _on_mouse_entered():
@@ -66,6 +85,8 @@ func _on_mouse_entered():
 	# check if parent is focused
 	if GameController.district_focused != parent_district:
 		return
+	
+	hovered = true
 	$Polygon2D.color = highlight_color
 	emit_signal("poi_hovered", self)
 
@@ -79,6 +100,8 @@ func _on_mouse_exited():
 		return
 	else:
 		$Polygon2D.color = selectable_color
+
+	hovered = false
 	emit_signal("poi_unhovered")
 
 func _on_poi_clicked(viewport: Node, event: InputEvent, shape_idx: int) -> void:

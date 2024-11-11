@@ -1,0 +1,65 @@
+[gd_scene load_steps=4 format=3 uid="uid://l7oaxvw3d3gl"]
+
+[ext_resource type="Script" path="res://scripts/gui/poi_popup.gd" id="1_pvfqc"]
+[ext_resource type="Theme" uid="uid://dexax20p2eewp" path="res://assets/themes/base_theme.tres" id="1_sfyac"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bbfx3"]
+bg_color = Color(0.929412, 0.85098, 0.713726, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="PoIPopup" type="Window" node_paths=PackedStringArray("title_label", "text_label")]
+auto_translate_mode = 1
+transparent_bg = true
+size = Vector2i(175, 150)
+unresizable = true
+borderless = true
+always_on_top = true
+transparent = true
+theme = ExtResource("1_sfyac")
+script = ExtResource("1_pvfqc")
+title_label = NodePath("PanelContainer/MarginContainer/VBoxContainer/Label")
+text_label = NodePath("PanelContainer/MarginContainer/VBoxContainer/RichTextLabel")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bbfx3")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "<title>"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 13
+bbcode_enabled = true
+text = "<text> <text> <text> <text> <text>"
+fit_content = true
