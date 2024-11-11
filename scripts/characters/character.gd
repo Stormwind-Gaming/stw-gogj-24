@@ -1,5 +1,4 @@
 extends Node2D
-
 class_name Character
 
 var id : String
@@ -35,11 +34,11 @@ func _init(profile: Dictionary):
 	self.dob = GameController.calendar.get_new_birthdate()
 	self.profession = Enums.CharacterProfession.UNKNOWN
 	
-	self.charm = _generateBellCurveStat()
-	self.subtlety = _generateBellCurveStat()
-	self.smarts = _generateBellCurveStat()
+	self.charm = MathHelpers.generateBellCurveStat()
+	self.subtlety = MathHelpers.generateBellCurveStat()
+	self.smarts = MathHelpers.generateBellCurveStat()
 	
-	self.sympathy = _generateLinearStat(1,100)
+	self.sympathy = MathHelpers.generateLinearStat(1,100)
 
 	if self.sympathy > 80:
 		# This character is sympathetic to the resistance
@@ -55,16 +54,6 @@ func _init(profile: Dictionary):
 		self.known = true
 	
 	self.id = GlobalRegistry.register_object(Enums.Registry_Category.CHARACTER, self, self.first_name + '_' + self.last_name + '_' + str(self.national_id_number))
-
-func _generateLinearStat(min:int, max:int) -> int:
-	return randi() % max + min 
-	GlobalRegistry.register_object(Enums.Registry_Category.CHARACTER, self, self.first_name + ' ' + self.last_name)
-
-func _generateBellCurveStat() -> int:
-	var total = 0
-	for i in range(3):
-		total += randi() % 4 + 1
-	return total - 2
 
 func get_full_name() -> String:
 	return first_name + ' ' + last_name

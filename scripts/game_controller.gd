@@ -25,6 +25,8 @@ var actions: Array[Action] = []
 var turn_number: int = 0
 # Multidimensional array to log the output of each turn
 var turn_logs: Array = []
+# Store current turn log
+var current_turn_log: Array = []
 
 # Method to add an action
 func add_action(poi: PointOfInterest, characters: Array[Character], action_type: Enums.ActionType, additional_info: Dictionary = {}) -> void:
@@ -47,76 +49,20 @@ func process_turn() -> void:
 
 	turn_number += 1  # Increment the turn number
 	calendar.increment_day()  # Increment the day
-	var current_turn_log: Array = []  # Array to store logs for this turn
 
 	for action in actions:
-		var log_message: String
-		var success: bool = false
 
 		match action.action_type:
 			Enums.ActionType.ESPIONAGE:
-				log_message = "Processing ESPIONAGE action at [u]" + str(action.poi.poi_name) + "[/u] by "
-				for character in action.characters:
-					log_message += "[u]" + character.first_name + " " + character.last_name + "[/u], "
-				current_turn_log.append(log_message)
+				_espionage_action(action)
 
-				var combined_subtlety = 0
-				var combined_smarts = 0
-				var combined_charm = 0
+			Enums.ActionType.SURVEILLANCE:
+				_surveillance_action(action)
 
-				for character in action.characters:
-					combined_subtlety += character.subtlety
-					combined_smarts += character.smarts
-					combined_charm += character.charm
-				
-				var subtle_roll = _bounded_sigmoid_check(combined_subtlety, true)
-				
-				if(subtle_roll.success):
-					log_message = "Succeeded subtlety check..."
-					# log_message += str(subtle_roll)
-					current_turn_log.append(log_message)
-
-				else:
-					log_message = "Failed subtlety check... heat increased"
-					# log_message += str(subtle_roll)
-					action.poi.parent_district.heat += 5
-					current_turn_log.append(log_message)
-					
-				match action.poi.stat_check_type:
-					Enums.StatCheckType.SMARTS:
-						
-						var smarts_roll = _bounded_sigmoid_check(combined_smarts, true)
-						
-						if(smarts_roll.success):
-							log_message = "Succeeded smarts check..."
-						# log_message += str(smarts_roll)
-							current_turn_log.append(log_message)
-							success = true
-						else: 
-							log_message = "Failed smarts check..."
-						# log_message += str(smarts_roll)
-							current_turn_log.append(log_message)
-
-					Enums.StatCheckType.CHARM:
-						if(_bounded_sigmoid_check(combined_charm)):
-							log_message = "Succeeded charm check..."
-							current_turn_log.append(log_message)
-							success = true
-						else: 
-							log_message = "Failed charm check..."
-							current_turn_log.append(log_message)
+			Enums.ActionType.PROPAGANDA:
+				_propaganda_action(action)
 				
 				
-		if success:
-			log_message = "[color=green]The mission was a success![/color]"
-			current_turn_log.append(log_message)
-			IntelFactory.create_rumour(action.poi.rumour_config)
-		else:
-			log_message = "[color=red]The mission was a failure! :([/color]"
-			current_turn_log.append(log_message)
-
-		current_turn_log.append("\n")
-
 		# set all agents back to available
 		for agent in action.characters:
 			# do an assigned check here to futureproof agents getting set to other statuses during the action (e.g. captured / dead)
@@ -128,6 +74,9 @@ func process_turn() -> void:
 	# Clear the actions list for the next turn
 	actions.clear()
 
+	# Clear the current turn log
+	current_turn_log = []
+
 	# Emit the signal to end the turn
 	end_turn_complete.emit(turn_number)
 
@@ -137,33 +86,6 @@ func get_turn_log(turn: int) -> Array:
 		return []
 	return turn_logs[turn - 1]  # Return the log for the specified turn
 	
-func _bounded_sigmoid_check(stat: int, detailed: bool = false, bottom_bound: float = 20.0, upper_bound: float = 80.0) -> Variant:
-	# Calculate the sigmoid-based success chance
-	var k = 1.0  # Steepness of the curve
-	var m = 5.0  # Midpoint of the curve
-	var raw_chance = 100 / (1 + exp(-k * (stat - m)))
-	
-	# Scale the raw chance to fit within the bottom and upper bounds
-	var success_chance = bottom_bound + (upper_bound - bottom_bound) * (raw_chance / 100)
-	
-	# Roll a random number between 0 and 100
-	var roll = randf() * 100
-	
-	# Determine success
-	var is_success = roll < success_chance
-	
-	# Return based on the 'detailed' flag
-	if detailed:
-		return {
-			"success": is_success,
-			"stat": stat,
-			"raw_chance": raw_chance,
-			"success_chance": success_chance,
-			"roll": roll
-		}
-	else:
-		return is_success
-
 func remove_action(action: Action) -> void:
 	# set all agents back to available
 	for agent in action.characters:
@@ -275,3 +197,182 @@ func remove_agent(agent: Character) -> void:
 
 func get_actions() -> Array[Action]:
 	return actions
+
+
+
+func _espionage_action(action:Action) -> void:
+	var log_message = "Processing ESPIONAGE action at [u]" + str(action.poi.poi_name) + "[/u] by "
+
+	var success = false
+
+	for character in action.characters:
+		log_message += "[u]" + character.first_name + " " + character.last_name + "[/u], "
+
+	current_turn_log.append(log_message)
+
+	var combined_subtlety = 0
+	var combined_smarts = 0
+	var combined_charm = 0
+
+	for character in action.characters:
+		combined_subtlety += character.subtlety
+		combined_smarts += character.smarts
+		combined_charm += character.charm
+	
+	var subtle_roll = MathHelpers.bounded_sigmoid_check(combined_subtlety, true)
+	
+	if(subtle_roll.success):
+		log_message = "Succeeded subtlety check..."
+		# log_message += str(subtle_roll)
+		current_turn_log.append(log_message)
+
+	else:
+		log_message = "Failed subtlety check... heat increased"
+		# log_message += str(subtle_roll)
+		action.poi.parent_district.heat += 5
+		current_turn_log.append(log_message)
+		
+	match action.poi.stat_check_type:
+		Enums.StatCheckType.SMARTS:
+			
+			var smarts_roll = MathHelpers.bounded_sigmoid_check(combined_smarts, true)
+			
+			if(smarts_roll.success):
+				log_message = "Succeeded smarts check..."
+			# log_message += str(smarts_roll)
+				current_turn_log.append(log_message)
+				success = true
+			else: 
+				log_message = "Failed smarts check..."
+			# log_message += str(smarts_roll)
+				current_turn_log.append(log_message)
+
+		Enums.StatCheckType.CHARM:
+			if(MathHelpers.bounded_sigmoid_check(combined_charm)):
+				log_message = "Succeeded charm check..."
+				current_turn_log.append(log_message)
+				success = true
+			else: 
+				log_message = "Failed charm check..."
+				current_turn_log.append(log_message)
+
+	if success:
+		log_message = "[color=green]The mission was a success![/color]"
+		current_turn_log.append(log_message)
+		IntelFactory.create_rumour(action.poi.rumour_config)
+	else:
+		log_message = "[color=red]The mission was a failure! :([/color]"
+		current_turn_log.append(log_message)
+
+	current_turn_log.append("\n")
+
+
+func _surveillance_action(action:Action) -> void:
+
+	var log_message = "Processing SURVEILLANCE action at [u]" + str(action.poi.poi_name) + "[/u] by "
+
+	var success = false
+
+	for character in action.characters:
+		log_message += "[u]" + character.first_name + " " + character.last_name + "[/u], "
+
+	current_turn_log.append(log_message)
+
+	var combined_subtlety = 0
+	var combined_smarts = 0
+	var combined_charm = 0
+
+	for character in action.characters:
+		combined_subtlety += character.subtlety
+		combined_smarts += character.smarts
+		combined_charm += character.charm
+	
+	var subtle_roll = MathHelpers.bounded_sigmoid_check(combined_subtlety, true)
+	
+	if(subtle_roll.success):
+		log_message = "Succeeded subtlety check..."
+		# log_message += str(subtle_roll)
+		current_turn_log.append(log_message)
+
+	else:
+		log_message = "Failed subtlety check... heat increased"
+		# log_message += str(subtle_roll)
+		action.poi.parent_district.heat += 5
+		current_turn_log.append(log_message)
+
+	
+	var smarts_roll = MathHelpers.bounded_sigmoid_check(combined_smarts, true)
+	
+	if(smarts_roll.success):
+		log_message = "Succeeded smarts check..."
+	# log_message += str(smarts_roll)
+		current_turn_log.append(log_message)
+		success = true
+	else: 
+		log_message = "Failed smarts check..."
+	# log_message += str(smarts_roll)
+		current_turn_log.append(log_message)
+
+	if success:
+		log_message = "[color=green]The mission was a success![/color]"
+		current_turn_log.append(log_message)
+		action.poi.poi_owner.known = true
+		log_message = "[color=green]" + action.poi.poi_owner.get_full_name() + " is now known to us[/color]"
+		current_turn_log.append(log_message)
+	else:
+		log_message = "[color=red]The mission was a failure! :([/color]"
+		current_turn_log.append(log_message)
+
+	current_turn_log.append("\n")
+
+func _propaganda_action(action:Action) -> void:
+	var log_message = "Processing PROPAGANDA action at [u]" + str(action.poi.poi_name) + "[/u] by "
+
+	var success = false
+
+	for character in action.characters:
+		log_message += "[u]" + character.first_name + " " + character.last_name + "[/u], "
+
+	current_turn_log.append(log_message)
+
+	var combined_subtlety = 0
+	var combined_smarts = 0
+	var combined_charm = 0
+
+	for character in action.characters:
+		combined_subtlety += character.subtlety
+		combined_smarts += character.smarts
+		combined_charm += character.charm
+	
+	var subtle_roll = MathHelpers.bounded_sigmoid_check(combined_subtlety, true)
+	
+	if(subtle_roll.success):
+		log_message = "Succeeded subtlety check..."
+		# log_message += str(subtle_roll)
+		current_turn_log.append(log_message)
+
+	else:
+		log_message = "Failed subtlety check... heat increased"
+		# log_message += str(subtle_roll)
+		action.poi.parent_district.heat += 5
+		current_turn_log.append(log_message)
+
+	if(MathHelpers.bounded_sigmoid_check(combined_charm)):
+		log_message = "Succeeded charm check..."
+		current_turn_log.append(log_message)
+		success = true
+	else: 
+		log_message = "Failed charm check..."
+		current_turn_log.append(log_message)
+
+	if success:
+		log_message = "[color=green]The mission was a success![/color]"
+		current_turn_log.append(log_message)
+		action.poi.poi_owner.sympathy += 5
+		log_message = "[color=green]" + action.poi.poi_owner.get_full_name() + " is now more sympathetic to our cause![/color]"
+		current_turn_log.append(log_message)
+	else:
+		log_message = "[color=red]The mission was a failure! :([/color]"
+		current_turn_log.append(log_message)
+
+	current_turn_log.append("\n")

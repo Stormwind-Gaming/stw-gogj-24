@@ -89,6 +89,8 @@ func populate_plan_list(intel):
 			label.text = intel_node.description
 			plan_list_container.add_child(label)
 
+			label.set_autowrap_mode(TextServer.AUTOWRAP_WORD_SMART)
+
 func _check_create_plan_visibility():
 	# Check if all intel types have a selected intel node
 	if selected_intel[Enums.IntelType.WHOWHAT] and selected_intel[Enums.IntelType.WHERE] and selected_intel[Enums.IntelType.WHEN]:
