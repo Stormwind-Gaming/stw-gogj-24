@@ -18,7 +18,7 @@ func _ready():
 
 func _process(delta):
 	# Check if the right mouse button is held down
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_MIDDLE):
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_MIDDLE) or Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
 		if enabled:
 			# Calculate the viewport size and mouse position
 			var viewport_size = get_viewport_rect().size

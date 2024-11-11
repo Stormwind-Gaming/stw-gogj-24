@@ -26,7 +26,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if GameController.district_focused != null:
-		if Input.is_mouse_button_pressed(MOUSE_BUTTON_MIDDLE):
+		if Input.is_mouse_button_pressed(MOUSE_BUTTON_MIDDLE) or Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
 			GameController.set_district_focused()
 			$Camera2D.enabled = true
 
