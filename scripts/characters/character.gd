@@ -77,6 +77,7 @@ func set_agent() -> void:
 func unset_agent() -> void:
 	# Unset the character as an agent
 	recruited = false
+	GameController.remove_all_actions_for_character(self)
 	current_status = Enums.CharacterStatus.SYMPATHISER
 	# tell the game controller that this character is no longer an agent
 	GameController.remove_agent(self)

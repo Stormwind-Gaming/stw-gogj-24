@@ -134,6 +134,12 @@ func process_turn() -> void:
 
 		current_turn_log.append("\n")
 
+		# set all agents back to available
+		for agent in action.characters:
+			# do an assigned check here to futureproof agents getting set to other statuses during the action (e.g. captured / dead)
+			if agent.current_status == Enums.CharacterStatus.ASSIGNED:
+				agent.current_status = Enums.CharacterStatus.AVAILABLE
+
 		
 	# Output current turn log to the console		
 	for each_log_message in current_turn_log:
@@ -179,6 +185,19 @@ func _bounded_sigmoid_check(stat: int, detailed: bool = false, bottom_bound: flo
 		}
 	else:
 		return is_success
+
+func _remove_action(action: Action) -> void:
+	# set all agents back to available
+	for agent in action.characters:
+		agent.current_status = Enums.CharacterStatus.AVAILABLE
+
+	# remove the action from the list
+	actions.erase(action)
+
+func remove_all_actions_for_character(character: Character) -> void:
+	for action in actions:
+		if character in action.characters:
+			_remove_action(action)
 
 #region District and PoIs
 
@@ -240,14 +259,6 @@ func _on_post_radial_assignment_option_selected(option: Enums.ActionType, select
 	await get_tree().create_timer(0.1).timeout
 	radial_menu_open.queue_free()
 	radial_menu_open = null
-
-func _remove_action(action: Action) -> void:
-	# set all agents back to available
-	for agent in action.characters:
-		agent.current_status = Enums.CharacterStatus.AVAILABLE
-
-	# remove the action from the list
-	actions.erase(action)
 
 #endregion
 
