@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://b1vvls3nbthm6" path="res://scenes/districts/district_n.tscn" id="5_ony1k"]
 [ext_resource type="PackedScene" uid="uid://cdhfja2nolmpl" path="res://scenes/districts/district_c.tscn" id="6_5acc7"]
 [ext_resource type="PackedScene" uid="uid://bnshi2p8ra26w" path="res://scenes/districts/district_sw.tscn" id="7_dde3t"]
-[ext_resource type="Script" path="res://scripts/camera.gd" id="7_f0cgf"]
+[ext_resource type="Script" path="res://scripts/gui/camera.gd" id="7_f0cgf"]
 [ext_resource type="PackedScene" uid="uid://dpqgqrfoqchlu" path="res://scenes/districts/district_cw.tscn" id="9_jaoy6"]
 [ext_resource type="PackedScene" uid="uid://bv860whpjsldd" path="res://scenes/gui/footer.tscn" id="11_4nem0"]
 [ext_resource type="PackedScene" uid="uid://kgy3mx1cyya" path="res://scenes/gui/header.tscn" id="12_gdl2t"]

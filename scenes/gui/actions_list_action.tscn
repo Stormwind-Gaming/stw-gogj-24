@@ -17,12 +17,13 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[node name="Action" type="MarginContainer" node_paths=PackedStringArray("title", "time_remaining", "agents")]
+[node name="Action" type="MarginContainer" node_paths=PackedStringArray("remove_button", "title", "time_remaining", "agents")]
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 script = ExtResource("1_7wvl1")
+remove_button = NodePath("PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/ActionsCenterContainer/TextureButton")
 title = NodePath("PanelContainer/MarginContainer/VBoxContainer/HeadHBoxContainer/Title")
 time_remaining = NodePath("PanelContainer/MarginContainer/VBoxContainer/HeadHBoxContainer/RichTextLabel")
 agents = NodePath("PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/AgentsVBoxContainer/GridContainer")
@@ -107,3 +108,5 @@ texture_normal = ExtResource("1_knmjg")
 texture_pressed = ExtResource("1_knmjg")
 texture_hover = ExtResource("2_leqgl")
 texture_disabled = ExtResource("3_pom7q")
+
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/ActionsCenterContainer/TextureButton" to="." method="_on_remove_button_pressed"]

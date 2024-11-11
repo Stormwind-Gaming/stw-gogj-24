@@ -17,9 +17,8 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_dcp7t")
-background_color = Color(0, 0, 0, 0.6)
-line_color = Color(1, 1, 1, 1)
-highlight_color = Color(1, 1, 1, 0.501961)
+background_color = Color(0.929412, 0.85098, 0.713726, 0.678431)
+highlight_color = Color(0.929412, 0.85098, 0.713726, 1)
 
 [node name="TextureRect" type="TextureRect" parent="."]
 visible = false

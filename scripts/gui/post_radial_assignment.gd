@@ -1,5 +1,6 @@
 extends Window
 
+@export var task_title: Label
 @export var continue_button: Button
 @export var agent_card_grid: GridContainer
 @export var asigned_label: Label
@@ -19,8 +20,14 @@ func set_option(option_attr: Enums.ActionType) -> void:
 	self.option = option_attr
 
 func _ready():
+	# calculate type
+	var type = ''
+	if option == Enums.ActionType.PLAN:
+		type = 'Plan'
+	else:
+		type = 'Action'
 	# set title
-	title = '%s Task' % Globals.get_action_type_string(option)
+	task_title.text = "%s - %s" % [Globals.get_action_type_string(option), type] 
 
 	# populate the agents list
 	var agents = []
@@ -49,6 +56,8 @@ func _on_agent_card_selected(agent: Character, selected: bool):
 	# check if the agent is already selected
 	if !selected:
 		selected_agents.erase(agent)
+		GameController.remove_all_actions_for_character(agent)
+
 		# enable all cards
 		for child in agent_card_grid.get_children():
 			child.enable_card()

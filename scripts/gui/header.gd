@@ -9,8 +9,7 @@ extends Control
 func _ready():
 	GameController.connect("end_turn_complete", _update_gui)
 	GameController.connect("new_district_registered", _on_new_district_registered)
-	GameController.connect("agent_added", _on_agents_changed)
-	GameController.connect("agent_removed", _on_agents_changed)
+	GameController.connect("agent_changed", _on_agents_changed)
 	GameController.connect("new_assignment", _on_new_assignment)
 	resistance_bar.value = GameController.get_resistance_level()
 	heat_bar.value = GameController.get_heat_level()

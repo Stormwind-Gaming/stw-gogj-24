@@ -17,6 +17,7 @@ func _generate_action_list() -> void:
 	for action in GameController.actions:
 		var actions_list_action = Globals.actions_list_action_scene.instantiate()
 		actions_list_action.set_action(action)
+		actions_list_action.connect("remove_action", _generate_action_list)
 		actions_list.add_child(actions_list_action)
 	
 	# center the window

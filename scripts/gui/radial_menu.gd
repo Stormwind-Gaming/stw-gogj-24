@@ -1,7 +1,7 @@
 extends Control
 class_name RadialMenu
 
-const SPRITE_SIZE = Vector2(32,32)
+const SPRITE_SIZE = Vector2(64,64)
 
 @export var background_color: Color
 @export var line_color: Color
@@ -23,6 +23,7 @@ func _init(options_attr: Array[Enums.ActionType] = []) -> void:
 	options_attr.append(Enums.ActionType.INFO)
 	options_attr.append(Enums.ActionType.ESPIONAGE)
 	options_attr.append(Enums.ActionType.PROPAGANDA)
+	options_attr.append(Enums.ActionType.SURVEILLANCE)
 	for option in options_attr:
 		options.append(RadialOption.new(option))
 
@@ -73,6 +74,7 @@ func _draw() -> void:
 		)
 	
 	draw_arc(Vector2.ZERO, inner_radius, 0, TAU, 128, line_color, line_width, true)
+	draw_arc(Vector2.ZERO, outer_radius, 0, TAU, 128, line_color, line_width, true)
 	
 	# draw separator lines
 	for i in range(len(options)-1):

@@ -283,8 +283,8 @@ func get_action_type_string(action_type: Enums.ActionType) -> String:
 			return "None"
 		Enums.ActionType.ESPIONAGE:
 			return "Espionage"
-		Enums.ActionType.ASSASSINATION:
-			return "Assassination"
+		Enums.ActionType.SURVEILLANCE:
+			return "Surveillance"
 		Enums.ActionType.PROPAGANDA:
 			return "Propaganda"
 		_:
@@ -387,19 +387,6 @@ func get_profession_string(profession: Enums.CharacterProfession) -> String:
 	match profession:
 		Enums.CharacterProfession.UNKNOWN:
 			return "Unknown"
-		_:
-			return "Unknown"
-
-func action_type_to_string(action_type: Enums.ActionType) -> String:
-	match action_type:
-		Enums.ActionType.NONE:
-			return "None"
-		Enums.ActionType.ESPIONAGE:
-			return "Espionage"
-		Enums.ActionType.ASSASSINATION:
-			return "Assassination"
-		Enums.ActionType.PROPAGANDA:
-			return "Propaganda"
 		_:
 			return "Unknown"
 

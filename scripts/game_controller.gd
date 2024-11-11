@@ -13,8 +13,7 @@ signal end_turn_initiated(num: int)
 signal end_turn_complete(num: int)
 signal district_just_focused(district: District)
 signal new_district_registered(district: District)
-signal agent_added(agent: Character)
-signal agent_removed(agent: Character)
+signal agent_changed(agent: Character)
 signal new_assignment(option: Enums.ActionType, poi: PointOfInterest, agents: Array[Character])
 
 func _ready() -> void:
@@ -35,7 +34,7 @@ func add_action(poi: PointOfInterest, characters: Array[Character], action_type:
 			for new_action_character in characters:
 				if existing_action_character == new_action_character:
 					# delete the previous action
-					_remove_action(action)
+					remove_action(action)
 
 	# print("Adding action:", poi, characters, action_type)
 	var new_action = Action.new(poi, characters, action_type, additional_info)
@@ -165,18 +164,26 @@ func _bounded_sigmoid_check(stat: int, detailed: bool = false, bottom_bound: flo
 	else:
 		return is_success
 
-func _remove_action(action: Action) -> void:
+func remove_action(action: Action) -> void:
 	# set all agents back to available
 	for agent in action.characters:
 		agent.current_status = Enums.CharacterStatus.AVAILABLE
 
 	# remove the action from the list
 	actions.erase(action)
+	agent_changed.emit(action.characters[0])
 
 func remove_all_actions_for_character(character: Character) -> void:
 	for action in actions:
 		if character in action.characters:
-			_remove_action(action)
+			# remove character from action
+			action.characters.erase(character)
+			# set character back to available
+			character.current_status = Enums.CharacterStatus.AVAILABLE
+			# if no more characters in action, remove action
+			if action.characters.size() == 0:
+				actions.erase(action)
+	agent_changed.emit(character)
 
 #region District and PoIs
 
@@ -261,10 +268,10 @@ func get_heat_level() -> int:
 	return floor(heat / districts.size())
 
 func add_agent(agent: Character) -> void:
-	agent_added.emit(agent)
+	agent_changed.emit(agent)
 
 func remove_agent(agent: Character) -> void:
-	agent_removed.emit(agent)
+	agent_changed.emit(agent)
 
 func get_actions() -> Array[Action]:
 	return actions

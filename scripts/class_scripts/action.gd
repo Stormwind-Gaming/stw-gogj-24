@@ -8,6 +8,7 @@ var action_type: Enums.ActionType  # Type of action
 var additional_info: Dictionary = {}  # Optional additional information, e.g., a second character
 var turn_to_end: int = 0  # Turn to end the action
 var turn_to_expire: int = 0  # Turn to expire the action
+var associated_plan: Plan = null  # Plan associated with the action
 
 # Constructor for the Action class
 func _init(poi: PointOfInterest, characters: Array[Character], action_type: Enums.ActionType, additional_info: Dictionary = {}):

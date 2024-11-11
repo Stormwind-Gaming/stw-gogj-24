@@ -49,8 +49,9 @@ enum ActionType {
 	NONE,
 	INFO,
 	ESPIONAGE,
-	ASSASSINATION,
-	PROPAGANDA
+	SURVEILLANCE,
+	PROPAGANDA,
+	PLAN
 }
 
 enum DistrictType {
