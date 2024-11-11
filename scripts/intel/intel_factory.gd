@@ -209,9 +209,13 @@ static func combine_rumours(rumours: Array) -> Intel:
 				related_character = rumour.related_character
 				profile['description'] += "It has come to our attention that "
 				profile['description'] += rumour.description.substr(0, 1).to_lower() + rumour.description.substr(1)
+				profile['description'] += '\n'
+				profile['description'] += '\n'
 			Enums.IntelType.WHERE:
 				related_poi = rumour.related_poi
-				profile['description'] += " As a result, it is recommended that we use " + rumour.related_poi.poi_name + " as a base of operations. "
+				profile['description'] += "As a result, it is recommended that we use " + rumour.related_poi.poi_name + " as a base of operations."
+				profile['description'] += '\n'
+				profile['description'] += '\n'
 			Enums.IntelType.WHEN:
 				related_duration = rumour.related_duration
 				related_expiry = rumour.related_expiry
