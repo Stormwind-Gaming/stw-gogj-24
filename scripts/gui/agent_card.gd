@@ -86,6 +86,9 @@ func _set_status_overlay(status: Enums.CharacterStatus) -> void:
 	if status == Enums.CharacterStatus.NONE or status == Enums.CharacterStatus.AVAILABLE:
 		status_overlay.visible = false
 		return
+	if status == Enums.CharacterStatus.DECEASED:
+		self.modulate = Color(0.5, 0.5, 0.5)
+		pass
 	var status_texture = load('res://assets/character_status/' + Globals.get_character_status_string(status).to_lower() + '.png')
 	status_overlay.texture = status_texture
 	status_overlay.visible = true

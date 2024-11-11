@@ -24,6 +24,7 @@ func _init(options_attr: Array[Enums.ActionType] = []) -> void:
 	options_attr.append(Enums.ActionType.ESPIONAGE)
 	options_attr.append(Enums.ActionType.PROPAGANDA)
 	options_attr.append(Enums.ActionType.SURVEILLANCE)
+	options_attr.append(Enums.ActionType.PLAN)
 	for option in options_attr:
 		options.append(RadialOption.new(option))
 

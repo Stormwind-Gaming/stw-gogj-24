@@ -23,6 +23,9 @@ func _init(type: Enums.ActionType) -> void:
 		Enums.ActionType.PROPAGANDA:
 			radial_option_name = "Sabotage"
 			region = Rect2(192, 0, 64, 64)
+		Enums.ActionType.PLAN:
+			radial_option_name = "Plan"
+			region = Rect2(320, 0, 64, 64)
 	
 	var texture = load(atlas_path)
 	self.atlas = texture

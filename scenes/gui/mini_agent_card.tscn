@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/gui/agent_card.gd" id="1_s8gp7"]
 [ext_resource type="Theme" uid="uid://c78hoq7n7ae54" path="res://assets/themes/typewriter_label_theme.tres" id="2_0b4ob"]
-[ext_resource type="Texture2D" uid="uid://vmb13yddjaj5" path="res://assets/agent_profile_71.png" id="3_2g42x"]
+[ext_resource type="Texture2D" uid="uid://c0xlm4ebrvmg4" path="res://assets/profile_pictures/blank.png" id="3_hwy0e"]
 [ext_resource type="Theme" uid="uid://dyewy8pdt73k3" path="res://assets/themes/handwriting_label_theme.tres" id="4_pvda4"]
 [ext_resource type="Texture2D" uid="uid://csqwxwqhukb2d" path="res://assets/icons/charm.png" id="5_apt8c"]
 [ext_resource type="Texture2D" uid="uid://dotbv717adkpq" path="res://assets/icons/subtlety.png" id="6_i2jue"]
@@ -87,7 +87,7 @@ size_flags_vertical = 3
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-texture = ExtResource("3_2g42x")
+texture = ExtResource("3_hwy0e")
 expand_mode = 3
 stretch_mode = 5
 
@@ -309,7 +309,7 @@ toggle_mode = true
 texture_pressed = ExtResource("8_bryry")
 texture_hover = ExtResource("9_yo54u")
 ignore_texture_size = true
-stretch_mode = 0
+stretch_mode = 3
 
 [node name="CharacterPageButton" type="TextureButton" parent="."]
 visible = false
@@ -318,7 +318,7 @@ layout_mode = 2
 texture_pressed = SubResource("ImageTexture_j0uh2")
 texture_hover = ExtResource("9_yo54u")
 ignore_texture_size = true
-stretch_mode = 0
+stretch_mode = 6
 
 [connection signal="toggled" from="AssignmentButton" to="." method="_on_assignment_button_toggled"]
 [connection signal="pressed" from="CharacterPageButton" to="." method="_on_character_page_button_pressed"]

@@ -23,7 +23,7 @@ enum CharacterStatus {
 	ASSIGNED,
 	MIA,
 	INCARCERATED,
-	DEAD
+	DECEASED
 }
 
 enum IntelLevel {

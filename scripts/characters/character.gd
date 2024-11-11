@@ -42,7 +42,16 @@ func _init(profile: Dictionary):
 	self.sympathy = _generateLinearStat(1,100)
 
 	if self.sympathy > 80:
-		self.current_status = Enums.CharacterStatus.SYMPATHISER
+		# This character is sympathetic to the resistance
+		# roll a d3
+		var roll = randi() % 3
+		match roll:
+			0:
+				self.current_status = Enums.CharacterStatus.SYMPATHISER
+			1:
+				self.current_status = Enums.CharacterStatus.MIA
+			2:
+				self.current_status = Enums.CharacterStatus.DECEASED
 		self.known = true
 	
 	self.id = GlobalRegistry.register_object(Enums.Registry_Category.CHARACTER, self, self.first_name + '_' + self.last_name + '_' + str(self.national_id_number))
