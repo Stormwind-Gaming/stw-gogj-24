@@ -1,7 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://dv6koqcesevck"]
+[gd_scene load_steps=15 format=3 uid="uid://dv6koqcesevck"]
 
+[ext_resource type="Theme" uid="uid://dexax20p2eewp" path="res://assets/themes/base_theme.tres" id="1_6ufjg"]
 [ext_resource type="Script" path="res://scripts/gui/agent_card.gd" id="1_dtlic"]
 [ext_resource type="Theme" uid="uid://dyewy8pdt73k3" path="res://assets/themes/handwriting_label_theme.tres" id="2_wiqf1"]
+[ext_resource type="Texture2D" uid="uid://hy5wv55fu1rx" path="res://assets/sprites/emblem.png" id="3_uiwnq"]
 [ext_resource type="Texture2D" uid="uid://vmb13yddjaj5" path="res://assets/agent_profile_71.png" id="4_eqpp8"]
 [ext_resource type="Theme" uid="uid://c78hoq7n7ae54" path="res://assets/themes/typewriter_label_theme.tres" id="4_j67y3"]
 [ext_resource type="Texture2D" uid="uid://csqwxwqhukb2d" path="res://assets/icons/charm.png" id="5_yrgtv"]
@@ -27,7 +29,7 @@ bg_color = Color(0, 0.727352, 0.11733, 1)
 
 [sub_resource type="ImageTexture" id="ImageTexture_5lb6r"]
 
-[node name="AgentCard" type="PanelContainer" node_paths=PackedStringArray("character_texture", "status_overlay", "gender_label", "dob_label", "profession_label", "national_id_label", "sympathy_progress", "charm_label", "subtlety_label", "smarts_label", "assignment_button", "character_page_button")]
+[node name="AgentCard" type="PanelContainer" node_paths=PackedStringArray("character_texture", "status_overlay", "gender_label", "dob_label", "nationality_label", "profession_label", "national_id_label", "sympathy_progress", "charm_label", "subtlety_label", "smarts_label", "assignment_button", "character_page_button")]
 clip_contents = true
 anchors_preset = 8
 anchor_left = 0.5
@@ -41,12 +43,14 @@ offset_bottom = 97.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
+theme = ExtResource("1_6ufjg")
 theme_override_styles/panel = SubResource("StyleBoxFlat_mm4m2")
 script = ExtResource("1_dtlic")
 character_texture = NodePath("MarginContainer/VBoxContainer/HBoxContainer/TextureRect")
 status_overlay = NodePath("StatusOverlay")
 gender_label = NodePath("MarginContainer/VBoxContainer/HBoxContainer/FluffVBoxContainer/HBoxContainer/Gender")
 dob_label = NodePath("MarginContainer/VBoxContainer/HBoxContainer/FluffVBoxContainer/HBoxContainer3/DoB")
+nationality_label = NodePath("MarginContainer/VBoxContainer/HBoxContainer/FluffVBoxContainer/HBoxContainer6/Nationality")
 profession_label = NodePath("MarginContainer/VBoxContainer/HBoxContainer/FluffVBoxContainer/HBoxContainer2/Profession")
 national_id_label = NodePath("MarginContainer/VBoxContainer/HBoxContainer/FluffVBoxContainer/HBoxContainer4/IDNumber")
 sympathy_progress = NodePath("MarginContainer/VBoxContainer/HBoxContainer/FluffVBoxContainer/HBoxContainer5/ProgressBar")
@@ -55,6 +59,27 @@ subtlety_label = NodePath("MarginContainer/VBoxContainer/StatsVBoxContainer/Subt
 smarts_label = NodePath("MarginContainer/VBoxContainer/StatsVBoxContainer/SmartsHBoxContainer/Label")
 assignment_button = NodePath("AssignmentButton")
 character_page_button = NodePath("CharacterPageButton")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Control"]
+modulate = Color(1, 1, 1, 0.152941)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -154.0
+offset_top = -50.0
+offset_bottom = 50.0
+grow_horizontal = 0
+grow_vertical = 2
+rotation = -0.260054
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("3_uiwnq")
+stretch_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -66,6 +91,14 @@ theme_override_constants/margin_bottom = 5
 layout_mode = 2
 size_flags_stretch_ratio = 9.82
 theme_override_constants/separation = 0
+
+[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer"]
+visible = false
+modulate = Color(1, 1, 1, 0.478431)
+layout_mode = 2
+theme_override_font_sizes/font_size = 7
+text = "Militärverwaltung in Belgien und Nordfrankreich"
+horizontal_alignment = 1
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(10, 10)
@@ -94,7 +127,7 @@ stretch_mode = 5
 [node name="FluffVBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/separation = -5
+theme_override_constants/separation = -10
 alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/FluffVBoxContainer"]
@@ -145,6 +178,29 @@ text = "<DoB>
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="HBoxContainer6" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/FluffVBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/FluffVBoxContainer/HBoxContainer6"]
+layout_mode = 2
+theme = ExtResource("4_j67y3")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 10
+text = "Nationaliteit: "
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Nationality" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/FluffVBoxContainer/HBoxContainer6"]
+layout_mode = 2
+theme = ExtResource("2_wiqf1")
+theme_override_constants/line_spacing = 6
+theme_override_font_sizes/font_size = 17
+text = "<DoB>
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/FluffVBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 0
@@ -177,7 +233,7 @@ layout_mode = 2
 theme = ExtResource("4_j67y3")
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 10
-text = "Nationalregistrnr: "
+text = "NRN: "
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -297,5 +353,5 @@ layout_mode = 2
 texture = ExtResource("6_6ampm")
 expand_mode = 3
 
-[connection signal="toggled" from="AssignmentButton" to="." method="_on_texture_button_toggled"]
+[connection signal="toggled" from="AssignmentButton" to="." method="_on_assignment_button_toggled"]
 [connection signal="pressed" from="CharacterPageButton" to="." method="_on_character_page_button_pressed"]

@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=3 uid="uid://yt2ei8y84260"]
+
+[ext_resource type="Theme" uid="uid://dexax20p2eewp" path="res://assets/themes/base_theme.tres" id="1_k3vf0"]
+[ext_resource type="Script" path="res://scripts/gui/confirmation_dialog.gd" id="1_xeo4c"]
+
+[node name="ConfirmationDialog" type="ConfirmationDialog"]
+initial_position = 2
+size = Vector2i(272, 135)
+visible = true
+unresizable = true
+borderless = true
+theme = ExtResource("1_k3vf0")
+ok_button_text = "Cancel"
+dialog_hide_on_ok = false
+dialog_close_on_escape = false
+dialog_autowrap = true
+cancel_button_text = "Accept"
+script = ExtResource("1_xeo4c")
+
+[node name="Label" type="Label" parent="."]
+custom_minimum_size = Vector2(10, 10)
+offset_left = 10.0
+offset_top = 15.0
+offset_right = 262.0
+offset_bottom = 66.0
+text = "<text>"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+visible = false
+offset_left = 10.0
+offset_top = 15.0
+offset_right = 262.0
+offset_bottom = 66.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[connection signal="canceled" from="." to="." method="_on_canceled"]
+[connection signal="confirmed" from="." to="." method="_on_confirmed"]

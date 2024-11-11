@@ -17,6 +17,7 @@ func _ready() -> void:
 		GameController.register_district(district)
 
 	_setup_agents()
+	_generate_population()
 
 	IntelFactory.create_rumour(IntelFactory.RumourConfig.new(100,0,0))
 	IntelFactory.create_rumour(IntelFactory.RumourConfig.new(0,100,0))
@@ -72,7 +73,7 @@ func _on_poi_unhovered() -> void:
 #endregion Districts
 
 func _generate_population() -> void:
-	for i in range(10):
+	for i in range(30):
 		CharacterFactory.create_character()
 		
 func _setup_agents() -> void:

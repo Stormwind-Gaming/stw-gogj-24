@@ -1,9 +1,27 @@
-[gd_resource type="Theme" load_steps=9 format=3 uid="uid://dexax20p2eewp"]
+[gd_resource type="Theme" load_steps=12 format=3 uid="uid://dexax20p2eewp"]
 
 [ext_resource type="FontFile" uid="uid://djwj10bhtdik" path="res://assets/fonts/veteran typewriter.ttf" id="1_lyhgf"]
 [ext_resource type="Texture2D" uid="uid://brj108w3mvknt" path="res://assets/sprites/panel_sheet_background.png" id="2_f4clh"]
 [ext_resource type="StyleBox" uid="uid://co18tu22sbler" path="res://assets/textures/folder_tab_box_texture_hover.tres" id="2_m063c"]
+[ext_resource type="StyleBox" uid="uid://6241urkjslaf" path="res://assets/textures/tw_button_style_box_texture.tres" id="2_qo8vt"]
+[ext_resource type="StyleBox" uid="uid://deqxdkxwpparc" path="res://assets/textures/tw_button_style_box_texture_hover.tres" id="3_d8d26"]
 [ext_resource type="StyleBox" uid="uid://d1vg5m2df7td2" path="res://assets/textures/folder_tab_box_texture.tres" id="3_in4tj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cfsho"]
+content_margin_left = 10.0
+content_margin_top = 15.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.929412, 0.85098, 0.713726, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8n68h"]
 texture = ExtResource("2_f4clh")
@@ -15,6 +33,13 @@ texture = ExtResource("2_f4clh")
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_stxgi"]
 
 [resource]
+AcceptDialog/fonts/title_font = ExtResource("1_lyhgf")
+AcceptDialog/styles/panel = SubResource("StyleBoxFlat_cfsho")
+Button/fonts/font = ExtResource("1_lyhgf")
+Button/styles/focus = ExtResource("2_qo8vt")
+Button/styles/hover = ExtResource("3_d8d26")
+Button/styles/normal = ExtResource("2_qo8vt")
+Button/styles/pressed = ExtResource("2_qo8vt")
 CheckButton/colors/font_color = Color(0, 0, 0, 1)
 CheckButton/fonts/font = ExtResource("1_lyhgf")
 Label/colors/font_color = Color(0, 0, 0, 1)

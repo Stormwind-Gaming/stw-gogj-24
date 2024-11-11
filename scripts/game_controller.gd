@@ -20,20 +20,6 @@ signal new_assignment(option: Enums.ActionType, poi: PointOfInterest, agents: Ar
 func _ready() -> void:
 	calendar = Calendar.new()
 
-# Structure to store each action
-class Action:
-	var poi: PointOfInterest  # Point of Interest
-	var characters: Array[Character]  # Character involved
-	var action_type: Enums.ActionType  # Type of action
-	var additional_info: Dictionary = {}  # Optional additional information, e.g., a second character
-
-	# Constructor for the Action class
-	func _init(poi: PointOfInterest, characters: Array[Character], action_type: Enums.ActionType, additional_info: Dictionary = {}):
-		self.poi = poi
-		self.characters = characters
-		self.action_type = action_type
-		self.additional_info = additional_info
-
 # List to store all actions for the current turn
 var actions: Array[Action] = []
 # Variable to track the current turn number
@@ -279,3 +265,6 @@ func add_agent(agent: Character) -> void:
 
 func remove_agent(agent: Character) -> void:
 	agent_removed.emit(agent)
+
+func get_actions() -> Array[Action]:
+	return actions

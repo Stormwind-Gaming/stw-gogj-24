@@ -68,6 +68,7 @@ layout_mode = 2
 [node name="HBoxContainer" type="HBoxContainer" parent="NinePatchRect/MarginContainer/LeftPanelContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.25
 
 [node name="ScrollContainer" type="ScrollContainer" parent="NinePatchRect/MarginContainer/LeftPanelContainer/MarginContainer/HBoxContainer/HBoxContainer"]
 layout_mode = 2

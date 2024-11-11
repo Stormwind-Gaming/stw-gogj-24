@@ -1,12 +1,15 @@
 extends Node
 
+var confirmation_dialog_scene = preload("res://scenes/gui/confirmation_dialog.tscn")
 var agent_card_scene = preload("res://scenes/gui/agent_card.tscn")
 var mini_agent_card_scene = preload("res://scenes/gui/mini_agent_card.tscn")
 var radial_menu_scene = preload("res://scenes/gui/radial_menu.tscn")
 var character_list_scene = preload("res://scenes/gui/character_list.tscn")
 var intel_list_scene = preload("res://scenes/gui/intel_list.tscn")
 var log_list_scene = preload("res://scenes/gui/log_list.tscn")
+var actions_list_scene = preload("res://scenes/gui/actions_list.tscn")
 var post_radial_assignment_scene = preload("res://scenes/gui/post_radial_assignment.tscn")
+var actions_list_action_scene = preload("res://scenes/gui/actions_list_action.tscn")
 
 var load_csvs = {
 	"town_names": "res://data/town_names.csv",
@@ -53,7 +56,6 @@ func _load_first_names(path: String) -> void:
 	for record in csv_data.records:
 		var gender = gender_map[record["gender"].to_upper()]
 		var nationality = nationality_map[record["nationality"].to_upper()]
-		print(record["nationality"], nationality)
 		first_names.append({
 			"first_name": record["first_name"],
 			"gender": gender,
@@ -368,4 +370,37 @@ func get_character_status_string(status: Enums.CharacterStatus) -> String:
 		_:
 			return "Unknown"
 		
+func get_nationality_string(nationality: Enums.CharacterNationality) -> String:
+	match nationality:
+		Enums.CharacterNationality.GERMAN:
+			return "German"
+		Enums.CharacterNationality.BELGIAN:
+			return "Belgian"
+		Enums.CharacterNationality.BRITISH:
+			return "British"
+		Enums.CharacterNationality.FRENCH:
+			return "French"
+		_:
+			return "Unknown"
+	
+func get_profession_string(profession: Enums.CharacterProfession) -> String:
+	match profession:
+		Enums.CharacterProfession.UNKNOWN:
+			return "Unknown"
+		_:
+			return "Unknown"
+
+func action_type_to_string(action_type: Enums.ActionType) -> String:
+	match action_type:
+		Enums.ActionType.NONE:
+			return "None"
+		Enums.ActionType.ESPIONAGE:
+			return "Espionage"
+		Enums.ActionType.ASSASSINATION:
+			return "Assassination"
+		Enums.ActionType.PROPAGANDA:
+			return "Propaganda"
+		_:
+			return "Unknown"
+
 #endregion

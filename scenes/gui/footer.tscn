@@ -1,16 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://bv860whpjsldd"]
+[gd_scene load_steps=5 format=3 uid="uid://bv860whpjsldd"]
 
 [ext_resource type="Theme" uid="uid://dexax20p2eewp" path="res://assets/themes/base_theme.tres" id="1_6mvh2"]
 [ext_resource type="Script" path="res://scripts/gui/footer.gd" id="1_hd6ji"]
 [ext_resource type="Theme" uid="uid://b4qdww0jic2xr" path="res://assets/themes/footer_theme.tres" id="2_3ln20"]
-[ext_resource type="FontFile" uid="uid://djwj10bhtdik" path="res://assets/fonts/veteran typewriter.ttf" id="4_kygcg"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g4xvg"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qsspa"]
-bg_color = Color(0, 0, 0, 1)
-
-[node name="Footer" type="Control" node_paths=PackedStringArray("show_character_list_button", "show_intel_list_button", "show_log_list_button", "show_agents_list_button", "turn_button")]
+[node name="Footer" type="Control" node_paths=PackedStringArray("show_actions_list_button", "show_character_list_button", "show_intel_list_button", "show_log_list_button", "turn_button")]
 layout_mode = 3
 anchors_preset = 12
 anchor_top = 1.0
@@ -20,11 +16,11 @@ grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("1_6mvh2")
 script = ExtResource("1_hd6ji")
+show_actions_list_button = NodePath("PanelContainer/HBoxContainer/HBoxContainer/ActionsListButton")
 show_character_list_button = NodePath("PanelContainer/HBoxContainer/HBoxContainer/CharacterListButton")
 show_intel_list_button = NodePath("PanelContainer/HBoxContainer/HBoxContainer/IntelListButton")
 show_log_list_button = NodePath("PanelContainer/HBoxContainer/HBoxContainer/LogListButton")
-show_agents_list_button = NodePath("PanelContainer/HBoxContainer/HBoxContainer/AgentsListButton")
-turn_button = NodePath("PanelContainer2/TurnButton")
+turn_button = NodePath("MarginContainer/TurnButton")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -49,13 +45,12 @@ size_flags_vertical = 8
 theme = ExtResource("2_3ln20")
 theme_override_constants/separation = -8
 
-[node name="AgentsListButton" type="Button" parent="PanelContainer/HBoxContainer/HBoxContainer"]
+[node name="ActionsListButton" type="Button" parent="PanelContainer/HBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(150, 30)
 layout_mode = 2
 focus_mode = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-disabled = true
-text = "Agents"
+text = "Actions"
 
 [node name="IntelListButton" type="Button" parent="PanelContainer/HBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(150, 30)
@@ -78,20 +73,20 @@ focus_mode = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Log"
 
-[node name="PanelContainer2" type="PanelContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -118.0
-offset_top = -31.0
+offset_left = -137.0
+offset_top = -44.0
 grow_horizontal = 0
 grow_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_qsspa")
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
 
-[node name="TurnButton" type="Button" parent="PanelContainer2"]
+[node name="TurnButton" type="Button" parent="MarginContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("4_kygcg")
 text = "Progress Time"

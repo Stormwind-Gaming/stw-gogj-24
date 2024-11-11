@@ -12,6 +12,10 @@ enum CharacterNationality {
 	FRENCH
 }
 
+enum CharacterProfession {
+	UNKNOWN
+}
+
 enum CharacterStatus {
 	NONE,
 	SYMPATHISER,

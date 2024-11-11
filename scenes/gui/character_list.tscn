@@ -18,8 +18,8 @@ always_on_top = true
 transparent = true
 theme = ExtResource("3_7dsct")
 script = ExtResource("1_dabvh")
-all_character_list_container = NodePath("NinePatchRect/MarginContainer/TabContainer/Known Characters/MarginContainer/AllGridContainer")
-sympathiser_list_container = NodePath("NinePatchRect/MarginContainer/TabContainer/Sympathisers/MarginContainer/HBoxContainer/VBoxContainer2/SympathiserContainer")
+all_character_list_container = NodePath("NinePatchRect/MarginContainer/TabContainer/Known Characters/MarginContainer/ScrollContainer/AllGridContainer")
+sympathiser_list_container = NodePath("NinePatchRect/MarginContainer/TabContainer/Sympathisers/MarginContainer/HBoxContainer/VBoxContainer2/ScrollContainer/SympathiserContainer")
 agent_list_container = NodePath("NinePatchRect/MarginContainer/TabContainer/Sympathisers/MarginContainer/HBoxContainer/VBoxContainer/AgentVBoxContainer")
 agents_label = NodePath("NinePatchRect/MarginContainer/TabContainer/Sympathisers/MarginContainer/HBoxContainer/VBoxContainer/Label")
 
@@ -47,9 +47,10 @@ theme_override_constants/margin_bottom = -84
 [node name="TabContainer" type="TabContainer" parent="NinePatchRect/MarginContainer"]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_vt46n")
-current_tab = 0
+current_tab = 1
 
 [node name="Sympathisers" type="PanelContainer" parent="NinePatchRect/MarginContainer/TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -87,12 +88,17 @@ size_flags_horizontal = 3
 layout_mode = 2
 text = "Sympathisers"
 
-[node name="SympathiserContainer" type="GridContainer" parent="NinePatchRect/MarginContainer/TabContainer/Sympathisers/MarginContainer/HBoxContainer/VBoxContainer2"]
+[node name="ScrollContainer" type="ScrollContainer" parent="NinePatchRect/MarginContainer/TabContainer/Sympathisers/MarginContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SympathiserContainer" type="GridContainer" parent="NinePatchRect/MarginContainer/TabContainer/Sympathisers/MarginContainer/HBoxContainer/VBoxContainer2/ScrollContainer"]
+custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
 size_flags_horizontal = 3
+columns = 2
 
 [node name="Known Characters" type="PanelContainer" parent="NinePatchRect/MarginContainer/TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
@@ -103,9 +109,13 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="AllGridContainer" type="GridContainer" parent="NinePatchRect/MarginContainer/TabContainer/Known Characters/MarginContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="NinePatchRect/MarginContainer/TabContainer/Known Characters/MarginContainer"]
 layout_mode = 2
-columns = 5
+
+[node name="AllGridContainer" type="GridContainer" parent="NinePatchRect/MarginContainer/TabContainer/Known Characters/MarginContainer/ScrollContainer"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+columns = 4
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchors_preset = 1

@@ -27,7 +27,7 @@ bg_color = Color(0, 0.727352, 0.11733, 1)
 
 [sub_resource type="ImageTexture" id="ImageTexture_j0uh2"]
 
-[node name="AgentCard" type="PanelContainer" node_paths=PackedStringArray("character_texture", "status_overlay", "gender_label", "dob_label", "profession_label", "national_id_label", "sympathy_progress", "charm_label", "subtlety_label", "smarts_label", "assignment_button", "character_page_button")]
+[node name="AgentCard" type="PanelContainer" node_paths=PackedStringArray("character_texture", "status_overlay", "gender_label", "dob_label", "nationality_label", "profession_label", "national_id_label", "sympathy_progress", "charm_label", "subtlety_label", "smarts_label", "assignment_button", "character_page_button")]
 clip_contents = true
 anchors_preset = 8
 anchor_left = 0.5
@@ -46,6 +46,7 @@ character_texture = NodePath("MarginContainer/VBoxContainer/HBoxContainer/Textur
 status_overlay = NodePath("StatusOverlay")
 gender_label = NodePath("MarginContainer/VBoxContainer/HBoxContainer/FluffVBoxContainer/HBoxContainer/Gender")
 dob_label = NodePath("MarginContainer/VBoxContainer/HBoxContainer/FluffVBoxContainer/HBoxContainer3/DoB")
+nationality_label = NodePath("MarginContainer/VBoxContainer/HBoxContainer/FluffVBoxContainer/HBoxContainer6/Nationality")
 profession_label = NodePath("MarginContainer/VBoxContainer/HBoxContainer/FluffVBoxContainer/HBoxContainer2/Profession")
 national_id_label = NodePath("MarginContainer/VBoxContainer/HBoxContainer/FluffVBoxContainer/HBoxContainer4/IDNumber")
 sympathy_progress = NodePath("MarginContainer/VBoxContainer/HBoxContainer/FluffVBoxContainer/HBoxContainer5/ProgressBar")
@@ -192,6 +193,29 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="DoB" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/FluffVBoxContainer/HBoxContainer3"]
+layout_mode = 2
+theme = ExtResource("4_pvda4")
+theme_override_constants/line_spacing = 6
+theme_override_font_sizes/font_size = 17
+text = "<DoB>
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer6" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/FluffVBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/FluffVBoxContainer/HBoxContainer6"]
+layout_mode = 2
+theme = ExtResource("2_0b4ob")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 10
+text = "Nationaliteit: "
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Nationality" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/FluffVBoxContainer/HBoxContainer6"]
 layout_mode = 2
 theme = ExtResource("4_pvda4")
 theme_override_constants/line_spacing = 6

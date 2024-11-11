@@ -11,7 +11,7 @@ var first_name: String
 var last_name: String
 var dob: String
 var national_id_number: int
-var profession: String
+var profession: Enums.CharacterProfession
 var associated_poi: PointOfInterest
 
 # Stats
@@ -33,7 +33,7 @@ func _init(profile: Dictionary):
 	self.picture = profile['image_path']
 	self.national_id_number = profile['national_id_number']
 	self.dob = GameController.calendar.get_new_birthdate()
-	self.profession = 'unknown'
+	self.profession = Enums.CharacterProfession.UNKNOWN
 	
 	self.charm = _generateBellCurveStat()
 	self.subtlety = _generateBellCurveStat()

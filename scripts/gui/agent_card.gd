@@ -5,6 +5,7 @@ extends PanelContainer
 
 @export var gender_label: Label
 @export var dob_label: Label
+@export var nationality_label: Label
 @export var profession_label: Label
 @export var national_id_label: Label
 @export var sympathy_progress: ProgressBar
@@ -39,7 +40,8 @@ func _ready():
 			pass
 	gender_label.text = gender
 	dob_label.text = character.dob
-	profession_label.text = character.profession
+	nationality_label.text = Globals.get_nationality_string(character.nationality)
+	profession_label.text = Globals.get_profession_string(character.profession)
 	national_id_label.text = str(character.national_id_number)
 	sympathy_progress.value = character.sympathy
 
@@ -79,7 +81,7 @@ func check_assignment_selection(poi: PointOfInterest, option: Enums.ActionType) 
 			if action.characters.has(character) and action.poi == poi and action.action_type == option:
 				print('Character is already assigned to this action')
 				status_overlay.visible = false
-				$TextureButton.button_pressed = true
+				assignment_button.button_pressed = true
 			else:
 				self.modulate = Color(0.5, 0.5, 0.5)
 
