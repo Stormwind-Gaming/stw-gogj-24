@@ -23,11 +23,12 @@ func _update_gui(number: int) -> void:
 	date.text = GameController.calendar.get_date_string()
 	resistance_bar.value = GameController.get_resistance_level()
 	heat_bar.value = GameController.get_heat_level()
+	_on_agents_changed()
 
 func _on_new_assignment(option: Enums.ActionType, poi: PointOfInterest, agents: Array[Character]) -> void:
 	_on_agents_changed(agents[0])
 
-func _on_agents_changed(new_agent: Character) -> void:
+func _on_agents_changed(new_agent: Character = null) -> void:
 	# update the sidebar list of agents
 	# get all agents
 	var agents = []

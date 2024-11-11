@@ -51,9 +51,26 @@ func set_character(character_id: String):
 	character = GlobalRegistry.get_object(Enums.Registry_Category.CHARACTER, character_id)
 
 	var stats = character.get_stats()
-	charm_label.text = str(stats.charm)
-	subtlety_label.text = str(stats.subtlety)
-	smarts_label.text = str(stats.smarts)
+	var charm = ''
+	var subtlety = ''
+	var smarts = ''
+	
+	if character.known and stats.charm < 10:
+		charm = '0' + str(stats.charm)
+	else:
+		charm = str(stats.charm)
+	if character.known and stats.subtlety < 10:
+		subtlety = '0' + str(stats.subtlety)
+	else:
+		subtlety = str(stats.subtlety)
+	if character.known and stats.smarts < 10:
+		smarts = '0' + str(stats.smarts)
+	else:
+		smarts = str(stats.smarts)
+
+	charm_label.text = charm
+	subtlety_label.text = subtlety
+	smarts_label.text = smarts
 
 func disable_card() -> void:
 	assignment_button.disabled = true
