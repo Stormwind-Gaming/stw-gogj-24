@@ -1,10 +1,10 @@
-[gd_resource type="Theme" load_steps=12 format=3 uid="uid://ude4jaq1pqqq"]
+[gd_resource type="Theme" load_steps=12 format=3 uid="uid://dexax20p2eewp"]
 
 [ext_resource type="FontFile" uid="uid://djwj10bhtdik" path="res://assets/fonts/veteran typewriter.ttf" id="1_lyhgf"]
 [ext_resource type="Texture2D" uid="uid://brj108w3mvknt" path="res://assets/sprites/panel_sheet_background.png" id="2_f4clh"]
 [ext_resource type="StyleBox" uid="uid://co18tu22sbler" path="res://assets/textures/folder_tab_box_texture_hover.tres" id="2_m063c"]
-[ext_resource type="StyleBox" path="res://assets/textures/tw_button_style_box_texture.tres" id="2_qo8vt"]
-[ext_resource type="StyleBox" path="res://assets/textures/tw_button_style_box_texture_hover.tres" id="3_d8d26"]
+[ext_resource type="StyleBox" uid="uid://6241urkjslaf" path="res://assets/textures/tw_button_style_box_texture.tres" id="2_qo8vt"]
+[ext_resource type="StyleBox" uid="uid://deqxdkxwpparc" path="res://assets/textures/tw_button_style_box_texture_hover.tres" id="3_d8d26"]
 [ext_resource type="StyleBox" uid="uid://d1vg5m2df7td2" path="res://assets/textures/folder_tab_box_texture.tres" id="3_in4tj"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cfsho"]

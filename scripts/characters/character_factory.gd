@@ -5,7 +5,7 @@ static func generate_random_profile() -> Dictionary:
 	randomize() # Seed the random number generator
 	
 	# Determine nationality and gender
-	var nationality = randi() % Enums.CharacterNationality.size()
+	var nationality = _nationality()
 	var gender = randi() % Enums.CharacterGender.size()
 	
 	# Generate a random name
@@ -75,6 +75,18 @@ static func _get_gender_string(gender: int) -> String:
 			return "female"
 		_:
 			return "default"
+
+static func _nationality() -> Enums.CharacterNationality:
+	var rand = randi() % 100  # Generate a random number between 0 and 99
+	
+	if rand < 40:
+			return Enums.CharacterNationality.BELGIAN  # 40% chance
+	elif rand < 70:
+		return Enums.CharacterNationality.GERMAN   # 30% chance (40-69)
+	elif rand < 90:
+		return Enums.CharacterNationality.FRENCH   # 20% chance (70-89)
+	else:
+		return Enums.CharacterNationality.BRITISH  # 10% chance (90-99)
 
 # Helper function to get a random image from a specified path
 static func _get_random_image_from_path(path: String) -> String:
