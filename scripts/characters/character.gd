@@ -43,6 +43,7 @@ func _init(profile: Dictionary):
 
 	if self.sympathy > 80:
 		self.current_status = Enums.CharacterStatus.SYMPATHISER
+		self.known = true
 	
 	self.id = GlobalRegistry.register_object(Enums.Registry_Category.CHARACTER, self, self.first_name + '_' + self.last_name + '_' + str(self.national_id_number))
 
