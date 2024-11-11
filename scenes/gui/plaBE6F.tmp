@@ -1,0 +1,105 @@
+[gd_scene load_steps=4 format=3 uid="uid://c26h6uvgdpl7l"]
+
+[ext_resource type="Texture2D" uid="uid://b2hufa4grdklc" path="res://assets/sprites/plan_sheet_background.png" id="1_v4sc6"]
+[ext_resource type="Script" path="res://scripts/gui/plan.gd" id="2_i785k"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_l5yse"]
+texture = ExtResource("1_v4sc6")
+
+[node name="Plan" type="PanelContainer"]
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxTexture_l5yse")
+script = ExtResource("2_i785k")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 22
+theme_override_constants/margin_top = 17
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 16
+
+[node name="CraftingContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TitleMarginContainer" type="MarginContainer" parent="MarginContainer/CraftingContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/CraftingContainer/TitleMarginContainer"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+text = "Plan Crafting
+"
+horizontal_alignment = 1
+vertical_alignment = 2
+autowrap_mode = 1
+
+[node name="WhenWhereMarginContainer" type="MarginContainer" parent="MarginContainer/CraftingContainer"]
+custom_minimum_size = Vector2(0, 122)
+layout_mode = 2
+theme_override_constants/margin_top = 4
+
+[node name="WhenWhereContainer" type="HBoxContainer" parent="MarginContainer/CraftingContainer/WhenWhereMarginContainer"]
+layout_mode = 2
+
+[node name="WhenVBoxContainer" type="VBoxContainer" parent="MarginContainer/CraftingContainer/WhenWhereMarginContainer/WhenWhereContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="MarginContainer/CraftingContainer/WhenWhereMarginContainer/WhenWhereContainer/WhenVBoxContainer"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Timing"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WhenDescription" type="Label" parent="MarginContainer/CraftingContainer/WhenWhereMarginContainer/WhenWhereContainer/WhenVBoxContainer"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+autowrap_mode = 3
+
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/CraftingContainer/WhenWhereMarginContainer/WhenWhereContainer"]
+visible = false
+layout_mode = 2
+
+[node name="WhereVBoxContainer" type="VBoxContainer" parent="MarginContainer/CraftingContainer/WhenWhereMarginContainer/WhenWhereContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="MarginContainer/CraftingContainer/WhenWhereMarginContainer/WhenWhereContainer/WhereVBoxContainer"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+size_flags_vertical = 1
+text = "Location"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WhereDescription" type="Label" parent="MarginContainer/CraftingContainer/WhenWhereMarginContainer/WhenWhereContainer/WhereVBoxContainer"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+autowrap_mode = 3
+
+[node name="WhoMarginContainer" type="MarginContainer" parent="MarginContainer/CraftingContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/CraftingContainer/WhoMarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/CraftingContainer/WhoMarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+text = "Mission:"
+
+[node name="WhoWhatDescription" type="Label" parent="MarginContainer/CraftingContainer/WhoMarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+autowrap_mode = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/CraftingContainer"]
+layout_mode = 2
+
+[node name="CreatePlanBtn" type="Button" parent="MarginContainer/CraftingContainer/MarginContainer2"]
+layout_mode = 2
+text = "Create Plan"

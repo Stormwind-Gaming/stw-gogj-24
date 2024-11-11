@@ -8,10 +8,11 @@ extends Window
 @onready var where_description = find_child("WhereDescription")
 @onready var when_description = find_child("WhenDescription")
 
-@onready var create_plan_btn = find_child("CreatePlanBtn")
 @onready var plan_list_container = find_child("PlanListContainer")
 @onready var tab_container = find_child("TabContainer")
 
+@export var plan_holder: HBoxContainer
+var plan_scene: PanelContainer 
 
 # Variables to store selected intel nodes
 var selected_intel = {
@@ -21,8 +22,7 @@ var selected_intel = {
 }
 
 func _ready():
-	create_plan_btn.visible = false
-	create_plan_btn.pressed.connect(_on_create_plan_btn_pressed)
+	# create_plan_btn.pressed.connect(_on_create_plan_btn_pressed)
 	
 	# Connect the tab change signal
 	tab_container.tab_changed.connect(_on_tab_changed)
@@ -31,6 +31,12 @@ func _ready():
 	var intel = GlobalRegistry.get_all_objects(Enums.Registry_Category.INTEL)
 	populate_intel_list(intel)
 	populate_plan_list(intel)
+
+	# create a new plan
+	var new_plan_scene = Globals.plan_scene.instantiate()
+	new_plan_scene.set_new_plan_card()
+	plan_holder.add_child(new_plan_scene)
+	plan_scene = new_plan_scene
 
 func clear_container(container):
 	while container.get_child_count() > 0:
@@ -66,10 +72,26 @@ func populate_intel_list(intel):
 			check_button.toggled.connect(func(pressed, intel_type=intel_node.type, node=intel_node):
 				if pressed:
 					selected_intel[intel_type] = node
-					description_label.text = Globals.get_intel_effect_string(node.effect)
+					match intel_type:
+						Enums.IntelType.WHOWHAT:
+							plan_scene.set_mission_text(Globals.get_intel_effect_string(node.effect, true))
+						Enums.IntelType.WHERE:
+							plan_scene.set_location_text(Globals.get_intel_effect_string(node.effect, true))
+						Enums.IntelType.WHEN:
+							plan_scene.set_time_text(Globals.get_intel_effect_string(node.effect, true))
+						_:
+							pass
 				else:
 					selected_intel[intel_type] = null
-					description_label.text = ""
+					match intel_type:
+						Enums.IntelType.WHOWHAT:
+							plan_scene.set_mission_text('')
+						Enums.IntelType.WHERE:
+							plan_scene.set_location_text('')
+						Enums.IntelType.WHEN:
+							plan_scene.set_time_text('')
+						_:
+							pass
 				_check_create_plan_visibility()
 			)
 
@@ -94,9 +116,11 @@ func populate_plan_list(intel):
 func _check_create_plan_visibility():
 	# Check if all intel types have a selected intel node
 	if selected_intel[Enums.IntelType.WHOWHAT] and selected_intel[Enums.IntelType.WHERE] and selected_intel[Enums.IntelType.WHEN]:
-		create_plan_btn.visible = true
+		# create_plan_btn.visible = true
+		pass
 	else:
-		create_plan_btn.visible = false
+		# create_plan_btn.visible = false
+		pass
 
 func _on_create_plan_btn_pressed():
 	# Ensure all required intel are selected
@@ -135,7 +159,7 @@ func _reset():
 	where_description.text = ""
 	when_description.text = ""
 	
-	create_plan_btn.visible = false
+	# create_plan_btn.visible = false
 
 
 func _on_close_button_pressed() -> void:

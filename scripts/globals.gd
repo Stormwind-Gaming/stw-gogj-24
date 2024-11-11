@@ -10,6 +10,7 @@ var log_list_scene = preload("res://scenes/gui/log_list.tscn")
 var actions_list_scene = preload("res://scenes/gui/actions_list.tscn")
 var post_radial_assignment_scene = preload("res://scenes/gui/post_radial_assignment.tscn")
 var actions_list_action_scene = preload("res://scenes/gui/actions_list_action.tscn")
+var plan_scene = preload("res://scenes/gui/plan.tscn")
 
 var load_csvs = {
 	"town_names": "res://data/town_names.csv",
@@ -290,7 +291,7 @@ func get_action_type_string(action_type: Enums.ActionType) -> String:
 		_:
 			return "Unknown"
 
-func get_intel_effect_string(effects) -> String:
+func get_intel_effect_string(effects, bbcode_enabled: bool = false) -> String:
 	var effect = effects[0]
 
 	match effect:
@@ -315,29 +316,65 @@ func get_intel_effect_string(effects) -> String:
 		Enums.IntelEffect.WILDCARD_INTEL:
 			return "+1 Wildcard Intel"
 		Enums.IntelEffect.D_ONE_E_ONE:
-			return "Duration: 1 Day, Expiry: 1 Day"
+			if bbcode_enabled:
+				return "Duration: 1 Day\nExpiry: 1 Day"
+			else:
+				return "Duration: 1 Day, Expiry: 1 Day"
 		Enums.IntelEffect.D_ONE_E_TWO:
-			return "Duration: 1 Day, Expiry: 2 Days"
+			if bbcode_enabled:
+				return "Duration: 1 Day\nExpiry: 2 Days"
+			else:
+				return "Duration: 1 Day, Expiry: 2 Days"
 		Enums.IntelEffect.D_ONE_E_THREE:
-			return "Duration: 1 Day, Expiry: 3 Days"
+			if bbcode_enabled:
+				return "Duration: 1 Day\nExpiry: 3 Days"
+			else:
+				return "Duration: 1 Day, Expiry: 3 Days"
 		Enums.IntelEffect.D_ONE_E_FOUR:
-			return "Duration: 1 Day, Expiry: 4 Days"
+			if bbcode_enabled:
+				return "Duration: 1 Day\nExpiry: 4 Days"
+			else:
+				return "Duration: 1 Day, Expiry: 4 Days"
 		Enums.IntelEffect.D_TWO_E_ONE:
-			return "Duration: 2 Days, Expiry: 1 Day"
+			if bbcode_enabled:
+				return "Duration: 2 Days\nExpiry: 1 Day"
+			else:
+				return "Duration: 2 Days, Expiry: 1 Day"
 		Enums.IntelEffect.D_TWO_E_TWO:
-			return "Duration: 2 Days, Expiry: 2 Days"
+			if bbcode_enabled:
+				return "Duration: 2 Days\nExpiry: 2 Days"
+			else:
+				return "Duration: 2 Days, Expiry: 2 Days"
 		Enums.IntelEffect.D_TWO_E_THREE:
-			return "Duration: 2 Days, Expiry: 3 Days"
+			if bbcode_enabled:
+				return "Duration: 2 Days\nExpiry: 3 Days"
+			else:
+				return "Duration: 2 Days, Expiry: 3 Days"
 		Enums.IntelEffect.D_TWO_E_FOUR:
-			return "Duration: 2 Days, Expiry: 4 Days"
+			if bbcode_enabled:
+				return "Duration: 2 Days\nExpiry: 4 Days"
+			else:
+				return "Duration: 2 Days, Expiry: 4 Days"
 		Enums.IntelEffect.D_THREE_E_ONE:
-			return "Duration: 3 Days, Expiry: 1 Day"
+			if bbcode_enabled:
+				return "Duration: 3 Days\nExpiry: 1 Day"
+			else:
+				return "Duration: 3 Days, Expiry: 1 Day"
 		Enums.IntelEffect.D_THREE_E_TWO:
-			return "Duration: 3 Days, Expiry: 2 Days"
+			if bbcode_enabled:
+				return "Duration: 3 Days\nExpiry: 2 Days"
+			else:
+				return "Duration: 3 Days, Expiry: 2 Days"
 		Enums.IntelEffect.D_THREE_E_THREE:
-			return "Duration: 3 Days, Expiry: 3 Days"
+			if bbcode_enabled:
+				return "Duration: 3 Days\nExpiry: 3 Days"
+			else:
+				return "Duration: 3 Days, Expiry: 3 Days"
 		Enums.IntelEffect.D_THREE_E_FOUR:
-			return "Duration: 3 Days, Expiry: 4 Days"
+			if bbcode_enabled:
+				return "Duration: 3 Days\nExpiry: 4 Days"
+			else:
+				return "Duration: 3 Days, Expiry: 4 Days"
 		Enums.IntelEffect.D_FOUR_E_ONE:
 			return "Duration: 4 Days, Expiry: 1 Day"
 		Enums.IntelEffect.D_FOUR_E_TWO:
