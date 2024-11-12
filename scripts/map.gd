@@ -100,11 +100,19 @@ func _setup_agents() -> void:
 	# Pick the second random key
 	var random_key2 = keys[randi() % keys.size()]
 
+	# Remove the first random key from the keys array to avoid picking it again
+	keys.erase(random_key2)
+
+	# Pick the second random key
+	var random_key3 = keys[randi() % keys.size()]
+
 	# Access the values using the random keys
 	var agent1 = population[random_key1]
 	var agent2 = population[random_key2]
+	var agent3 = population[random_key3]
 	
 	agent1.sympathy = 80
 	agent1.set_agent()
 	agent2.sympathy = 80
 	agent2.set_agent()
+	agent3.set_sympathy(90)
