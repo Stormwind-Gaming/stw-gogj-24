@@ -66,7 +66,7 @@ func populate_intel_list(intel):
 			var description_label = intel_data["description_label"]
 
 			var check_button = CheckButton.new()
-			check_button.text = intel_node.description
+			check_button.text = intel_node.description + " (Expires in " + str(intel_node.expires_on_turn - GameController.turn_number) + " days)"
 			check_button.set_button_group(button_group)
 			check_button.set_autowrap_mode(TextServer.AUTOWRAP_WORD_SMART)
 
