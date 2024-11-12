@@ -45,6 +45,10 @@ static func _generate_name(nationality: Enums.CharacterNationality, gender: Enum
 static func create_character() -> Character:
 	var profile = generate_random_profile()
 	var new_character = Character.new(profile)
+
+	# 50% chance of known
+	if randi() % 2 == 0:
+		new_character.known = true
 	
 	return new_character
 

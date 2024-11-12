@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dv6koqcesevck"]
+[gd_scene load_steps=16 format=3 uid="uid://dv6koqcesevck"]
 
 [ext_resource type="Theme" uid="uid://dexax20p2eewp" path="res://assets/themes/base_theme.tres" id="1_6ufjg"]
 [ext_resource type="Script" path="res://scripts/gui/agent_card.gd" id="1_dtlic"]
@@ -29,17 +29,13 @@ bg_color = Color(0, 0.727352, 0.11733, 1)
 
 [sub_resource type="ImageTexture" id="ImageTexture_5lb6r"]
 
-[node name="AgentCard" type="PanelContainer" node_paths=PackedStringArray("character_texture", "status_overlay", "gender_label", "dob_label", "nationality_label", "profession_label", "national_id_label", "sympathy_progress", "charm_label", "subtlety_label", "smarts_label", "assignment_button", "character_page_button")]
+[sub_resource type="ImageTexture" id="ImageTexture_ln0gf"]
+
+[node name="AgentCard" type="PanelContainer" node_paths=PackedStringArray("character_texture", "status_overlay", "gender_label", "dob_label", "nationality_label", "profession_label", "national_id_label", "sympathy_progress", "charm_label", "subtlety_label", "smarts_label", "assignment_button", "set_unset_agent_button", "popup_button")]
 clip_contents = true
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -35.5
-offset_top = -46.0
-offset_right = 160.5
-offset_bottom = 97.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
@@ -58,7 +54,8 @@ charm_label = NodePath("MarginContainer/VBoxContainer/StatsVBoxContainer/CharmHB
 subtlety_label = NodePath("MarginContainer/VBoxContainer/StatsVBoxContainer/SubtletyHBoxContainer/Label")
 smarts_label = NodePath("MarginContainer/VBoxContainer/StatsVBoxContainer/SmartsHBoxContainer/Label")
 assignment_button = NodePath("AssignmentButton")
-character_page_button = NodePath("CharacterPageButton")
+set_unset_agent_button = NodePath("CharacterPageButton")
+popup_button = NodePath("PopupButton")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 2
@@ -347,6 +344,15 @@ texture_hover = ExtResource("7_pqda2")
 ignore_texture_size = true
 stretch_mode = 0
 
+[node name="PopupButton" type="TextureButton" parent="."]
+visible = false
+custom_minimum_size = Vector2(71, 78)
+layout_mode = 2
+texture_pressed = SubResource("ImageTexture_ln0gf")
+texture_hover = ExtResource("7_pqda2")
+ignore_texture_size = true
+stretch_mode = 6
+
 [node name="StatusOverlay" type="TextureRect" parent="."]
 visible = false
 layout_mode = 2
@@ -354,4 +360,4 @@ texture = ExtResource("6_6ampm")
 expand_mode = 3
 
 [connection signal="toggled" from="AssignmentButton" to="." method="_on_assignment_button_toggled"]
-[connection signal="pressed" from="CharacterPageButton" to="." method="_on_character_page_button_pressed"]
+[connection signal="pressed" from="CharacterPageButton" to="." method="_on_set_unset_agent_button_pressed"]

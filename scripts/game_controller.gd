@@ -123,13 +123,11 @@ func set_district_focused(district: District = null) -> void:
 	emit_signal("district_just_focused", district)
 
 func set_menu_open(menu_id: String) -> void:
-	print("Opening menu: ", menu_id)
 	if menus_open.has(menu_id):
 		return
 	menus_open.append(menu_id)
 
 func set_menu_closed(menu_id: String) -> void:
-	print("Closing menu: ", menu_id)
 	if !menus_open.has(menu_id):
 		return
 	menus_open.erase(menu_id)

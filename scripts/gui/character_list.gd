@@ -21,13 +21,13 @@ func populate_character_lists(characters):
 		child.queue_free()
 	for child in agent_list_container.get_children():
 		child.queue_free()
+
+	var all_characters = []
 			
 	for name in characters.keys():
 		var character_node = characters[name]
 		if character_node.current_status == Enums.CharacterStatus.NONE:
-			var mini_agent_card_scene = Globals.mini_agent_card_scene.instantiate()
-			mini_agent_card_scene.set_character(character_node.id)
-			all_character_list_container.add_child(mini_agent_card_scene)
+			all_characters.append(character_node)
 		elif character_node.recruited:
 			var agent_card_scene = Globals.agent_card_scene.instantiate()
 			agent_card_scene.on_character_list_page()
@@ -51,6 +51,20 @@ func populate_character_lists(characters):
 			mini_agent_card_scene.connect("character_card_pressed", _on_character_button_pressed)
 			mia_list_container.add_child(mini_agent_card_scene)
 
+	# sort the character.known to the front of the list
+	all_characters.sort_custom(func(a, b):
+		if a.known and not b.known:
+			return true
+		else:
+			return false
+	)
+
+	for character_node in all_characters:
+			var mini_agent_card_scene = Globals.mini_agent_card_scene.instantiate()
+			if character_node.known:
+				mini_agent_card_scene.enable_popup_interaction()
+			mini_agent_card_scene.set_character(character_node.id)
+			all_character_list_container.add_child(mini_agent_card_scene)
 
 func _on_character_button_pressed(character_node: Character) -> void:
 	# if the character is an agent, remove them from the agent list

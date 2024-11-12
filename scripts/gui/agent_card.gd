@@ -15,11 +15,12 @@ extends PanelContainer
 @export var smarts_label: Label
 
 @export var assignment_button: TextureButton
-@export var character_page_button: TextureButton
+@export var set_unset_agent_button: TextureButton
+@export var popup_button: TextureButton
 
 var character : Character
 
-signal agent_card_selected(character: Character)
+signal agent_card_selected(character: Character, toggled_on: bool)
 signal character_card_pressed(character: Character)
 
 func _ready():
@@ -110,8 +111,37 @@ func check_assignment_selection(poi: PointOfInterest, option: Enums.ActionType) 
 func on_character_list_page() -> void:
 	# this function disables the normal click functionality of the card and enables the character list page functionality
 	assignment_button.visible = false
-	character_page_button.visible = true
-	pass
+	set_unset_agent_button.visible = true
+	popup_button.visible = false
 
-func _on_character_page_button_pressed() -> void:
+func enable_popup_interaction() -> void:
+	# this function enables the normal click functionality of the card and disables the character list page functionality
+	assignment_button.visible = false
+	set_unset_agent_button.visible = false
+	popup_button.visible = true
+
+func _on_set_unset_agent_button_pressed() -> void:
 	emit_signal('character_card_pressed', character)
+
+func _on_popup_button_pressed() -> void:
+	# create a new window with the full agent card
+	var window = Window.new()
+	# set window to mouse location
+	window.size = Vector2(300, 160)
+	window.set_position(get_viewport().get_mouse_position() + Vector2(200, 0))
+	window.exclusive = true
+	window.unresizable = true
+	window.borderless = true
+	window.always_on_top = true
+	window.transparent = false
+	window.connect("mouse_exited", 
+		func():
+			window.queue_free()
+	)
+	# popup a full agent_card
+	var agent_card_scene = Globals.agent_card_scene.instantiate()
+	agent_card_scene.set_character(character.id)
+	agent_card_scene.disable_card()
+	window.add_child(agent_card_scene)
+	window.show()
+	self.add_child(window)
