@@ -38,7 +38,7 @@ func _init(profile: Dictionary):
 	self.subtlety = MathHelpers.generateBellCurveStat()
 	self.smarts = MathHelpers.generateBellCurveStat()
 	
-	self.sympathy = MathHelpers.generateBellCurveStat(1,70)
+	self.sympathy = MathHelpers.generateBellCurveStat(10,30)
 
 	# if self.sympathy > 80:
 	# 	# This character is sympathetic to the resistance

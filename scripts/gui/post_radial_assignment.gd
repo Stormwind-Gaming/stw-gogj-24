@@ -49,7 +49,7 @@ func _ready():
 		agent_instance.check_assignment_selection(GameController.poi_for_radial, option)
 	
 	# set max agents to 1 or 2
-	max_agents = randi() % 2 + 1
+	max_agents = 1 # randi() % 2 + 1
 	asigned_label.text = 'Assigned Agents (0/%s):' % max_agents
 
 func _on_agent_card_selected(agent: Character, selected: bool):

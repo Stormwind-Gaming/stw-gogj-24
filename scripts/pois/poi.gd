@@ -126,8 +126,11 @@ func _on_poi_clicked(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 			var actions = [
 				Enums.ActionType.ESPIONAGE,
 				Enums.ActionType.PROPAGANDA,
-				Enums.ActionType.SURVEILLANCE,
 			] as Array[Enums.ActionType]
+
+			# add SURVAILENCE if the poi owner is unknown
+			if poi_owner.known == false:
+				actions.append(Enums.ActionType.SURVEILLANCE)
 
 			if(_has_plan()):
 				actions.append(Enums.ActionType.PLAN)
