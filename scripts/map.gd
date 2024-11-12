@@ -79,8 +79,13 @@ func _on_poi_unhovered() -> void:
 #endregion Districts
 
 func _generate_population() -> void:
-	for i in range(30):
-		CharacterFactory.create_character()
+
+	var dead = CharacterFactory.create_character()
+	var mia = CharacterFactory.create_character()
+
+	dead.current_status = Enums.CharacterStatus.DECEASED
+	mia.current_status = Enums.CharacterStatus.MIA
+
 		
 func _setup_agents() -> void:
 	var population = GlobalRegistry.get_all_objects(Enums.Registry_Category.CHARACTER)

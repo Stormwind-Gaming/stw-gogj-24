@@ -211,6 +211,7 @@ static func combine_rumours(rumours: Array) -> Intel:
 				profile['description'] += rumour.description.substr(0, 1).to_lower() + rumour.description.substr(1)
 				profile['description'] += '\n'
 				profile['description'] += '\n'
+				profile['effect'] = rumour.effect
 			Enums.IntelType.WHERE:
 				related_poi = rumour.related_poi
 				profile['description'] += "As a result, it is recommended that we use " + rumour.related_poi.poi_name + " as a base of operations."

@@ -382,7 +382,7 @@ func _propaganda_action(action:Action) -> void:
 	if success:
 		log_message = "[color=green]The mission was a success![/color]"
 		current_turn_log.append(log_message)
-		action.poi.poi_owner.sympathy += 5
+		action.poi.poi_owner.set_sympathy(action.poi.poi_owner.sympathy + 5)
 		log_message = "[color=green]" + action.poi.poi_owner.get_full_name() + " is now more sympathetic to our cause![/color]"
 		current_turn_log.append(log_message)
 	else:
@@ -411,5 +411,6 @@ func _plan_action(action:Action) -> void:
 		combined_smarts += character.smarts
 		combined_charm += character.charm
 
-	log_message = "oh god... how is this bit supposed to work?!"
+	log_message = "oh god... how is this bit supposed to work?! "
+
 	current_turn_log.append(log_message)
