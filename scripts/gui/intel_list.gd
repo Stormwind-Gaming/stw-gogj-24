@@ -102,20 +102,21 @@ func populate_intel_list(intel):
 			print("Error: Container not found or intel_data is invalid for:", name, "with type:", intel_node.type)
 
 func populate_plan_list(intel):
+	var plans = []
+	for i in intel:
+		if intel[i].level == Enums.IntelLevel.PLAN:
+			plans.append(intel[i])
+
 	# Clear any existing elements in the plan_list_container
 	clear_container(plan_list_container)
 
 	# Loop over intel and add labels for nodes with level PLAN
-	for name in intel.keys():
-		var intel_node = intel[name]
-		if intel_node.level == Enums.IntelLevel.PLAN:
-			var label = RichTextLabel.new()
-			label.bbcode_enabled = true
-			label.fit_content = true
-			label.text = "[u]" + intel_node.plan_name + "[/u]\n\n" + intel_node.description
-			plan_list_container.add_child(label)
-
-			label.set_autowrap_mode(TextServer.AUTOWRAP_WORD_SMART)
+	for plan in plans:
+		var new_plan_scene = Globals.plan_scene.instantiate()
+		new_plan_scene.toggle_enabled_button(false)
+		new_plan_scene.set_existing_plan_card(plan)
+		new_plan_scene.create_plan.connect(_on_create_plan_btn_pressed)
+		plan_list_container.add_child(new_plan_scene)
 
 func _check_create_plan_visibility():
 	# Check if all intel types have a selected intel node
@@ -137,18 +138,13 @@ func _on_create_plan_btn_pressed():
 	# Call IntelFactory.combine_rumours with the selected intel nodes
 	var plan = IntelFactory.combine_rumours(required_intel)
 	
-	if plan:
-		# Optionally, you can add the new plan to the GlobalRegistry or handle it accordingly
-		# print("Plan created successfully.")
-		pass
-	
 	# Switch to the 'Plans' tab
 	tab_container.current_tab = 1
 
 func _on_tab_changed(tab_index):
 	# Re-run both populate_plan_list and populate_intel_list when the tab changes
-	var intel = GlobalRegistry.get_all_objects(Enums.Registry_Category.INTEL)
 	_reset()
+	var intel = GlobalRegistry.get_all_objects(Enums.Registry_Category.INTEL)
 	populate_intel_list(intel)
 	populate_plan_list(intel)
 	

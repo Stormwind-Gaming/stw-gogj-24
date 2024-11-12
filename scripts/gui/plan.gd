@@ -19,9 +19,10 @@ signal create_plan
 
 func set_existing_plan_card(plan_arg: Intel = null) -> void:
 	plan = plan_arg
-	timing_label.text = plan.timing
-	location_label.text = plan.location
-	mission_label.text = plan.mission
+	title_label.text = plan_arg.plan_name
+	timing_label.text = plan.plan_when
+	location_label.text = plan.plan_where
+	mission_label.text = plan.plan_who_what
 	green_star_stamp.visible = true
 
 func set_new_plan_card() -> void:

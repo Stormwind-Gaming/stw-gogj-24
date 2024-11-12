@@ -1,5 +1,4 @@
 extends Object
-
 class_name Intel
 
 var level: Enums.IntelLevel
@@ -15,6 +14,10 @@ var related_duration: int
 var related_expiry: int
 
 var expires_on_turn : int
+
+var plan_who_what: String
+var plan_where: String
+var plan_when: String
 
 func _init(profile: Dictionary):
 	for key in profile:

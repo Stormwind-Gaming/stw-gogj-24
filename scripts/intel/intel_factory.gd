@@ -241,6 +241,9 @@ static func combine_rumours(rumours: Array) -> Intel:
 	profile['related_duration'] = related_duration
 	profile['related_expiry'] = related_expiry
 	profile['plan_name'] = plan_names[randi() % plan_names.size()]
+	profile['plan_who_what'] = rumours[0].description
+	profile['plan_where'] = rumours[1].description
+	profile['plan_when'] = rumours[2].description
 
 	# Create new PLAN level intel
 	var plan = Intel.new(profile)

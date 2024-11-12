@@ -1,6 +1,8 @@
 extends Node
 class_name Calendar
 
+var initialised: bool = false
+
 # Initial date variables
 var year: int = 1942
 var month: int = 1
@@ -9,17 +11,20 @@ var day: int = 1
 # Days per month, accounting for February in leap years
 const DAYS_IN_MONTHS = { 1: 31, 2: 28, 3: 31, 4: 30, 5: 31, 6: 30, 7: 31, 8: 31, 9: 30, 10: 31, 11: 30, 12: 31 }
 
-func _ready():
+func _setup_calendar():
     # Initialize with a random day in early 1942
     randomize()
-    month = 1 #randi_range(1, 4)  # Start between January and April
-    day = 1 #randi_range(1, DAYS_IN_MONTHS[month])
+    month = randi_range(1, 4)  # Start between January and April
+    day = randi_range(1, DAYS_IN_MONTHS[month])
 
 # Array of month names
 var month_names = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
 # Function to get a string representation of the current date with the month name
 func get_date_string() -> String:
+    if not initialised:
+        _setup_calendar()
+        initialised = true
     return "%02d %s %04d" % [day, month_names[month - 1], year]
 
 # Function to check if a year is a leap year
