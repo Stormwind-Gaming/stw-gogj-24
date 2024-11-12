@@ -128,7 +128,7 @@ func set_district_details(district_name_arg: String, district_description_arg: S
 
 func _on_mouse_entered() -> void:
 	# check if we have a radial menu instance, if so, don't expand
-	if GameController.radial_menu_open != null:
+	if GameController.radial_menu_open != null or GameController.menus_open:
 		return
 	
 	hovered = true
@@ -141,7 +141,7 @@ func _on_mouse_exited():
 
 func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	# check if we have a radial menu instance, if so, don't expand
-	if GameController.radial_menu_open != null:
+	if GameController.radial_menu_open != null or GameController.menus_open:
 		return
 
 	if event is InputEventMouseButton:

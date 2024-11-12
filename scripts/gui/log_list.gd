@@ -25,4 +25,5 @@ func _process(delta: float) -> void:
 
 
 func _on_close_button_pressed() -> void:
+	GameController.set_menu_closed("LogList")
 	queue_free()

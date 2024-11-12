@@ -6,6 +6,7 @@ func _ready() -> void:
 	_generate_action_list()
 
 func _on_close_button_pressed() -> void:
+	GameController.set_menu_closed("ActionsList")
 	queue_free()
 
 func _generate_action_list() -> void:

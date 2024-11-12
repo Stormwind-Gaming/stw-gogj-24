@@ -10,8 +10,9 @@
 [ext_resource type="PackedScene" uid="uid://bv860whpjsldd" path="res://scenes/gui/footer.tscn" id="11_4nem0"]
 [ext_resource type="PackedScene" uid="uid://kgy3mx1cyya" path="res://scenes/gui/header.tscn" id="12_gdl2t"]
 
-[node name="Map" type="Node2D" node_paths=PackedStringArray("districts")]
+[node name="Map" type="Node2D" node_paths=PackedStringArray("footer", "districts")]
 script = ExtResource("1_ppup2")
+footer = NodePath("CanvasLayer2/Footer")
 districts = [NodePath("Node2D/Districts/District_CW"), NodePath("Node2D/Districts/District_N"), NodePath("Node2D/Districts/District_C"), NodePath("Node2D/Districts/District_SW")]
 
 [node name="ColorRect" type="ColorRect" parent="."]

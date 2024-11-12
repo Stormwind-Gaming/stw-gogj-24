@@ -6,7 +6,7 @@ extends Control
 @export var show_log_list_button: Button
 @export var turn_button: Button
 
-var footer_tray_open: bool = false
+signal menu_opened
 
 func _ready():
 	# Connect the button's "pressed" signal to a function using Callable
@@ -28,6 +28,9 @@ func _on_show_actions_list_button_pressed():
 	# Add the instance to the scene tree
 	add_child(actions_list_instance)
 
+	_clear_focus()
+	_update_menu_open("ActionsList")
+
 func _on_show_intel_list_button_pressed():
 	# if we already have an instance of the intel list, don't create a new one
 	if get_node("IntelList") != null:
@@ -38,6 +41,9 @@ func _on_show_intel_list_button_pressed():
 	
 		# Add the instance to the scene tree
 	add_child(intel_list_instance)
+
+	_clear_focus()
+	_update_menu_open("IntelList")
 
 
 func _on_show_character_list_button_pressed():
@@ -50,6 +56,9 @@ func _on_show_character_list_button_pressed():
 	
 		# Add the instance to the scene tree
 	add_child(character_list_instance)
+
+	_clear_focus()
+	_update_menu_open("CharacterList")
 	
 func _on_show_log_list_button_pressed(end_turn_button: bool = false):
 	# if we already have an instance of the log list, don't create a new one
@@ -63,8 +72,17 @@ func _on_show_log_list_button_pressed(end_turn_button: bool = false):
 	
 	# Add the instance to the scene tree
 	add_child(log_list_instance)
+
+	_clear_focus()
+	_update_menu_open("LogList")
 	
 func _on_turn_button_pressed():
 	GameController.process_turn()
 	_on_show_log_list_button_pressed(true)
 	var num = 13 + GameController.turn_number	
+
+func _clear_focus() -> void:
+	menu_opened.emit()
+
+func _update_menu_open(id: String) -> void:
+	GameController.set_menu_open(id)

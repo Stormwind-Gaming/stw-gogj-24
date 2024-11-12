@@ -167,4 +167,5 @@ func _reset():
 
 
 func _on_close_button_pressed() -> void:
+	GameController.set_menu_closed("IntelList")
 	queue_free()

@@ -1,6 +1,7 @@
 extends Node
 
 var district_focused: District = null
+var menus_open: Array[String] = []
 
 var poi_for_radial: PointOfInterest
 var radial_menu_open: RadialMenu
@@ -121,6 +122,17 @@ func set_district_focused(district: District = null) -> void:
 	district_focused = district
 	emit_signal("district_just_focused", district)
 
+func set_menu_open(menu_id: String) -> void:
+	print("Opening menu: ", menu_id)
+	if menus_open.has(menu_id):
+		return
+	menus_open.append(menu_id)
+
+func set_menu_closed(menu_id: String) -> void:
+	print("Closing menu: ", menu_id)
+	if !menus_open.has(menu_id):
+		return
+	menus_open.erase(menu_id)
 
 func open_radial_menu(radial_menu: RadialMenu, poi: PointOfInterest) -> void:
 	if radial_menu_open:
