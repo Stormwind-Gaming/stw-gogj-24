@@ -47,9 +47,10 @@ layout_mode = 2
 [node name="TabContainer" type="TabContainer" parent="NinePatchRect/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-current_tab = 0
+current_tab = 1
 
 [node name="Rumours" type="PanelContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -111,7 +112,6 @@ text = "Timings"
 layout_mode = 2
 
 [node name="Plans" type="PanelContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 

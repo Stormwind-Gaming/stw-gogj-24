@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=12 format=3 uid="uid://dexax20p2eewp"]
+[gd_resource type="Theme" load_steps=13 format=3 uid="uid://dexax20p2eewp"]
 
 [ext_resource type="FontFile" uid="uid://djwj10bhtdik" path="res://assets/fonts/veteran typewriter.ttf" id="1_lyhgf"]
 [ext_resource type="Texture2D" uid="uid://brj108w3mvknt" path="res://assets/sprites/panel_sheet_background.png" id="2_f4clh"]
@@ -6,6 +6,7 @@
 [ext_resource type="StyleBox" uid="uid://6241urkjslaf" path="res://assets/textures/tw_button_style_box_texture.tres" id="2_qo8vt"]
 [ext_resource type="StyleBox" uid="uid://deqxdkxwpparc" path="res://assets/textures/tw_button_style_box_texture_hover.tres" id="3_d8d26"]
 [ext_resource type="StyleBox" uid="uid://d1vg5m2df7td2" path="res://assets/textures/folder_tab_box_texture.tres" id="3_in4tj"]
+[ext_resource type="StyleBox" uid="uid://b4hyjh8fafst3" path="res://assets/textures/folder_tab_box_texture_selected.tres" id="6_h240h"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cfsho"]
 content_margin_left = 10.0
@@ -55,6 +56,6 @@ TabContainer/fonts/font = ExtResource("1_lyhgf")
 TabContainer/styles/panel = SubResource("StyleBoxEmpty_kedib")
 TabContainer/styles/tab_focus = SubResource("StyleBoxEmpty_31g3q")
 TabContainer/styles/tab_hovered = ExtResource("2_m063c")
-TabContainer/styles/tab_selected = ExtResource("3_in4tj")
+TabContainer/styles/tab_selected = ExtResource("6_h240h")
 TabContainer/styles/tab_unselected = ExtResource("3_in4tj")
 TabContainer/styles/tabbar_background = SubResource("StyleBoxEmpty_stxgi")
