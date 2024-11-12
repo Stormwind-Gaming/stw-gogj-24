@@ -33,12 +33,8 @@ static func _generate_name(nationality: Enums.CharacterNationality, gender: Enum
 	var last_name_bag: Array
 	var first_name_bag: Array
 
-	if nationality and gender:
-		last_name_bag = Globals.get_all_last_names(nationality)
-		first_name_bag = Globals.get_all_first_names(gender, nationality)
-	else:
-		last_name_bag = Globals.get_all_last_names(Enums.CharacterNationality.BELGIAN)
-		first_name_bag = Globals.get_all_first_names(Enums.CharacterGender.MALE, Enums.CharacterNationality.BELGIAN)
+	last_name_bag = Globals.get_all_last_names(nationality)
+	first_name_bag = Globals.get_all_first_names(gender, nationality)
 	
 	# Randomize name
 	var last_name: String = last_name_bag[randi() % last_name_bag.size()].last_name
