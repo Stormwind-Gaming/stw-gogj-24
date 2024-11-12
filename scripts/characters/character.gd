@@ -4,7 +4,7 @@ class_name Character
 var id : String
 var gender: Enums.CharacterGender
 var nationality: Enums.CharacterNationality
-var picture : String
+var picture : CompressedTexture2D
 
 var first_name: String
 var last_name: String

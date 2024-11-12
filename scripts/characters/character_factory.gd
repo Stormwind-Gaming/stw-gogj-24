@@ -11,14 +11,18 @@ static func generate_random_profile() -> Dictionary:
 	# Generate a random name
 	var name_arr = _generate_name(nationality, gender)
 	
+	## ## Old code for selecting random image from directory
 	# Determine image path based on nationality and gender
-	var nationality_str = _get_nationality_string(nationality)
-	var gender_str = _get_gender_string(gender)
-	var image_directory = "res://assets/profile_pictures/%s/%s/" % [nationality_str, gender_str]
-
-	# Select a random image from the directory
-	var selected_image = _get_random_image_from_path(image_directory)
+	# var nationality_str = _get_nationality_string(nationality)
+	# var gender_str = _get_gender_string(gender)
+	# var image_directory = "res://assets/profile_pictures/%s/%s/" % [nationality_str, gender_str]
+	# # Select a random image from the directory
+	# var selected_image = _get_random_image_from_path(image_directory)
 	
+	## ## New code for selecting random image from preloaded images
+	var image_directory = Globals.profile_images[nationality][gender]
+	var selected_image = image_directory[randi() % image_directory.size()]
+
 	return {
 		"first_name": name_arr[0], 
 		"last_name": name_arr[1],

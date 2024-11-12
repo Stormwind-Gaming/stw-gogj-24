@@ -26,8 +26,7 @@ signal character_card_pressed(character: Character)
 func _ready():
 	$MarginContainer/VBoxContainer/Label.text = character.first_name + " " + character.last_name
 	
-	var picture_texture = load(character.picture)
-	character_texture.texture = picture_texture
+	character_texture.texture = character.picture
 
 	var gender = ''
 	match character.gender:

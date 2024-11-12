@@ -446,3 +446,46 @@ func get_district_type_string(district_type: Enums.DistrictType) -> String:
 			return "Unknown"
 
 #endregion
+
+
+#region Preload Profile Images
+
+var profile_images = {
+	Enums.CharacterNationality.GERMAN: {
+		Enums.CharacterGender.MALE: [
+			preload("res://assets/profile_pictures/german/male/german-male-1.png"),
+			preload("res://assets/profile_pictures/german/male/german-male-2.png"),
+			preload("res://assets/profile_pictures/german/male/german-male-3.png"),
+		],
+		Enums.CharacterGender.FEMALE: [
+			preload("res://assets/profile_pictures/german/female/german-female-1.png"),
+		]
+	},
+	Enums.CharacterNationality.BELGIAN: {
+		Enums.CharacterGender.MALE: [
+			preload("res://assets/profile_pictures/belgian/male/belgian-male-1.png"),
+			preload("res://assets/profile_pictures/belgian/male/belgian-male-2.png"),
+		],
+		Enums.CharacterGender.FEMALE: [
+			preload("res://assets/profile_pictures/belgian/female/belgian-female-1.png"),
+		]
+	},
+	Enums.CharacterNationality.FRENCH: {
+		Enums.CharacterGender.MALE: [
+			preload("res://assets/profile_pictures/french/male/blank.png"),
+		],
+		Enums.CharacterGender.FEMALE: [
+			preload("res://assets/profile_pictures/french/female/blank.png"),
+		]
+	},
+	Enums.CharacterNationality.BRITISH: {
+		Enums.CharacterGender.MALE: [
+			preload("res://assets/profile_pictures/british/male/blank.png"),
+		],
+		Enums.CharacterGender.FEMALE: [
+			preload("res://assets/profile_pictures/british/female/blank.png"),
+		]
+	},
+}
+
+#endreigon
