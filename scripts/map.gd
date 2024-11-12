@@ -116,3 +116,4 @@ func _setup_agents() -> void:
 	agent2.sympathy = 80
 	agent2.set_agent()
 	agent3.set_sympathy(90)
+	agent3.known = true;
