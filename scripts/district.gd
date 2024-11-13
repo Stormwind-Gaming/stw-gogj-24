@@ -3,7 +3,7 @@ class_name District
 
 @export var district_popup: Window
 
-var district_type: Enums.DistrictType
+@export var district_type: Enums.DistrictType
 var district_name: String = ""
 var district_description: String = ""
 var rumour_text: String = ""
@@ -27,9 +27,6 @@ signal poi_hovered(poi: PointOfInterest)
 signal poi_unhovered
 
 func _ready() -> void:
-	# Give the district a random type
-	district_type = randi() % Enums.DistrictType.size() as Enums.DistrictType
-
 	# set heat random 20-80
 	heat = randi() % 80 + 21
 

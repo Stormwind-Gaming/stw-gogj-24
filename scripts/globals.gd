@@ -76,7 +76,9 @@ func _load_poi_types(path: String) -> void:
 	var csv_data = load(path)
 	for record in csv_data.records:
 		var poi_type = poi_type_map[record["poi_name"].to_upper()]
-		var district_type = district_type_map[record["district_type"].to_upper()]
+		var district_type = []
+		for type in record["district_type"].split(","):
+			district_type.append(district_type_map[type.to_upper()])
 		var skill_required = poi_skill_required_map[record["skill_required"].to_upper()]
 		var bonus_type = poi_bonus_map[record["bonus_type"].to_upper()]
 		poi_types.append({
@@ -155,7 +157,7 @@ func get_all_last_names(nationality: Enums.CharacterNationality) -> Array:
 func get_poi_types(district: Enums.DistrictType) -> Array:
 	return poi_types.filter(
 		func(poi_type):
-			return poi_type != null and poi_type.district_type == district
+			return poi_type != null and poi_type.district_type.has(district)
 	)
 
 func get_poi_name(poi_type: Enums.POIType) -> String:

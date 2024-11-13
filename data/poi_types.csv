@@ -7,8 +7,8 @@ Restaurant,,civic,50,-1,charm,none,1,1,1
 Residence,,civic,25,-1,smarts,none,1,1,1
 Factory,,industrial,75,-1,charm,none,1,1,1
 Workshop,,industrial,75,-1,smarts,none,1,1,1
-Warehouse,,industrial,75,-1,charm,none,1,1,1
-Office,,industrial,50,-1,smarts,none,1,1,1
+Warehouse,,"industrial,port",75,-1,charm,none,1,1,1
+Office,,"industrial,port",50,-1,smarts,none,1,1,1
 Anti Air Emplacement,,military,50,-1,charm,none,1,1,1
 Residence,,residential,75,-1,smarts,none,1,1,1
 Pub,,residential,50,3,charm,none,1,1,1

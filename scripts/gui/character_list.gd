@@ -21,6 +21,10 @@ func populate_character_lists(characters):
 		child.queue_free()
 	for child in agent_list_container.get_children():
 		child.queue_free()
+	for child in deceased_list_container.get_children():
+		child.queue_free()
+	for child in mia_list_container.get_children():
+		child.queue_free()
 
 	var all_characters = []
 			

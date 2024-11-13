@@ -1,0 +1,106 @@
+[gd_scene load_steps=5 format=3 uid="uid://cdhfja2nolmpl"]
+
+[ext_resource type="Script" path="res://scripts/district.gd" id="1_rcirc"]
+[ext_resource type="Texture2D" uid="uid://dr1v7la7ll1bf" path="res://assets/new_costal_map_lg.png" id="2_fvcfm"]
+[ext_resource type="PackedScene" uid="uid://cf5mn4nfhvkwj" path="res://scenes/gui/district_popup.tscn" id="3_sp0bn"]
+[ext_resource type="PackedScene" uid="uid://c0trxtgty6phy" path="res://scenes/pois/poi.tscn" id="4_wxf62"]
+
+[node name="District_Port" type="Area2D" node_paths=PackedStringArray("district_popup")]
+script = ExtResource("1_rcirc")
+district_popup = NodePath("DistrictPopup")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(800, 450)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("2_fvcfm")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+top_level = true
+polygon = PackedVector2Array(723, 559, 699, 387, 388, 286, 334, 281, 258, 478, 230, 513, 201, 531, 189, 542, 163, 543, 163, 559, 87, 574, 49, 600, 39, 643, 63, 670, 89, 723, 95, 745, 231, 709, 329, 670, 425, 639, 558, 601)
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+
+[node name="FocusPoint" type="Node2D" parent="."]
+position = Vector2(398, 668)
+
+[node name="DistrictPopup" parent="." instance=ExtResource("3_sp0bn")]
+visible = false
+
+[node name="pois" type="Node2D" parent="."]
+
+[node name="Poi" parent="pois" instance=ExtResource("4_wxf62")]
+poi_static = true
+poi_static_type = 7
+poi_static_name = "Docks"
+poi_static_description = "Here are some docks"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi"]
+polygon = PackedVector2Array(111, 735, 223, 708, 265, 691, 262, 679, 255, 680, 231, 585, 187, 542, 163, 544, 164, 563, 127, 568, 87, 575, 55, 353, 44, 354, 31, 441, 48, 576, -80, 597, -243, 611, -266, 606, -272, 623, -266, 643, -252, 651, -197, 647, -123, 636, -46, 627, -1, 626, 32, 629, 47, 641, 68, 665, 82, 690, 92, 721, 97, 736)
+
+[node name="Poi2" parent="pois" instance=ExtResource("4_wxf62")]
+poi_static_type = 7
+poi_static_name = "Docks"
+poi_static_description = "Here are some docks"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi2"]
+polygon = PackedVector2Array(268, 683, 274, 685, 285, 684, 338, 661, 343, 658, 344, 649, 337, 639, 330, 635, 322, 619, 311, 623, 290, 584, 259, 603, 251, 612, 256, 648)
+
+[node name="Poi3" parent="pois" instance=ExtResource("4_wxf62")]
+poi_static_type = 7
+poi_static_name = "Docks"
+poi_static_description = "Here are some docks"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi3"]
+polygon = PackedVector2Array(290, 573, 310, 601, 313, 615, 320, 615, 326, 610, 330, 616, 342, 632, 346, 641, 349, 656, 357, 656, 368, 649, 386, 644, 399, 641, 408, 634, 415, 639, 423, 630, 379, 587, 375, 574, 368, 569, 371, 565, 345, 539, 325, 521)
+
+[node name="Poi4" parent="pois" instance=ExtResource("4_wxf62")]
+poi_static_type = 7
+poi_static_name = "Docks"
+poi_static_description = "Here are some docks"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi4"]
+polygon = PackedVector2Array(404, 567, 396, 581, 404, 591, 415, 603, 432, 612, 449, 616, 470, 618, 494, 614, 494, 587, 477, 590, 452, 587, 423, 579)
+
+[node name="Poi5" parent="pois" instance=ExtResource("4_wxf62")]
+poi_static_type = 7
+poi_static_name = "Docks"
+poi_static_description = "Here are some docks"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi5"]
+polygon = PackedVector2Array(408, 560, 437, 574, 484, 582, 498, 580, 512, 538, 462, 532, 421, 526)
+
+[node name="Poi6" parent="pois" instance=ExtResource("4_wxf62")]
+poi_static_type = 7
+poi_static_name = "Docks"
+poi_static_description = "Here are some docks"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi6"]
+polygon = PackedVector2Array(424, 519, 474, 528, 518, 528, 523, 508, 526, 489, 505, 488, 460, 490, 432, 491)
+
+[node name="Poi7" parent="pois" instance=ExtResource("4_wxf62")]
+poi_static_type = 7
+poi_static_name = "Docks"
+poi_static_description = "Here are some docks"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi7"]
+polygon = PackedVector2Array(432, 483, 460, 484, 522, 482, 528, 462, 528, 438, 507, 437, 480, 430, 458, 423, 444, 424, 440, 439, 434, 458)
+
+[node name="Poi8" parent="pois" instance=ExtResource("4_wxf62")]
+poi_static_type = 7
+poi_static_name = "Docks"
+poi_static_description = "Here are some docks"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi8"]
+polygon = PackedVector2Array(438, 422, 422, 484, 364, 466, 383, 406)
+
+[node name="Poi9" parent="pois" instance=ExtResource("4_wxf62")]
+poi_static_type = 7
+poi_static_name = "Docks"
+poi_static_description = "Here are some docks"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi9"]
+polygon = PackedVector2Array(363, 475, 422, 494, 412, 531, 390, 562, 340, 516, 359, 477)
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

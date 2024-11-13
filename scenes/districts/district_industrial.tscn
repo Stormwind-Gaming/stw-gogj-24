@@ -1,0 +1,155 @@
+[gd_scene load_steps=5 format=3 uid="uid://d0a4qatowu8vq"]
+
+[ext_resource type="Script" path="res://scripts/district.gd" id="1_0s8ny"]
+[ext_resource type="Texture2D" uid="uid://dr1v7la7ll1bf" path="res://assets/new_costal_map_lg.png" id="2_1v442"]
+[ext_resource type="PackedScene" uid="uid://cf5mn4nfhvkwj" path="res://scenes/gui/district_popup.tscn" id="3_immi2"]
+[ext_resource type="PackedScene" uid="uid://c0trxtgty6phy" path="res://scenes/pois/poi.tscn" id="4_c6rks"]
+
+[node name="District_Industrial" type="Area2D" node_paths=PackedStringArray("district_popup")]
+script = ExtResource("1_0s8ny")
+district_popup = NodePath("DistrictPopup")
+district_type = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(800, 450)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("2_1v442")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+top_level = true
+polygon = PackedVector2Array(864, 538, 886, 541, 890, 553, 906, 697, 908, 723, 870, 724, 798, 749, 728, 763, 663, 802, 649, 856, 626, 889, 556, 956, 541, 980, 520, 996, 493, 997, 479, 1024, 474, 1049, 455, 1098, 416, 1109, 353, 1136, 338, 1150, 322, 1178, 315, 1200, 315, 1235, 263, 1249, 226, 1239, 189, 1205, 172, 1167, 150, 1041, 131, 913, 115, 827, 96, 750, 113, 743, 227, 713, 347, 668, 409, 648, 473, 628, 564, 604, 649, 587, 729, 562)
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+
+[node name="FocusPoint" type="Node2D" parent="."]
+position = Vector2(501, 1017)
+
+[node name="DistrictPopup" parent="." instance=ExtResource("3_immi2")]
+visible = false
+
+[node name="pois" type="Node2D" parent="."]
+
+[node name="Poi" parent="pois" instance=ExtResource("4_c6rks")]
+poi_static = true
+poi_static_type = 6
+poi_static_name = "Train Station"
+poi_static_description = "This is The Train Station"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi"]
+polygon = PackedVector2Array(650, 754, 677, 741, 686, 742, 693, 745, 700, 755, 711, 757, 786, 746, 869, 724, 897, 727, 878, 550, 866, 537, 722, 565, 735, 646, 669, 654, 662, 690, 635, 742)
+
+[node name="Poi2" parent="pois" instance=ExtResource("4_c6rks")]
+poi_static_type = 6
+poi_static_name = "Train Station"
+poi_static_description = "This is The Train Station"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi2"]
+polygon = PackedVector2Array(446, 742, 515, 718, 485, 630, 424, 646)
+
+[node name="Poi3" parent="pois" instance=ExtResource("4_c6rks")]
+poi_static_type = 6
+poi_static_name = "Train Station"
+poi_static_description = "This is The Train Station"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi3"]
+polygon = PackedVector2Array(436, 747, 394, 758, 363, 669, 410, 650)
+
+[node name="Poi4" parent="pois" instance=ExtResource("4_c6rks")]
+poi_static_type = 6
+poi_static_name = "Train Station"
+poi_static_description = "This is The Train Station"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi4"]
+polygon = PackedVector2Array(316, 743, 366, 722, 350, 671, 303, 688)
+
+[node name="Poi5" parent="pois" instance=ExtResource("4_c6rks")]
+poi_static_type = 6
+poi_static_name = "Train Station"
+poi_static_description = "This is The Train Station"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi5"]
+polygon = PackedVector2Array(294, 691, 253, 706, 251, 717, 258, 761, 309, 744)
+
+[node name="Poi6" parent="pois" instance=ExtResource("4_c6rks")]
+poi_static_type = 6
+poi_static_name = "Train Station"
+poi_static_description = "This is The Train Station"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi6"]
+polygon = PackedVector2Array(527, 724, 537, 749, 410, 799, 400, 774)
+
+[node name="Poi7" parent="pois" instance=ExtResource("4_c6rks")]
+poi_static_type = 6
+poi_static_name = "Train Station"
+poi_static_description = "This is The Train Station"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi7"]
+polygon = PackedVector2Array(391, 778, 400, 804, 300, 842, 291, 817)
+
+[node name="Poi8" parent="pois" instance=ExtResource("4_c6rks")]
+poi_static_type = 6
+poi_static_name = "Train Station"
+poi_static_description = "This is The Train Station"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi8"]
+polygon = PackedVector2Array(241, 837, 280, 820, 302, 869, 312, 901, 254, 932, 247, 899, 246, 873, 245, 852)
+
+[node name="Poi9" parent="pois" instance=ExtResource("4_c6rks")]
+poi_static_type = 6
+poi_static_name = "Train Station"
+poi_static_description = "This is The Train Station"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi9"]
+polygon = PackedVector2Array(413, 843, 316, 882, 300, 842, 400, 804)
+
+[node name="Poi10" parent="pois" instance=ExtResource("4_c6rks")]
+poi_static_type = 6
+poi_static_name = "Train Station"
+poi_static_description = "This is The Train Station"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi10"]
+polygon = PackedVector2Array(411, 799, 426, 836, 501, 806, 538, 807, 562, 783, 542, 758, 537, 749)
+
+[node name="Poi11" parent="pois" instance=ExtResource("4_c6rks")]
+poi_static_type = 6
+poi_static_name = "Train Station"
+poi_static_description = "This is The Train Station"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi11"]
+polygon = PackedVector2Array(503, 811, 534, 812, 466, 897, 450, 905, 425, 843)
+
+[node name="Poi12" parent="pois" instance=ExtResource("4_c6rks")]
+poi_static_type = 6
+poi_static_name = "Train Station"
+poi_static_description = "This is The Train Station"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi12"]
+polygon = PackedVector2Array(521, 713, 503, 670, 494, 627, 566, 614, 570, 624, 571, 662, 579, 663, 582, 667, 584, 672, 583, 679, 580, 696, 566, 702)
+
+[node name="Poi13" parent="pois" instance=ExtResource("4_c6rks")]
+poi_static_type = 6
+poi_static_name = "Train Station"
+poi_static_description = "This is The Train Station"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi13"]
+polygon = PackedVector2Array(536, 722, 554, 762, 565, 777, 574, 771, 579, 763, 567, 741, 573, 723, 570, 710, 559, 711)
+
+[node name="Poi14" parent="pois" instance=ExtResource("4_c6rks")]
+poi_static_type = 6
+poi_static_name = "Train Station"
+poi_static_description = "This is The Train Station"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi14"]
+polygon = PackedVector2Array(579, 750, 582, 757, 589, 755, 600, 746, 610, 730, 610, 718, 607, 698, 579, 705, 577, 709, 581, 720, 580, 731)
+
+[node name="Poi15" parent="pois" instance=ExtResource("4_c6rks")]
+poi_static_type = 6
+poi_static_name = "Train Station"
+poi_static_description = "This is The Train Station"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi15"]
+polygon = PackedVector2Array(572, 609, 589, 638, 605, 639, 608, 687, 634, 687, 654, 678, 655, 606, 655, 600, 652, 593, 646, 587, 617, 591, 595, 595, 569, 601)
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

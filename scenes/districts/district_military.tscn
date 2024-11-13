@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=3 uid="uid://cee65vvqnqgwm"]
+
+[ext_resource type="Script" path="res://scripts/district.gd" id="1_wlb8j"]
+[ext_resource type="Texture2D" uid="uid://dr1v7la7ll1bf" path="res://assets/new_costal_map_lg.png" id="2_i8ci0"]
+[ext_resource type="PackedScene" uid="uid://cf5mn4nfhvkwj" path="res://scenes/gui/district_popup.tscn" id="3_mgjpb"]
+
+[node name="District_Military" type="Area2D" node_paths=PackedStringArray("district_popup")]
+script = ExtResource("1_wlb8j")
+district_popup = NodePath("DistrictPopup")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(800, 450)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("2_i8ci0")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+top_level = true
+polygon = PackedVector2Array(1055, -820, 1218, -766, 1402, -694, 1331, -546, 1345, -314, 1126, -264, 1124, -212, 987, -178, 934, -172, 838, -165, 791, -164, 780, -381, 216, -442, 149, -663, 209, -703, 287, -698, 755, -649, 919, -709, 965, -791, 1004, -825)
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+
+[node name="FocusPoint" type="Node2D" parent="."]
+position = Vector2(848, -350)
+
+[node name="DistrictPopup" parent="." instance=ExtResource("3_mgjpb")]
+visible = false
+
+[node name="pois" type="Node2D" parent="."]
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

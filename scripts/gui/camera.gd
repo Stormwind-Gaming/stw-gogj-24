@@ -1,9 +1,9 @@
 extends Node2D
 
-@export var parallax_strength_x: float = 400.0  # Strength of the parallax effect in the x direction
-@export var parallax_strength_y: float = 400.0  # Strength of the parallax effect in the y direction
-@export var max_offset_x: float = 300.0  # Maximum distance the image can move horizontally
-@export var max_offset_y: float = 300.0  # Maximum distance the image can move vertically
+@export var parallax_strength_x: float = 1000.0  # Strength of the parallax effect in the x direction
+@export var parallax_strength_y: float = 1000.0  # Strength of the parallax effect in the y direction
+@export var max_offset_x: float = 800.0  # Maximum distance the image can move horizontally
+@export var max_offset_y: float = 1300.0  # Maximum distance the image can move vertically
 
 var enabled: bool = true
 
@@ -17,6 +17,7 @@ func _ready():
 	target_position = position
 
 func _process(delta):
+	# clamp the position between 
 	# Check if the right mouse button is held down
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_MIDDLE) or Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
 		if not GameController.menus_open:
