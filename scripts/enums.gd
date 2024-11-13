@@ -55,9 +55,11 @@ enum ActionType {
 }
 
 enum DistrictType {
-	SHOPPING,
+	PORT,
 	INDUSTRIAL,
 	RESIDENTIAL,
+	CIVIC,
+	MILITARY,
 }
 
 enum POIType {
