@@ -1,19 +1,18 @@
-poi_name,poi_description,district_type,spawn_chance,max_spawn_quantity,skill_required,bonus_type
-Cinema,,shopping,100,1,charm,none
-Grocer,,shopping,75,-1,smarts,none
-Shop,,shopping,75,-1,charm,none
-Pub,,shopping,50,-1,smarts,none
-Restaurant,,shopping,50,-1,charm,none
-Residence,,shopping,25,-1,smarts,none
-Factory,,industrial,75,-1,charm,none
-Workshop,,industrial,75,-1,smarts,none
-Warehouse,,industrial,75,-1,charm,none
-Office,,industrial,50,-1,smarts,none
-Anti Air Emplacement,,industrial,50,-1,charm,none
-Residence,,residential,75,-1,smarts,none
-Pub,,residential,50,3,charm,none
-Cafe,,residential,50,3,smarts,none
-Shop,,residential,50,3,charm,none
-Church,,residential,50,2,smarts,none
-Restaurant,,residential,25,3,charm,none
-Gestapo Post,,residential,25,3,smarts,none
+poi_name,poi_description,district_type,spawn_chance,max_spawn_quantity,skill_required,bonus_type,what_chance,where_chance,when_chance
+Cinema,,civic,100,1,charm,none,1,1,1
+Grocer,,civic,75,-1,smarts,none,1,1,1
+Shop,,civic,75,-1,charm,none,1,1,1
+Pub,,civic,50,-1,smarts,none,1,1,1
+Restaurant,,civic,50,-1,charm,none,1,1,1
+Residence,,civic,25,-1,smarts,none,1,1,1
+Factory,,industrial,75,-1,charm,none,1,1,1
+Workshop,,industrial,75,-1,smarts,none,1,1,1
+Warehouse,,industrial,75,-1,charm,none,1,1,1
+Office,,industrial,50,-1,smarts,none,1,1,1
+Anti Air Emplacement,,military,50,-1,charm,none,1,1,1
+Residence,,residential,75,-1,smarts,none,1,1,1
+Pub,,residential,50,3,charm,none,1,1,1
+Cafe,,residential,50,3,smarts,none,1,1,1
+Shop,,residential,50,3,charm,none,1,1,1
+Church,,residential,50,2,smarts,none,1,1,1
+Restaurant,,residential,25,3,charm,none,1,1,1
