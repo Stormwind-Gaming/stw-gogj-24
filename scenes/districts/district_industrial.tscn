@@ -29,14 +29,23 @@ visible = false
 
 [node name="pois" type="Node2D" parent="."]
 
-[node name="Poi" parent="pois" instance=ExtResource("4_c6rks")]
+[node name="Poi_Train_Station" parent="pois" instance=ExtResource("4_c6rks")]
 poi_static = true
 poi_static_type = 6
 poi_static_name = "Train Station"
 poi_static_description = "This is The Train Station"
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi_Train_Station"]
 polygon = PackedVector2Array(650, 754, 677, 741, 686, 742, 693, 745, 700, 755, 711, 757, 786, 746, 869, 724, 897, 727, 878, 550, 866, 537, 722, 565, 735, 646, 669, 654, 662, 690, 635, 742)
+
+[node name="Poi_Foundry" parent="pois" instance=ExtResource("4_c6rks")]
+poi_static = true
+poi_static_type = 0
+poi_static_name = "Foundry"
+poi_static_description = "This is the Foundry"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi_Foundry"]
+polygon = PackedVector2Array(527, 724, 537, 749, 560, 782, 539, 809, 505, 807, 427, 836, 400, 774)
 
 [node name="Poi2" parent="pois" instance=ExtResource("4_c6rks")]
 poi_static_type = 6
@@ -70,14 +79,6 @@ poi_static_description = "This is The Train Station"
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi5"]
 polygon = PackedVector2Array(294, 691, 253, 706, 251, 717, 258, 761, 309, 744)
 
-[node name="Poi6" parent="pois" instance=ExtResource("4_c6rks")]
-poi_static_type = 6
-poi_static_name = "Train Station"
-poi_static_description = "This is The Train Station"
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi6"]
-polygon = PackedVector2Array(527, 724, 537, 749, 410, 799, 400, 774)
-
 [node name="Poi7" parent="pois" instance=ExtResource("4_c6rks")]
 poi_static_type = 6
 poi_static_name = "Train Station"
@@ -101,14 +102,6 @@ poi_static_description = "This is The Train Station"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi9"]
 polygon = PackedVector2Array(413, 843, 316, 882, 300, 842, 400, 804)
-
-[node name="Poi10" parent="pois" instance=ExtResource("4_c6rks")]
-poi_static_type = 6
-poi_static_name = "Train Station"
-poi_static_description = "This is The Train Station"
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi10"]
-polygon = PackedVector2Array(411, 799, 426, 836, 501, 806, 538, 807, 562, 783, 542, 758, 537, 749)
 
 [node name="Poi11" parent="pois" instance=ExtResource("4_c6rks")]
 poi_static_type = 6

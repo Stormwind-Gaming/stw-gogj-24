@@ -1,12 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://b1vvls3nbthm6"]
+[gd_scene load_steps=5 format=3 uid="uid://b1vvls3nbthm6"]
 
 [ext_resource type="Script" path="res://scripts/district.gd" id="1_epqjp"]
 [ext_resource type="Texture2D" uid="uid://dr1v7la7ll1bf" path="res://assets/new_costal_map_lg.png" id="2_7n30c"]
+[ext_resource type="PackedScene" uid="uid://c0trxtgty6phy" path="res://scenes/pois/poi.tscn" id="3_g4xl4"]
 [ext_resource type="PackedScene" uid="uid://cf5mn4nfhvkwj" path="res://scenes/gui/district_popup.tscn" id="3_g17pl"]
 
 [node name="District_Civic" type="Area2D" node_paths=PackedStringArray("district_popup")]
 script = ExtResource("1_epqjp")
 district_popup = NodePath("DistrictPopup")
+district_type = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(800, 450)
@@ -26,6 +28,80 @@ position = Vector2(1047, 8)
 visible = false
 
 [node name="pois" type="Node2D" parent="."]
+
+[node name="Poi_Gestapo_HQ" parent="pois" instance=ExtResource("3_g4xl4")]
+poi_static = true
+poi_static_type = 1
+poi_static_name = "Gestapo HQ"
+poi_static_description = "This is Gestapo HQ"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi_Gestapo_HQ"]
+polygon = PackedVector2Array(957, 34, 1023, 24, 1016, -27, 1006, -80, 958, -75, 949, -71)
+
+[node name="Poi_Town_Hall" parent="pois" instance=ExtResource("3_g4xl4")]
+poi_static = true
+poi_static_type = 2
+poi_static_name = "Town Hall"
+poi_static_description = "This is the Town Hall"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi_Town_Hall"]
+polygon = PackedVector2Array(827, 62, 940, 43, 952, 38, 942, -72, 815, -67, 828, 8, 825, 17)
+
+[node name="Poi3" parent="pois" instance=ExtResource("3_g4xl4")]
+poi_static_type = 2
+poi_static_name = "Town Hall"
+poi_static_description = "This is the Town Hall"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi3"]
+polygon = PackedVector2Array(1031, 25, 1111, 8, 1100, -40, 1024, -25)
+
+[node name="Poi4" parent="pois" instance=ExtResource("3_g4xl4")]
+poi_static_type = 2
+poi_static_name = "Town Hall"
+poi_static_description = "This is the Town Hall"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi4"]
+polygon = PackedVector2Array(1099, -44, 1023, -29, 1012, -79, 1095, -84)
+
+[node name="Poi5" parent="pois" instance=ExtResource("3_g4xl4")]
+poi_static_type = 2
+poi_static_name = "Town Hall"
+poi_static_description = "This is the Town Hall"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi5"]
+polygon = PackedVector2Array(1117, 5, 1230, -24, 1211, -59, 1106, -40)
+
+[node name="Poi6" parent="pois" instance=ExtResource("3_g4xl4")]
+poi_static_type = 2
+poi_static_name = "Town Hall"
+poi_static_description = "This is the Town Hall"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi6"]
+polygon = PackedVector2Array(1102, -87, 1106, -45, 1206, -62, 1191, -93)
+
+[node name="Poi7" parent="pois" instance=ExtResource("3_g4xl4")]
+poi_static_type = 2
+poi_static_name = "Town Hall"
+poi_static_description = "This is the Town Hall"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi7"]
+polygon = PackedVector2Array(1097, -94, 1188, -98, 1123, -206, 1059, -194)
+
+[node name="Poi8" parent="pois" instance=ExtResource("3_g4xl4")]
+poi_static_type = 2
+poi_static_name = "Town Hall"
+poi_static_description = "This is the Town Hall"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi8"]
+polygon = PackedVector2Array(1097, -94, 1009, -88, 980, -177, 1059, -194)
+
+[node name="Poi9" parent="pois" instance=ExtResource("3_g4xl4")]
+poi_static_type = 2
+poi_static_name = "Town Hall"
+poi_static_description = "This is the Town Hall"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi9"]
+polygon = PackedVector2Array(947, -81, 1005, -86, 977, -173, 935, -168)
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

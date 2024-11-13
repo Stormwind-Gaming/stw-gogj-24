@@ -1,12 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://bnshi2p8ra26w"]
+[gd_scene load_steps=5 format=3 uid="uid://bnshi2p8ra26w"]
 
 [ext_resource type="Script" path="res://scripts/district.gd" id="1_cj7mk"]
 [ext_resource type="Texture2D" uid="uid://dr1v7la7ll1bf" path="res://assets/new_costal_map_lg.png" id="2_py33n"]
+[ext_resource type="PackedScene" uid="uid://c0trxtgty6phy" path="res://scenes/pois/poi.tscn" id="3_c5tls"]
 [ext_resource type="PackedScene" uid="uid://cf5mn4nfhvkwj" path="res://scenes/gui/district_popup.tscn" id="3_ppqo0"]
 
 [node name="District_Residential" type="Area2D" node_paths=PackedStringArray("district_popup")]
 script = ExtResource("1_cj7mk")
 district_popup = NodePath("DistrictPopup")
+district_type = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(800, 450)
@@ -14,6 +16,7 @@ scale = Vector2(1.5, 1.5)
 texture = ExtResource("2_py33n")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+visible = false
 top_level = true
 polygon = PackedVector2Array(823, 68, 827, 106, 760, 119, 685, 134, 666, 144, 643, 150, 504, 102, 435, 65, 367, 30, 309, 14, 268, 8, 226, 13, 190, 28, 115, 65, 80, 25, 96, 11, 118, -17, 155, -94, 173, -143, 201, -255, 210, -314, 217, -387, 216, -442, 780, -381, 791, -164, 806, -73, 811, -68, 823, -7)
 
@@ -26,6 +29,121 @@ position = Vector2(496, -90)
 visible = false
 
 [node name="pois" type="Node2D" parent="."]
+
+[node name="Poi_Ammo_Factory" parent="pois" instance=ExtResource("3_c5tls")]
+poi_static = true
+poi_static_type = 0
+poi_static_name = "Ammo Factory"
+poi_static_description = "This is an Ammo Factory"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi_Ammo_Factory"]
+polygon = PackedVector2Array(588, -78, 674, -72, 674, -164, 611, -177)
+
+[node name="Poi_Post_Office" parent="pois" instance=ExtResource("3_c5tls")]
+poi_static = true
+poi_static_type = 4
+poi_static_name = "Post Office"
+poi_static_description = "This is a Post Office"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi_Post_Office"]
+polygon = PackedVector2Array(325, -99, 392, -91, 405, -208, 344, -216)
+
+[node name="Poi_Police_Station" parent="pois" instance=ExtResource("3_c5tls")]
+poi_static = true
+poi_static_type = 4
+poi_static_name = "Police Station"
+poi_static_description = "This is the Police Station"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi_Police_Station"]
+polygon = PackedVector2Array(577, 12, 556, 66, 617, 89, 638, 90, 641, 83, 772, 58, 765, 26, 754, 3, 734, -5, 705, -14, 693, -17, 680, -11, 680, 21, 685, 29, 686, 42, 686, 50, 636, 46, 640, 30)
+
+[node name="Poi3" parent="pois" instance=ExtResource("3_c5tls")]
+poi_static_type = 4
+poi_static_name = " Post Office"
+poi_static_description = "This is a Post Office"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi3"]
+polygon = PackedVector2Array(226, -311, 278, -307, 291, -401, 236, -405)
+
+[node name="Poi4" parent="pois" instance=ExtResource("3_c5tls")]
+poi_static_type = 4
+poi_static_name = " Post Office"
+poi_static_description = "This is a Post Office"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi4"]
+polygon = PackedVector2Array(226, -301, 279, -294, 275, -231, 211, -239)
+
+[node name="Poi5" parent="pois" instance=ExtResource("3_c5tls")]
+poi_static_type = 4
+poi_static_name = " Post Office"
+poi_static_description = "This is a Post Office"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi5"]
+polygon = PackedVector2Array(210, -226, 268, -218, 257, -159, 197, -166)
+
+[node name="Poi6" parent="pois" instance=ExtResource("3_c5tls")]
+poi_static_type = 4
+poi_static_name = " Post Office"
+poi_static_description = "This is a Post Office"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi6"]
+polygon = PackedVector2Array(170, -85, 192, -73, 207, -115, 219, -123, 242, -112, 254, -150, 197, -159, 185, -124)
+
+[node name="Poi7" parent="pois" instance=ExtResource("3_c5tls")]
+poi_static_type = 4
+poi_static_name = " Post Office"
+poi_static_description = "This is a Post Office"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi7"]
+polygon = PackedVector2Array(600, -180, 592, -123, 527, -125, 535, -194)
+
+[node name="Poi8" parent="pois" instance=ExtResource("3_c5tls")]
+poi_static_type = 4
+poi_static_name = " Post Office"
+poi_static_description = "This is a Post Office"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi8"]
+polygon = PackedVector2Array(525, -116, 589, -112, 575, -36, 508, -47)
+
+[node name="Poi9" parent="pois" instance=ExtResource("3_c5tls")]
+poi_static_type = 4
+poi_static_name = " Post Office"
+poi_static_description = "This is a Post Office"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi9"]
+polygon = PackedVector2Array(508, -41, 568, -28, 559, 6, 570, 10, 554, 55, 483, 30, 500, -6)
+
+[node name="Poi10" parent="pois" instance=ExtResource("3_c5tls")]
+poi_static_type = 4
+poi_static_name = " Post Office"
+poi_static_description = "This is a Post Office"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi10"]
+polygon = PackedVector2Array(587, -73, 583, -29, 671, -27, 673, -68)
+
+[node name="Poi11" parent="pois" instance=ExtResource("3_c5tls")]
+poi_static_type = 4
+poi_static_name = " Post Office"
+poi_static_description = "This is a Post Office"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi11"]
+polygon = PackedVector2Array(578, -22, 570, 3, 649, 6, 646, 38, 671, 42, 674, -18)
+
+[node name="Poi12" parent="pois" instance=ExtResource("3_c5tls")]
+poi_static_type = 4
+poi_static_name = " Post Office"
+poi_static_description = "This is a Post Office"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi12"]
+polygon = PackedVector2Array(268, -157, 321, -151, 333, -217, 281, -226)
+
+[node name="Poi13" parent="pois" instance=ExtResource("3_c5tls")]
+poi_static_type = 4
+poi_static_name = " Post Office"
+poi_static_description = "This is a Post Office"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi13"]
+polygon = PackedVector2Array(285, -236, 336, -229, 344, -306, 328, -305, 318, -291, 290, -294)
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

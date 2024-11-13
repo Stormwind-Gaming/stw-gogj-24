@@ -1,12 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://cee65vvqnqgwm"]
+[gd_scene load_steps=5 format=3 uid="uid://cee65vvqnqgwm"]
 
 [ext_resource type="Script" path="res://scripts/district.gd" id="1_wlb8j"]
 [ext_resource type="Texture2D" uid="uid://dr1v7la7ll1bf" path="res://assets/new_costal_map_lg.png" id="2_i8ci0"]
 [ext_resource type="PackedScene" uid="uid://cf5mn4nfhvkwj" path="res://scenes/gui/district_popup.tscn" id="3_mgjpb"]
+[ext_resource type="PackedScene" uid="uid://c0trxtgty6phy" path="res://scenes/pois/poi.tscn" id="4_jxi4m"]
 
 [node name="District_Military" type="Area2D" node_paths=PackedStringArray("district_popup")]
 script = ExtResource("1_wlb8j")
 district_popup = NodePath("DistrictPopup")
+district_type = 4
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(800, 450)
@@ -26,6 +28,24 @@ position = Vector2(848, -350)
 visible = false
 
 [node name="pois" type="Node2D" parent="."]
+
+[node name="Poi_Airfield" parent="pois" instance=ExtResource("4_jxi4m")]
+poi_static = true
+poi_static_type = 0
+poi_static_name = "Airfield"
+poi_static_description = "This is an Airfield"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi_Airfield"]
+polygon = PackedVector2Array(256, -439, 781, -381, 767, -532, 759, -628, 751, -641, 288, -689, 215, -692, 184, -649, 212, -586, 233, -440)
+
+[node name="Poi_Garrison" parent="pois" instance=ExtResource("4_jxi4m")]
+poi_static = true
+poi_static_type = 0
+poi_static_name = "Garrison"
+poi_static_description = "This is the Garrison"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi_Garrison"]
+polygon = PackedVector2Array(916, -711, 958, -788, 962, -794, 976, -797, 996, -818, 1008, -823, 1029, -821, 1063, -815, 1118, -796, 1214, -763, 1323, -719, 1397, -694, 1404, -678, 1416, -671, 1421, -663, 1403, -634, 1393, -627, 1354, -542, 1311, -530, 1261, -518, 1217, -519, 1166, -535, 1130, -535, 1083, -540, 1061, -544, 1019, -563, 984, -572, 972, -585, 969, -595, 972, -612, 964, -638, 951, -662, 928, -690, 916, -704)
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
