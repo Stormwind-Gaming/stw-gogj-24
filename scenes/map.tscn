@@ -48,7 +48,6 @@ parallax_strength_y = 1500.0
 max_offset_y = 1200.0
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="."]
-visible = false
 
 [node name="Footer" parent="CanvasLayer2" instance=ExtResource("11_4nem0")]
 

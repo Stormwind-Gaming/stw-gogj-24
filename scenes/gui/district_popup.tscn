@@ -18,7 +18,7 @@ corner_radius_bottom_left = 5
 [node name="DistrictPopup" type="Window" node_paths=PackedStringArray("title_label", "text_label")]
 auto_translate_mode = 1
 transparent_bg = true
-size = Vector2i(175, 175)
+size = Vector2i(200, 200)
 unresizable = true
 borderless = true
 always_on_top = true
@@ -47,11 +47,13 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 
 [node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
 theme_override_font_sizes/font_size = 17
 text = "<title>"
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 3
 
 [node name="HSeparator" type="HSeparator" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2

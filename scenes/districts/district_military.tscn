@@ -31,16 +31,16 @@ visible = false
 
 [node name="Poi_Airfield" parent="pois" instance=ExtResource("4_jxi4m")]
 poi_static = true
-poi_static_type = 0
-poi_static_name = "Airfield"
-poi_static_description = "This is an Airfield"
+poi_static_type = 25
+poi_static_name = "Aerodrome"
+poi_static_description = "This is the Aerodrome"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi_Airfield"]
 polygon = PackedVector2Array(256, -439, 781, -381, 767, -532, 759, -628, 751, -641, 288, -689, 215, -692, 184, -649, 212, -586, 233, -440)
 
 [node name="Poi_Garrison" parent="pois" instance=ExtResource("4_jxi4m")]
 poi_static = true
-poi_static_type = 0
+poi_static_type = 26
 poi_static_name = "Garrison"
 poi_static_description = "This is the Garrison"
 

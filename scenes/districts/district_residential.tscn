@@ -16,7 +16,6 @@ scale = Vector2(1.5, 1.5)
 texture = ExtResource("2_py33n")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-visible = false
 top_level = true
 polygon = PackedVector2Array(823, 68, 827, 106, 760, 119, 685, 134, 666, 144, 643, 150, 504, 102, 435, 65, 367, 30, 309, 14, 268, 8, 226, 13, 190, 28, 115, 65, 80, 25, 96, 11, 118, -17, 155, -94, 173, -143, 201, -255, 210, -314, 217, -387, 216, -442, 780, -381, 791, -164, 806, -73, 811, -68, 823, -7)
 
@@ -32,7 +31,7 @@ visible = false
 
 [node name="Poi_Ammo_Factory" parent="pois" instance=ExtResource("3_c5tls")]
 poi_static = true
-poi_static_type = 0
+poi_static_type = 27
 poi_static_name = "Ammo Factory"
 poi_static_description = "This is an Ammo Factory"
 
@@ -50,7 +49,7 @@ polygon = PackedVector2Array(325, -99, 392, -91, 405, -208, 344, -216)
 
 [node name="Poi_Police_Station" parent="pois" instance=ExtResource("3_c5tls")]
 poi_static = true
-poi_static_type = 4
+poi_static_type = 5
 poi_static_name = "Police Station"
 poi_static_description = "This is the Police Station"
 

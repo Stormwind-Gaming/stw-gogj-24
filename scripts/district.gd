@@ -28,7 +28,7 @@ signal poi_unhovered
 
 func _ready() -> void:
 	# set heat random 20-80
-	heat = randi() % 80 + 21
+	heat = MathHelpers.generateBellCurveStat(10, 30)
 
 	# set heat color alpha based on heat between 0 and 0.5
 	heat_color.a = heat / 200
@@ -121,7 +121,7 @@ func set_district_details(district_name_arg: String, district_description_arg: S
 	district_description = district_description_arg
 	rumour_text = rumour_text_arg
 
-	district_popup.set_details(district_name, "%s\n\nType: %s\n%s Points of Interest\n\nHeat: [font_size=20]%s[/font_size]" % [district_description, Globals.get_district_type_string(district_type), str(pois.size()), str(heat)  + "%"])
+	district_popup.set_details("%s %s District" % [district_name, Globals.get_district_type_string(district_type)], "%s\n\nType: %s\n%s Points of Interest\n\nHeat: [font_size=20]%s[/font_size]" % [district_description, Globals.get_district_type_string(district_type), str(pois.size()), str(heat)  + "%"])
 
 func _on_mouse_entered() -> void:
 	# check if we have a radial menu instance, if so, don't expand

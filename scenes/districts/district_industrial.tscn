@@ -40,7 +40,7 @@ polygon = PackedVector2Array(650, 754, 677, 741, 686, 742, 693, 745, 700, 755, 7
 
 [node name="Poi_Foundry" parent="pois" instance=ExtResource("4_c6rks")]
 poi_static = true
-poi_static_type = 0
+poi_static_type = 28
 poi_static_name = "Foundry"
 poi_static_description = "This is the Foundry"
 
