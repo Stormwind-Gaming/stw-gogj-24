@@ -165,7 +165,7 @@ func _setup_agents() -> void:
 	var agent3 = population[random_key3]
 	
 	agent1.char_sympathy = 80
-	agent1.set_agent()
+	GameController.set_agent(agent1)
 	agent2.char_sympathy = 80
-	agent2.set_agent()
+	GameController.set_agent(agent2)
 	agent3.char_sympathy = 90

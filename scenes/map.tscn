@@ -2,12 +2,12 @@
 
 [ext_resource type="Script" path="res://scripts/map.gd" id="1_ppup2"]
 [ext_resource type="Texture2D" uid="uid://dr1v7la7ll1bf" path="res://assets/new_costal_map_lg.png" id="2_2sl0p"]
-[ext_resource type="PackedScene" path="res://scenes/districts/district_port.tscn" id="3_jl581"]
-[ext_resource type="PackedScene" path="res://scenes/districts/district_civic.tscn" id="5_hdi3m"]
-[ext_resource type="PackedScene" path="res://scenes/districts/district_military.tscn" id="6_0oqea"]
+[ext_resource type="PackedScene" uid="uid://cdhfja2nolmpl" path="res://scenes/districts/district_port.tscn" id="3_jl581"]
+[ext_resource type="PackedScene" uid="uid://b1vvls3nbthm6" path="res://scenes/districts/district_civic.tscn" id="5_hdi3m"]
+[ext_resource type="PackedScene" uid="uid://cee65vvqnqgwm" path="res://scenes/districts/district_military.tscn" id="6_0oqea"]
 [ext_resource type="Script" path="res://scripts/gui/camera.gd" id="7_f0cgf"]
-[ext_resource type="PackedScene" path="res://scenes/districts/district_residential.tscn" id="7_ortub"]
-[ext_resource type="PackedScene" path="res://scenes/districts/district_industrial.tscn" id="9_jaoy6"]
+[ext_resource type="PackedScene" uid="uid://bnshi2p8ra26w" path="res://scenes/districts/district_residential.tscn" id="7_ortub"]
+[ext_resource type="PackedScene" uid="uid://d0a4qatowu8vq" path="res://scenes/districts/district_industrial.tscn" id="9_jaoy6"]
 [ext_resource type="PackedScene" uid="uid://bv860whpjsldd" path="res://scenes/gui/footer.tscn" id="11_4nem0"]
 [ext_resource type="PackedScene" uid="uid://kgy3mx1cyya" path="res://scenes/gui/header.tscn" id="12_gdl2t"]
 

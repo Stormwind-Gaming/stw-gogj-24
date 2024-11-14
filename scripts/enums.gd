@@ -29,21 +29,13 @@ enum CharacterProfession {
 }
 
 """
-@brief Role options for characters
-"""
-enum CharacterRole { #TODO: Delete this enum
-	DEFAULT, # aka non-sympathiser
-	SYMPATHISER,
-}
-
-"""
 @brief Knowledge states for characters
 """
-enum CharacterKnowledge { #TODO: CHANGE THIS TO CharacterRecruitmentState
-	NOT_RECRUITED, # aka sympathiser #TODO: CHANGE THIS TO SYMPATHISER_NOT_RECRUITED
-	RECRUITED, # aka sympathiser #TODO: CHANGE THIS TO SYMPATHISER_RECRUITED
-	UNKNOWN, # aka not sympathiser #TODO: CHANGE THIS TO NON_SYMPATHISER_UNKNOWN
-	KNOWN # aka not sympathiser #TODO: CHANGE THIS TO NON_SYMPATHISER_KNOWN
+enum CharacterRecruitmentState {
+	SYMPATHISER_NOT_RECRUITED, # aka sympathiser
+	SYMPATHISER_RECRUITED, # aka sympathiser
+	NON_SYMPATHISER_UNKNOWN, # aka not sympathiser
+	NON_SYMPATHISER_KNOWN # aka not sympathiser
 }
 
 """

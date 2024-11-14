@@ -112,19 +112,11 @@ func _on_character_status_changed(status: Enums.CharacterStatus) -> void:
 	pass
 
 """
-@brief Handles changes to the character's role.
-
-@param role The new role of the character.
-"""
-func _on_character_role_changed(role: Enums.CharacterRole) -> void:
-	pass
-
-"""
 @brief Handles changes to the character's knowledge.
 
 @param knowledge The new knowledge level of the character.
 """
-func _on_character_knowledge_changed(knowledge: Enums.CharacterKnowledge) -> void:
+func _on_charracter_recruitment_state_changedd(knowledge: Enums.CharacterRecruitmentState) -> void:
 	pass
 
 #|==============================|
@@ -138,8 +130,7 @@ func _on_character_knowledge_changed(knowledge: Enums.CharacterKnowledge) -> voi
 func _bind_character_signals(character: Character) -> void:
 	# Connect to character signals
 	character.char_status_changed.connect(func(status: Enums.CharacterStatus): _on_character_status_changed(status))
-	character.char_role_changed.connect(func(role: Enums.CharacterRole): _on_character_role_changed(role))	
-	character.char_knowledge_changed.connect(func(knowledge: Enums.CharacterKnowledge): _on_character_knowledge_changed(knowledge))
+	character.char_recruitment_state_changed.connect(func(state: Enums.CharacterRecruitmentState): _on_charracter_recruitment_state_changedd(state))
 
 """
 @brief Assigns the character's data to the corresponding UI elements.

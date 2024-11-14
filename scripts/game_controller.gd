@@ -111,9 +111,8 @@ func get_resistance_level() -> int:
 	var level = 0
 	var characters = GlobalRegistry.get_all_objects(Enums.Registry_Category.CHARACTER)
 	for character in characters.values():
-		# TODO: Check this works
-		# level += character.char_sympathy
-		break
+		if character.char_sympathy:
+			level += character.char_sympathy
 
 	return level / characters.size()
 
@@ -123,6 +122,7 @@ func get_resistance_level() -> int:
 """
 func get_heat_level() -> int:
 	# TODO: Implement this
+
 	return 0
 
 func get_turn_log(num: int) -> Array:
@@ -167,9 +167,26 @@ func remove_all_actions_for_character(character: Character) -> void:
 	for action in actions:
 		if character in action.characters:
 			remove_action(action)
+	
+	agent_changed.emit(character)
 
-func remove_agent(character: Character) -> void:
+"""
+@brief Sets an agent state to SYMPATHISER_NOT_RECRUITED 
+
+@param character The character to unset as an agent
+"""
+func unset_agent(character: Character) -> void:
 	character.unset_agent()
+	agent_changed.emit(character)
+
+"""
+@brief Sets an agent state to SYMPATHISER_RECRUITED 
+
+@param character The character to set as an agent
+"""
+func set_agent(character: Character) -> void:
+	character.set_agent()
+	agent_changed.emit(character)
 
 #|==============================|
 #|      Turn Processing        |

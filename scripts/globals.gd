@@ -421,13 +421,25 @@ func get_intel_effect_string(effects, bbcode_enabled: bool = false) -> String:
 			else:
 				return "Duration: 3 Days, Expiry: 4 Days"
 		Enums.IntelEffect.D_FOUR_E_ONE:
-			return "Duration: 4 Days, Expiry: 1 Day"
+			if bbcode_enabled:
+				return "Duration: 4 Days\nExpiry: 1 Day"
+			else:
+				return "Duration: 4 Days, Expiry: 1 Day"
 		Enums.IntelEffect.D_FOUR_E_TWO:
-			return "Duration: 4 Days, Expiry: 2 Days"
+			if bbcode_enabled:
+				return "Duration: 4 Days\nExpiry: 2 Days"
+			else:
+				return "Duration: 4 Days, Expiry: 2 Days"
 		Enums.IntelEffect.D_FOUR_E_THREE:
-			return "Duration: 4 Days, Expiry: 3 Days"
+			if bbcode_enabled:
+				return "Duration: 4 Days\nExpiry: 3 Days"
+			else:
+				return "Duration: 4 Days, Expiry: 3 Days"
 		Enums.IntelEffect.D_FOUR_E_FOUR:
-			return "Duration: 4 Days, Expiry: 4 Days"
+			if bbcode_enabled:
+				return "Duration: 4 Days\nExpiry: 4 Days"
+			else:
+				return "Duration: 4 Days, Expiry: 4 Days"
 		Enums.IntelEffect.NONE:
 			return "None"
 		_:

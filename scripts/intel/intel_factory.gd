@@ -84,7 +84,7 @@ static func _get_random_poi() -> PointOfInterest:
 """
 static func _get_random_non_sympathiser_character() -> Character:
 	var characters = GlobalRegistry.get_all_objects(Enums.Registry_Category.CHARACTER)
-	var non_sympathisers = characters.values().filter(func(character): return not character.char_role == Enums.CharacterRole.SYMPATHISER)
+	var non_sympathisers = characters.values().filter(func(character): return character.char_recruitment_state == Enums.CharacterRecruitmentState.NON_SYMPATHISER_KNOWN or character.char_recruitment_state == Enums.CharacterRecruitmentState.NON_SYMPATHISER_UNKNOWN)
 	var random_non_sympathiser = non_sympathisers[randi() % non_sympathisers.size()]
 	print('get_random_non_sympathiser_character', random_non_sympathiser)
 	return random_non_sympathiser

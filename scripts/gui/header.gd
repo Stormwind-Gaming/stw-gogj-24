@@ -39,6 +39,8 @@ func _ready():
 	heat_bar.value = GameController.get_heat_level()
 	date.text = GameController.calendar.get_date_string()
 
+	_update_gui()
+
 #|==============================|
 #|      Event Handlers         |
 #|==============================|
@@ -49,7 +51,7 @@ Updates the GUI to reflect new game state.
 @param district The newly registered district
 """
 func _on_new_district_registered(district: District) -> void:
-	_update_gui(0)
+	_update_gui()
 
 """
 @brief Handles changes to agent status.
@@ -58,19 +60,22 @@ Updates the agent list in the sidebar.
 @param new_agent Optional parameter for the agent that changed
 """
 func _on_agents_changed(new_agent: Character = null) -> void:
+	# TODO: this works, and it reacts to agent_changed, but agent_changed isnt called if set directly on the character, only if set through the GameController, I'm not sure what pattern to follow here
+
 	# update the sidebar list of agents
 	# get all agents
 	var agents = []
 	for character_id in GlobalRegistry.get_all_objects(Enums.Registry_Category.CHARACTER):
 		var character = GlobalRegistry.get_object(Enums.Registry_Category.CHARACTER, character_id)
 
-		if character.char_knowledge == Enums.CharacterKnowledge.RECRUITED:
+		if character.char_recruitment_state == Enums.CharacterRecruitmentState.SYMPATHISER_RECRUITED:
 			agents.append(character)
 	
 	# clear the agents wrapper
 	for child in agents_wrapper.get_children():
 		child.queue_free()
 	
+	print(agents)
 	# add the agents to the wrapper
 	for agent in agents:
 		var agent_instance = Globals.mini_agent_card_scene.instantiate()
@@ -96,7 +101,7 @@ func _on_new_assignment(option: Enums.ActionType, poi: PointOfInterest, agents: 
 
 @param number Optional parameter for turn number
 """
-func _update_gui(number: int) -> void:
+func _update_gui(number: int = 0) -> void:
 	date.text = GameController.calendar.get_date_string()
 	resistance_bar.value = GameController.get_resistance_level()
 	heat_bar.value = GameController.get_heat_level()
