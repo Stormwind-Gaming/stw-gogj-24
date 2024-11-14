@@ -40,10 +40,10 @@ enum CharacterRole { #TODO: Delete this enum
 @brief Knowledge states for characters
 """
 enum CharacterKnowledge { #TODO: CHANGE THIS TO CharacterRecruitmentState
-    NOT_RECRUITED, # aka sympathiser #TODO: CHANGE THIS TO SYMPATHISER_NOT_RECRUITED
-    RECRUITED, # aka sympathiser #TODO: CHANGE THIS TO SYMPATHISER_RECRUITED
-    UNKNOWN, # aka not sympathiser #TODO: CHANGE THIS TO NON_SYMPATHISER_UNKNOWN
-    KNOWN # aka not sympathiser #TODO: CHANGE THIS TO NON_SYMPATHISER_KNOWN
+	NOT_RECRUITED, # aka sympathiser #TODO: CHANGE THIS TO SYMPATHISER_NOT_RECRUITED
+	RECRUITED, # aka sympathiser #TODO: CHANGE THIS TO SYMPATHISER_RECRUITED
+	UNKNOWN, # aka not sympathiser #TODO: CHANGE THIS TO NON_SYMPATHISER_UNKNOWN
+	KNOWN # aka not sympathiser #TODO: CHANGE THIS TO NON_SYMPATHISER_KNOWN
 }
 
 """
