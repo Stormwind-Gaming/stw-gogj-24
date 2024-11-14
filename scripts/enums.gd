@@ -31,7 +31,7 @@ enum CharacterProfession {
 """
 @brief Role options for characters
 """
-enum CharacterRole {
+enum CharacterRole { #TODO: Delete this enum
 	DEFAULT, # aka non-sympathiser
 	SYMPATHISER,
 }
@@ -39,17 +39,18 @@ enum CharacterRole {
 """
 @brief Knowledge states for characters
 """
-enum CharacterKnowledge {
-    NOT_RECRUITED,
-    RECRUITED,
-    UNKNOWN
+enum CharacterKnowledge { #TODO: CHANGE THIS TO CharacterRecruitmentState
+    NOT_RECRUITED, # aka sympathiser #TODO: CHANGE THIS TO SYMPATHISER_NOT_RECRUITED
+    RECRUITED, # aka sympathiser #TODO: CHANGE THIS TO SYMPATHISER_RECRUITED
+    UNKNOWN, # aka not sympathiser #TODO: CHANGE THIS TO NON_SYMPATHISER_UNKNOWN
+    KNOWN # aka not sympathiser #TODO: CHANGE THIS TO NON_SYMPATHISER_KNOWN
 }
 
 """
 @brief Status options for characters
 """
-enum CharacterStatus {
-	DEFAULT, # aka available
+enum CharacterStatus { #TODO: CHANGE THIS TO CharacterState
+	DEFAULT, # aka available #TODO: CHANGE THIS TO AVAILABLE
 	ASSIGNED,
 	MIA,
 	INCARCERATED,
