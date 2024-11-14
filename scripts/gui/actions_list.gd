@@ -1,14 +1,41 @@
 extends Window
 
+#|==============================|
+#|      Exported Variables      |
+#|==============================|
+"""
+@brief Container for the list of actions
+"""
 @export var actions_list: VBoxContainer
 
+#|==============================|
+#|      Lifecycle Methods      |
+#|==============================|
+"""
+@brief Called when the node enters the scene tree.
+Generates the initial action list.
+"""
 func _ready() -> void:
 	_generate_action_list()
 
+#|==============================|
+#|      Event Handlers         |
+#|==============================|
+"""
+@brief Handles the close button press event.
+Notifies the GameController and removes this window.
+"""
 func _on_close_button_pressed() -> void:
 	GameController.set_menu_closed("ActionsList")
 	queue_free()
 
+#|==============================|
+#|      Helper Functions       |
+#|==============================|
+"""
+@brief Generates the list of actions.
+Clears existing actions and creates new action cards for each active action.
+"""
 func _generate_action_list() -> void:
 	# clear the list
 	for child in actions_list.get_children():

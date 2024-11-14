@@ -1,29 +1,78 @@
 extends Window
 
+#|==============================|
+#|      Exported Variables      |
+#|==============================|
+"""
+@brief Container for Who/What button groups
+"""
 @onready var whowhat_btn_grp_container = find_child("WhoWhatBtnGrpContainer")
+
+"""
+@brief Container for Where button groups
+"""
 @onready var where_btn_grp_container = find_child("WhereBtnGrpContainer")
+
+"""
+@brief Container for When button groups
+"""
 @onready var when_btn_grp_container = find_child("WhenBtnGrpContainer")
 
+"""
+@brief Description label for Who/What intel
+"""
 @onready var whowhat_description = find_child("WhoWhatDescription")
+
+"""
+@brief Description label for Where intel
+"""
 @onready var where_description = find_child("WhereDescription")
+
+"""
+@brief Description label for When intel
+"""
 @onready var when_description = find_child("WhenDescription")
 
+"""
+@brief Container for the plan list
+"""
 @onready var plan_list_container = find_child("PlanListContainer")
+
+"""
+@brief Container for all tabs
+"""
 @onready var tab_container = find_child("TabContainer")
 
+"""
+@brief Container for the plan holder
+"""
 @export var plan_holder: HBoxContainer
+
+#|==============================|
+#|         Properties          |
+#|==============================|
+"""
+@brief Reference to the current plan scene
+"""
 var plan_scene: PanelContainer 
 
-# Variables to store selected intel nodes
+"""
+@brief Dictionary to store selected intel for each type
+"""
 var selected_intel = {
 	Enums.IntelType.WHOWHAT: null,
 	Enums.IntelType.WHERE: null,
 	Enums.IntelType.WHEN: null
 }
 
+#|==============================|
+#|      Lifecycle Methods      |
+#|==============================|
+"""
+@brief Called when the node enters the scene tree.
+Initializes the intel list and plan creation interface.
+"""
 func _ready():
-	# create_plan_btn.pressed.connect(_on_create_plan_btn_pressed)
-	
 	# Connect the tab change signal
 	tab_container.tab_changed.connect(_on_tab_changed)
 	
@@ -40,10 +89,23 @@ func _ready():
 	plan_holder.add_child(new_plan_scene)
 	plan_scene = new_plan_scene
 
+#|==============================|
+#|      Helper Functions       |
+#|==============================|
+"""
+@brief Clears all child nodes from a container.
+
+@param container The container to clear
+"""
 func clear_container(container):
 	while container.get_child_count() > 0:
 		container.remove_child(container.get_child(0))
 
+"""
+@brief Populates the intel list with available intel items.
+
+@param intel Dictionary of intel items to display
+"""
 func populate_intel_list(intel):
 	# Clear any existing controls in the containers
 	clear_container(whowhat_btn_grp_container)
@@ -101,6 +163,11 @@ func populate_intel_list(intel):
 		else:
 			print("Error: Container not found or intel_data is invalid for:", name, "with type:", intel_node.type)
 
+"""
+@brief Populates the plan list with existing plans.
+
+@param intel Dictionary of intel items to filter for plans
+"""
 func populate_plan_list(intel):
 	var plans = []
 	for i in intel:
@@ -118,15 +185,39 @@ func populate_plan_list(intel):
 		new_plan_scene.create_plan.connect(_on_create_plan_btn_pressed)
 		plan_list_container.add_child(new_plan_scene)
 
+"""
+@brief Checks if a plan can be created and updates button visibility.
+"""
 func _check_create_plan_visibility():
 	# Check if all intel types have a selected intel node
 	if selected_intel[Enums.IntelType.WHOWHAT] and selected_intel[Enums.IntelType.WHERE] and selected_intel[Enums.IntelType.WHEN]:
 		plan_scene.toggle_enabled_button(true)
-		pass
 	else:
 		plan_scene.toggle_enabled_button(false)
-		pass
 
+"""
+@brief Resets the selected intel and plan display.
+"""
+func _reset():
+	selected_intel = {
+		Enums.IntelType.WHOWHAT: null,
+		Enums.IntelType.WHERE: null,
+		Enums.IntelType.WHEN: null
+	}
+	
+	plan_scene.set_mission_text('')
+	plan_scene.set_location_text('')
+	plan_scene.set_time_text('')
+	
+	plan_scene.toggle_enabled_button(false)
+
+#|==============================|
+#|      Event Handlers         |
+#|==============================|
+"""
+@brief Handles the create plan button press.
+Creates a new plan from selected intel pieces.
+"""
 func _on_create_plan_btn_pressed():
 	# Ensure all required intel are selected
 	var required_intel = [
@@ -141,27 +232,22 @@ func _on_create_plan_btn_pressed():
 	# Switch to the 'Plans' tab
 	tab_container.current_tab = 1
 
+"""
+@brief Handles tab changes in the intel list.
+Refreshes the intel and plan lists.
+
+@param tab_index The index of the newly selected tab
+"""
 func _on_tab_changed(tab_index):
 	# Re-run both populate_plan_list and populate_intel_list when the tab changes
 	_reset()
 	var intel = GlobalRegistry.get_all_objects(Enums.Registry_Category.INTEL)
 	populate_intel_list(intel)
 	populate_plan_list(intel)
-	
-func _reset():
-	selected_intel = {
-		Enums.IntelType.WHOWHAT: null,
-		Enums.IntelType.WHERE: null,
-		Enums.IntelType.WHEN: null
-	}
-	
-	plan_scene.set_mission_text('')
-	plan_scene.set_location_text('')
-	plan_scene.set_time_text('')
-	
-	plan_scene.toggle_enabled_button(false)
 
-
+"""
+@brief Handles the close button press.
+"""
 func _on_close_button_pressed() -> void:
 	GameController.set_menu_closed("IntelList")
 	queue_free()

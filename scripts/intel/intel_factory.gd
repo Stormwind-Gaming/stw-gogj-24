@@ -2,254 +2,172 @@ extends Object
 
 class_name IntelFactory
 
-# Structure to store each action
-class RumourConfig:
-		var whowhat_chance: int
-		var where_chance: int
-		var when_chance: int
+#|==============================|
+#|       Rumour Creation        |
+#|==============================|
+"""
+@brief Creates a new Rumour based on the provided configuration.
 
-		# Constructor for the RumourConfig class
-		func _init(whowhat_chance: int, where_chance: int, when_chance: int):
-				self.whowhat_chance = whowhat_chance
-				self.where_chance = where_chance
-				self.when_chance = when_chance
+@param config The configuration settings for the rumour
+@returns A new Rumour object populated with data based on the configuration
+"""
+static func create_rumour(config: RumourConfig) -> Rumour:
+	print('IntelFactory create_rumour')
 
-				# Calculate the total chances
-				var total_chances = self.whowhat_chance + self.where_chance + self.when_chance
+	# Create a new instance of RumourProperties
+	var rumour_properties = Rumour.RumourProperties.new()
 
-				# If the total is not 100, scale the chances proportionally
-				if total_chances != 100:
-						if total_chances == 0:
-								push_error("Error: All chances are zero. Cannot generate a rumour.")
-						else:
-								# Calculate the scaling factor
-								var scale_factor = 100.0 / total_chances
+	# Generate the type of rumour based on the provided configuration
+	var rumour_type = _generate_rumour_type(config)
 
-								# Scale the chances
-								self.whowhat_chance = int(self.whowhat_chance * scale_factor)
-								self.where_chance = int(self.where_chance * scale_factor)
-								self.when_chance = int(self.when_chance * scale_factor)
+	# Retrieve the rumour data based on the generated type
+	var rumour_data = Globals.get_rumour_data(rumour_type)
 
-								# Adjust for any rounding errors to ensure total is exactly 100
-								var adjusted_total = self.whowhat_chance + self.where_chance + self.when_chance
-								if adjusted_total != 100:
-										self.whowhat_chance += 100 - adjusted_total
+	# Assign the subject of the rumour based on the rumour data
+	match rumour_data.subject:
+		Enums.RumourSubject.ANY_CHARACTER:
+			rumour_properties.rumour_subject_character = _get_random_character()
+		Enums.RumourSubject.ANY_POI:
+			rumour_properties.rumour_subject_poi = _get_random_poi()
+		Enums.RumourSubject.NON_SYMPATHISER_CHARACTER:
+			rumour_properties.rumour_subject_character = _get_random_non_sympathiser_character()
+		Enums.RumourSubject.SYMPATHISER_CHARACTER:
+			rumour_properties.rumour_subject_character = _get_random_sympathiser_character()
+		Enums.RumourSubject.MIA_CHARACTER:
+			rumour_properties.rumour_subject_character = _get_random_mia_character()
+		Enums.RumourSubject.INCARCERATED_CHARACTER:
+			rumour_properties.rumour_subject_character = _get_random_incarcerated_character()
 
-								# print("Scaled chances to 100%: WhoWhat: %d, Where: %d, When: %d" % 
-								# 				[self.whowhat_chance, self.where_chance, self.when_chance])
+	# Check if the rumour has a specific effect that requires duration and expiry
+	if rumour_data.effect in [Enums.IntelEffect.D_ONE_E_ONE, Enums.IntelEffect.D_ONE_E_TWO, Enums.IntelEffect.D_ONE_E_THREE, Enums.IntelEffect.D_ONE_E_FOUR,
+							  Enums.IntelEffect.D_TWO_E_ONE, Enums.IntelEffect.D_TWO_E_TWO, Enums.IntelEffect.D_TWO_E_THREE, Enums.IntelEffect.D_TWO_E_FOUR,
+							  Enums.IntelEffect.D_THREE_E_ONE, Enums.IntelEffect.D_THREE_E_TWO, Enums.IntelEffect.D_THREE_E_THREE, Enums.IntelEffect.D_THREE_E_FOUR,
+							  Enums.IntelEffect.D_FOUR_E_ONE, Enums.IntelEffect.D_FOUR_E_TWO, Enums.IntelEffect.D_FOUR_E_THREE, Enums.IntelEffect.D_FOUR_E_FOUR]:
+		var duration_expiry = _get_rumour_duration_and_expiry(rumour_data.effect)
+		rumour_properties.rumour_subject_duration = duration_expiry[0]
+		rumour_properties.rumour_subject_expiry = duration_expiry[1]
 
+	# Set the properties of the rumour
+	rumour_properties.rumour_text = rumour_data.text
+	rumour_properties.rumour_type = rumour_type
+	rumour_properties.rumour_effect = rumour_data.effect
 
-static func create_rumour(config: RumourConfig) -> Intel:
-		var profile = {
-			"level": Enums.IntelLevel.RUMOUR,
-		}
+	# Initialize and return the rumour with the properties
+	return Rumour.new(rumour_properties)
 
-		# Generate a random number between 0 and 99
-		var random_value = randi() % 100
+#|==============================|
+#|     Random Character Getters  |
+#|==============================|
+"""
+@brief Retrieves a random character from the global registry.
 
-		# Determine the type of rumour based on the random value and chances
-		if random_value < config.whowhat_chance:
-				profile['type'] = Enums.IntelType.WHOWHAT
-				var rumour_text = Globals.get_rumour_text(profile.type)
+@returns A random Character object
+"""
+static func _get_random_character() -> Character:
+	var characters = GlobalRegistry.get_all_objects(Enums.Registry_Category.CHARACTER)
+	return characters[randi() % characters.size()]
 
-				profile['effect'] = [rumour_text.effect]
+"""
+@brief Retrieves a random point of interest from the global registry.
 
-				# TODO: Rejig this with enums
-				if(rumour_text.subject == 'CHARACTER'):
-						var characters = GlobalRegistry.get_all_objects(Enums.Registry_Category.CHARACTER)
+@returns A random PointOfInterest object
+"""
+static func _get_random_poi() -> PointOfInterest:
+	var pois = GlobalRegistry.get_all_objects(Enums.Registry_Category.POI)
+	var pois_array = pois.values()
+	return pois_array[randi() % pois_array.size()]
 
-						var filtered_characters = []
-						for key in characters:
-								var value = characters[key]
-								if !value.recruited:
-										filtered_characters.append(value)
+"""
+@brief Retrieves a random non-sympathiser character from the global registry.
 
-						var subject_character = filtered_characters[randi() % filtered_characters.size()]
-						var replacements = {
-								"character": subject_character.get_full_name(),
-						}
+@returns A random Character object that is not a sympathiser
+"""
+static func _get_random_non_sympathiser_character() -> Character:
+	var characters = GlobalRegistry.get_all_objects(Enums.Registry_Category.CHARACTER)
+	var non_sympathisers = characters.values().filter(func(character): return not character.char_role == Enums.CharacterRole.SYMPATHISER)
+	var random_non_sympathiser = non_sympathisers[randi() % non_sympathisers.size()]
+	print('get_random_non_sympathiser_character', random_non_sympathiser)
+	return random_non_sympathiser
 
-						profile['description'] = rumour_text.text.format(replacements)
-						profile['related_character'] = subject_character
-				else:
-						profile['description'] = rumour_text.text
+"""
+@brief Retrieves a random sympathiser character (currently returns null).
 
-		elif random_value < config.whowhat_chance + config.where_chance:
-				profile['type'] = Enums.IntelType.WHERE
-				var rumour_text = Globals.get_rumour_text(profile.type)
+@returns A null value (placeholder for future implementation)
+"""
+static func _get_random_sympathiser_character() -> Character:
+	return null
 
-				profile['description'] = rumour_text.text
-				profile['effect'] = [rumour_text.effect]
+"""
+@brief Retrieves a random MIA character (currently returns null).
 
-				# TODO: Rejig this with enums
-				if(rumour_text.subject == 'POI'):
-						var pois = GlobalRegistry.get_all_objects(Enums.Registry_Category.POI)
+@returns A null value (placeholder for future implementation)
+"""
+static func _get_random_mia_character() -> Character:
+	return null
 
-						var filtered_pois = []
-						for key in pois:
-								var value = pois[key]
-								filtered_pois.append(value)
+"""
+@brief Retrieves a random incarcerated character (currently returns null).
 
-						var subject_poi = filtered_pois[randi() % filtered_pois.size()]
-						var replacements = {
-								"poi": subject_poi.poi_name,
-						}
+@returns A null value (placeholder for future implementation)
+"""
+static func _get_random_incarcerated_character() -> Character:
+	return null
 
-						profile['description'] = rumour_text.text.format(replacements)
-						profile['related_poi'] = subject_poi
-				else:
-						profile['description'] = rumour_text.text
+#|==============================|
+#|   Duration and Expiry Logic   |
+#|==============================|
+"""
+@brief Gets the duration and expiry for a given intel effect.
 
-		else:
-				profile['type'] = Enums.IntelType.WHEN
-
-				var rumour_text = Globals.get_rumour_text(profile.type)
-
-				profile['description'] = rumour_text.text
-				profile['effect'] = [rumour_text.effect]
-
-				match rumour_text.effect:
-						Enums.IntelEffect.D_ONE_E_ONE:
-								profile['related_duration'] = 1
-								profile['related_expiry'] = 1
-						Enums.IntelEffect.D_ONE_E_TWO:
-								profile['related_duration'] = 1
-								profile['related_expiry'] = 2
-						Enums.IntelEffect.D_ONE_E_THREE:
-								profile['related_duration'] = 1
-								profile['related_expiry'] = 3
-						Enums.IntelEffect.D_ONE_E_FOUR:
-								profile['related_duration'] = 1
-								profile['related_expiry'] = 4
-						Enums.IntelEffect.D_TWO_E_ONE:
-								profile['related_duration'] = 2
-								profile['related_expiry'] = 1
-						Enums.IntelEffect.D_TWO_E_TWO:
-								profile['related_duration'] = 2
-								profile['related_expiry'] = 2
-						Enums.IntelEffect.D_TWO_E_THREE:
-								profile['related_duration'] = 2
-								profile['related_expiry'] = 3
-						Enums.IntelEffect.D_TWO_E_FOUR:
-								profile['related_duration'] = 2
-								profile['related_expiry'] = 4
-						Enums.IntelEffect.D_THREE_E_ONE:
-								profile['related_duration'] = 3
-								profile['related_expiry'] = 1
-						Enums.IntelEffect.D_THREE_E_TWO:
-								profile['related_duration'] = 3
-								profile['related_expiry'] = 2
-						Enums.IntelEffect.D_THREE_E_THREE:
-								profile['related_duration'] = 3
-								profile['related_expiry'] = 3
-						Enums.IntelEffect.D_THREE_E_FOUR:
-								profile['related_duration'] = 3
-								profile['related_expiry'] = 4
-						Enums.IntelEffect.D_FOUR_E_ONE:
-								profile['related_duration'] = 4
-								profile['related_expiry'] = 1
-						Enums.IntelEffect.D_FOUR_E_TWO:
-								profile['related_duration'] = 4
-								profile['related_expiry'] = 2
-						Enums.IntelEffect.D_FOUR_E_THREE:
-								profile['related_duration'] = 4
-								profile['related_expiry'] = 3
-						Enums.IntelEffect.D_FOUR_E_FOUR:
-								profile['related_duration'] = 4
-								profile['related_expiry'] = 4
-						# Handle other IntelEffects if necessary
-						_:
-								profile['related_duration'] = 0
-								profile['related_expiry'] = 0
-
-		return Intel.new(profile)
-
-
-static func combine_rumours(rumours: Array) -> Intel:
-	
-	# Initialize variables to hold related data
-	var related_character = null
-	var related_poi = null
-	var related_duration = 0
-	var related_expiry = 0
-
-	var profile = {
-		"level": Enums.IntelLevel.PLAN,
-		"type": Enums.IntelType.COMPLETE,
-		"description": ""
+@param effect The intel effect for which to retrieve duration and expiry
+@returns An array containing duration and expiry values
+"""
+static func _get_rumour_duration_and_expiry(effect: Enums.IntelEffect) -> Array:
+	var duration_expiry_map = {
+		Enums.IntelEffect.D_ONE_E_ONE: [1, 1],
+		Enums.IntelEffect.D_ONE_E_TWO: [1, 2],
+		Enums.IntelEffect.D_ONE_E_THREE: [1, 3],
+		Enums.IntelEffect.D_ONE_E_FOUR: [1, 4],
+		Enums.IntelEffect.D_TWO_E_ONE: [2, 1],
+		Enums.IntelEffect.D_TWO_E_TWO: [2, 2],
+		Enums.IntelEffect.D_TWO_E_THREE: [2, 3],
+		Enums.IntelEffect.D_TWO_E_FOUR: [2, 4],
+		Enums.IntelEffect.D_THREE_E_ONE: [3, 1],
+		Enums.IntelEffect.D_THREE_E_TWO: [3, 2],
+		Enums.IntelEffect.D_THREE_E_THREE: [3, 3],
+		Enums.IntelEffect.D_THREE_E_FOUR: [3, 4],
+		Enums.IntelEffect.D_FOUR_E_ONE: [4, 1],
+		Enums.IntelEffect.D_FOUR_E_TWO: [4, 2],
+		Enums.IntelEffect.D_FOUR_E_THREE: [4, 3],
+		Enums.IntelEffect.D_FOUR_E_FOUR: [4, 4],
 	}
+	return duration_expiry_map[effect]
 
-	# Verify we have exactly 3 rumours (whowhat, where, when)
-	if rumours.size() != 3:
-		push_error("Need exactly 3 rumours to combine: WhoWhat, Where, When.")
-		return null
+#|==============================|
+#|     Rumour Type Generation    |
+#|==============================|
+"""
+@brief Generates a rumour type based on the provided configuration.
 
-	# Check each rumour is unique type and RUMOUR level
-	var type_check = {}
-	for rumour in rumours:
-		if not rumour is Intel or rumour.level != Enums.IntelLevel.RUMOUR:
-			push_error("Can only combine RUMOUR level intel.")
-			return null
-		if rumour.type in type_check:
-			push_error("Cannot combine duplicate rumour types.")
-			return null
-		type_check[rumour.type] = true
+@param config The configuration settings for rumour type generation
+@returns The generated RumourType based on random chance
+"""
+static func _generate_rumour_type(config: RumourConfig) -> Enums.RumourType:
+	var random_value = randi() % 100
 
-	# Ensure all required types are present
-	var required_types = [Enums.IntelType.WHOWHAT, Enums.IntelType.WHERE, Enums.IntelType.WHEN]
-	for req_type in required_types:
-		if req_type not in type_check:
-			push_error("Missing required rumour type: %s" % [req_type])
-			return null
+	if random_value < config.mission_chance:
+		return Enums.RumourType.MISSION
+	elif random_value < config.mission_chance + config.location_chance:
+		return Enums.RumourType.LOCATION
+	else:
+		return Enums.RumourType.TIME
 
-	# Extract related data from each rumour
-	for rumour in rumours:
-		match rumour.type:
-			Enums.IntelType.WHOWHAT:
-				related_character = rumour.related_character
-				profile['description'] += "It has come to our attention that "
-				profile['description'] += rumour.description.substr(0, 1).to_lower() + rumour.description.substr(1)
-				profile['description'] += '\n'
-				profile['description'] += '\n'
-				profile['effect'] = rumour.effect
-			Enums.IntelType.WHERE:
-				related_poi = rumour.related_poi
-				profile['description'] += "As a result, it is recommended that we use " + rumour.related_poi.poi_name + " as a base of operations."
-				profile['description'] += '\n'
-				profile['description'] += '\n'
-			Enums.IntelType.WHEN:
-				related_duration = rumour.related_duration
-				related_expiry = rumour.related_expiry
-				profile['description'] += rumour.description
+"""
+@brief Combines multiple rumours into a plan.
 
-	var plan_names = [
-		"Operation Ironclad",
-		"Operation Seagull",
-		"Operation Tempest",
-		"Operation Frostbite",
-		"Operation Lionheart",
-		"Operation Thunderstrike",
-		"Operation Wolfpack",
-		"Operation Whirlwind",
-		"Operation Valkyrie Shield",
-		"Operation Phoenix",
-	]
-
-	# Assign the extracted data to the plan's profile
-	profile['related_character'] = related_character
-	profile['related_poi'] = related_poi
-	profile['related_duration'] = related_duration
-	profile['related_expiry'] = related_expiry
-	profile['plan_name'] = plan_names[randi() % plan_names.size()]
-	profile['plan_who_what'] = rumours[0].description
-	profile['plan_where'] = rumours[1].description
-	profile['plan_when'] = rumours[2].description
-
-	# Create new PLAN level intel
-	var plan = Intel.new(profile)
-
-	# Destroy rumours by freeing them
-	for rumour in rumours:
-		rumour.free()
-		
-	return plan
+@param rumours Array of rumours to combine
+@returns A new Plan object
+"""
+static func combine_rumours(rumours: Array[Rumour]) -> Plan:
+	print('IntelFactory combine_rumours', rumours)
+	return Plan.new()

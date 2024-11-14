@@ -1,20 +1,36 @@
 extends Node
 class_name Map
 
+#|==============================|
+#|         Properties          |
+#|==============================|
+"""
+@brief Name of the town this map represents
+"""
 var town_name = ""
 
+"""
+@brief Reference to the footer UI control
+"""
 @export var footer: Control
+
+"""
+@brief Array of districts in the map
+"""
 @export var districts: Array[District] = []
 
+#|==============================|
+#|      Lifecycle Methods      |
+#|==============================|
+"""
+@brief Called when the node enters the scene tree.
+Initializes the map, districts, and starting agents.
+"""
 func _ready() -> void:
-	# get random seed
 	randomize()
-
 	footer.connect("menu_opened", _clear_focus)
-
 	town_name = Globals.town_names[randi() % Globals.town_names.size()]
 
-	# _set_district_details on all districts
 	for district in districts:
 		_set_district_details(district)
 		GameController.register_district(district)
@@ -22,98 +38,134 @@ func _ready() -> void:
 	_setup_agents()
 	_generate_population()
 
-	# IntelFactory.create_rumour(IntelFactory.RumourConfig.new(100,0,0))
-	# IntelFactory.create_rumour(IntelFactory.RumourConfig.new(0,100,0))
-	# IntelFactory.create_rumour(IntelFactory.RumourConfig.new(0,0,100))
+	# Create initial rumours
+	IntelFactory.create_rumour(RumourConfig.new(100,0,0))
+	IntelFactory.create_rumour(RumourConfig.new(0,100,0))
+	IntelFactory.create_rumour(RumourConfig.new(0,0,100))
 
+"""
+@brief Called every frame to handle input.
+Checks for middle/right click to clear district focus.
 
+@param delta Time elapsed since the last frame
+"""
 func _process(delta: float) -> void:
 	if GameController.district_focused != null:
 		if Input.is_mouse_button_pressed(MOUSE_BUTTON_MIDDLE) or Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
 			_clear_focus()
 
+#|==============================|
+#|      District Management    |
+#|==============================|
+"""
+@brief Clears the currently focused district
+"""
 func _clear_focus() -> void:
-	GameController.set_district_focused()
+	GameController.set_district_focused(null)
 	$Camera2D.enabled = true
 
-#region Districts
+"""
+@brief Sets up a district with random name and description
 
+@param district The district to initialize
+"""
 func _set_district_details(district: District) -> void:
 	var district_name = Globals.district_names[randi() % Globals.district_names.size()]
-	# remove this district name from the list
 	Globals.district_names.erase(Globals.district_names.find(district_name))
 	var district_description = "This is the district of " + district_name + "."
 	
 	district.set_district_details(district_name, district_description, "")
+	_connect_district_signals(district)
 
+"""
+@brief Connects signal handlers for district events
+
+@param district The district to connect signals for
+"""
+func _connect_district_signals(district: District) -> void:
 	district.connect("district_hovered", _on_district_hovered)
 	district.connect("district_unhovered", _on_district_unhovered)
 	district.connect("district_clicked", _on_district_clicked)
 	district.connect("poi_hovered", _on_poi_hovered)
 	district.connect("poi_unhovered", _on_poi_unhovered)
 
+#|==============================|
+#|      Event Handlers         |
+#|==============================|
+"""
+@brief Handles district hover events
+@param district The district being hovered
+"""
 func _on_district_hovered(district: District) -> void:
 	if GameController.district_focused == null:
 		district.set_highlight_color()
-	
+
+"""
+@brief Handles district unhover events
+@param district The district being unhovered
+"""
 func _on_district_unhovered(district: District) -> void:
-	# remove highlight color if not focused
 	if GameController.district_focused == null:
 		district.remove_highlight_color()
 
-func _on_district_clicked(district: District) -> void:	
+"""
+@brief Handles district click events
+@param district The district being clicked
+"""
+func _on_district_clicked(district: District) -> void:    
 	for d in districts:
 		d.remove_highlight_color()
 	
 	district.set_focus_color()
-
 	$Camera2D.enabled = false
 	GameController.set_district_focused(district)
 
+"""
+@brief Handles POI hover events
+@param poi The POI being hovered
+"""
 func _on_poi_hovered(poi: PointOfInterest) -> void:
 	pass
 
+"""
+@brief Handles POI unhover events
+"""
 func _on_poi_unhovered() -> void:
 	pass
 
-#endregion Districts
-
+#|==============================|
+#|      Character Setup        |
+#|==============================|
+"""
+@brief Generates initial population including some special cases
+"""
 func _generate_population() -> void:
-
 	var dead = CharacterFactory.create_character()
 	var mia = CharacterFactory.create_character()
 
-	dead.current_status = Enums.CharacterStatus.DECEASED
-	mia.current_status = Enums.CharacterStatus.MIA
+	dead.char_status = Enums.CharacterStatus.DECEASED
+	mia.char_status = Enums.CharacterStatus.MIA
 
-		
+"""
+@brief Sets up initial agent characters with high sympathy
+"""
 func _setup_agents() -> void:
 	var population = GlobalRegistry.get_all_objects(Enums.Registry_Category.CHARACTER)
 	var keys = population.keys()
 	
-	# Pick the first random key
+	# Pick three random characters to be initial agents
 	var random_key1 = keys[randi() % keys.size()]
-
-	# Remove the first random key from the keys array to avoid picking it again
 	keys.erase(random_key1)
-
-	# Pick the second random key
 	var random_key2 = keys[randi() % keys.size()]
-
-	# Remove the first random key from the keys array to avoid picking it again
 	keys.erase(random_key2)
-
-	# Pick the second random key
 	var random_key3 = keys[randi() % keys.size()]
 
-	# Access the values using the random keys
 	var agent1 = population[random_key1]
 	var agent2 = population[random_key2]
 	var agent3 = population[random_key3]
 	
-	agent1.sympathy = 80
+	agent1.char_sympathy = 80
 	agent1.set_agent()
-	agent2.sympathy = 80
+	agent2.char_sympathy = 80
 	agent2.set_agent()
-	agent3.set_sympathy(90)
-	agent3.known = true;
+	agent3.char_sympathy = 90

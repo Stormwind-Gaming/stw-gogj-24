@@ -1,10 +1,19 @@
 extends Node
 
+#|==============================|
+#|       Character Enums        |
+#|==============================|
+"""
+@brief Gender options for characters
+"""
 enum CharacterGender {
 	MALE,
 	FEMALE
 }
 
+"""
+@brief Nationality options for characters
+"""
 enum CharacterNationality {
 	BELGIAN,
 	GERMAN,
@@ -12,39 +21,59 @@ enum CharacterNationality {
 	FRENCH
 }
 
+"""
+@brief Profession options for characters
+"""
 enum CharacterProfession {
 	UNKNOWN
 }
 
-enum CharacterStatus {
-	NONE,
+"""
+@brief Role options for characters
+"""
+enum CharacterRole {
+	DEFAULT, # aka non-sympathiser
 	SYMPATHISER,
-	AVAILABLE,
+}
+
+"""
+@brief Knowledge states for characters
+"""
+enum CharacterKnowledge {
+    NOT_RECRUITED,
+    RECRUITED,
+    UNKNOWN
+}
+
+"""
+@brief Status options for characters
+"""
+enum CharacterStatus {
+	DEFAULT, # aka available
 	ASSIGNED,
 	MIA,
 	INCARCERATED,
 	DECEASED
 }
 
-enum IntelLevel {
-	RUMOUR,
-	PLAN,
-	STRATEGEM
-}
-
-enum IntelType {
-	WHOWHAT,
-	WHERE,
-	WHEN,
-	COMPLETE
-}
-
+#|==============================|
+#|        Stat Check Enums      |
+#|==============================|
+"""
+@brief Types of stat checks that can be performed
+"""
 enum StatCheckType {
 	SUBTLETY,
 	SMARTS,
 	CHARM
 }
 
+#|==============================|
+#|        Action Enums          |
+#|==============================|
+"""
+@brief Types of actions that can be performed
+"""
 enum ActionType {
 	NONE,
 	INFO,
@@ -54,6 +83,12 @@ enum ActionType {
 	PLAN
 }
 
+#|==============================|
+#|        District Enums        |
+#|==============================|
+"""
+@brief Types of districts in the game
+"""
 enum DistrictType {
 	PORT,
 	INDUSTRIAL,
@@ -62,6 +97,12 @@ enum DistrictType {
 	MILITARY,
 }
 
+#|==============================|
+#|        POI Enums             |
+#|==============================|
+"""
+@brief Types of Points of Interest
+"""
 enum POIType {
 	NONE,
 	GESTAPO_HQ,
@@ -94,10 +135,16 @@ enum POIType {
 	FOUNDRY
 }
 
+"""
+@brief Types of bonuses provided by POIs
+"""
 enum POIBonusType {
 	NONE
 }
 
+"""
+@brief Skills required for POI interactions
+"""
 enum POISkillRequired {
 	NONE,
 	SUBTLETY,
@@ -105,6 +152,12 @@ enum POISkillRequired {
 	CHARM
 }
 
+#|==============================|
+#|        Registry Enums        |
+#|==============================|
+"""
+@brief Categories for the global registry system
+"""
 enum Registry_Category {
 	CHARACTER,
 	DISTRICT,
@@ -113,6 +166,38 @@ enum Registry_Category {
 	ITEM
 }
 
+#|==============================|
+#|        Rumour Enums          |
+#|==============================|
+"""
+@brief Types of rumours that can be generated
+"""
+enum RumourType {
+	MISSION,
+	LOCATION,
+	TIME,
+	WILDCARD,
+}
+
+"""
+@brief Subject types for rumours
+"""
+enum RumourSubject {
+	ANY_CHARACTER,
+	NON_SYMPATHISER_CHARACTER,
+	SYMPATHISER_CHARACTER,
+	MIA_CHARACTER,
+	INCARCERATED_CHARACTER,
+	ANY_POI,
+	NONE
+}
+
+#|==============================|
+#|        Intel Effect Enums     |
+#|==============================|
+"""
+@brief Types of effects that intel can have
+"""
 enum IntelEffect {
 	BUILD_SYMPATHY,
 	BUILD_SYMPATHY_ALL,

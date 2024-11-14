@@ -1,23 +1,62 @@
 extends Node2D
 
-@export var parallax_strength_x: float = 1000.0  # Strength of the parallax effect in the x direction
-@export var parallax_strength_y: float = 1000.0  # Strength of the parallax effect in the y direction
-@export var max_offset_x: float = 800.0  # Maximum distance the image can move horizontally
-@export var max_offset_y: float = 1300.0  # Maximum distance the image can move vertically
+#|==============================|
+#|      Exported Variables      |
+#|==============================|
+"""
+@brief Strength of the parallax effect in the x direction
+"""
+@export var parallax_strength_x: float = 1000.0
 
+"""
+@brief Strength of the parallax effect in the y direction
+"""
+@export var parallax_strength_y: float = 1000.0
+
+"""
+@brief Maximum distance the image can move horizontally
+"""
+@export var max_offset_x: float = 800.0
+
+"""
+@brief Maximum distance the image can move vertically
+"""
+@export var max_offset_y: float = 1300.0
+
+#|==============================|
+#|         Properties          |
+#|==============================|
+"""
+@brief Whether the camera movement is enabled
+"""
 var enabled: bool = true
 
-# Store the initial position as an offset
+"""
+@brief The initial position of the camera
+"""
 var initial_position: Vector2
+
+"""
+@brief The target position for camera movement
+"""
 var target_position: Vector2
 
+#|==============================|
+#|      Lifecycle Methods      |
+#|==============================|
+"""
+@brief Called when the node enters the scene tree.
+Sets up initial camera position.
+"""
 func _ready():
-	# Set the initial position as the starting offset
 	initial_position = position
 	target_position = position
 
+"""
+@brief Called every frame to update camera position.
+Handles mouse-based camera movement and district focusing.
+"""
 func _process(delta):
-	# clamp the position between 
 	# Check if the right mouse button is held down
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_MIDDLE) or Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
 		if not GameController.menus_open:
@@ -38,12 +77,11 @@ func _process(delta):
 				target_position.x = initial_position.x + target_x
 				target_position.y = initial_position.y + target_y
 				
-				# Smoothly move the position towards the target position using lerp
+				# Move the position to the target position
 				position.x = target_position.x
 				position.y = target_position.y
-				# position.x = lerp(position.x, target_position.x, lerp_speed * delta)
-				# position.y = lerp(position.y, target_position.y, lerp_speed * delta)
 	elif !enabled:
+		# Focus on district centerpoint when camera is disabled
 		var point_to_focus_on = GameController.district_focused.get_district_centerpoint() - Vector2(800, 450)
 		if self.position.distance_to(point_to_focus_on) > 1:
 			position = point_to_focus_on

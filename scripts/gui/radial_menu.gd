@@ -1,22 +1,77 @@
 extends Control
 class_name RadialMenu
 
+#|==============================|
+#|         Constants           |
+#|==============================|
+"""
+@brief Size of the sprite icons in the menu
+"""
 const SPRITE_SIZE = Vector2(64,64)
 
+#|==============================|
+#|      Exported Variables      |
+#|==============================|
+"""
+@brief Color of the menu background
+"""
 @export var background_color: Color
+
+"""
+@brief Color of the menu lines
+"""
 @export var line_color: Color
+
+"""
+@brief Color of the highlighted option
+"""
 @export var highlight_color: Color
 
+"""
+@brief Radius of the outer circle
+"""
 @export var outer_radius: int = 128
+
+"""
+@brief Radius of the inner circle
+"""
 @export var inner_radius: int = 32
+
+"""
+@brief Width of the menu lines
+"""
 @export var line_width: int = 4
 
+#|==============================|
+#|         Properties          |
+#|==============================|
+"""
+@brief Array of available options in the menu
+"""
 var options: Array[RadialOption]
 
+"""
+@brief Currently selected cell index
+"""
 var selected_cell = 0
 
+#|==============================|
+#|          Signals            |
+#|==============================|
+"""
+@brief Emitted when a radial option is selected
+@param option The type of action selected
+"""
 signal selected_radial_option(option: Enums.ActionType)
 
+#|==============================|
+#|      Lifecycle Methods      |
+#|==============================|
+"""
+@brief Initializes the radial menu with given options.
+
+@param options_attr Array of action types to include in the menu
+"""
 func _init(options_attr: Array[Enums.ActionType] = []) -> void:
 	options = []
 	options_attr.append(Enums.ActionType.NONE)
@@ -24,10 +79,30 @@ func _init(options_attr: Array[Enums.ActionType] = []) -> void:
 	for option in options_attr:
 		options.append(RadialOption.new(option))
 
-func set_optional_actions(options_attr: Array[Enums.ActionType] = []) -> void:
-	for option in options_attr:
-		options.append(RadialOption.new(option))
+"""
+@brief Called every frame to update menu state.
+Updates selected cell based on mouse position.
 
+@param delta Time elapsed since the last frame
+"""
+func _process(delta: float) -> void:
+	var mouse_pos = get_local_mouse_position()
+	var mouse_radius = mouse_pos.length()
+	
+	if mouse_radius > outer_radius:
+		selected_cell = -1
+	elif mouse_radius < inner_radius:
+		selected_cell = 0
+	else:
+		var mouse_rads = fposmod(mouse_pos.angle() * -1, TAU)
+		selected_cell = ceil((mouse_rads / TAU) * (len(options) -1))
+
+	queue_redraw()
+
+"""
+@brief Called to draw the radial menu.
+Handles all custom drawing operations for the menu.
+"""
 func _draw() -> void:
 	var offset = SPRITE_SIZE / -2
 	
@@ -89,23 +164,31 @@ func _draw() -> void:
 			true
 		)
 
-func _process(delta: float) -> void:
-	var mouse_pos = get_local_mouse_position()
-	var mouse_radius = mouse_pos.length()
-	
-	if mouse_radius > outer_radius:
-		selected_cell = -1
-	elif mouse_radius < inner_radius:
-		selected_cell = 0
-	else:
-		var mouse_rads = fposmod(mouse_pos.angle() * -1, TAU)
-		selected_cell = ceil((mouse_rads / TAU) * (len(options) -1))
+#|==============================|
+#|      Event Handlers         |
+#|==============================|
+"""
+@brief Handles input events for the menu area.
+Processes mouse clicks and emits selection signals.
 
-	queue_redraw()
-
-
+@param viewport The viewport that received the event
+@param event The input event
+@param shape_idx The shape index that was clicked
+"""
 func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if event is InputEventMouseButton:
 		var mouse_event = event as InputEventMouseButton
 		if mouse_event.button_index == MOUSE_BUTTON_LEFT and mouse_event.pressed:
 			emit_signal("selected_radial_option", options[selected_cell].action_type)
+
+#|==============================|
+#|      Helper Functions       |
+#|==============================|
+"""
+@brief Adds optional actions to the menu.
+
+@param options_attr Array of action types to add
+"""
+func set_optional_actions(options_attr: Array[Enums.ActionType] = []) -> void:
+	for option in options_attr:
+		options.append(RadialOption.new(option))

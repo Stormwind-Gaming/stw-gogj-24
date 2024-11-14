@@ -1,5 +1,11 @@
 extends Node
 
+#|==============================|
+#|      Scene References       |
+#|==============================|
+"""
+@brief Preloaded scene references for UI elements
+"""
 var confirmation_dialog_scene = preload("res://scenes/gui/confirmation_dialog.tscn")
 var agent_card_scene = preload("res://scenes/gui/agent_card.tscn")
 var mini_agent_card_scene = preload("res://scenes/gui/mini_agent_card.tscn")
@@ -12,6 +18,12 @@ var post_radial_assignment_scene = preload("res://scenes/gui/post_radial_assignm
 var actions_list_action_scene = preload("res://scenes/gui/actions_list_action.tscn")
 var plan_scene = preload("res://scenes/gui/plan.tscn")
 
+#|==============================|
+#|       Data Sources          |
+#|==============================|
+"""
+@brief Paths to CSV data files
+"""
 var load_csvs = {
 	"town_names": "res://data/town_names.csv",
 	"district_names": "res://data/district_names.csv",
@@ -23,6 +35,12 @@ var load_csvs = {
 	"items": "res://data/items.csv"
 }
 
+#|==============================|
+#|      Cached Data Lists      |
+#|==============================|
+"""
+@brief Arrays storing loaded data from CSVs
+"""
 var town_names = []
 var district_names = []
 var first_names = []
@@ -31,6 +49,13 @@ var poi_types = []
 var poi_names = []
 var rumour_text = []
 
+#|==============================|
+#|      Data Loading           |
+#|==============================|
+"""
+@brief Called when the node enters the scene tree.
+Loads all CSV data into memory.
+"""
 func _ready() -> void:
 	_load_town_names(load_csvs["town_names"])
 	_load_district_names(load_csvs["district_names"])
@@ -40,8 +65,10 @@ func _ready() -> void:
 	_load_poi_names(load_csvs["poi_names"])
 	_load_rumour_text(load_csvs["rumour_text"])
 
-#region Loaders
-
+"""
+@brief Loads town names from CSV
+@param path Path to the CSV file
+"""
 func _load_town_names(path: String) -> void:
 	var csv_data = load(path)
 	for record in csv_data.records:
@@ -101,9 +128,6 @@ func _load_poi_names(path: String) -> void:
 			"poi_name": record["poi_name"],
 		})
 
-#endregion
-
-#region getters
 func _load_rumour_text(path: String) -> void:
 	var csv_data = load(path)
 	for record in csv_data.records:
@@ -112,71 +136,70 @@ func _load_rumour_text(path: String) -> void:
 			"text": record["text"],
 			"type": type,
 			"effect": intel_effect_map[record['effect'].to_upper()],
-			"subject": record['subject'],
+			"subject": rumour_subject_map[record['subject'].to_upper()]
 		})
 
-func get_rumour_text(type: Enums.IntelType) -> Dictionary:
+#|==============================|
+#|      Data Retrieval         |
+#|==============================|
+"""
+@brief Retrieves all last names for a given nationality
+@param nationality The nationality to filter by
+@returns Array of last names
+"""
+func get_all_last_names(nationality: Enums.CharacterNationality) -> Array:
+	return last_names.filter(func(name): return name.nationality == nationality)
+
+"""
+@brief Retrieves all first names for a given gender and nationality
+@param gender The gender to filter by
+@param nationality The nationality to filter by
+@returns Array of first names
+"""
+func get_all_first_names(gender: Enums.CharacterGender, nationality: Enums.CharacterNationality) -> Array:
+	return first_names.filter(func(name): return name.gender == gender and name.nationality == nationality)
+
+"""
+@brief Gets random rumour data of specified type
+@param type The type of rumour to get
+@returns Dictionary containing rumour data
+"""
+func get_rumour_data(type: Enums.RumourType) -> Dictionary:
 	var filtered_rumour_text = rumour_text.filter(
 		func(record):
 			return record.type == type
 	)
 	return filtered_rumour_text[randi() % filtered_rumour_text.size()]
 
-func get_new_town_name() -> String:
-	return town_names[randi() % town_names.size()]
-
-func get_new_district_name() -> String:
-	return district_names[randi() % district_names.size()]
-
-func get_new_first_name(gender: Enums.CharacterGender, nationality: Enums.CharacterNationality) -> Dictionary:
-	var filtered_first_names = first_names.filter(
-		func(first_name):
-			return first_name != null and first_name.gender == gender and first_name.nationality == nationality
+"""
+@brief Retrieves all POI types for a given district type
+@param district_type The district type to filter by
+@returns Array of POI types
+"""
+func get_poi_types(district_type: Enums.DistrictType) -> Array:
+	var filtered_poi_types = poi_types.filter(
+		func(record):
+			return record.district_type.has(district_type)
 	)
-	return filtered_first_names[randi() % filtered_first_names.size()]
+	return filtered_poi_types
 
-func get_all_first_names(gender: Enums.CharacterGender, nationality: Enums.CharacterNationality) -> Array:
-	return first_names.filter(
-		func(first_name):
-			return first_name != null and first_name.gender == gender and first_name.nationality == nationality
-	)
-
-func get_new_last_name(nationality: Enums.CharacterNationality) -> Dictionary:
-	var filtered_last_names = last_names.filter(
-		func(last_name):
-			return last_name != null and last_name.nationality == nationality
-	)
-	return filtered_last_names[randi() % filtered_last_names.size()]
-
-func get_all_last_names(nationality: Enums.CharacterNationality) -> Array:
-	return last_names.filter(
-		func(last_name):
-			return last_name != null and last_name.nationality == nationality
-	)
-
-func get_poi_types(district: Enums.DistrictType) -> Array:
-	return poi_types.filter(
-		func(poi_type):
-			return poi_type != null and poi_type.district_type.has(district)
-	)
-
+"""
+@brief Retrieves the name of a POI type
+@param poi_type The POI type to get the name of
+@returns The name of the POI type
+"""
 func get_poi_name(poi_type: Enums.POIType) -> String:
-	var filtered_poi_names = poi_names.filter(
-		func(poi_name):
-			return poi_name != null and poi_name.poi_type == poi_type
-	)
-	return filtered_poi_names[randi() % filtered_poi_names.size()]["poi_name"]
-
-func get_all_poi_names(poi_type: Enums.POIType) -> Array:
 	return poi_names.filter(
-		func(poi_name):
-			return poi_name != null and poi_name.poi_type == poi_type
-	)
+		func(record):
+			return record.poi_type == poi_type
+	)[0].poi_name
 
-#endregion
-
-#region EnumMaps
-
+#|==============================|
+#|      Enum Mappings          |
+#|==============================|
+"""
+@brief Maps string values to enum values for various types
+"""
 var gender_map = {
 	"MALE": Enums.CharacterGender.MALE,
 	"FEMALE": Enums.CharacterGender.FEMALE
@@ -237,9 +260,20 @@ var district_type_map = {
 }
 
 var rumour_map = {
-	"WHOWHAT": Enums.IntelType.WHOWHAT,
-	"WHERE": Enums.IntelType.WHERE,
-	"WHEN": Enums.IntelType.WHEN
+	"MISSION": Enums.RumourType.MISSION,
+	"LOCATION": Enums.RumourType.LOCATION,
+	"TIME": Enums.RumourType.TIME,
+	"WILDCARD": Enums.RumourType.WILDCARD
+}
+
+var rumour_subject_map = {
+	"ANY_CHARACTER": Enums.RumourSubject.ANY_CHARACTER,
+	"NON_SYMPATHISER_CHARACTER": Enums.RumourSubject.NON_SYMPATHISER_CHARACTER,
+	"SYMPATHISER_CHARACTER": Enums.RumourSubject.SYMPATHISER_CHARACTER,
+	"MIA_CHARACTER": Enums.RumourSubject.MIA_CHARACTER,
+	"INCARCERATED_CHARACTER": Enums.RumourSubject.INCARCERATED_CHARACTER,
+	"ANY_POI": Enums.RumourSubject.ANY_POI,
+	"NONE": Enums.RumourSubject.NONE
 }
 
 var intel_effect_map = {
@@ -283,10 +317,12 @@ var poi_bonus_map = {
 	"NONE": Enums.POIBonusType.NONE
 }
 
-#endregion
-
-#region Enum to friendly string
-
+#|==============================|
+#|    String Conversions       |
+#|==============================|
+"""
+@brief Converts enum values to human-readable strings
+"""
 func get_action_type_string(action_type: Enums.ActionType) -> String:
 	match action_type:
 		Enums.ActionType.NONE:
@@ -399,12 +435,8 @@ func get_intel_effect_string(effects, bbcode_enabled: bool = false) -> String:
 
 func get_character_status_string(status: Enums.CharacterStatus) -> String:
 	match status:
-		Enums.CharacterStatus.NONE:
+		Enums.CharacterStatus.DEFAULT:
 			return "None"
-		Enums.CharacterStatus.SYMPATHISER:
-			return "Sympathiser"
-		Enums.CharacterStatus.AVAILABLE:
-			return "Available"
 		Enums.CharacterStatus.ASSIGNED:
 			return "Assigned"
 		Enums.CharacterStatus.MIA:
@@ -458,11 +490,12 @@ func get_district_type_string(district_type: Enums.DistrictType) -> String:
 		_:
 			return "Unknown"
 
-#endregion
-
-
-#region Preload Profile Images
-
+#|==============================|
+#|      Asset References       |
+#|==============================|
+"""
+@brief Preloaded profile images organized by nationality and gender
+"""
 var profile_images = {
 	Enums.CharacterNationality.GERMAN: {
 		Enums.CharacterGender.MALE: [
@@ -563,5 +596,3 @@ var profile_images = {
 		]
 	},
 }
-
-#endreigon

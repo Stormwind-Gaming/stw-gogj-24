@@ -1,35 +1,147 @@
 extends Node
 
+#|==============================|
+#|         Properties          |
+#|==============================|
+"""
+@brief Currently focused district
+"""
 var district_focused: District = null
+
+"""
+@brief List of currently open menu IDs
+"""
 var menus_open: Array[String] = []
 
+"""
+@brief POI associated with current radial menu
+"""
 var poi_for_radial: PointOfInterest
+
+"""
+@brief Currently open radial menu instance
+"""
 var radial_menu_open: RadialMenu
+
+"""
+@brief List of all districts in the game
+"""
 var districts: Array[District] = []
+
+"""
+@brief Calendar instance for tracking game time
+"""
 var calendar: Calendar
 
+"""
+@brief Maximum number of agents that can be assigned
+"""
 var max_agents: int = 2
 
+"""
+@brief List of actions for the current turn
+"""
+var actions: Array[Action] = []
+
+"""
+@brief Current turn number
+"""
+var turn_number: int = 0
+
+"""
+@brief Log of all turn outcomes
+"""
+var turn_logs: Array = []
+
+"""
+@brief Log entries for current turn
+"""
+var current_turn_log: Array = []
+
+#|==============================|
+#|          Signals            |
+#|==============================|
+"""
+@brief Emitted when a turn ends
+"""
 signal end_turn_initiated(num: int)
+
+"""
+@brief Emitted when turn processing is complete
+"""
 signal end_turn_complete(num: int)
+
+"""
+@brief Emitted when a district becomes focused
+"""
 signal district_just_focused(district: District)
+
+"""
+@brief Emitted when a new district is registered
+"""
 signal new_district_registered(district: District)
+
+"""
+@brief Emitted when an agent's status changes
+"""
 signal agent_changed(agent: Character)
+
+"""
+@brief Emitted when a new action is assigned
+"""
 signal new_assignment(option: Enums.ActionType, poi: PointOfInterest, agents: Array[Character])
 
+#|==============================|
+#|      Lifecycle Methods      |
+#|==============================|
+"""
+@brief Called when the node enters the scene tree
+"""
 func _ready() -> void:
 	calendar = Calendar.new()
 
-# List to store all actions for the current turn
-var actions: Array[Action] = []
-# Variable to track the current turn number
-var turn_number: int = 0
-# Multidimensional array to log the output of each turn
-var turn_logs: Array = []
-# Store current turn log
-var current_turn_log: Array = []
+#|==============================|
+#|      Getters & Setters      |
+#|==============================|
+"""
+@brief Gets the current resistance level
+@returns The current resistance level
+"""
+func get_resistance_level() -> int:
+	var level = 0
+	var characters = GlobalRegistry.get_all_objects(Enums.Registry_Category.CHARACTER)
+	for character in characters.values():
+		# TODO: Check this works
+		# level += character.char_sympathy
+		break
 
-# Method to add an action
+	return level / characters.size()
+
+"""
+@brief Gets the current heat level
+@returns The current heat level
+"""
+func get_heat_level() -> int:
+	# TODO: Implement this
+	return 0
+
+func get_turn_log(num: int) -> Array:
+	if turn_logs.size() < 1:
+		return []
+	return turn_logs[num]
+
+
+#|==============================|
+#|      Action Management      |
+#|==============================|
+"""
+@brief Adds a new action to the current turn
+
+@param poi The POI where the action takes place
+@param characters The agents performing the action
+@param action_type The type of action being performed
+@param additional_info Optional additional data for the action
+"""
 func add_action(poi: PointOfInterest, characters: Array[Character], action_type: Enums.ActionType, additional_info: Dictionary = {}) -> void:
 	# check if this character is already assigned to an action
 	for action in actions:
@@ -43,8 +155,28 @@ func add_action(poi: PointOfInterest, characters: Array[Character], action_type:
 	var new_action = Action.new(poi, characters, action_type, additional_info)
 	actions.append(new_action)
 
+"""
+@brief Removes an action from the current turn
 
-# Method to process a turn
+@param action The action to remove
+"""
+func remove_action(action: Action) -> void:
+	actions.erase(action)
+
+func remove_all_actions_for_character(character: Character) -> void:
+	for action in actions:
+		if character in action.characters:
+			remove_action(action)
+
+func remove_agent(character: Character) -> void:
+	character.unset_agent()
+
+#|==============================|
+#|      Turn Processing        |
+#|==============================|
+"""
+@brief Processes the current turn and advances game state
+"""
 func process_turn() -> void:
 	end_turn_initiated.emit(turn_number)  # Emit the end turn signal
 
@@ -68,9 +200,10 @@ func process_turn() -> void:
 				
 		# set all agents back to available
 		for agent in action.characters:
-			# do an assigned check here to futureproof agents getting set to other statuses during the action (e.g. captured / dead)
-			if agent.current_status == Enums.CharacterStatus.ASSIGNED:
-				agent.current_status = Enums.CharacterStatus.AVAILABLE
+			#TODO: do an assigned check here to futureproof agents getting set to other statuses during the action (e.g. captured / dead)
+
+			if agent.char_status == Enums.CharacterStatus.ASSIGNED:
+				agent.char_status = Enums.CharacterStatus.DEFAULT
 
 	# Store the logs for this turn
 	turn_logs.append(current_turn_log)
@@ -83,55 +216,36 @@ func process_turn() -> void:
 	# Emit the signal to end the turn
 	end_turn_complete.emit(turn_number)
 
-# Method to get the log for a specific turn
-func get_turn_log(turn: int) -> Array:
-	if turn < 1 or turn > turn_logs.size():
-		return []
-	return turn_logs[turn - 1]  # Return the log for the specified turn
-	
-func remove_action(action: Action) -> void:
-	# set all agents back to available
-	for agent in action.characters:
-		agent.current_status = Enums.CharacterStatus.AVAILABLE
+#|==============================|
+#|      District Management    |
+#|==============================|
+"""
+@brief Registers a new district in the game
 
-	# remove the action from the list
-	actions.erase(action)
-	agent_changed.emit(action.characters[0])
-
-func remove_all_actions_for_character(character: Character) -> void:
-	for action in actions:
-		if character in action.characters:
-			# remove character from action
-			action.characters.erase(character)
-			# set character back to available
-			character.current_status = Enums.CharacterStatus.AVAILABLE
-			# if no more characters in action, remove action
-			if action.characters.size() == 0:
-				actions.erase(action)
-	agent_changed.emit(character)
-
-#region District and PoIs
-
+@param district The district to register
+"""
 func register_district(district: District) -> void:
 	districts.append(district)
 	emit_signal("new_district_registered", district)
 
-func set_district_focused(district: District = null) -> void:
-	if district_focused == district:
-		return
+"""
+@brief Sets the currently focused district
+
+@param district The district to set as focused
+"""
+func set_district_focused(district: District) -> void:
 	district_focused = district
 	emit_signal("district_just_focused", district)
 
-func set_menu_open(menu_id: String) -> void:
-	if menus_open.has(menu_id):
-		return
-	menus_open.append(menu_id)
+#|==============================|
+#|      Menu Management        |
+#|==============================|
+"""
+@brief Opens a radial menu for a POI
 
-func set_menu_closed(menu_id: String) -> void:
-	if !menus_open.has(menu_id):
-		return
-	menus_open.erase(menu_id)
-
+@param radial_menu The menu instance to open
+@param poi The POI the menu is for
+"""
 func open_radial_menu(radial_menu: RadialMenu, poi: PointOfInterest) -> void:
 	if radial_menu_open:
 		return
@@ -179,39 +293,31 @@ func _on_post_radial_assignment_option_selected(option: Enums.ActionType, select
 	radial_menu_open.queue_free()
 	radial_menu_open = null
 
-#endregion
+"""
+@brief Sets the menu open state
 
-func get_resistance_level() -> int:
-	var population = GlobalRegistry.get_all_objects(Enums.Registry_Category.CHARACTER)
-	var keys = population.keys()
-	var resistance_level = 0
+@param id The ID of the menu to set as open
+"""
+func set_menu_open(id: String) -> void:
+	menus_open.append(id)
+	emit_signal("menu_opened", id)
 
-	for key in keys:
-		var character = population[key]
-		resistance_level += character.sympathy
+"""
+@brief Sets the menu closed state
 
-	return resistance_level / keys.size()
+@param id The ID of the menu to set as closed
+"""
+func set_menu_closed(id: String) -> void:
+	menus_open.erase(id)
 
-func get_heat_level() -> int:
-	if districts.size() == 0:
-		return 0
-	var heat = 0
-	for district in districts:
-		heat += district.heat
-	
-	return floor(heat / districts.size())
+#|==============================|
+#|      Action Processing      |
+#|==============================|
+"""
+@brief Processes an espionage action
 
-func add_agent(agent: Character) -> void:
-	agent_changed.emit(agent)
-
-func remove_agent(agent: Character) -> void:
-	agent_changed.emit(agent)
-
-func get_actions() -> Array[Action]:
-	return actions
-
-
-
+@param action The action to process
+"""
 func _espionage_action(action:Action) -> void:
 	var log_message = "Processing ESPIONAGE action at [u]" + str(action.poi.poi_name) + "[/u] by "
 
@@ -277,7 +383,6 @@ func _espionage_action(action:Action) -> void:
 		current_turn_log.append(log_message)
 
 	current_turn_log.append("\n")
-
 
 func _surveillance_action(action:Action) -> void:
 

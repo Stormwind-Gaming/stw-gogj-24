@@ -1,9 +1,28 @@
 extends AtlasTexture
 class_name RadialOption
 
+#|==============================|
+#|         Properties          |
+#|==============================|
+"""
+@brief The display name of this radial option
+"""
 @export var radial_option_name := ''
+
+"""
+@brief The type of action this option represents
+"""
 var action_type: Enums.ActionType
- 
+
+#|==============================|
+#|      Lifecycle Methods      |
+#|==============================|
+"""
+@brief Initializes a new RadialOption with the specified action type.
+Sets up the appropriate texture region and name based on the action type.
+
+@param type The type of action this option represents
+"""
 func _init(type: Enums.ActionType) -> void:
 	var atlas_path = "res://assets/sprites/radial_menu_icons.png"
 	var region = Rect2(0, 0, 64, 64)
