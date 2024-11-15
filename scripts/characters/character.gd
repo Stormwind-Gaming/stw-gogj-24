@@ -31,13 +31,13 @@ var char_smarts: int
 var char_sympathy: set = set_char_sympathy  # 1-99 how likely is this character to join the resistance?
 
 var char_recruitment_state: set = set_char_recruitment_state, get = get_char_recruitment_state
-var char_status: set = set_char_status, get = get_char_status
+var char_state: set = set_char_state, get = get_char_state
 
 #|==============================|
 #|           Signals             |
 #|==============================|
 signal char_recruitment_state_changed(value: Enums.CharacterRecruitmentState)
-signal char_status_changed(value: Enums.CharacterStatus)
+signal char_state_changed(value: Enums.CharacterState)
 
 #|==============================|
 #|        Lifecycle Methods      |
@@ -61,7 +61,7 @@ func _init(profile: Dictionary):
 
 	# Set default values
 	char_recruitment_state = Enums.CharacterRecruitmentState.NON_SYMPATHISER_UNKNOWN
-	char_status = Enums.CharacterStatus.DEFAULT
+	char_state = Enums.CharacterState.AVAILABLE
 
 	# Generate stats
 	char_charm = MathHelpers.generateBellCurveStat(Constants.CHARACTER_INIT_CHARM_MIN, Constants.CHARACTER_INIT_CHARM_MAX)
@@ -73,7 +73,8 @@ func _init(profile: Dictionary):
 	print('sympathy', char_sympathy)
 
 	# Register the character
-	id = GlobalRegistry.register_object(Enums.Registry_Category.CHARACTER, self, char_full_name + '_' + str(char_national_id_number))
+	GlobalRegistry.add_character(self)
+	# id = GlobalRegistry.register_object(Enums.Registry_Category.CHARACTER, self, char_full_name + '_' + str(char_national_id_number))
 
 #|==============================|
 #|        Helper Functions      |
@@ -98,7 +99,7 @@ Updates the character's knowledge, status, and role, and notifies the GameContro
 func set_agent() -> void:
 	# Set the character as an agent
 	self.char_recruitment_state = Enums.CharacterRecruitmentState.SYMPATHISER_RECRUITED
-	self.char_status = Enums.CharacterStatus.DEFAULT
+	self.char_state = Enums.CharacterState.AVAILABLE
 
 	# TODO: Game controller should listen to these signals and update accordingly
 	# Notify the GameController that this character is now an agent
@@ -132,7 +133,7 @@ Updates the character's role based on the sympathy value.
 func set_char_sympathy(sympathy: int) -> void:
 	if sympathy > 80:
 		# This character is sympathetic to the resistance
-		self.char_recruitment_state = Enums.CharacterRecruitmentState.SYMPATHISER_NOT_RECRUITED
+		char_recruitment_state = Enums.CharacterRecruitmentState.SYMPATHISER_NOT_RECRUITED
 
 	char_sympathy = sympathy
 
@@ -150,25 +151,25 @@ func get_char_recruitment_state() -> Enums.CharacterRecruitmentState:
 @param value The new knowledge status to set.
 """
 func set_char_recruitment_state(value: Enums.CharacterRecruitmentState) -> void:
-	# char_recruitment_state_changed.emit(value)
 	char_recruitment_state = value
+	char_recruitment_state_changed.emit(value)
 
 """
 @brief Retrieves the character's current status.
 
 @return The current status of the character.
 """
-func get_char_status() -> Enums.CharacterStatus:
-	return char_status
+func get_char_state() -> Enums.CharacterState:
+	return char_state
 
 """
 @brief Sets the character's status and emits a corresponding signal.
 
 @param value The new status to assign to the character.
 """
-func set_char_status(value: Enums.CharacterStatus) -> void:
-	char_status_changed.emit(value)
-	char_status = value
+func set_char_state(value: Enums.CharacterState) -> void:
+	char_state = value
+	char_state_changed.emit(value)
 
 """
 @brief Constructs the character's full name by combining first and last names.

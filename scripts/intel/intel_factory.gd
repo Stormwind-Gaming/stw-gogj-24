@@ -73,9 +73,7 @@ static func _get_random_character() -> Character:
 @returns A random PointOfInterest object
 """
 static func _get_random_poi() -> PointOfInterest:
-	var pois = GlobalRegistry.get_all_objects(Enums.Registry_Category.POI)
-	var pois_array = pois.values()
-	return pois_array[randi() % pois_array.size()]
+	return GlobalRegistry.pois.get_random_item()
 
 """
 @brief Retrieves a random non-sympathiser character from the global registry.

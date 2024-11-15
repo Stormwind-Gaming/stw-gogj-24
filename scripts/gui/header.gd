@@ -62,25 +62,16 @@ Updates the agent list in the sidebar.
 func _on_agents_changed(new_agent: Character = null) -> void:
 	# TODO: this works, and it reacts to agent_changed, but agent_changed isnt called if set directly on the character, only if set through the GameController, I'm not sure what pattern to follow here
 
-	# update the sidebar list of agents
-	# get all agents
-	var agents = []
-	for character_id in GlobalRegistry.get_all_objects(Enums.Registry_Category.CHARACTER):
-		var character = GlobalRegistry.get_object(Enums.Registry_Category.CHARACTER, character_id)
-
-		if character.char_recruitment_state == Enums.CharacterRecruitmentState.SYMPATHISER_RECRUITED:
-			agents.append(character)
-	
 	# clear the agents wrapper
 	for child in agents_wrapper.get_children():
 		child.queue_free()
-	
-	print(agents)
-	# add the agents to the wrapper
-	for agent in agents:
+
+	# get all recruited sympathisers
+	for character in GlobalRegistry.characters.get_list(GlobalRegistry.LIST_SYMPATHISER_RECRUITED):
 		var agent_instance = Globals.mini_agent_card_scene.instantiate()
-		agent_instance.set_character(agent.id)
+		agent_instance.set_character(character)
 		agents_wrapper.add_child(agent_instance)
+	
 
 """
 @brief Handles new agent assignments.

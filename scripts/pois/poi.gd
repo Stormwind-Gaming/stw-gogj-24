@@ -118,7 +118,7 @@ Initializes POI properties and connects signals.
 """
 func _ready() -> void:
 	parent_district = get_parent().get_parent()
-	GlobalRegistry.register_object(Enums.Registry_Category.POI, self)
+	GlobalRegistry.add_poi(self)
 	GameController.connect("district_just_focused", _on_district_just_focused)
 	
 	# Create the owner of the POI

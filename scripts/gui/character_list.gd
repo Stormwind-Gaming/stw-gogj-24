@@ -41,8 +41,7 @@ extends Window
 Fetches characters and populates the lists.
 """
 func _ready():
-	var characters = GlobalRegistry.get_all_objects(Enums.Registry_Category.CHARACTER)
-	populate_character_lists(characters)
+	populate_character_lists()
 	_recalculate_agent_count()
 
 #|==============================|
@@ -54,7 +53,8 @@ Sorts and distributes characters to appropriate lists based on their status.
 
 @param characters Dictionary of all characters to be distributed
 """
-func populate_character_lists(characters):
+func populate_character_lists():
+	print('populating character lists')
 	# Clear existing children in all containers
 	for child in all_character_list_container.get_children():
 		child.queue_free()
@@ -68,42 +68,39 @@ func populate_character_lists(characters):
 		child.queue_free()
 
 	var all_characters = []
+
+	for character in GlobalRegistry.characters.get_list(GlobalRegistry.LIST_MIA):
+		var mini_agent_card_scene = Globals.mini_agent_card_scene.instantiate()
+		mini_agent_card_scene.set_character(character)
+		mini_agent_card_scene.connect("character_card_pressed", _on_character_button_pressed)
+		mia_list_container.add_child(mini_agent_card_scene)
+
+	for character in GlobalRegistry.characters.get_list(GlobalRegistry.LIST_DECEASED):
+		var mini_agent_card_scene = Globals.mini_agent_card_scene.instantiate()
+		mini_agent_card_scene.set_character(character)
+		mini_agent_card_scene.connect("character_card_pressed", _on_character_button_pressed)
+		deceased_list_container.add_child(mini_agent_card_scene)
+
+	for character in GlobalRegistry.characters.get_list(GlobalRegistry.LIST_NON_SYMPATHISER_KNOWN):
+		all_characters.append(character)
+
+	for character in GlobalRegistry.characters.get_list(GlobalRegistry.LIST_NON_SYMPATHISER_UNKNOWN):
+		all_characters.append(character)
+
+	for character in GlobalRegistry.characters.get_list(GlobalRegistry.LIST_SYMPATHISER_RECRUITED):
+		var agent_card_scene = Globals.agent_card_scene.instantiate()
+		agent_card_scene.on_character_list_page()
+		agent_card_scene.set_character(character)
+		agent_card_scene.connect("character_card_pressed", _on_character_button_pressed)
+		agent_list_container.add_child(agent_card_scene)
+
+	for character in GlobalRegistry.characters.get_list(GlobalRegistry.LIST_SYMPATHISER_NOT_RECRUITED):
+		var mini_agent_card_scene = Globals.mini_agent_card_scene.instantiate()
+		mini_agent_card_scene.on_character_list_page()
+		mini_agent_card_scene.set_character(character)
+		mini_agent_card_scene.connect("character_card_pressed", _on_character_button_pressed)
+		sympathiser_list_container.add_child(mini_agent_card_scene)
 			
-	# Distribute characters to appropriate lists based on status
-	for name in characters.keys():
-		var character = characters[name]
-
-		match character.char_status:
-			Enums.CharacterStatus.MIA:
-				var mini_agent_card_scene = Globals.mini_agent_card_scene.instantiate()
-				mini_agent_card_scene.set_character(character.id)
-				mini_agent_card_scene.connect("character_card_pressed", _on_character_button_pressed)
-				mia_list_container.add_child(mini_agent_card_scene)
-				continue # break out as we dont want to add to any other list
-			Enums.CharacterStatus.DECEASED:
-				var mini_agent_card_scene = Globals.mini_agent_card_scene.instantiate()
-				mini_agent_card_scene.set_character(character.id)
-				mini_agent_card_scene.connect("character_card_pressed", _on_character_button_pressed)
-				deceased_list_container.add_child(mini_agent_card_scene)
-				continue # break out as we dont want to add to any other list
-
-		match character.char_recruitment_state:
-			Enums.CharacterRecruitmentState.SYMPATHISER_RECRUITED:
-				var agent_card_scene = Globals.agent_card_scene.instantiate()
-				agent_card_scene.on_character_list_page()
-				agent_card_scene.set_character(character.id)
-				agent_card_scene.connect("character_card_pressed", _on_character_button_pressed)
-				agent_list_container.add_child(agent_card_scene)
-			Enums.CharacterRecruitmentState.SYMPATHISER_NOT_RECRUITED:
-				var mini_agent_card_scene = Globals.mini_agent_card_scene.instantiate()
-				mini_agent_card_scene.on_character_list_page()
-				mini_agent_card_scene.set_character(character.id)
-				mini_agent_card_scene.connect("character_card_pressed", _on_character_button_pressed)
-				sympathiser_list_container.add_child(mini_agent_card_scene)
-			Enums.CharacterRecruitmentState.NON_SYMPATHISER_KNOWN:
-				all_characters.append(character)
-			Enums.CharacterRecruitmentState.NON_SYMPATHISER_UNKNOWN:
-				all_characters.append(character)
 
 	# Sort characters by known status
 	all_characters.sort_custom(func(a, b):
@@ -118,7 +115,7 @@ func populate_character_lists(characters):
 		var mini_agent_card_scene = Globals.mini_agent_card_scene.instantiate()
 		if character.char_recruitment_state == Enums.CharacterRecruitmentState.NON_SYMPATHISER_KNOWN:
 			mini_agent_card_scene.enable_popup_interaction()
-		mini_agent_card_scene.set_character(character.id)
+		mini_agent_card_scene.set_character(character)
 		all_character_list_container.add_child(mini_agent_card_scene)
 
 #|==============================|
@@ -135,19 +132,13 @@ func _on_character_button_pressed(character: Character) -> void:
 		GameController.unset_agent(character)
 	else:
 		# Check if we're at the agent limit
-		var agents = GlobalRegistry.get_all_objects(Enums.Registry_Category.CHARACTER)
-		var agent_count = 0
-		for name in agents.keys():
-			var agent = agents[name]
-			if agent.char_recruitment_state == Enums.CharacterRecruitmentState.SYMPATHISER_RECRUITED:
-				agent_count += 1
-		if agent_count >= GameController.max_agents:
+		if GlobalRegistry.characters.list_size(GlobalRegistry.LIST_SYMPATHISER_RECRUITED) >= GameController.max_agents:
 			return
 		else:
 			GameController.set_agent(character)
 
-	var characters = GlobalRegistry.get_all_objects(Enums.Registry_Category.CHARACTER)
-	populate_character_lists(characters)
+
+	populate_character_lists()
 	_recalculate_agent_count()
 
 """
@@ -164,10 +155,7 @@ func _on_close_button_pressed() -> void:
 @brief Recalculates and updates the agent count display.
 """
 func _recalculate_agent_count() -> void:
-	var agents = GlobalRegistry.get_all_objects(Enums.Registry_Category.CHARACTER)
-	var agent_count = 0
-	for id in agents.keys():
-		var agent = agents[id]
-		if agent.char_recruitment_state == Enums.CharacterRecruitmentState.SYMPATHISER_RECRUITED:
-			agent_count += 1
+
+	var agent_count = GlobalRegistry.characters.list_size(GlobalRegistry.LIST_SYMPATHISER_RECRUITED)
+	
 	agents_label.text = "Agents (" + str(agent_count) + "/" + str(GameController.max_agents) + ")"

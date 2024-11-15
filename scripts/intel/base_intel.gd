@@ -24,8 +24,7 @@ Registers the intel with the global registry and connects to turn end signal.
 func _init():
 	print('BaseIntel init')
 
-	# Register the object after setting properties
-	self.id = GlobalRegistry.register_object(Enums.Registry_Category.INTEL, self)
+	# self.id = GlobalRegistry.register_object(Enums.Registry_Category.INTEL, self)
 
 	# Listen to turn end
 	GameController.end_turn_complete.connect(_expire_intel)

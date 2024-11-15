@@ -10,5 +10,7 @@ class_name Plan
 Sets up initial values and registers with the global registry.
 """
 func _init():
-    super()
-    print('Plan init')
+	super()
+	print('Plan init')
+	# Register the object after setting properties
+	GlobalRegistry.intel.add_item(GlobalRegistry.LIST_RUMOURS, self)

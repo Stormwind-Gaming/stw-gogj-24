@@ -37,7 +37,7 @@ signal character_card_pressed(character: Character)
 Sets the initial status overlay based on the character's current status.
 """
 func _ready():
-	_set_status_overlay(character.char_status)
+	_set_state_overlay(character.char_state)
 
 #|==============================|
 #|    Getters and Setters       |
@@ -47,8 +47,8 @@ func _ready():
 
 @param character_id The unique identifier of the character to set.
 """
-func set_character(character_id: String):
-	character = GlobalRegistry.get_object(Enums.Registry_Category.CHARACTER, character_id)
+func set_character(my_character: Character):
+	character = my_character
 
 	_bind_character_signals(character)
 
@@ -108,7 +108,7 @@ func _on_popup_button_pressed() -> void:
 
 @param status The new status of the character.
 """
-func _on_character_status_changed(status: Enums.CharacterStatus) -> void:
+func _on_character_state_changed(status: Enums.CharacterState) -> void:
 	pass
 
 """
@@ -116,7 +116,7 @@ func _on_character_status_changed(status: Enums.CharacterStatus) -> void:
 
 @param knowledge The new knowledge level of the character.
 """
-func _on_charracter_recruitment_state_changedd(knowledge: Enums.CharacterRecruitmentState) -> void:
+func _on_charracter_recruitment_state_changed(knowledge: Enums.CharacterRecruitmentState) -> void:
 	pass
 
 #|==============================|
@@ -129,8 +129,8 @@ func _on_charracter_recruitment_state_changedd(knowledge: Enums.CharacterRecruit
 """
 func _bind_character_signals(character: Character) -> void:
 	# Connect to character signals
-	character.char_status_changed.connect(func(status: Enums.CharacterStatus): _on_character_status_changed(status))
-	character.char_recruitment_state_changed.connect(func(state: Enums.CharacterRecruitmentState): _on_charracter_recruitment_state_changedd(state))
+	character.char_state_changed.connect(func(status: Enums.CharacterState): _on_character_state_changed(status))
+	character.char_recruitment_state_changed.connect(func(state: Enums.CharacterRecruitmentState): _on_charracter_recruitment_state_changed(state))
 
 """
 @brief Assigns the character's data to the corresponding UI elements.
@@ -161,21 +161,21 @@ func _assign_character_ui(character: Character) -> void:
 	# sympathy_progress.value = character.char_sympathy
 
 """
-@brief Updates the status overlay based on the character's status.
+@brief Updates the state overlay based on the character's state.
 
-@param status The current status of the character.
+@param state The current state of the character.
 """
-func _set_status_overlay(status: Enums.CharacterStatus) -> void:
+func _set_state_overlay(status: Enums.CharacterState) -> void:
 	self.modulate = Color(1, 1, 1)
 
-	if status == Enums.CharacterStatus.DEFAULT:
+	if status == Enums.CharacterState.AVAILABLE:
 		status_overlay.visible = false
 		return
-	if status == Enums.CharacterStatus.DECEASED:
+	if status == Enums.CharacterState.DECEASED:
 		self.modulate = Color(0.5, 0.5, 0.5)
 		pass
 	
-	var status_texture = load('res://assets/character_status/' + Globals.get_character_status_string(status).to_lower() + '.png')
+	var status_texture = load('res://assets/character_status/' + Globals.get_character_state_string(status).to_lower() + '.png')
 	status_overlay.texture = status_texture
 	status_overlay.visible = true
 	pass

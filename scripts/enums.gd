@@ -32,17 +32,17 @@ enum CharacterProfession {
 @brief Knowledge states for characters
 """
 enum CharacterRecruitmentState {
-	SYMPATHISER_NOT_RECRUITED, # aka sympathiser
-	SYMPATHISER_RECRUITED, # aka sympathiser
-	NON_SYMPATHISER_UNKNOWN, # aka not sympathiser
-	NON_SYMPATHISER_KNOWN # aka not sympathiser
+	SYMPATHISER_NOT_RECRUITED,
+	SYMPATHISER_RECRUITED,
+	NON_SYMPATHISER_UNKNOWN,
+	NON_SYMPATHISER_KNOWN
 }
 
 """
 @brief Status options for characters
 """
-enum CharacterStatus { #TODO: CHANGE THIS TO CharacterState
-	DEFAULT, # aka available #TODO: CHANGE THIS TO AVAILABLE
+enum CharacterState { 
+	AVAILABLE, 
 	ASSIGNED,
 	MIA,
 	INCARCERATED,

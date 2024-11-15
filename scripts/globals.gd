@@ -445,17 +445,17 @@ func get_intel_effect_string(effects, bbcode_enabled: bool = false) -> String:
 		_:
 			return "Unknown"
 
-func get_character_status_string(status: Enums.CharacterStatus) -> String:
+func get_character_state_string(status: Enums.CharacterState) -> String:
 	match status:
-		Enums.CharacterStatus.DEFAULT:
+		Enums.CharacterState.AVAILABLE:
 			return "None"
-		Enums.CharacterStatus.ASSIGNED:
+		Enums.CharacterState.ASSIGNED:
 			return "Assigned"
-		Enums.CharacterStatus.MIA:
+		Enums.CharacterState.MIA:
 			return "MIA"
-		Enums.CharacterStatus.INCARCERATED:
+		Enums.CharacterState.INCARCERATED:
 			return "Incarcerated"
-		Enums.CharacterStatus.DECEASED:
+		Enums.CharacterState.DECEASED:
 			return "Deceased"
 		_:
 			return "Unknown"

@@ -74,6 +74,9 @@ func _init(properties: RumourProperties):
 	rumour_subject_duration = properties.rumour_subject_duration
 	rumour_subject_expiry = properties.rumour_subject_expiry
 
+	# Register the object after setting properties
+	GlobalRegistry.intel.add_item(GlobalRegistry.LIST_RUMOURS, self)
+
 func _get_rumour_text() -> String:
 	print('get_rumour_text')
 	var replacement_map = {

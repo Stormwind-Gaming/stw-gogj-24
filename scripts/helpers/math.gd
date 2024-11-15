@@ -64,7 +64,6 @@ static func generateLinearStat(min: int, max: int) -> int:
 @returns Random integer between min and max
 """
 static func generateBellCurveStat(min: int = 1, max: int = 10) -> int:
-	print("Generating bell curve stat between", min, "and", max)
 	var total = 0
 	for i in range(3):
 		total += randi() % 4 + 1  # Rolls a 4-sided die and adds the result to total

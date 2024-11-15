@@ -109,8 +109,8 @@ func _ready() -> void:
 """
 func get_resistance_level() -> int:
 	var level = 0
-	var characters = GlobalRegistry.get_all_objects(Enums.Registry_Category.CHARACTER)
-	for character in characters.values():
+	var characters = GlobalRegistry.characters.get_all_items()
+	for character in characters:
 		if character.char_sympathy:
 			level += character.char_sympathy
 

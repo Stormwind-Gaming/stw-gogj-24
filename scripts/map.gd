@@ -143,26 +143,22 @@ func _generate_population() -> void:
 	var dead = CharacterFactory.create_character()
 	var mia = CharacterFactory.create_character()
 
-	dead.char_status = Enums.CharacterStatus.DECEASED
-	mia.char_status = Enums.CharacterStatus.MIA
+	dead.char_state = Enums.CharacterState.DECEASED
+	mia.char_state = Enums.CharacterState.MIA
 
 """
 @brief Sets up initial agent characters with high sympathy
 """
 func _setup_agents() -> void:
-	var population = GlobalRegistry.get_all_objects(Enums.Registry_Category.CHARACTER)
-	var keys = population.keys()
+	var population = GlobalRegistry.characters.get_all_items()
+	var available_agents = population.duplicate()
 	
 	# Pick three random characters to be initial agents
-	var random_key1 = keys[randi() % keys.size()]
-	keys.erase(random_key1)
-	var random_key2 = keys[randi() % keys.size()]
-	keys.erase(random_key2)
-	var random_key3 = keys[randi() % keys.size()]
-
-	var agent1 = population[random_key1]
-	var agent2 = population[random_key2]
-	var agent3 = population[random_key3]
+	var agent1 = available_agents[randi() % available_agents.size()]
+	available_agents.erase(agent1)
+	var agent2 = available_agents[randi() % available_agents.size()]
+	available_agents.erase(agent2)
+	var agent3 = available_agents[randi() % available_agents.size()]
 	
 	agent1.char_sympathy = 80
 	GameController.set_agent(agent1)
