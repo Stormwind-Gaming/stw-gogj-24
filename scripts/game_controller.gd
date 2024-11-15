@@ -31,22 +31,12 @@ var calendar: Calendar
 """
 @brief Maximum number of agents that can be assigned
 """
-var max_agents: int = 2
+var max_agents: int = Constants.INIT_MAX_AGENTS
 
 """
 @brief Current turn number
 """
 var turn_number: int = 0
-
-"""
-@brief Log of all turn outcomes
-"""
-var turn_logs: Array = []
-
-"""
-@brief Log entries for current turn
-"""
-var current_turn_log: Array = []
 
 #|==============================|
 #|          Signals            |
@@ -61,10 +51,6 @@ signal district_just_focused(district: District)
 """
 signal new_district_registered(district: District)
 
-"""
-@brief Emitted when a new action is assigned
-"""
-signal new_assignment(option: Enums.ActionType, poi: PointOfInterest, agents: Array[Character])
 
 #|==============================|
 #|      Lifecycle Methods      |
@@ -99,14 +85,15 @@ func get_resistance_level() -> int:
 @returns The current heat level
 """
 func get_heat_level() -> int:
-	# TODO: Implement this
+	var level = 0
+	var districts = GlobalRegistry.districts.get_all_items()
+	for district in districts:
+		level += district.heat
 
-	return 0
+	if districts.size() == 0:
+		return 0
 
-func get_turn_log(num: int) -> Array:
-	if turn_logs.size() < 1:
-		return []
-	return turn_logs[num]
+	return level / districts.size()
 
 
 #|==============================|

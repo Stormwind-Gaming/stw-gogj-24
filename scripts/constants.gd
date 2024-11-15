@@ -2,6 +2,15 @@ extends Node
 
 class_name Constants
 
+
+#|==============================|
+#|    Game Settings  |
+#|==============================|
+"""
+@brief Initial maximum number of agents that can be recruited
+"""
+const INIT_MAX_AGENTS: int = 2
+
 #|==============================|
 #|    Character Initialization  |
 #|==============================|
