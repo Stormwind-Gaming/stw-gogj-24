@@ -101,20 +101,16 @@ func _ready():
 	task_title.text = "%s - %s" % [Globals.get_action_type_string(option), type] 
 
 	# populate the agents list
-	var agents = []
-	for character in GlobalRegistry.get_all_objects(Enums.Registry_Category.CHARACTER):
-		var character_instance = GlobalRegistry.get_object(Enums.Registry_Category.CHARACTER, character)
+	var agents: Array[Character] = []
+	var recruited_agents = GlobalRegistry.characters.get_list(GlobalRegistry.LIST_SYMPATHISER_RECRUITED)
+	for character in recruited_agents:
 
-
-		# TODO: Refactor this for the new character statuses
-
-		# if character_instance.recruited:
-		# 	if character_instance.current_status == Enums.CharacterStatus.AVAILABLE:
-		# 		# if the character is available, add them to the list
-		# 		agents.push_front(character)
-		# 	if character_instance.current_status == Enums.CharacterStatus.ASSIGNED:
-		# 		# if the character is assigned, put them to the bottom of the list
-		# 		agents.push_back(character)
+		if character.char_state == Enums.CharacterState.AVAILABLE:
+		# if the character is available, add them to the list
+			agents.push_front(character)
+		else:
+		# if the character is assigned, put them to the bottom of the list
+			agents.push_back(character)
 
 	for agent in agents:
 		var agent_instance = Globals.agent_card_scene.instantiate()
@@ -192,9 +188,9 @@ func _calculate_stats():
 	var subtlety = 0
 	var smarts = 0
 	for agent in selected_agents:
-		charm += agent.charm
-		subtlety += agent.subtlety
-		smarts += agent.smarts
+		charm += agent.char_charm
+		subtlety += agent.char_subtlety
+		smarts += agent.char_smarts
 	
 	charm_label.text = "Charm: %s" % str(charm)
 	

@@ -118,7 +118,7 @@ Initializes POI properties and connects signals.
 """
 func _ready() -> void:
 	parent_district = get_parent().get_parent()
-	GlobalRegistry.add_poi(self)
+	EventBus.poi_created.emit(self)
 	GameController.connect("district_just_focused", _on_district_just_focused)
 	
 	# Create the owner of the POI
@@ -240,7 +240,7 @@ func _on_poi_clicked(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 				Enums.ActionType.PROPAGANDA,
 			] as Array[Enums.ActionType]
 
-			if poi_owner.known == false:
+			if poi_owner.char_recruitment_state == Enums.CharacterRecruitmentState.NON_SYMPATHISER_UNKNOWN:
 				actions.append(Enums.ActionType.SURVEILLANCE)
 
 			if(_has_plan()):
@@ -284,8 +284,10 @@ func _derive_poi_bonus() -> Enums.POIBonusType:
 @returns True if there are plans for this POI
 """
 func _has_plan() -> bool:
-	var poi_plans = GlobalRegistry.get_all_objects(Enums.Registry_Category.INTEL).values().filter(
-			func(intel): return intel.level == Enums.IntelLevel.PLAN && intel.related_poi == self
-	)
-
-	return poi_plans.size() > 0
+	var plans = GlobalRegistry.intel.get_list(GlobalRegistry.LIST_PLANS)
+	var has_plan = false
+	for plan in plans:
+		if plan.related_poi == self:
+			has_plan = true
+			break
+	return has_plan

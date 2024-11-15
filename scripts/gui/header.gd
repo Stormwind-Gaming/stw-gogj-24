@@ -31,10 +31,13 @@ extends Control
 Connects signals and initializes UI elements.
 """
 func _ready():
-	GameController.connect("end_turn_complete", _update_gui)
+	# TODO: Is this district created? if so it should go in the eventbus following the same pattern as the other objects
 	GameController.connect("new_district_registered", _on_new_district_registered)
-	GameController.connect("agent_changed", _on_agents_changed)
-	GameController.connect("new_assignment", _on_new_assignment)
+
+	EventBus.end_turn_complete.connect(_update_gui)
+	EventBus.character_recruitment_state_changed.connect(_on_agents_changed)
+	EventBus.action_created.connect(_on_new_assignment)
+
 	resistance_bar.value = GameController.get_resistance_level()
 	heat_bar.value = GameController.get_heat_level()
 	date.text = GameController.calendar.get_date_string()
@@ -60,7 +63,6 @@ Updates the agent list in the sidebar.
 @param new_agent Optional parameter for the agent that changed
 """
 func _on_agents_changed(new_agent: Character = null) -> void:
-	# TODO: this works, and it reacts to agent_changed, but agent_changed isnt called if set directly on the character, only if set through the GameController, I'm not sure what pattern to follow here
 
 	# clear the agents wrapper
 	for child in agents_wrapper.get_children():
@@ -81,8 +83,8 @@ Updates the agent list to reflect new assignments.
 @param poi The point of interest for the assignment
 @param agents Array of agents involved in the assignment
 """
-func _on_new_assignment(option: Enums.ActionType, poi: PointOfInterest, agents: Array[Character]) -> void:
-	_on_agents_changed(agents[0])
+func _on_new_assignment(action: BaseAction) -> void:
+	_on_agents_changed(action.characters[0])
 
 #|==============================|
 #|      Helper Functions       |

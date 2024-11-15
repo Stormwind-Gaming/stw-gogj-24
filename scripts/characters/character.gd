@@ -34,12 +34,6 @@ var char_recruitment_state: set = set_char_recruitment_state, get = get_char_rec
 var char_state: set = set_char_state, get = get_char_state
 
 #|==============================|
-#|           Signals             |
-#|==============================|
-signal char_recruitment_state_changed(value: Enums.CharacterRecruitmentState)
-signal char_state_changed(value: Enums.CharacterState)
-
-#|==============================|
 #|        Lifecycle Methods      |
 #|==============================|
 """
@@ -70,11 +64,12 @@ func _init(profile: Dictionary):
 
 	# Generate sympathy
 	char_sympathy = MathHelpers.generateBellCurveStat(Constants.CHARACTER_INIT_SYMPATHY_MIN, Constants.CHARACTER_INIT_SYMPATHY_MAX)
-	print('sympathy', char_sympathy)
 
 	# Register the character
-	GlobalRegistry.add_character(self)
-	# id = GlobalRegistry.register_object(Enums.Registry_Category.CHARACTER, self, char_full_name + '_' + str(char_national_id_number))
+	EventBus.character_created.emit(self)
+
+func _ready():
+	print('character ready')
 
 #|==============================|
 #|        Helper Functions      |
@@ -91,35 +86,6 @@ func get_stats() -> Dictionary:
 		"smarts": "%02d" % [self.char_smarts] if char_recruitment_state != Enums.CharacterRecruitmentState.NON_SYMPATHISER_UNKNOWN else "??",
 	}
 
-"""
-@brief Sets the character as an agent within the game.
-
-Updates the character's knowledge, status, and role, and notifies the GameController.
-"""
-func set_agent() -> void:
-	# Set the character as an agent
-	self.char_recruitment_state = Enums.CharacterRecruitmentState.SYMPATHISER_RECRUITED
-	self.char_state = Enums.CharacterState.AVAILABLE
-
-	# TODO: Game controller should listen to these signals and update accordingly
-	# Notify the GameController that this character is now an agent
-	# GameController.set_agent(self)
-
-"""
-@brief Removes the character from being an agent.
-
-Updates the character's knowledge and notifies the GameController to remove all associated actions.
-"""
-func unset_agent() -> void:
-	# Unset the character as an agent
-	self.char_recruitment_state = Enums.CharacterRecruitmentState.SYMPATHISER_NOT_RECRUITED
-
-	# TODO: Game controller should listen to these signals and update accordingly
-	GameController.remove_all_actions_for_character(self)
-
-	# TODO: all this function does is run this same function again from the GameController
-	# Notify the GameController that this character is no longer an agent
-	# GameController.unset_agent(self)
 
 #|==============================|
 #|       Getters and Setters    |
@@ -152,7 +118,7 @@ func get_char_recruitment_state() -> Enums.CharacterRecruitmentState:
 """
 func set_char_recruitment_state(value: Enums.CharacterRecruitmentState) -> void:
 	char_recruitment_state = value
-	char_recruitment_state_changed.emit(value)
+	EventBus.character_recruitment_state_changed.emit(self)
 
 """
 @brief Retrieves the character's current status.
@@ -169,7 +135,7 @@ func get_char_state() -> Enums.CharacterState:
 """
 func set_char_state(value: Enums.CharacterState) -> void:
 	char_state = value
-	char_state_changed.emit(value)
+	EventBus.character_state_changed.emit(self)
 
 """
 @brief Constructs the character's full name by combining first and last names.

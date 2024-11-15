@@ -44,6 +44,7 @@ enum CharacterRecruitmentState {
 enum CharacterState { 
 	AVAILABLE, 
 	ASSIGNED,
+	ON_MISSION,
 	MIA,
 	INCARCERATED,
 	DECEASED

@@ -87,4 +87,5 @@ func _init(properties: PlanProperties):
 	expires_on_turn = GameController.turn_number + plan_expiry
 
 	# Register the object after setting properties
-	GlobalRegistry.intel.add_item(GlobalRegistry.LIST_PLANS, self)
+	EventBus.plan_created.emit(self)
+	

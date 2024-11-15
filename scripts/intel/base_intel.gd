@@ -27,7 +27,7 @@ func _init():
 	# self.id = GlobalRegistry.register_object(Enums.Registry_Category.INTEL, self)
 
 	# Listen to turn end
-	GameController.end_turn_complete.connect(_expire_intel)
+	EventBus.end_turn_complete.connect(_expire_intel)
 
 """
 @brief Called when the object is being deleted.

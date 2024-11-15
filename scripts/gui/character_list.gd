@@ -129,13 +129,13 @@ Manages character recruitment and agent status changes.
 """
 func _on_character_button_pressed(character: Character) -> void:
 	if character.char_recruitment_state == Enums.CharacterRecruitmentState.SYMPATHISER_RECRUITED:
-		GameController.unset_agent(character)
+		character.char_recruitment_state = Enums.CharacterRecruitmentState.SYMPATHISER_NOT_RECRUITED
 	else:
 		# Check if we're at the agent limit
 		if GlobalRegistry.characters.list_size(GlobalRegistry.LIST_SYMPATHISER_RECRUITED) >= GameController.max_agents:
 			return
 		else:
-			GameController.set_agent(character)
+			character.char_recruitment_state = Enums.CharacterRecruitmentState.SYMPATHISER_RECRUITED
 
 
 	populate_character_lists()

@@ -38,6 +38,7 @@ Sets the initial status overlay based on the character's current status.
 """
 func _ready():
 	_set_state_overlay(character.char_state)
+	_bind_character_signals()
 
 #|==============================|
 #|    Getters and Setters       |
@@ -49,8 +50,6 @@ func _ready():
 """
 func set_character(my_character: Character):
 	character = my_character
-
-	_bind_character_signals(character)
 
 	_assign_character_ui(character)
 
@@ -108,7 +107,9 @@ func _on_popup_button_pressed() -> void:
 
 @param status The new status of the character.
 """
-func _on_character_state_changed(status: Enums.CharacterState) -> void:
+func _on_character_state_changed(character: Character) -> void:
+	if character == self.character:
+		pass
 	pass
 
 """
@@ -116,7 +117,9 @@ func _on_character_state_changed(status: Enums.CharacterState) -> void:
 
 @param knowledge The new knowledge level of the character.
 """
-func _on_charracter_recruitment_state_changed(knowledge: Enums.CharacterRecruitmentState) -> void:
+func _on_character_recruitment_state_changed(character: Character) -> void:
+	if character == self.character:
+		pass
 	pass
 
 #|==============================|
@@ -127,10 +130,10 @@ func _on_charracter_recruitment_state_changed(knowledge: Enums.CharacterRecruitm
 
 @param character The Character instance whose signals are to be bound.
 """
-func _bind_character_signals(character: Character) -> void:
+func _bind_character_signals() -> void:
 	# Connect to character signals
-	character.char_state_changed.connect(func(status: Enums.CharacterState): _on_character_state_changed(status))
-	character.char_recruitment_state_changed.connect(func(state: Enums.CharacterRecruitmentState): _on_charracter_recruitment_state_changed(state))
+	EventBus.character_state_changed.connect(_on_character_state_changed)
+	EventBus.character_recruitment_state_changed.connect(_on_character_recruitment_state_changed)
 
 """
 @brief Assigns the character's data to the corresponding UI elements.
@@ -188,9 +191,9 @@ func _set_state_overlay(status: Enums.CharacterState) -> void:
 """
 func check_assignment_selection(poi: PointOfInterest, option: Enums.ActionType) -> void:
 	# Check this character's status
-	if character.current_status == Enums.CharacterStatus.ASSIGNED:
+	if character.char_state == Enums.CharacterState.ASSIGNED:
 		# If the character is assigned, check if they are assigned to this POI and action
-		var actions = GameController.actions
+		var actions = GlobalRegistry.actions.get_all_items()
 		for action in actions:
 			if action.characters.has(character) and action.poi == poi and action.action_type == option:
 				print('Character is already assigned to this action')

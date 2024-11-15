@@ -79,7 +79,7 @@ func _init(properties: RumourProperties):
 	expires_on_turn = GameController.turn_number + Constants.RUMOUR_EXPIRY_TURNS
 
 	# Register the object after setting properties
-	GlobalRegistry.intel.add_item(GlobalRegistry.LIST_RUMOURS, self)
+	EventBus.rumour_created.emit(self)
 
 func _get_rumour_text() -> String:
 	print('get_rumour_text')
@@ -87,7 +87,5 @@ func _get_rumour_text() -> String:
 		"character": rumour_subject_character.char_full_name if rumour_subject_character != null else "Unknown Character",
 		"poi": rumour_subject_poi.poi_name if rumour_subject_poi != null else "Unknown POI",
 	}
-
-	print(replacement_map)
 
 	return rumour_text.format(replacement_map)

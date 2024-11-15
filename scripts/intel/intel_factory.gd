@@ -81,17 +81,21 @@ static func _get_random_poi() -> PointOfInterest:
 @returns A random Character object that is not a sympathiser
 """
 static func _get_random_non_sympathiser_character() -> Character:
-	#TODO: this actually needs to be a random character from either LIST_NON_SYMPATHISER_KNOWN or LIST_NON_SYMPATHISER_UNKNOWN
-	return GlobalRegistry.characters.get_random_item_from_list(GlobalRegistry.LIST_NON_SYMPATHISER_KNOWN)
+	var known = GlobalRegistry.characters.get_list(GlobalRegistry.LIST_NON_SYMPATHISER_KNOWN)
+	var unknown = GlobalRegistry.characters.get_list(GlobalRegistry.LIST_NON_SYMPATHISER_UNKNOWN)
+	var all_non_sympathisers = known + unknown
+	return all_non_sympathisers[randi() % all_non_sympathisers.size()]
 
 """
-@brief Retrieves a random sympathiser character (currently returns null).
+@brief Retrieves a random sympathiser character from the global registry.
 
-@returns A null value (placeholder for future implementation)
+@returns A random Character object that is a sympathiser
 """
 static func _get_random_sympathiser_character() -> Character:
-	#TODO: this actually needs to be a random character from either LIST_SYMPATHISER_RECRUITED or LIST_SYMPATHISER_NOT_RECRUITED
-	return GlobalRegistry.characters.get_random_item_from_list(GlobalRegistry.LIST_SYMPATHISER_RECRUITED)
+	var recruited = GlobalRegistry.characters.get_list(GlobalRegistry.LIST_SYMPATHISER_RECRUITED)
+	var not_recruited = GlobalRegistry.characters.get_list(GlobalRegistry.LIST_SYMPATHISER_NOT_RECRUITED)
+	var all_sympathisers = recruited + not_recruited
+	return all_sympathisers[randi() % all_sympathisers.size()]
 
 """
 @brief Retrieves a random MIA character (currently returns null).

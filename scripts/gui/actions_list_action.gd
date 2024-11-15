@@ -29,7 +29,7 @@ extends MarginContainer
 """
 @brief The action this UI element represents
 """
-var action: Action
+var action: BaseAction
 
 #|==============================|
 #|          Signals            |
@@ -47,7 +47,7 @@ signal remove_action
 
 @param action_attr The action to display in this list item
 """
-func set_action(action_attr: Action) -> void:
+func set_action(action_attr: BaseAction) -> void:
 	self.action = action_attr
 	
 	# Determine if this is a plan or standalone action
@@ -66,7 +66,7 @@ func set_action(action_attr: Action) -> void:
 	# Create and add agent cards for each character in the action
 	for agent in action.characters:
 		var agent_card = Globals.mini_agent_card_scene.instantiate()
-		agent_card.set_character(agent.id)
+		agent_card.set_character(agent)
 		agents.add_child(agent_card)
 	
 	# Handle remove button state based on plan association
@@ -89,6 +89,7 @@ Removes the action from the game and emits the remove_action signal.
 """
 func _on_remove_button_pressed() -> void:
 	print("Remove button pressed")
-	GameController.remove_action(action)
-	emit_signal("remove_action", action)
+	# Remove the action and let it clean up
+	action.queue_free()
+	# Remove this UI element
 	queue_free()

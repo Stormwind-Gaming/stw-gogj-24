@@ -26,6 +26,8 @@ const LIST_MIA = "mia"
 const LIST_INCARCERATED = "incarcerated"
 const LIST_DECEASED = "deceased"
 const LIST_ALL_POIS = "all_pois"
+const LIST_ALL_DISTRICTS = "all_districts"
+const LIST_ALL_ACTIONS = "all_actions"
 const LIST_RUMOURS = "rumours"
 const LIST_PLANS = "plans"
 
@@ -52,6 +54,16 @@ var districts : Registry = Registry.new()
 """
 var intel : Registry = Registry.new()
 
+"""
+@brief Registry instance for managing action-related lists
+"""
+var actions : Registry = Registry.new()
+
+"""
+@brief Registry instance for managing turn-logs lists
+"""
+var turn_logs : Registry = Registry.new()
+
 #|==============================|
 #|      Initialization         |
 #|==============================|
@@ -72,11 +84,24 @@ func _init():
 	pois.create_list(LIST_ALL_POIS)
 
 	# Initialize district-related lists
-	districts.create_list("all_districts")
+	districts.create_list(LIST_ALL_DISTRICTS)
 
 	# Initialize intel-related lists
-	intel.create_list("rumours")
-	intel.create_list("plans")
+	intel.create_list(LIST_RUMOURS)
+	intel.create_list(LIST_PLANS)
+
+	# Initialize action-related lists
+	actions.create_list(LIST_ALL_ACTIONS)
+
+
+func _ready():
+	EventBus.character_created.connect(_on_character_created)
+	EventBus.character_state_changed.connect(_on_character_changed)
+	EventBus.character_recruitment_state_changed.connect(_on_character_changed)
+	EventBus.rumour_created.connect(_on_rumour_created)
+	EventBus.plan_created.connect(_on_plan_created)
+	EventBus.poi_created.connect(_on_poi_created)
+	EventBus.action_created.connect(_on_action_created)
 
 #|==============================|
 #|     Character Management    |
@@ -87,20 +112,11 @@ func _init():
 
 @param character The character to add to the registry
 """
-func add_character(character: Character) -> void:
+func _on_character_created(character: Character) -> void:
 	var target_list_name = _get_character_list(character)
 	print('adding character to list', target_list_name)
-	_bind_character_signals(character)
 	characters.add_item(target_list_name, character)
 
-"""
-@brief Connects signal handlers for character state changes
-
-@param character The character to bind signals for
-"""
-func _bind_character_signals(character: Character) -> void:
-	character.char_state_changed.connect(func(_value: int): _on_character_changed(character))
-	character.char_recruitment_state_changed.connect(func(_value: int): _on_character_changed(character))
 
 """
 @brief Handles character state change events by moving them to appropriate lists
@@ -108,9 +124,9 @@ func _bind_character_signals(character: Character) -> void:
 @param character The character whose state has changed
 """
 func _on_character_changed(character: Character) -> void:
-	print('character changed', character)
-	var target_list_name = _get_character_list(character)
-	characters.move_item(target_list_name, character)
+	if(characters.get_all_items().has(character)):
+		var target_list_name = _get_character_list(character)
+		characters.move_item(target_list_name, character)
 
 """
 @brief Determines which list a character should belong to based on their properties
@@ -119,7 +135,6 @@ func _on_character_changed(character: Character) -> void:
 @returns String The name of the list the character should be in
 """
 func _get_character_list(character: Character) -> String:
-
 	if character.char_state == Enums.CharacterState.DECEASED:
 		return LIST_DECEASED
 	if character.char_state == Enums.CharacterState.MIA:
@@ -149,5 +164,35 @@ func _get_character_list(character: Character) -> String:
 
 @param poi The POI to add to the registry
 """
-func add_poi(poi: PointOfInterest) -> void:
+func _on_poi_created(poi: PointOfInterest) -> void:
 	pois.add_item(LIST_ALL_POIS, poi)
+
+#|==============================|
+#|     Intel Management        |
+#|==============================|
+"""
+@brief Adds a rumour to the rumours list
+
+@param rumour The rumour to add to the registry
+"""
+func _on_rumour_created(rumour: Rumour) -> void:
+	intel.add_item(LIST_RUMOURS, rumour)
+
+"""
+@brief Adds a plan to the plans list
+
+@param plan The plan to add to the registry
+"""
+func _on_plan_created(plan: Plan) -> void:
+	intel.add_item(LIST_PLANS, plan)
+
+#|==============================|
+#|     Action Management      |
+#|==============================|
+"""
+@brief Adds an action to the actions list
+
+@param action The action to add to the registry
+"""
+func _on_action_created(action: BaseAction) -> void:
+	actions.add_item(LIST_ALL_ACTIONS, action)

@@ -21,6 +21,7 @@ Globals="*res://scripts/globals.gd"
 Enums="*res://scripts/enums.gd"
 GameController="*res://scripts/game_controller.gd"
 GlobalRegistry="*res://scripts/registry/global_registry.gd"
+EventBus="*res://scripts/event_bus.gd"
 
 [display]
 

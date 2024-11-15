@@ -126,8 +126,7 @@ func populate_rumour_list():
 			var description_label = intel_data["description_label"]
 
 			var check_button = CheckButton.new()
-			#TODO: implement rumour expiry
-			check_button.text = rumour.rumour_text + " (Expires in " + str((GameController.turn_number + 3) - GameController.turn_number) + " days)"
+			check_button.text = rumour.rumour_text + " (Expires in " + str(rumour.expires_on_turn - GameController.turn_number) + " days)"
 			check_button.set_button_group(button_group)
 			check_button.set_autowrap_mode(TextServer.AUTOWRAP_WORD_SMART)
 

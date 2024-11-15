@@ -42,7 +42,7 @@ func _generate_action_list() -> void:
 		child.queue_free()
 	
 	# for each action, create a new action card
-	for action in GameController.actions:
+	for action in GlobalRegistry.actions.get_list(GlobalRegistry.LIST_ALL_ACTIONS):
 		var actions_list_action = Globals.actions_list_action_scene.instantiate()
 		actions_list_action.set_action(action)
 		actions_list_action.connect("remove_action", _generate_action_list)

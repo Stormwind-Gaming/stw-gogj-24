@@ -35,6 +35,7 @@ func _ready() -> void:
 		_set_district_details(district)
 		GameController.register_district(district)
 
+	#TODO: Fix the race condition here
 	_setup_agents()
 	_generate_population()
 
@@ -151,17 +152,16 @@ func _generate_population() -> void:
 """
 func _setup_agents() -> void:
 	var population = GlobalRegistry.characters.get_all_items()
-	var available_agents = population.duplicate()
 	
 	# Pick three random characters to be initial agents
-	var agent1 = available_agents[randi() % available_agents.size()]
-	available_agents.erase(agent1)
-	var agent2 = available_agents[randi() % available_agents.size()]
-	available_agents.erase(agent2)
-	var agent3 = available_agents[randi() % available_agents.size()]
+	var agent1 = population[randi() % population.size()]
+	population.erase(agent1)
+	var agent2 = population[randi() % population.size()]
+	population.erase(agent2)
+	var agent3 = population[randi() % population.size()]
 	
 	agent1.char_sympathy = 80
-	GameController.set_agent(agent1)
+	agent1.char_recruitment_state = Enums.CharacterRecruitmentState.SYMPATHISER_RECRUITED
 	agent2.char_sympathy = 80
-	GameController.set_agent(agent2)
+	agent2.char_recruitment_state = Enums.CharacterRecruitmentState.SYMPATHISER_RECRUITED
 	agent3.char_sympathy = 90
