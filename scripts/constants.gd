@@ -4,7 +4,7 @@ class_name Constants
 
 
 #|==============================|
-#|    Game Settings  |
+#|    Game Initialization       |
 #|==============================|
 """
 @brief Initial maximum number of agents that can be recruited
@@ -61,3 +61,16 @@ const CHARACTER_INIT_SMARTS_MAX: int 			= 10
 @brief Number of turns to wait before a rumour expires
 """
 const RUMOUR_EXPIRY_TURNS: int = 3
+
+#|==============================|
+#|    District Initialization   |
+#|==============================|
+"""
+@brief Minimum initial heat value for new districts
+"""
+const DISTRICT_INIT_HEAT_MIN: int = 10
+
+"""
+@brief Maximum initial heat value for new districts
+"""
+const DISTRICT_INIT_HEAT_MAX: int = 30

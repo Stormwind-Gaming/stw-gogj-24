@@ -93,8 +93,8 @@ func _ready() -> void:
 	# emit district created signal
 	EventBus.district_created.emit(self)
 
-	# set heat random 20-80
-	heat = MathHelpers.generateBellCurveStat(10, 30)
+	# set heat random between min and max
+	heat = MathHelpers.generateBellCurveStat(Constants.DISTRICT_INIT_HEAT_MIN, Constants.DISTRICT_INIT_HEAT_MAX)
 
 	# set heat color alpha based on heat between 0 and 0.5
 	heat_color.a = heat / 200
