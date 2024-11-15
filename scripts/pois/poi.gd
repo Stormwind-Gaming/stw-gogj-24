@@ -287,7 +287,7 @@ func _has_plan() -> bool:
 	var plans = GlobalRegistry.intel.get_list(GlobalRegistry.LIST_PLANS)
 	var has_plan = false
 	for plan in plans:
-		if plan.related_poi == self:
+		if plan.plan_subject_poi == self:
 			has_plan = true
 			break
 	return has_plan
