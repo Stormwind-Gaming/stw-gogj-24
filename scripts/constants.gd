@@ -74,3 +74,41 @@ const DISTRICT_INIT_HEAT_MIN: int = 10
 @brief Maximum initial heat value for new districts
 """
 const DISTRICT_INIT_HEAT_MAX: int = 30
+
+#|==============================|
+#|    Action Effects   |
+#|==============================|
+"""
+@brief Amount of sympathy added to a character when an action is completed
+"""
+const ACTION_EFFECT_PROPAGANDA_SYMPATHY_MODIFIER: int = 20
+
+"""
+@brief Amount of sympathy added to a character when executing BUILD_SYMPATHY plans
+"""
+const ACTION_EFFECT_PLAN_BUILD_SYMPATHY_MODIFIER: int = 40
+
+"""
+@brief Amount of sympathy added to all characters in a district when executing BUILD_SYMPATHY_ALL plans
+"""
+const ACTION_EFFECT_PLAN_BUILD_SYMPATHY_ALL_MODIFIER: int = 10
+
+"""
+@brief Amount of heat reduced from a district when executing REDUCE_HEAT plans
+"""
+const ACTION_EFFECT_PLAN_REDUCE_HEAT_MODIFIER: int = 20
+
+"""
+@brief Amount of heat reduced from all districts when executing REDUCE_HEAT_ALL plans
+"""
+const ACTION_EFFECT_PLAN_REDUCE_HEAT_ALL_MODIFIER: int = 10
+
+"""
+@brief Percentage increase in difficulty when executing INCREASE_DIFFICULTY plans
+"""
+const ACTION_EFFECT_PLAN_INCREASE_DIFFICULTY_MODIFIER: int = 10
+
+"""
+@brief Percentage decrease in difficulty when executing REDUCE_DIFFICULTY plans
+"""
+const ACTION_EFFECT_PLAN_REDUCE_DIFFICULTY_MODIFIER: int = 10
