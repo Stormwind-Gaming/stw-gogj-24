@@ -24,11 +24,6 @@ var poi_for_radial: PointOfInterest
 var radial_menu_open: RadialMenu
 
 """
-@brief List of all districts in the game
-"""
-var districts: Array[District] = []
-
-"""
 @brief Calendar instance for tracking game time
 """
 var calendar: Calendar
@@ -191,14 +186,6 @@ func process_turn() -> void:
 #|==============================|
 #|      District Management    |
 #|==============================|
-"""
-@brief Registers a new district in the game
-
-@param district The district to register
-"""
-func register_district(district: District) -> void:
-	districts.append(district)
-	emit_signal("new_district_registered", district)
 
 """
 @brief Sets the currently focused district

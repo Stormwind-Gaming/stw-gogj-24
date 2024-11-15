@@ -64,3 +64,12 @@ signal plan_created(plan: Plan)
 @brief Emitted when a new POI is created
 """
 signal poi_created(poi: PointOfInterest)
+
+
+#|==============================|
+#|      District Management     |
+#|==============================|
+"""
+@brief Emitted when a new district is created
+"""
+signal district_created(district: District)

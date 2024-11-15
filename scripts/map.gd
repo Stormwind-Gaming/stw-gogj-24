@@ -14,11 +14,6 @@ var town_name = ""
 """
 @export var footer: Control
 
-"""
-@brief Array of districts in the map
-"""
-@export var districts: Array[District] = []
-
 #|==============================|
 #|      Lifecycle Methods      |
 #|==============================|
@@ -31,11 +26,9 @@ func _ready() -> void:
 	footer.connect("menu_opened", _clear_focus)
 	town_name = Globals.town_names[randi() % Globals.town_names.size()]
 
-	for district in districts:
+	for district in GlobalRegistry.districts.get_all_items():
 		_set_district_details(district)
-		GameController.register_district(district)
 
-	#TODO: Fix the race condition here
 	_setup_agents()
 	_generate_population()
 
@@ -114,7 +107,7 @@ func _on_district_unhovered(district: District) -> void:
 @param district The district being clicked
 """
 func _on_district_clicked(district: District) -> void:    
-	for d in districts:
+	for d in GlobalRegistry.districts.get_all_items():
 		d.remove_highlight_color()
 	
 	district.set_focus_color()

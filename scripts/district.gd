@@ -90,6 +90,9 @@ signal poi_unhovered
 Initializes district properties and sets up POIs.
 """
 func _ready() -> void:
+	# emit district created signal
+	EventBus.district_created.emit(self)
+
 	# set heat random 20-80
 	heat = MathHelpers.generateBellCurveStat(10, 30)
 

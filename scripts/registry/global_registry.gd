@@ -95,13 +95,23 @@ func _init():
 
 
 func _ready():
+	# Character events
 	EventBus.character_created.connect(_on_character_created)
 	EventBus.character_state_changed.connect(_on_character_changed)
 	EventBus.character_recruitment_state_changed.connect(_on_character_changed)
+
+	# Intel events
 	EventBus.rumour_created.connect(_on_rumour_created)
 	EventBus.plan_created.connect(_on_plan_created)
+
+	# POI events
 	EventBus.poi_created.connect(_on_poi_created)
+
+	# Action events
 	EventBus.action_created.connect(_on_action_created)
+
+	# District events
+	EventBus.district_created.connect(_on_district_created)	
 
 #|==============================|
 #|     Character Management    |
@@ -196,3 +206,14 @@ func _on_plan_created(plan: Plan) -> void:
 """
 func _on_action_created(action: BaseAction) -> void:
 	actions.add_item(LIST_ALL_ACTIONS, action)
+
+#|==============================|
+#|     District Management    |
+#|==============================|
+"""
+@brief Adds a district to the districts list
+
+@param district The district to add to the registry
+"""
+func _on_district_created(district: District) -> void:
+	districts.add_item(LIST_ALL_DISTRICTS, district)
