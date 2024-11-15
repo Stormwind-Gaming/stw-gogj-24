@@ -48,14 +48,39 @@ func _setup_calendar():
 #|==============================|
 """
 @brief Formats the current date as a string with the format "DD Month YYYY".
+Optionally offsets the date by the given number of days.
 
-@return A formatted string representation of the current date.
+@param days_offset Optional number of days to offset the date by (default: 0)
+@return A formatted string representation of the current/offset date.
 """
-func get_date_string() -> String:
+func get_date_string(days_offset: int = 0) -> String:
     if not initialised:
         _setup_calendar()
         initialised = true
-    return "%02d %s %04d" % [day, month_names[month - 1], year]
+        
+    var offset_day = day
+    var offset_month = month 
+    var offset_year = year
+    
+    # Apply the offset if non-zero
+    for i in range(days_offset):
+        offset_day += 1
+        
+        # Check if we need to increment month
+        var days_in_current_month = DAYS_IN_MONTHS[offset_month]
+        if offset_month == 2 and is_leap_year(offset_year):
+            days_in_current_month = 29
+            
+        if offset_day > days_in_current_month:
+            offset_day = 1
+            offset_month += 1
+            
+            # Check if we need to increment year
+            if offset_month > 12:
+                offset_month = 1
+                offset_year += 1
+                
+    return "%02d %s %04d" % [offset_day, month_names[offset_month - 1], offset_year]
 
 """
 @brief Generates a random birthdate for character creation.

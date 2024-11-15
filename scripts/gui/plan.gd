@@ -57,9 +57,9 @@ var has_mission_text: bool = false
 var type_effect_speed: float = 1.0
 
 """
-@brief The Intel object this plan represents
+@brief The Plan object this plan represents
 """
-var plan: Intel
+var plan: Plan
 
 #|==============================|
 #|          Signals            |
@@ -77,12 +77,12 @@ signal create_plan
 
 @param plan_arg The Intel object containing plan details
 """
-func set_existing_plan_card(plan_arg: Intel = null) -> void:
+func set_existing_plan_card(plan_arg: Plan = null) -> void:
 	plan = plan_arg
-	title_label.text = plan_arg.plan_name
-	timing_label.text = plan.plan_when
-	location_label.text = plan.plan_where
-	mission_label.text = plan.plan_who_what
+	title_label.text = plan.plan_name
+	timing_label.text = plan.plan_timing
+	location_label.text = plan.plan_subject_poi.poi_name
+	mission_label.text = plan.plan_text
 	green_star_stamp.visible = true
 
 """

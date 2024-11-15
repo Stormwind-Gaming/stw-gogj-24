@@ -81,11 +81,8 @@ static func _get_random_poi() -> PointOfInterest:
 @returns A random Character object that is not a sympathiser
 """
 static func _get_random_non_sympathiser_character() -> Character:
-	var characters = GlobalRegistry.get_all_objects(Enums.Registry_Category.CHARACTER)
-	var non_sympathisers = characters.values().filter(func(character): return character.char_recruitment_state == Enums.CharacterRecruitmentState.NON_SYMPATHISER_KNOWN or character.char_recruitment_state == Enums.CharacterRecruitmentState.NON_SYMPATHISER_UNKNOWN)
-	var random_non_sympathiser = non_sympathisers[randi() % non_sympathisers.size()]
-	print('get_random_non_sympathiser_character', random_non_sympathiser)
-	return random_non_sympathiser
+	#TODO: this actually needs to be a random character from either LIST_NON_SYMPATHISER_KNOWN or LIST_NON_SYMPATHISER_UNKNOWN
+	return GlobalRegistry.characters.get_random_item_from_list(GlobalRegistry.LIST_NON_SYMPATHISER_KNOWN)
 
 """
 @brief Retrieves a random sympathiser character (currently returns null).
@@ -93,7 +90,8 @@ static func _get_random_non_sympathiser_character() -> Character:
 @returns A null value (placeholder for future implementation)
 """
 static func _get_random_sympathiser_character() -> Character:
-	return null
+	#TODO: this actually needs to be a random character from either LIST_SYMPATHISER_RECRUITED or LIST_SYMPATHISER_NOT_RECRUITED
+	return GlobalRegistry.characters.get_random_item_from_list(GlobalRegistry.LIST_SYMPATHISER_RECRUITED)
 
 """
 @brief Retrieves a random MIA character (currently returns null).
@@ -101,7 +99,7 @@ static func _get_random_sympathiser_character() -> Character:
 @returns A null value (placeholder for future implementation)
 """
 static func _get_random_mia_character() -> Character:
-	return null
+	return GlobalRegistry.characters.get_random_item_from_list(GlobalRegistry.LIST_MIA)
 
 """
 @brief Retrieves a random incarcerated character (currently returns null).
@@ -109,7 +107,7 @@ static func _get_random_mia_character() -> Character:
 @returns A null value (placeholder for future implementation)
 """
 static func _get_random_incarcerated_character() -> Character:
-	return null
+	return GlobalRegistry.characters.get_random_item_from_list(GlobalRegistry.LIST_INCARCERATED)
 
 #|==============================|
 #|   Duration and Expiry Logic   |
@@ -166,6 +164,47 @@ static func _generate_rumour_type(config: RumourConfig) -> Enums.RumourType:
 @param rumours Array of rumours to combine
 @returns A new Plan object
 """
-static func combine_rumours(rumours: Array[Rumour]) -> Plan:
-	print('IntelFactory combine_rumours', rumours)
-	return Plan.new()
+static func formulate_plan(mission_rumour: Rumour, location_rumour: Rumour, time_rumour: Rumour) -> Plan:
+	print('IntelFactory formulate_plan')
+
+	var plan_properties = Plan.PlanProperties.new()
+
+	plan_properties.plan_name = "Operation " + str(randi() % 1000)
+	plan_properties.plan_text = mission_rumour.rumour_text + "\n\n" + location_rumour.rumour_text + "\n\n" + time_rumour.rumour_text
+	plan_properties.plan_duration = time_rumour.rumour_subject_duration
+	plan_properties.plan_expiry = time_rumour.rumour_subject_expiry
+	plan_properties.plan_subject_character = mission_rumour.rumour_subject_character
+	plan_properties.plan_subject_poi = location_rumour.rumour_subject_poi
+	plan_properties.plan_effect = mission_rumour.rumour_effect
+
+	# Create a new plan
+	var plan = Plan.new(plan_properties)
+
+	# Delete the rumours
+	mission_rumour.queue_free()
+	location_rumour.queue_free()
+	time_rumour.queue_free()
+	
+	# for rumour in rumours:
+	# 	match rumour.rumour_type:
+	# 		Enums.RumourType.MISSION:
+	# 			mission_rumour = rumour
+	# 		Enums.RumourType.LOCATION:
+	# 			location_rumour = rumour
+	# 		Enums.RumourType.TIME:
+	# 			time_rumour = rumour
+	
+	# # Validate we have all required rumours
+	# if !mission_rumour or !location_rumour or !time_rumour:
+	# 	push_error("Missing required rumours to formulate plan")
+	# 	return null
+	
+	# # Set plan properties based on rumours
+	# plan.plan_who_what = Globals.get_intel_effect_string(mission_rumour.rumour_effect, true)
+	# plan.plan_where = Globals.get_intel_effect_string(location_rumour.rumour_effect, true)
+	# plan.plan_when = Globals.get_intel_effect_string(time_rumour.rumour_effect, true)
+	
+	# # Set plan name (could be more sophisticated)
+	# plan.plan_name = "Operation " + str(randi() % 1000)
+	
+	return plan

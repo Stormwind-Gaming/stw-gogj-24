@@ -106,6 +106,23 @@ func get_random_item():
 	return selected_list[randi() % selected_list.size()]
 
 """
+@brief Retrieves a random item from the specified list.
+
+@param list_name The name of the list to get a random item from.
+@returns A random item from the list, or null if the list is empty or doesn't exist.
+"""
+func get_random_item_from_list(list_name: String):
+	if not _registry.has(list_name):
+		push_error("List '%s' does not exist" % list_name)
+		return null
+		
+	var list = _registry[list_name]
+	if list.is_empty():
+		return null
+		
+	return list[randi() % list.size()]
+
+"""
 @brief Retrieves all items from all lists.
 
 @returns An array containing all items from all lists.
@@ -203,19 +220,16 @@ func find_items_by_condition(list_name: String, condition: Callable) -> Array:
 #|==============================|
 
 """
-@brief Removes an item at the specified index from a list.
+@brief Removes the specified item from any list it is found in.
 
-@param list_name The name of the list to remove the item from.
-@param index The index of the item to remove.
+@param item The item to remove from the registry.
 """
-func remove_item(list_name: String, index: int) -> void:
-	if not _registry.has(list_name):
-		push_error("List '%s' does not exist" % list_name)
-		return
-	if index < 0 or index >= _registry[list_name].size():
-		push_error("Index out of bounds")
-		return
-	_registry[list_name].remove_at(index)
+func remove_item(item) -> void:
+	for list in _registry.values():
+		var index = list.find(item)
+		if index != -1:
+			list.remove_at(index)
+			return
 
 """
 @brief Removes an entire list from the registry.

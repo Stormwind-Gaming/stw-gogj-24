@@ -66,6 +66,8 @@ var rumour_subject_expiry: int
 func _init(properties: RumourProperties):
 	super()
 	print('Rumour init')
+
+	# Set properties
 	rumour_text = properties.rumour_text
 	rumour_type = properties.rumour_type
 	rumour_effect = properties.rumour_effect
@@ -73,6 +75,8 @@ func _init(properties: RumourProperties):
 	rumour_subject_poi = properties.rumour_subject_poi
 	rumour_subject_duration = properties.rumour_subject_duration
 	rumour_subject_expiry = properties.rumour_subject_expiry
+
+	expires_on_turn = GameController.turn_number + Constants.RUMOUR_EXPIRY_TURNS
 
 	# Register the object after setting properties
 	GlobalRegistry.intel.add_item(GlobalRegistry.LIST_RUMOURS, self)

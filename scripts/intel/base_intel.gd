@@ -1,4 +1,4 @@
-extends Object
+extends Node2D
 class_name BaseIntel
 
 #|==============================|
@@ -37,7 +37,7 @@ Unregisters the intel from the global registry.
 """
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE:
-		GlobalRegistry.unregister_object(Enums.Registry_Category.INTEL, self.id)
+		GlobalRegistry.intel.remove_item(self)
 
 #|==============================|
 #|      Event Handlers         |

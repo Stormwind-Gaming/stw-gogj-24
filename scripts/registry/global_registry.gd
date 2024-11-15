@@ -23,6 +23,7 @@ const LIST_SYMPATHISER_RECRUITED = "sympathiser_recruited"
 const LIST_NON_SYMPATHISER_UNKNOWN = "non_sympathiser_unknown"
 const LIST_NON_SYMPATHISER_KNOWN = "non_sympathiser_known"
 const LIST_MIA = "mia"
+const LIST_INCARCERATED = "incarcerated"
 const LIST_DECEASED = "deceased"
 const LIST_ALL_POIS = "all_pois"
 const LIST_RUMOURS = "rumours"
@@ -66,7 +67,7 @@ func _init():
 	characters.create_list(LIST_NON_SYMPATHISER_KNOWN)
 	characters.create_list(LIST_DECEASED)
 	characters.create_list(LIST_MIA)
-
+	characters.create_list(LIST_INCARCERATED)
 	# Initialize POI-related lists
 	pois.create_list(LIST_ALL_POIS)
 
@@ -123,6 +124,8 @@ func _get_character_list(character: Character) -> String:
 		return LIST_DECEASED
 	if character.char_state == Enums.CharacterState.MIA:
 		return LIST_MIA
+	if character.char_state == Enums.CharacterState.INCARCERATED:
+		return LIST_INCARCERATED
 
 	match character.char_recruitment_state:
 		Enums.CharacterRecruitmentState.SYMPATHISER_NOT_RECRUITED:

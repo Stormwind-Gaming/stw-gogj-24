@@ -336,8 +336,7 @@ func get_action_type_string(action_type: Enums.ActionType) -> String:
 		_:
 			return "Unknown"
 
-func get_intel_effect_string(effects, bbcode_enabled: bool = false) -> String:
-	var effect = effects[0]
+func get_intel_effect_string(effect, bbcode_enabled: bool = false) -> String:
 
 	match effect:
 		Enums.IntelEffect.ADD_AGENT_SLOT:

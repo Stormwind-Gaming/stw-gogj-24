@@ -60,9 +60,9 @@ var plan_scene: PanelContainer
 @brief Dictionary to store selected intel for each type
 """
 var selected_intel = {
-	Enums.IntelType.WHOWHAT: null,
-	Enums.IntelType.WHERE: null,
-	Enums.IntelType.WHEN: null
+	Enums.RumourType.MISSION: null,
+	Enums.RumourType.LOCATION: null,
+	Enums.RumourType.TIME: null
 }
 
 #|==============================|
@@ -76,10 +76,8 @@ func _ready():
 	# Connect the tab change signal
 	tab_container.tab_changed.connect(_on_tab_changed)
 	
-	# Fetch intel from the GlobalRegistry and populate the list
-	var intel = GlobalRegistry.get_all_objects(Enums.Registry_Category.INTEL)
-	populate_intel_list(intel)
-	populate_plan_list(intel)
+	populate_rumour_list()
+	populate_plan_list()
 
 	# create a new plan
 	var new_plan_scene = Globals.plan_scene.instantiate()
@@ -106,21 +104,21 @@ func clear_container(container):
 
 @param intel Dictionary of intel items to display
 """
-func populate_intel_list(intel):
+func populate_rumour_list():
 	# Clear any existing controls in the containers
 	clear_container(whowhat_btn_grp_container)
 	clear_container(where_btn_grp_container)
 	clear_container(when_btn_grp_container)
 	
 	var intel_type_to_container = {
-		Enums.IntelType.WHOWHAT: { "container": whowhat_btn_grp_container, "button_group": ButtonGroup.new(), "description_label": whowhat_description },
-		Enums.IntelType.WHERE: { "container": where_btn_grp_container, "button_group": ButtonGroup.new(), "description_label": where_description },
-		Enums.IntelType.WHEN: { "container": when_btn_grp_container, "button_group": ButtonGroup.new(), "description_label": when_description }
+		Enums.RumourType.MISSION: { "container": whowhat_btn_grp_container, "button_group": ButtonGroup.new(), "description_label": whowhat_description },
+		Enums.RumourType.LOCATION: { "container": where_btn_grp_container, "button_group": ButtonGroup.new(), "description_label": where_description },
+		Enums.RumourType.TIME: { "container": when_btn_grp_container, "button_group": ButtonGroup.new(), "description_label": when_description }
 	}
 
-	for name in intel.keys():
-		var intel_node = intel[name]
-		var intel_data = intel_type_to_container.get(intel_node.type)
+	var rumours = GlobalRegistry.intel.get_list(GlobalRegistry.LIST_RUMOURS)
+	for rumour in rumours:
+		var intel_data = intel_type_to_container.get(rumour.rumour_type)
 
 		if intel_data and intel_data["container"]:
 			var container = intel_data["container"]
@@ -128,31 +126,35 @@ func populate_intel_list(intel):
 			var description_label = intel_data["description_label"]
 
 			var check_button = CheckButton.new()
-			check_button.text = intel_node.description + " (Expires in " + str(intel_node.expires_on_turn - GameController.turn_number) + " days)"
+			#TODO: implement rumour expiry
+			check_button.text = rumour.rumour_text + " (Expires in " + str((GameController.turn_number + 3) - GameController.turn_number) + " days)"
 			check_button.set_button_group(button_group)
 			check_button.set_autowrap_mode(TextServer.AUTOWRAP_WORD_SMART)
 
+			# Store reference to rumour object
+			check_button.set_meta("rumour", rumour)
+
 			# Use a lambda to update selected intel and toggle button visibility
-			check_button.toggled.connect(func(pressed, intel_type=intel_node.type, node=intel_node):
+			check_button.toggled.connect(func(pressed, intel_type=rumour.rumour_type, rumour_ref=rumour):
 				if pressed:
-					selected_intel[intel_type] = node
+					selected_intel[intel_type] = rumour_ref
 					match intel_type:
-						Enums.IntelType.WHOWHAT:
-							plan_scene.set_mission_text(Globals.get_intel_effect_string(node.effect, true))
-						Enums.IntelType.WHERE:
-							plan_scene.set_location_text(Globals.get_intel_effect_string(node.effect, true))
-						Enums.IntelType.WHEN:
-							plan_scene.set_time_text(Globals.get_intel_effect_string(node.effect, true))
+						Enums.RumourType.MISSION:
+							plan_scene.set_mission_text(Globals.get_intel_effect_string(rumour_ref.rumour_effect, true))
+						Enums.RumourType.LOCATION:
+							plan_scene.set_location_text(Globals.get_intel_effect_string(rumour_ref.rumour_effect, true))
+						Enums.RumourType.TIME:
+							plan_scene.set_time_text(Globals.get_intel_effect_string(rumour_ref.rumour_effect, true))
 						_:
 							pass
 				else:
 					selected_intel[intel_type] = null
 					match intel_type:
-						Enums.IntelType.WHOWHAT:
+						Enums.RumourType.MISSION:
 							plan_scene.set_mission_text('')
-						Enums.IntelType.WHERE:
+						Enums.RumourType.LOCATION:
 							plan_scene.set_location_text('')
-						Enums.IntelType.WHEN:
+						Enums.RumourType.TIME:
 							plan_scene.set_time_text('')
 						_:
 							pass
@@ -161,18 +163,15 @@ func populate_intel_list(intel):
 
 			container.add_child(check_button)
 		else:
-			print("Error: Container not found or intel_data is invalid for:", name, "with type:", intel_node.type)
+			print("Error: Container not found or intel_data is invalid for:", name, "with type:", rumour.type)
 
 """
 @brief Populates the plan list with existing plans.
 
 @param intel Dictionary of intel items to filter for plans
 """
-func populate_plan_list(intel):
-	var plans = []
-	for i in intel:
-		if intel[i].level == Enums.IntelLevel.PLAN:
-			plans.append(intel[i])
+func populate_plan_list():
+	var plans = GlobalRegistry.intel.get_list(GlobalRegistry.LIST_PLANS)
 
 	# Clear any existing elements in the plan_list_container
 	clear_container(plan_list_container)
@@ -190,7 +189,7 @@ func populate_plan_list(intel):
 """
 func _check_create_plan_visibility():
 	# Check if all intel types have a selected intel node
-	if selected_intel[Enums.IntelType.WHOWHAT] and selected_intel[Enums.IntelType.WHERE] and selected_intel[Enums.IntelType.WHEN]:
+	if selected_intel[Enums.RumourType.MISSION] and selected_intel[Enums.RumourType.LOCATION] and selected_intel[Enums.RumourType.TIME]:
 		plan_scene.toggle_enabled_button(true)
 	else:
 		plan_scene.toggle_enabled_button(false)
@@ -200,9 +199,9 @@ func _check_create_plan_visibility():
 """
 func _reset():
 	selected_intel = {
-		Enums.IntelType.WHOWHAT: null,
-		Enums.IntelType.WHERE: null,
-		Enums.IntelType.WHEN: null
+		Enums.RumourType.MISSION: null,
+		Enums.RumourType.LOCATION: null,
+		Enums.RumourType.TIME: null
 	}
 	
 	plan_scene.set_mission_text('')
@@ -221,13 +220,13 @@ Creates a new plan from selected intel pieces.
 func _on_create_plan_btn_pressed():
 	# Ensure all required intel are selected
 	var required_intel = [
-		selected_intel[Enums.IntelType.WHOWHAT],
-		selected_intel[Enums.IntelType.WHERE],
-		selected_intel[Enums.IntelType.WHEN]
+		selected_intel[Enums.RumourType.MISSION],
+		selected_intel[Enums.RumourType.LOCATION],
+		selected_intel[Enums.RumourType.TIME]
 	]
 	
 	# Call IntelFactory.combine_rumours with the selected intel nodes
-	var plan = IntelFactory.combine_rumours(required_intel)
+	IntelFactory.formulate_plan(required_intel[0], required_intel[1], required_intel[2])
 	
 	# Switch to the 'Plans' tab
 	tab_container.current_tab = 1
@@ -241,9 +240,8 @@ Refreshes the intel and plan lists.
 func _on_tab_changed(tab_index):
 	# Re-run both populate_plan_list and populate_intel_list when the tab changes
 	_reset()
-	var intel = GlobalRegistry.get_all_objects(Enums.Registry_Category.INTEL)
-	populate_intel_list(intel)
-	populate_plan_list(intel)
+	populate_rumour_list()
+	populate_plan_list()
 
 """
 @brief Handles the close button press.

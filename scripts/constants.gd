@@ -45,3 +45,10 @@ const CHARACTER_INIT_SMARTS_MIN: int 			= 1
 """
 const CHARACTER_INIT_SMARTS_MAX: int 			= 10
 
+#|==============================|
+#|    Rumour Initialization    |
+#|==============================|
+"""
+@brief Number of turns to wait before a rumour expires
+"""
+const RUMOUR_EXPIRY_TURNS: int = 3
