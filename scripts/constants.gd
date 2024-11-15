@@ -79,6 +79,11 @@ const DISTRICT_INIT_HEAT_MAX: int = 30
 #|    Action Effects   |
 #|==============================|
 """
+@brief Amount of heat added to a district when an action fails
+"""
+const ACTION_EFFECT_FAILED_SUBTLETY: int = 10
+
+"""
 @brief Amount of sympathy added to a character when an action is completed
 """
 const ACTION_EFFECT_PROPAGANDA_SYMPATHY_MODIFIER: int = 20

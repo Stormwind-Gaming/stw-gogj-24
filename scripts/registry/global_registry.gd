@@ -80,6 +80,7 @@ func _init():
 	characters.create_list(LIST_DECEASED)
 	characters.create_list(LIST_MIA)
 	characters.create_list(LIST_INCARCERATED)
+
 	# Initialize POI-related lists
 	pois.create_list(LIST_ALL_POIS)
 

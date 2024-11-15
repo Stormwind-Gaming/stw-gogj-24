@@ -77,9 +77,10 @@ func _init(config: ActionFactory.ActionConfig):
 """
 func _on_turn_processing_initiated(num:int) -> void:
 	in_flight = true
+	var danger_logs = _process_danger()
 	var action_logs = _process_action()
 
-	for step in action_logs:
+	for step in danger_logs + action_logs:
 		GlobalRegistry.turn_logs.add_item(str(GameController.turn_number), step)
 
 
@@ -118,6 +119,58 @@ func _notification(what: int) -> void:
 #|==============================|
 #|      Action Processing      |
 #|==============================|
+
+"""
+@brief Processes the danger of an action
+"""
+func _process_danger() -> Array[String]:
+
+	var logs: Array[String] = []
+
+	# First figure out the heat of the district
+	var district_heat: int = poi.parent_district.heat
+	var stats: Dictionary = _get_stats()
+
+	logs.append("Processing danger for action at [u]" + str(poi.poi_name) + "[/u] in district with heat " + str(district_heat))
+
+	var subtle_roll = MathHelpers.bounded_sigmoid_check(stats["subtlety"], true)
+
+	var log_message: String = ""
+		
+	if(subtle_roll.success):
+		log_message = "Succeeded subtlety check..."
+		logs.append(log_message)
+
+	else:
+		log_message = "Failed subtlety check... heat increased by " + str(Constants.ACTION_EFFECT_FAILED_SUBTLETY)
+		poi.parent_district.heat += Constants.ACTION_EFFECT_FAILED_SUBTLETY
+		logs.append(log_message)
+
+		#TODO: Add effect of failure (roll on danger table based on district heat)
+
+	return logs
+
+#|==============================|
+#|      Helper Methods         |
+#|==============================|
+
+"""
+@brief Gets the combined stats of all characters involved in the action
+"""
+func _get_stats() -> Dictionary:
+	var stats: Dictionary = {
+		"subtlety": 0,
+		"smarts": 0,
+		"charm": 0
+	}
+
+	for character in characters:
+		stats["subtlety"] += character.char_subtlety
+		stats["smarts"] += character.char_smarts
+		stats["charm"] += character.char_charm
+
+	return stats
+
 # """
 # @brief Processes an espionage action
 
