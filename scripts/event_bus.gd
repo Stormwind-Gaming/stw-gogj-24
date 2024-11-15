@@ -73,3 +73,8 @@ signal poi_created(poi: PointOfInterest)
 @brief Emitted when a new district is created
 """
 signal district_created(district: District)
+
+"""
+@brief Emitted when a district's heat level changes
+"""
+signal district_heat_changed(district: District, heat: float)

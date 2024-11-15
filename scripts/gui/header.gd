@@ -42,7 +42,7 @@ func _ready():
 	heat_bar.value = GameController.get_heat_level()
 	date.text = GameController.calendar.get_date_string()
 
-	_update_gui()
+	_update_gui(0)
 
 #|==============================|
 #|      Event Handlers         |
@@ -54,7 +54,7 @@ Updates the GUI to reflect new game state.
 @param district The newly registered district
 """
 func _on_new_district_registered(district: District) -> void:
-	_update_gui()
+	_update_gui(0)
 
 """
 @brief Handles changes to agent status.
@@ -62,8 +62,10 @@ Updates the agent list in the sidebar.
 
 @param new_agent Optional parameter for the agent that changed
 """
-func _on_agents_changed(new_agent: Character = null) -> void:
+func _on_agents_changed(new_agent: Character) -> void:
+	_update_agents_gui()
 
+func _update_agents_gui() -> void:
 	# clear the agents wrapper
 	for child in agents_wrapper.get_children():
 		child.queue_free()
@@ -84,7 +86,7 @@ Updates the agent list to reflect new assignments.
 @param agents Array of agents involved in the assignment
 """
 func _on_new_assignment(action: BaseAction) -> void:
-	_on_agents_changed(action.characters[0])
+	_update_agents_gui()
 
 #|==============================|
 #|      Helper Functions       |
@@ -94,8 +96,8 @@ func _on_new_assignment(action: BaseAction) -> void:
 
 @param number Optional parameter for turn number
 """
-func _update_gui(number: int = 0) -> void:
+func _update_gui(number: int) -> void:
 	date.text = GameController.calendar.get_date_string()
 	resistance_bar.value = GameController.get_resistance_level()
 	heat_bar.value = GameController.get_heat_level()
-	_on_agents_changed()
+	_update_agents_gui()

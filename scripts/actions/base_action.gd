@@ -143,7 +143,7 @@ func _process_danger() -> Array[String]:
 
 	else:
 		log_message = "Failed subtlety check... heat increased by " + str(Constants.ACTION_EFFECT_FAILED_SUBTLETY)
-		poi.parent_district.heat += Constants.ACTION_EFFECT_FAILED_SUBTLETY
+		EventBus.district_heat_changed.emit(poi.parent_district, Constants.ACTION_EFFECT_FAILED_SUBTLETY)
 		logs.append(log_message)
 
 		#TODO: Add effect of failure (roll on danger table based on district heat)

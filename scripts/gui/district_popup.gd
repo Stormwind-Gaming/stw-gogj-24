@@ -12,6 +12,7 @@ extends Window
 @brief RichTextLabel that displays the district details
 """
 @export var text_label: RichTextLabel
+@export var heat_label: RichTextLabel 
 
 #|==============================|
 #|      Setters & Getters      |
@@ -22,6 +23,10 @@ extends Window
 @param title The title to display at the top of the popup
 @param text The main text content to display in the popup body
 """
-func set_details(title: String, text: String) -> void:
+func set_initial_details(title: String, text: String, heat: float) -> void:
 	title_label.text = title
 	text_label.text = text
+	heat_label.text = ("Heat: %s" % [str(round(heat))]) + "%"
+
+func set_heat(heat: float) -> void:
+	heat_label.text = ("Heat: %s" % [str(round(heat))]) + "%"

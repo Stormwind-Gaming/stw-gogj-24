@@ -15,7 +15,7 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[node name="DistrictPopup" type="Window" node_paths=PackedStringArray("title_label", "text_label")]
+[node name="DistrictPopup" type="Window" node_paths=PackedStringArray("title_label", "text_label", "heat_label")]
 auto_translate_mode = 1
 transparent_bg = true
 size = Vector2i(200, 200)
@@ -27,6 +27,7 @@ theme = ExtResource("1_6nfkl")
 script = ExtResource("1_li8rk")
 title_label = NodePath("PanelContainer/MarginContainer/VBoxContainer/Label")
 text_label = NodePath("PanelContainer/MarginContainer/VBoxContainer/RichTextLabel")
+heat_label = NodePath("PanelContainer/MarginContainer/VBoxContainer/RichTextLabel2")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 anchors_preset = 15
@@ -61,6 +62,13 @@ layout_mode = 2
 [node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 13
+bbcode_enabled = true
+text = "<text> <text> <text> <text> <text>"
+fit_content = true
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "<text> <text> <text> <text> <text>"
 fit_content = true

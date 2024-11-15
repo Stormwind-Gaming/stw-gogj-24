@@ -104,7 +104,6 @@ func _ready():
 	var agents: Array[Character] = []
 	var recruited_agents = GlobalRegistry.characters.get_list(GlobalRegistry.LIST_SYMPATHISER_RECRUITED)
 	for character in recruited_agents:
-
 		if character.char_state == Enums.CharacterState.AVAILABLE:
 		# if the character is available, add them to the list
 			agents.push_front(character)
@@ -122,6 +121,8 @@ func _ready():
 	# set max agents to 1 or 2
 	max_agents = 1 # randi() % 2 + 1
 	asigned_label.text = 'Assigned Agents (0/%s):' % max_agents
+
+	continue_button.disabled = true
 
 #|==============================|
 #|      Event Handlers         |
