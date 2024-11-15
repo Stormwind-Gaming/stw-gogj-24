@@ -4,6 +4,11 @@ extends Node
 #|         Properties          |
 #|==============================|
 """
+@brief Name of the town this map represents
+"""
+var town_name: String = ""
+
+"""
 @brief Currently focused district
 """
 var district_focused: District = null
@@ -64,6 +69,22 @@ func _ready() -> void:
 #|==============================|
 #|      Getters & Setters      |
 #|==============================|
+
+"""
+@breif Sets the town name
+
+@param name The name of the town
+"""
+func set_town_name(name: String) -> void:
+	town_name = name
+
+"""
+@brief Gets the town name
+@returns The name of the town
+"""
+func get_town_name() -> String:
+	return town_name
+
 """
 @brief Gets the current resistance level
 @returns The current resistance level

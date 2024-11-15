@@ -1,14 +1,18 @@
-[gd_scene load_steps=6 format=3 uid="uid://b16krdr76iks3"]
+[gd_scene load_steps=9 format=3 uid="uid://b16krdr76iks3"]
 
 [ext_resource type="Theme" uid="uid://dexax20p2eewp" path="res://assets/themes/base_theme.tres" id="1_cx4ff"]
 [ext_resource type="Texture2D" uid="uid://clngwcyqosfng" path="res://assets/sprites/newspaper_base_2.png" id="1_ig858"]
 [ext_resource type="Script" path="res://scripts/gui/newspaper.gd" id="2_c6gi3"]
+[ext_resource type="Texture2D" uid="uid://ctiq8sa8m5iv" path="res://assets/sprites/close_ribbon_black.png" id="4_im5rt"]
+[ext_resource type="Texture2D" uid="uid://5vk04yychida" path="res://assets/sprites/close_ribbon_white.png" id="5_bunkg"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_78d6f"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6gb03"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h8imn"]
 
-[node name="Newspaper" type="PopupPanel"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3ykkc"]
+
+[node name="Newspaper" type="PopupPanel" node_paths=PackedStringArray("town_label", "date_label", "note_content")]
 transparent_bg = true
 initial_position = 2
 size = Vector2i(800, 800)
@@ -18,6 +22,9 @@ transparent = true
 theme = ExtResource("1_cx4ff")
 theme_override_styles/panel = SubResource("StyleBoxEmpty_78d6f")
 script = ExtResource("2_c6gi3")
+town_label = NodePath("TextureRect/TownNameLabel")
+date_label = NodePath("TextureRect/PanelContainer/DateLabel")
+note_content = NodePath("TextureRect/TRPanelContainer/VBoxContainer/ContentLabel")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 anchors_preset = 15
@@ -40,46 +47,69 @@ text = "<Town Name>"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="DateLabel" type="Label" parent="TextureRect"]
+[node name="PanelContainer" type="PanelContainer" parent="TextureRect"]
 layout_mode = 0
-offset_left = 111.0
-offset_top = 183.0
-offset_right = 165.0
-offset_bottom = 206.0
+offset_left = 43.64
+offset_top = 172.62
+offset_right = 233.69
+offset_bottom = 221.05
+theme_override_styles/panel = SubResource("StyleBoxEmpty_h8imn")
+
+[node name="DateLabel" type="Label" parent="TextureRect/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "<date>"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TRPanelContainer" type="PanelContainer" parent="TextureRect"]
-visible = false
 clip_contents = true
 layout_mode = 0
-offset_left = 736.0
-offset_top = 277.0
-offset_right = 956.0
-offset_bottom = 560.0
-theme_override_styles/panel = SubResource("StyleBoxEmpty_6gb03")
+offset_left = 112.405
+offset_top = 342.235
+offset_right = 695.715
+offset_bottom = 912.235
+rotation = -0.0698132
+theme_override_styles/panel = SubResource("StyleBoxEmpty_3ykkc")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TextureRect/TRPanelContainer"]
 layout_mode = 2
 
 [node name="TitleLabel" type="Label" parent="TextureRect/TRPanelContainer/VBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
-size_flags_vertical = 6
-theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 40
 text = "<Title>"
 horizontal_alignment = 1
 vertical_alignment = 1
-autowrap_mode = 3
-uppercase = true
 
-[node name="RichTextLabel" type="RichTextLabel" parent="TextureRect/TRPanelContainer/VBoxContainer"]
+[node name="ContentLabel" type="RichTextLabel" parent="TextureRect/TRPanelContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_colors/default_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/normal_font_size = 14
-bbcode_enabled = true
-text = "<Article>"
+theme_override_font_sizes/normal_font_size = 20
+text = "To the Resistance Commander,
+
+Intelligence suggests heightened activity in your sector. Be advised that extra patrols will be deployed in [district] for the next [days] days. Troop movements will be concentrated near strategic locations, including checkpoints and known access routes.
+
+For Belgium, for freedom."
 fit_content = true
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 800.0
+grow_horizontal = 2
+theme_override_constants/margin_top = 20
+
+[node name="TextureButton" type="TextureButton" parent="MarginContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+focus_mode = 0
+texture_normal = ExtResource("4_im5rt")
+texture_pressed = ExtResource("4_im5rt")
+texture_hover = ExtResource("5_bunkg")
+
+[connection signal="pressed" from="MarginContainer/TextureButton" to="." method="_on_close_button_pressed"]

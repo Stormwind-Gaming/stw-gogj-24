@@ -4,10 +4,6 @@ class_name Map
 #|==============================|
 #|         Properties          |
 #|==============================|
-"""
-@brief Name of the town this map represents
-"""
-var town_name = ""
 
 """
 @brief Reference to the footer UI control
@@ -24,7 +20,7 @@ Initializes the map, districts, and starting agents.
 func _ready() -> void:
 	randomize()
 	footer.connect("menu_opened", _clear_focus)
-	town_name = Globals.town_names[randi() % Globals.town_names.size()]
+	GameController.set_town_name(Globals.town_names[randi() % Globals.town_names.size()])
 
 	for district in GlobalRegistry.districts.get_all_items():
 		_set_district_details(district)

@@ -17,6 +17,7 @@ var actions_list_scene = preload("res://scenes/gui/actions_list.tscn")
 var post_radial_assignment_scene = preload("res://scenes/gui/post_radial_assignment.tscn")
 var actions_list_action_scene = preload("res://scenes/gui/actions_list_action.tscn")
 var plan_scene = preload("res://scenes/gui/plan.tscn")
+var newspaper_scene = preload("res://scenes/gui/newspaper.tscn")
 
 #|==============================|
 #|       Data Sources          |
