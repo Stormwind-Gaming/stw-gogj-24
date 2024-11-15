@@ -1,51 +1,58 @@
-[gd_scene load_steps=3 format=3 uid="uid://b16krdr76iks3"]
+[gd_scene load_steps=6 format=3 uid="uid://b16krdr76iks3"]
 
-[ext_resource type="Texture2D" uid="uid://cinhwyd6rnsae" path="res://assets/sprites/newspaper_base.png" id="1_uow7u"]
+[ext_resource type="Theme" uid="uid://dexax20p2eewp" path="res://assets/themes/base_theme.tres" id="1_cx4ff"]
+[ext_resource type="Texture2D" uid="uid://clngwcyqosfng" path="res://assets/sprites/newspaper_base_2.png" id="1_ig858"]
+[ext_resource type="Script" path="res://scripts/gui/newspaper.gd" id="2_c6gi3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_78d6f"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6gb03"]
 
 [node name="Newspaper" type="PopupPanel"]
+transparent_bg = true
 initial_position = 2
-size = Vector2i(900, 900)
+size = Vector2i(800, 800)
 visible = true
 always_on_top = true
+transparent = true
+theme = ExtResource("1_cx4ff")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_78d6f")
+script = ExtResource("2_c6gi3")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 4.0
-offset_top = 4.0
-offset_right = -4.0
-offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_uow7u")
-expand_mode = 3
+texture = ExtResource("1_ig858")
 
 [node name="TownNameLabel" type="Label" parent="TextureRect"]
-layout_mode = 0
-offset_left = 439.485
-offset_top = 2.0
-offset_right = 550.485
-offset_bottom = 25.0
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 16.0
+offset_bottom = 39.0
+grow_horizontal = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 13
 text = "<Town Name>"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="DateLabel" type="Label" parent="TextureRect"]
 layout_mode = 0
-offset_left = 133.0
-offset_top = 200.0
-offset_right = 187.0
-offset_bottom = 223.0
+offset_left = 111.0
+offset_top = 183.0
+offset_right = 165.0
+offset_bottom = 206.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "<date>"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TRPanelContainer" type="PanelContainer" parent="TextureRect"]
+visible = false
 clip_contents = true
 layout_mode = 0
 offset_left = 736.0
@@ -60,6 +67,7 @@ layout_mode = 2
 [node name="TitleLabel" type="Label" parent="TextureRect/TRPanelContainer/VBoxContainer"]
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
+size_flags_vertical = 6
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "<Title>"
 horizontal_alignment = 1

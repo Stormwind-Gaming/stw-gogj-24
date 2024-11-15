@@ -19,9 +19,10 @@ config/icon="res://icon.svg"
 
 Globals="*res://scripts/globals.gd"
 Enums="*res://scripts/enums.gd"
-GameController="*res://scripts/game_controller.gd"
 GlobalRegistry="*res://scripts/registry/global_registry.gd"
+GameController="*res://scripts/game_controller.gd"
 EventBus="*res://scripts/event_bus.gd"
+StatisticModification="*res://scripts/statistic_modification.gd"
 
 [display]
 

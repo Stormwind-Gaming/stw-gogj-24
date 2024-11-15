@@ -36,6 +36,11 @@ signal character_recruitment_state_changed(character: Character)
 """
 signal character_state_changed(character: Character)
 
+"""
+@brief Emitted when a character's sympathy changes
+"""
+signal character_sympathy_changed(character: Character)
+
 #|==============================|
 #|      Action Management       |
 #|==============================|

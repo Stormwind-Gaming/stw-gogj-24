@@ -79,14 +79,14 @@ static func _get_gender_string(gender: int) -> String:
 static func _nationality() -> Enums.CharacterNationality:
 	var rand = randi() % 100  # Generate a random number between 0 and 99
 	
-	if rand < 40:
-			return Enums.CharacterNationality.BELGIAN  # 40% chance
-	elif rand < 70:
-		return Enums.CharacterNationality.GERMAN   # 30% chance (40-69)
-	elif rand < 90:
-		return Enums.CharacterNationality.FRENCH   # 20% chance (70-89)
+	if rand < 50:
+			return Enums.CharacterNationality.BELGIAN  # 50% chance
+	elif rand < 80:
+		return Enums.CharacterNationality.GERMAN   # 30% chance (50-79)
+	elif rand < 95:
+		return Enums.CharacterNationality.FRENCH   # 15% chance (80-94)
 	else:
-		return Enums.CharacterNationality.BRITISH  # 10% chance (90-99)
+		return Enums.CharacterNationality.BRITISH  # 5% chance (95-99)
 
 # Helper function to get a random image from a specified path
 static func _get_random_image_from_path(path: String) -> String:

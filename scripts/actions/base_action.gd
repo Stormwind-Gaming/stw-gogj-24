@@ -151,7 +151,7 @@ func _process_danger() -> Array[String]:
 	return logs
 
 #|==============================|
-#|      Helper Methods         |
+#|      Helper Methods          |
 #|==============================|
 
 """
@@ -165,9 +165,9 @@ func _get_stats() -> Dictionary:
 	}
 
 	for character in characters:
-		stats["subtlety"] += character.char_subtlety
-		stats["smarts"] += character.char_smarts
-		stats["charm"] += character.char_charm
+		stats["subtlety"] += StatisticModification.character_stat_modification(character.char_subtlety, Enums.StatCheckType.SUBTLETY)
+		stats["smarts"] += StatisticModification.character_stat_modification(character.char_smarts, Enums.StatCheckType.SMARTS)
+		stats["charm"] += StatisticModification.character_stat_modification(character.char_charm, Enums.StatCheckType.CHARM)
 
 	return stats
 
