@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://c26h6uvgdpl7l"]
+[gd_scene load_steps=11 format=3 uid="uid://c26h6uvgdpl7l"]
 
 [ext_resource type="Theme" uid="uid://dexax20p2eewp" path="res://assets/themes/base_theme.tres" id="1_pfypv"]
 [ext_resource type="Texture2D" uid="uid://b2hufa4grdklc" path="res://assets/sprites/plan_sheet_background.png" id="1_v4sc6"]
@@ -10,6 +10,8 @@
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_l5yse"]
 texture = ExtResource("1_v4sc6")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pbgrt"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_82vbq"]
 
@@ -88,8 +90,8 @@ theme_override_font_sizes/normal_font_size = 12
 bbcode_enabled = true
 
 [node name="VSeparator" type="VSeparator" parent="MarginContainer/CraftingContainer/WhenWhereMarginContainer/WhenWhereContainer"]
-visible = false
 layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_pbgrt")
 
 [node name="WhereVBoxContainer" type="VBoxContainer" parent="MarginContainer/CraftingContainer/WhenWhereMarginContainer/WhenWhereContainer"]
 layout_mode = 2
