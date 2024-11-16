@@ -59,6 +59,7 @@ Handles mouse-based camera movement and district focusing.
 func _process(delta):
 	# Check if the right mouse button is held down
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_MIDDLE) or Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
+		EventBus.close_all_windows.emit()
 		if not GameController.menus_open:
 			if enabled:
 				# Calculate the viewport size and mouse position
