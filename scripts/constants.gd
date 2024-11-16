@@ -328,7 +328,7 @@ func _ready():
 	config.connect("constants_loaded", _on_constants_loaded)
 
 func _on_constants_loaded():
-	print('constants loaded')
+	print('constants loaded', config._values)
 	print(config.get_value("INIT_MAX_AGENTS"))
 
 	# Game Initialization
