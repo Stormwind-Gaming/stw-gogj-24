@@ -23,6 +23,7 @@ GlobalRegistry="*res://scripts/registry/global_registry.gd"
 GameController="*res://scripts/game_controller.gd"
 EventBus="*res://scripts/event_bus.gd"
 StatisticModification="*res://scripts/statistic_modification.gd"
+WindowHandler="*res://scripts/window_handler.gd"
 
 [display]
 

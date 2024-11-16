@@ -119,6 +119,7 @@ Initializes POI properties and connects signals.
 func _ready() -> void:
 	parent_district = get_parent().get_parent()
 	EventBus.poi_created.emit(self)
+	EventBus.character_state_changed.connect(_character_state_changed)
 	GameController.connect("district_just_focused", _on_district_just_focused)
 	
 	# Create the owner of the POI
@@ -247,6 +248,7 @@ func _on_poi_clicked(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 				actions.append(Enums.ActionType.PLAN)
 
 			radial_menu_instance.set_optional_actions(actions)
+			EventBus.open_new_radial_menu.emit(radial_menu_instance)
 			add_child(radial_menu_instance)
 
 			GameController.open_radial_menu(radial_menu_instance, self)
@@ -265,6 +267,19 @@ func _on_district_just_focused(district: District) -> void:
 	else:
 		$Polygon2D.color = no_color
 		enabled = false
+
+"""
+@brief Handles character state changes.
+Updates POI popup details based on owner changes.
+
+@param character The character whose state changed
+"""
+func _character_state_changed(character: Character) -> void:
+	if character == poi_owner:
+		poi_popup.set_details(poi_name, poi_description)
+		if character.char_state == Enums.CharacterState.DECEASED:
+			$Polygon2D.color = no_color
+			enabled = false
 
 #|==============================|
 #|      Helper Functions       |

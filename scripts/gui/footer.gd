@@ -29,14 +29,6 @@ extends Control
 @export var turn_button: Button
 
 #|==============================|
-#|          Signals            |
-#|==============================|
-"""
-@brief Emitted when any menu is opened
-"""
-signal menu_opened
-
-#|==============================|
 #|      Lifecycle Methods      |
 #|==============================|
 """
@@ -66,10 +58,7 @@ func _on_show_actions_list_button_pressed():
 	var actions_list_instance = Globals.actions_list_scene.instantiate()
 	
 	# Add the instance to the scene tree
-	add_child(actions_list_instance)
-
-	_clear_focus()
-	_update_menu_open("ActionsList")
+	EventBus.open_new_window.emit(actions_list_instance)
 
 """
 @brief Handles the show intel list button press.
@@ -84,10 +73,7 @@ func _on_show_intel_list_button_pressed():
 	var intel_list_instance = Globals.intel_list_scene.instantiate()
 	
 	# Add the instance to the scene tree
-	add_child(intel_list_instance)
-
-	_clear_focus()
-	_update_menu_open("IntelList")
+	EventBus.open_new_window.emit(intel_list_instance)
 
 """
 @brief Handles the show character list button press.
@@ -102,10 +88,7 @@ func _on_show_character_list_button_pressed():
 	var character_list_instance = Globals.character_list_scene.instantiate()
 	
 	# Add the instance to the scene tree
-	add_child(character_list_instance)
-
-	_clear_focus()
-	_update_menu_open("CharacterList")
+	EventBus.open_new_window.emit(character_list_instance)
 
 """
 @brief Handles the show log list button press.
@@ -124,10 +107,7 @@ func _on_show_log_list_button_pressed(end_turn_button: bool = false):
 		log_list_instance.is_end_turn_log()
 	
 	# Add the instance to the scene tree
-	add_child(log_list_instance)
-
-	_clear_focus()
-	_update_menu_open("LogList")
+	EventBus.open_new_window.emit(log_list_instance)
 
 """
 @brief Handles the turn button press.
@@ -136,20 +116,3 @@ Processes the turn and shows the end turn log.
 func _on_turn_button_pressed():
 	GameController.process_turn()
 	_on_show_log_list_button_pressed(true)
-
-#|==============================|
-#|      Helper Functions       |
-#|==============================|
-"""
-@brief Emits the menu_opened signal to clear focus from other UI elements.
-"""
-func _clear_focus() -> void:
-	menu_opened.emit()
-
-"""
-@brief Updates the GameController with which menu is currently open.
-
-@param id The identifier of the opened menu
-"""
-func _update_menu_open(id: String) -> void:
-	GameController.set_menu_open(id)

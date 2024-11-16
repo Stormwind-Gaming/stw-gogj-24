@@ -227,7 +227,7 @@ func open_radial_menu(radial_menu: RadialMenu, poi: PointOfInterest) -> void:
 		return
 	radial_menu_open = radial_menu
 	poi_for_radial = poi
-	radial_menu.connect('selected_radial_option', _on_radial_option_selected)
+	radial_menu.selected_radial_option.connect( _on_radial_option_selected)
 
 func _on_radial_option_selected(option: Enums.ActionType) -> void:
 	radial_menu_open.hide()
@@ -236,7 +236,7 @@ func _on_radial_option_selected(option: Enums.ActionType) -> void:
 	if option == Enums.ActionType.NONE:
 		# create a tiny timer to get around erroneous clickthroughs
 		await get_tree().create_timer(0.1).timeout
-		radial_menu_open.queue_free()
+		EventBus.close_all_windows.emit()
 		radial_menu_open = null
 		return
 	
@@ -246,7 +246,7 @@ func _on_radial_option_selected(option: Enums.ActionType) -> void:
 		# poi_for_radial.show_info()
 		# create a tiny timer to get around erroneous clickthroughs
 		await get_tree().create_timer(0.1).timeout
-		radial_menu_open.queue_free()
+		EventBus.close_all_windows.emit()
 		radial_menu_open = null
 		return
 
@@ -254,7 +254,7 @@ func _on_radial_option_selected(option: Enums.ActionType) -> void:
 	var post_radial_assignment = Globals.post_radial_assignment_scene.instantiate()
 	post_radial_assignment.set_option(option)
 	post_radial_assignment.connect('post_radial_assignment_option', _on_post_radial_assignment_option_selected)
-	add_child(post_radial_assignment)
+	EventBus.open_new_window.emit(post_radial_assignment)
 
 func _on_post_radial_assignment_option_selected(option: Enums.ActionType, selected_agents: Array[Character], additions: Array) -> void:
 	if option != Enums.ActionType.NONE and option != Enums.ActionType.INFO:
@@ -262,7 +262,7 @@ func _on_post_radial_assignment_option_selected(option: Enums.ActionType, select
 
 	# create a tiny timer to get around erroneous clickthroughs
 	await get_tree().create_timer(0.1).timeout
-	radial_menu_open.queue_free()
+	EventBus.close_all_windows.emit()
 	radial_menu_open = null
 
 """

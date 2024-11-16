@@ -145,8 +145,7 @@ func _on_character_button_pressed(character: Character) -> void:
 @brief Handles the close button press event.
 """
 func _on_close_button_pressed() -> void:
-	GameController.set_menu_closed("CharacterList")
-	queue_free()
+	EventBus.close_all_windows.emit()
 
 #|==============================|
 #|      Helper Functions       |

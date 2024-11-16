@@ -21,6 +21,8 @@ func _ready() -> void:
 	randomize()
 	footer.connect("menu_opened", _clear_focus)
 	GameController.set_town_name(Globals.town_names[randi() % Globals.town_names.size()])
+	EventBus.end_turn_initiated.connect(_clear_focus)
+	EventBus.open_new_window.connect(_clear_focus)
 
 	for district in GlobalRegistry.districts.get_all_items():
 		_set_district_details(district)
@@ -50,7 +52,8 @@ func _process(delta: float) -> void:
 """
 @brief Clears the currently focused district
 """
-func _clear_focus() -> void:
+func _clear_focus(_i = null) -> void:
+	print("Clearing focus")
 	GameController.set_district_focused(null)
 	$Camera2D.enabled = true
 

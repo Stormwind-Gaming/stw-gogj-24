@@ -179,7 +179,7 @@ func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) 
 	if event is InputEventMouseButton:
 		var mouse_event = event as InputEventMouseButton
 		if mouse_event.button_index == MOUSE_BUTTON_LEFT and mouse_event.pressed:
-			emit_signal("selected_radial_option", options[selected_cell].action_type)
+			selected_radial_option.emit(options[selected_cell].action_type)
 
 #|==============================|
 #|      Helper Functions       |

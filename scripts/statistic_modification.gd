@@ -150,7 +150,7 @@ func set_port_bonus(value: bool):
 #|==============================|
 """
 @brief Called when the node enters the scene tree.
-Sets up signals to listen for sympathy changes
+Sets up signals to listen for changes
 """
 func _ready() -> void:
 	EventBus.end_turn_complete.connect(_check_milestones)

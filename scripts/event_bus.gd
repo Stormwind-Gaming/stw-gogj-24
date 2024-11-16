@@ -91,3 +91,21 @@ signal district_heat_changed(district: District, heat: float)
 @brief Emitted when a new log is created
 """
 signal log_created(log: TurnLog)
+
+#|==============================|
+#|      Window Management       |
+#|==============================|
+"""
+@brief Emitted when a new window is opened
+"""
+signal open_new_window(window: Window)
+
+"""
+@brief Emitted when a new radial is opened
+"""
+signal open_new_radial_menu(window: RadialMenu)
+
+"""
+@brief Emitted when all windows are closed
+"""
+signal close_all_windows()
