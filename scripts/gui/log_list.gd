@@ -53,9 +53,15 @@ func _ready():
 """
 func _process(delta: float) -> void:
 	if type_effect:
-		label.visible_ratio += delta * type_effect_speed
+		label.visible_characters += 1
 		if label.visible_ratio >= 1:
 			type_effect = false
+	
+	# detect left click to end typewriter effect
+	if Input.is_action_just_pressed("left_click"):
+		type_effect = false
+		label.visible_characters = label.text.length()
+
 
 #|==============================|
 #|      Helper Functions       |
@@ -69,6 +75,7 @@ func _process(delta: float) -> void:
 func is_end_turn_log(type_effect_speed: float = 0.25) -> bool:
 	type_effect = true
 	label.visible_ratio = 0
+	label.visible_characters = 0
 	self.type_effect_speed = type_effect_speed
 	return type_effect
 

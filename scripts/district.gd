@@ -104,7 +104,8 @@ func _ready() -> void:
 	heat = MathHelpers.generateBellCurveStat(Constants.DISTRICT_INIT_HEAT_MIN, Constants.DISTRICT_INIT_HEAT_MAX)
 
 	# set heat color alpha based on heat between 0 and 0.5
-	heat_color.a = heat / 200
+	heat_color.a = float(heat) / 200.0
+	print("Heat color: %s" % heat_color.a)
 
 	# Set up the Polygon2D for visual appearance
 	$Polygon2D.polygon = $CollisionPolygon2D.polygon
@@ -199,7 +200,8 @@ func _process(delta: float) -> void:
 @param district The district to update 
 new_heat The new heat value
 """
-func _update_heat_value(district: District, new_heat: float) -> void:
+func _update_heat_value(district: District, new_heat: int) -> void:
+	print("Updating heat value")
 	if district == self:
 		heat += new_heat
 		heat_color.a = heat / 200
@@ -343,9 +345,4 @@ func _on_poi_unhovered() -> void:
 #|==============================|
 func set_heat(new_heat: int) -> void:
 	# clamp heat between 0 and 100
-	if new_heat < 0:
-		new_heat = 0
-	elif new_heat > 2100:
-		new_heat = 100
-
-	heat = new_heat
+	heat = clamp(new_heat, 0, 100)

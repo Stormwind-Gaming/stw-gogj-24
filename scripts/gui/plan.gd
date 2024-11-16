@@ -90,8 +90,11 @@ func set_existing_plan_card(plan_arg: Plan = null) -> void:
 """
 func set_new_plan_card() -> void:
 	timing_label.visible_ratio = 0
+	timing_label.visible_characters = 0
 	location_label.visible_ratio = 0
+	timing_label.visible_characters = 0
 	mission_label.visible_ratio = 0
+	timing_label.visible_characters = 0
 
 """
 @brief Sets the timing text with typewriter effect.
@@ -150,11 +153,14 @@ func toggle_enabled_button(enabled: bool) -> void:
 """
 func _process(delta: float) -> void:
 	if !plan && has_time_text && timing_label.visible_ratio < 1:
-		timing_label.visible_ratio += delta * type_effect_speed
+		timing_label.visible_characters += delta * type_effect_speed
+		# timing_label.visible_ratio += delta * type_effect_speed
 	if has_location_text && location_label.visible_ratio < 1:
-		location_label.visible_ratio += delta * type_effect_speed
+		location_label.visible_characters += delta * type_effect_speed
+		# location_label.visible_ratio += delta * type_effect_speed
 	if has_mission_text && mission_label.visible_ratio < 1:
-		mission_label.visible_ratio += delta * type_effect_speed
+		mission_label.visible_characters += delta * type_effect_speed
+		# mission_label.visible_ratio += delta * type_effect_speed
 
 #|==============================|
 #|      Event Handlers         |

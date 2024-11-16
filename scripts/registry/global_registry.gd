@@ -147,7 +147,6 @@ func _on_character_created(character: Character) -> void:
 @param character The character whose state has changed
 """
 func _on_character_changed(character: Character) -> void:
-	print('character state changed: ', character.char_full_name)
 	if(characters.get_all_items().has(character)):
 		print('character is in registry')
 		var target_list_name = _get_character_list(character)
