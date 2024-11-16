@@ -239,6 +239,9 @@ enum LogType {
 #|      Event Enums							|
 #|==============================|
 
+"""
+@brief Types of events that can occur
+"""
 enum EventOutcomeType {
 	MIA,
 	KIA
