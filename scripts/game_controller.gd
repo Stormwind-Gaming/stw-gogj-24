@@ -36,7 +36,7 @@ var calendar: Calendar
 """
 @brief Maximum number of agents that can be assigned
 """
-var max_agents: int = Constants.INIT_MAX_AGENTS
+@onready var max_agents: int = Constants.INIT_MAX_AGENTS
 
 """
 @brief Current turn number
