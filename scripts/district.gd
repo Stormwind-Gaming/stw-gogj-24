@@ -99,6 +99,7 @@ func _ready() -> void:
 	EventBus.district_created.emit(self)
 	EventBus.district_heat_changed.connect(_update_heat_value)
 	EventBus.character_sympathy_changed.connect(_update_sympathy_value)
+	EventBus.district_unfocused.connect(_reset_highlight_color)
 
 	# set heat random between min and max
 	heat = MathHelpers.generateBellCurveStat(Constants.DISTRICT_INIT_HEAT_MIN, Constants.DISTRICT_INIT_HEAT_MAX)
@@ -339,6 +340,10 @@ Forwards POI unhover signals.
 """
 func _on_poi_unhovered() -> void:
 	emit_signal("poi_unhovered")
+
+func _reset_highlight_color(district: District) -> void:
+	if district == self:
+		$Polygon2D.color = heat_color
 
 #|==============================|
 #|      Setters                |

@@ -120,7 +120,7 @@ func _ready() -> void:
 	parent_district = get_parent().get_parent()
 	EventBus.poi_created.emit(self)
 	EventBus.character_state_changed.connect(_character_state_changed)
-	GameController.connect("district_just_focused", _on_district_just_focused)
+	EventBus.district_just_focused.connect(_on_district_just_focused)
 	
 	# Create the owner of the POI
 	self.poi_owner = CharacterFactory.create_character()

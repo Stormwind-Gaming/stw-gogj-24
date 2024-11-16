@@ -55,7 +55,7 @@ func _process(delta: float) -> void:
 @brief Clears the currently focused district
 """
 func _clear_focus(_i = null) -> void:
-	print("Clearing focus")
+	EventBus.district_unfocused.emit(GameController.district_focused)
 	GameController.set_district_focused(null)
 	$Camera2D.enabled = true
 
