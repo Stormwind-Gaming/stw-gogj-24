@@ -1,92 +1,6 @@
 extends Node
 
 #|==============================|
-#| Military District Modifiers	|
-#|==============================|
-
-"""
-@brief negative effect of performing an action in a military district
-"""
-# -50% sympathy generated
-const MILITARY_DISTRICT_MODIFIER_BASE: float = 0.5
-# const MILITARY_DISTRICT_MODIFIER_STAT: sympathy
-
-"""
-@brief positive effect gained from military district when over 66 percent sympathy
-"""
-const MILITARY_DISTRICT_MODIFIER_HIGH_SYMPATHY_VALUE: int = 1
-const MILITARY_DISTRICT_MODIFIER_HIGH_SYMPATHY_STAT: Enums.StatCheckType = Enums.StatCheckType.SUBTLETY
-
-#|==============================|
-#|   Civic District Modifiers  	|
-#|==============================|
-
-"""
-@brief negative effect of performing an action in a civic district
-"""
-# +25% heat generated
-const CIVIC_DISTRICT_MODIFIER_BASE: float = 1.25
-# const CIVIC_DISTRICT_MODIFIER_STAT: heat
-
-"""
-@brief positive effect gained from civic district when over 66 percent sympathy
-"""
-const CIVIC_DISTRICT_MODIFIER_HIGH_SYMPATHY_VALUE: int = 1
-const CIVIC_DISTRICT_MODIFIER_HIGH_SYMPATHY_STAT: Enums.StatCheckType = Enums.StatCheckType.CHARM
-
-#|==============================|
-#| Industry District Modifiers	|
-#|==============================|
-
-"""
-@brief negative effect of performing an action in an industry district
-"""
-# +10% injury risk
-const INDUSTRY_DISTRICT_MODIFIER_BASE: float = 1.1
-# const INDUSTRY_DISTRICT_MODIFIER_STAT: injury
-
-"""
-@brief positive effect gained from industry district when over 66 percent sympathy
-"""
-const INDUSTRY_DISTRICT_MODIFIER_HIGH_SYMPATHY_VALUE: int = 1
-const INDUSTRY_DISTRICT_MODIFIER_HIGH_SYMPATHY_STAT: Enums.StatCheckType = Enums.StatCheckType.SMARTS
-
-#|==============================|
-#|Residential District Modifiers|
-#|==============================|
-
-"""
-@brief negative effect of performing an action in a residential district
-"""
-# +10% subtlety check failure risk
-const RESIDENTIAL_DISTRICT_MODIFIER_BASE: float = 1.1
-# const RESIDENTIAL_DISTRICT_MODIFIER_STAT: subtlety check
-
-"""
-@brief positive effect gained from residential district when over 66 percent sympathy
-"""
-const RESIDENTIAL_DISTRICT_MODIFIER_HIGH_SYMPATHY_VALUE: float = 1.25
-# const RESIDENTIAL_DISTRICT_MODIFIER_HIGH_SYMPATHY_STAT: sympathy
-
-#|==============================|
-#|	Port District Modifiers			|
-#|==============================|
-
-"""
-@brief negative effect of performing an action in a port district
-"""
-# +1 mission duration
-const PORT_DISTRICT_MODIFIER_BASE: int = 1
-# const PORT_DISTRICT_MODIFIER_STAT: mission duration
-
-"""
-@brief positive effect gained from port district when over 66 percent sympathy
-"""
-const PORT_DISTRICT_MODIFIER_HIGH_SYMPATHY_VALUE: float = 0.75
-# const PORT_DISTRICT_MODIFIER_HIGH_SYMPATHY_STAT: heat
-
-
-#|==============================|
 #|    Milestones passed         |
 #|==============================|
 """
@@ -206,13 +120,13 @@ func character_stat_modification(stat_to_modify: int, stat_type: Enums.StatCheck
 
 	if stat_type == Enums.StatCheckType.SUBTLETY:
 		if military_bonus_active:
-			modifier += MILITARY_DISTRICT_MODIFIER_HIGH_SYMPATHY_VALUE
+			modifier += Constants.MILITARY_DISTRICT_MODIFIER_HIGH_SYMPATHY_VALUE
 	elif stat_type == Enums.StatCheckType.SMARTS:
 		if industry_bonus_active:
-			modifier += INDUSTRY_DISTRICT_MODIFIER_HIGH_SYMPATHY_VALUE
+			modifier += Constants.INDUSTRY_DISTRICT_MODIFIER_HIGH_SYMPATHY_VALUE
 	elif stat_type == Enums.StatCheckType.CHARM:
 		if civic_bonus_active:
-			modifier += CIVIC_DISTRICT_MODIFIER_HIGH_SYMPATHY_VALUE
+			modifier += Constants.CIVIC_DISTRICT_MODIFIER_HIGH_SYMPATHY_VALUE
 	
 	return stat_to_modify + modifier
 
@@ -226,10 +140,10 @@ func heat_modification(heat: int, district_type: Enums.DistrictType) -> int:
 	var modifier = 1
 	
 	if district_type == Enums.DistrictType.CIVIC:
-			modifier *= CIVIC_DISTRICT_MODIFIER_BASE
+			modifier *= Constants.CIVIC_DISTRICT_MODIFIER_BASE
 	
-	if industry_bonus_active:
-		modifier *= PORT_DISTRICT_MODIFIER_HIGH_SYMPATHY_VALUE
+	if port_bonus_active:
+		modifier *= Constants.PORT_DISTRICT_MODIFIER_HIGH_SYMPATHY_VALUE
 
 	return floor(heat * modifier)
 
@@ -243,12 +157,12 @@ func sympathy_modification(sympathy: int, district_type: Enums.DistrictType) -> 
 	var modifier = 1
 
 	if district_type == Enums.DistrictType.MILITARY:
-		modifier *= MILITARY_DISTRICT_MODIFIER_BASE
+		modifier *= Constants.MILITARY_DISTRICT_MODIFIER_BASE
 
 	if residential_bonus_active:
-		modifier *= RESIDENTIAL_DISTRICT_MODIFIER_HIGH_SYMPATHY_VALUE
+		modifier *= Constants.RESIDENTIAL_DISTRICT_MODIFIER_HIGH_SYMPATHY_VALUE
 
-	return sympathy * modifier
+	return floor(sympathy * modifier)
 
 """
 @brief Modifies the injury based on the district type modifier
@@ -260,7 +174,7 @@ func injury_chance_modification(injury: int, district_type: Enums.DistrictType) 
 	var modifier = 1
 
 	if district_type == Enums.DistrictType.INDUSTRIAL:
-		modifier *= INDUSTRY_DISTRICT_MODIFIER_BASE
+		modifier *= Constants.INDUSTRY_DISTRICT_MODIFIER_BASE
 
 	return injury * modifier
 
@@ -274,8 +188,6 @@ func mission_duration_modification(mission_duration: int, district_type: Enums.D
 	var modified_mission_duration: int = mission_duration
 
 	if district_type == Enums.DistrictType.PORT:
-		modified_mission_duration += PORT_DISTRICT_MODIFIER_BASE
-	elif port_bonus_active and district_type == Enums.DistrictType.PORT:
-		modified_mission_duration = floor(modified_mission_duration * PORT_DISTRICT_MODIFIER_HIGH_SYMPATHY_VALUE)
+		modified_mission_duration += Constants.PORT_DISTRICT_MODIFIER_BASE
 
 	return modified_mission_duration

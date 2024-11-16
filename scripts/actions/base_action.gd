@@ -187,30 +187,33 @@ func _process_danger() -> Array[TurnLog]:
 
 
 func _determine_action_failure_consequence(district_heat: int) -> int:
-	# Total probability should equal 1.0 (100%)
-	var base_chances = {
-			Enums.CharacterState.ASSIGNED: 0.85,    # 85% chance nothing happens
-			Enums.CharacterState.MIA: 0.1,          # 10% chance for MIA
-			Enums.CharacterState.DECEASED: 0.05     # 5% chance for death
+	var heat_factor = district_heat / 100.0
+	
+	# Calculate raw probabilities
+	var raw_chances = {
+		Enums.CharacterState.ASSIGNED: Constants.FAILURE_CONSEQUENCE_NONE * (1.0 - heat_factor * Constants.FAILURE_HEAT_MOD_NONE),
+		Enums.CharacterState.MIA: Constants.FAILURE_CONSEQUENCE_MIA + (heat_factor * Constants.FAILURE_HEAT_MOD_MIA),
+		Enums.CharacterState.DECEASED: Constants.FAILURE_CONSEQUENCE_DECEASED + (heat_factor * Constants.FAILURE_HEAT_MOD_DECEASED)
 	}
 	
-	# As heat increases, redistribute probabilities (scaled down by half)
-	var heat_factor = district_heat / 100.0
-	var modified_chances = {
-			Enums.CharacterState.ASSIGNED: base_chances[Enums.CharacterState.ASSIGNED] * (1.0 - heat_factor * 0.5),
-			Enums.CharacterState.MIA: base_chances[Enums.CharacterState.MIA] + (heat_factor * 0.1),
-			Enums.CharacterState.DECEASED: base_chances[Enums.CharacterState.DECEASED] + (heat_factor * 0.1)
-	}
+	# Calculate sum for normalization
+	var total = 0.0
+	for chance in raw_chances.values():
+		total += chance
+	
+	# Normalize probabilities to ensure they sum to 1.0
+	var modified_chances = {}
+	for state in raw_chances:
+		modified_chances[state] = raw_chances[state] / total
 	
 	# Roll the dice
-	var consequence_modifier: int = StatisticModification.injury_chance_modification(1, poi.parent_district.district_type)
-	var roll = randf() * (2 - consequence_modifier)
+	var roll = randf()
 	var cumulative_probability = 0.0
 	
 	for consequence in modified_chances:
-			cumulative_probability += modified_chances[consequence]
-			if roll < cumulative_probability:
-					return consequence
+		cumulative_probability += modified_chances[consequence]
+		if roll < cumulative_probability:
+			return consequence
 	
 	return Enums.CharacterState.ASSIGNED
 
