@@ -195,6 +195,29 @@ func get_poi_name(poi_type: Enums.POIType) -> String:
 			return record.poi_type == poi_type
 	)[0].poi_name
 
+"""
+@brief Gets the next profile picture for a given nationality and gender
+@param nationality The nationality to get a profile picture for
+@param gender The gender to get a profile picture for
+@returns A profile picture resource
+"""
+func get_next_profile_image(nationality: Enums.CharacterNationality, gender: Enums.CharacterGender) -> Resource:
+	# Create a unique key for this nationality/gender combination
+	var pool_key = str(nationality) + "_" + str(gender)
+	
+	# Initialize the pool if it doesn't exist
+	if not profile_images.has("pools"):
+		profile_images["pools"] = {}
+	
+	if not profile_images.pools.has(pool_key) or profile_images.pools[pool_key].is_empty():
+		# Create a new shuffled pool from the source images
+		var source_images = profile_images[nationality][gender].duplicate()
+		source_images.shuffle()
+		profile_images.pools[pool_key] = source_images
+	
+	# Return and remove the last image from the pool
+	return profile_images.pools[pool_key].pop_back()
+
 #|==============================|
 #|      Enum Mappings          |
 #|==============================|
