@@ -35,7 +35,7 @@ var rumour_text: String = ""
 """
 @brief Heat level of the district (attention from authorities)
 """
-var heat: float = 0 #TODO: Is there a reason this is a float not an int?
+var heat: int = 0
 
 """
 @brief Sympathy level of the district (aggregate of all characters from PoIs)

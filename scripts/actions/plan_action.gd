@@ -51,12 +51,14 @@ func _build_sympathy() -> Array[TurnLog]:
 	var charm_roll = MathHelpers.bounded_sigmoid_check(stats["charm"], true)
 		
 	if(charm_roll.success):
+		var sympathy_added: int = StatisticModification.sympathy_modification(Constants.ACTION_EFFECT_PLAN_BUILD_SYMPATHY_MODIFIER, poi.parent_district.district_type)
+
 		log_message = "Succeeded charm check..."
 		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
 
-		associated_plan.plan_subject_character.char_sympathy += Constants.ACTION_EFFECT_PLAN_BUILD_SYMPATHY_MODIFIER
+		associated_plan.plan_subject_character.char_sympathy += sympathy_added
 
-		log_message = associated_plan.plan_subject_character.char_full_name + " sympathy increased by " + str(Constants.ACTION_EFFECT_PLAN_BUILD_SYMPATHY_MODIFIER)
+		log_message = associated_plan.plan_subject_character.char_full_name + " sympathy increased by " + str(sympathy_added)
 		logs.append(TurnLog.new(log_message, Enums.LogType.SUCCESS))
 
 	else:

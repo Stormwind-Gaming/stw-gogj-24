@@ -93,16 +93,6 @@ const DISTRICT_HEAT_DECREASE_PER_TURN_MAX: int = 10
 """
 const ACTION_EFFECT_FAILED_SUBTLETY: float = 10.0
 
-const FAILURE_CONSEQUENCE_NONE: float = 0.7
-const FAILURE_CONSEQUENCE_MIA: float = 0.15
-const FAILURE_CONSEQUENCE_INCARCERATED: float = 0.1
-const FAILURE_CONSEQUENCE_DECEASED: float = 0.05
-
-const FAILURE_HEAT_MOD_MIA = 0.2
-const FAILURE_HEAT_MOD_INCARCERATED = 0.2
-const FAILURE_HEAT_MOD_DECEASED = 0.2
-
-
 """
 @brief Amount of sympathy added to a character when an action is completed
 """
@@ -137,3 +127,150 @@ const ACTION_EFFECT_PLAN_INCREASE_DIFFICULTY_MODIFIER: int = 10
 @brief Percentage decrease in difficulty when executing REDUCE_DIFFICULTY plans
 """
 const ACTION_EFFECT_PLAN_REDUCE_DIFFICULTY_MODIFIER: int = 10
+
+#|==============================|
+#|    Consequence Modifiers     |
+#|==============================|
+"""
+@brief Base probabilities and heat modifiers for action failure consequences
+       All probabilities are normalized to sum to 1.0 (100%) at all heat levels
+
+Base probabilities (sum to 100%):
+NONE:     85% (0.85)
+MIA:      10% (0.10)
+DECEASED:  5% (0.05)
+
+Heat modifies these base probabilities using the formula:
+1. Calculate raw probabilities:
+   NONE:     base_chance * (1.0 - heat_factor * mod)
+   MIA:      base_chance + (heat_factor * mod)
+   DECEASED: base_chance + (heat_factor * mod)
+
+2. Normalize by dividing each probability by their sum
+
+Example at 0 heat (heat_factor = 0.0):
+NONE:     0.85 / 1.00 = 0.85    (85%)
+MIA:      0.10 / 1.00 = 0.10    (10%)
+DECEASED: 0.05 / 1.00 = 0.05     (5%)
+Total:                  1.00   (100%)
+
+Example at 50 heat (heat_factor = 0.5):
+Raw values:
+NONE:     0.85 * (1.0 - 0.5 * 0.5) = 0.744
+MIA:      0.10 + (0.5 * 0.1)       = 0.150
+DECEASED: 0.05 + (0.5 * 0.1)       = 0.100
+Total: 0.994
+
+Normalized:
+NONE:     0.744 / 0.994 = 0.748   (74.8%)
+MIA:      0.150 / 0.994 = 0.151   (15.1%)
+DECEASED: 0.100 / 0.994 = 0.101   (10.1%)
+Total:                   1.000   (100%)
+
+Example at 100 heat (heat_factor = 1.0):
+Raw values:
+NONE:     0.85 * (1.0 - 1.0 * 0.5) = 0.425
+MIA:      0.10 + (1.0 * 0.1)       = 0.200
+DECEASED: 0.05 + (1.0 * 0.1)       = 0.150
+Total: 0.775
+
+Normalized:
+NONE:     0.425 / 0.775 = 0.548   (54.8%)
+MIA:      0.200 / 0.775 = 0.258   (25.8%)
+DECEASED: 0.150 / 0.775 = 0.194   (19.4%)
+Total:                   1.000   (100%)
+"""
+
+const FAILURE_CONSEQUENCE_NONE: float = 0.85
+const FAILURE_CONSEQUENCE_MIA: float = 0.1
+const FAILURE_CONSEQUENCE_DECEASED: float = 0.05
+
+const FAILURE_HEAT_MOD_NONE: float = 0.5
+const FAILURE_HEAT_MOD_MIA: float = 0.1
+const FAILURE_HEAT_MOD_DECEASED: float = 0.1
+
+#|==============================|
+#| Military District Modifiers	|
+#|==============================|
+
+"""
+@brief negative effect of performing an action in a military district
+"""
+# -50% sympathy generated
+const MILITARY_DISTRICT_MODIFIER_BASE: float = 0.5
+# const MILITARY_DISTRICT_MODIFIER_STAT: sympathy
+
+"""
+@brief positive effect gained from military district when over 66 percent sympathy
+"""
+const MILITARY_DISTRICT_MODIFIER_HIGH_SYMPATHY_VALUE: int = 1
+const MILITARY_DISTRICT_MODIFIER_HIGH_SYMPATHY_STAT: Enums.StatCheckType = Enums.StatCheckType.SUBTLETY
+
+#|==============================|
+#|   Civic District Modifiers  	|
+#|==============================|
+
+"""
+@brief negative effect of performing an action in a civic district
+"""
+# +25% heat generated
+const CIVIC_DISTRICT_MODIFIER_BASE: float = 1.25
+# const CIVIC_DISTRICT_MODIFIER_STAT: heat
+
+"""
+@brief positive effect gained from civic district when over 66 percent sympathy
+"""
+const CIVIC_DISTRICT_MODIFIER_HIGH_SYMPATHY_VALUE: int = 1
+const CIVIC_DISTRICT_MODIFIER_HIGH_SYMPATHY_STAT: Enums.StatCheckType = Enums.StatCheckType.CHARM
+
+#|==============================|
+#| Industry District Modifiers	|
+#|==============================|
+
+"""
+@brief negative effect of performing an action in an industry district
+"""
+# +10% injury risk
+const INDUSTRY_DISTRICT_MODIFIER_BASE: float = 1.1
+# const INDUSTRY_DISTRICT_MODIFIER_STAT: injury
+
+"""
+@brief positive effect gained from industry district when over 66 percent sympathy
+"""
+const INDUSTRY_DISTRICT_MODIFIER_HIGH_SYMPATHY_VALUE: int = 1
+const INDUSTRY_DISTRICT_MODIFIER_HIGH_SYMPATHY_STAT: Enums.StatCheckType = Enums.StatCheckType.SMARTS
+
+#|==============================|
+#|Residential District Modifiers|
+#|==============================|
+
+"""
+@brief negative effect of performing an action in a residential district
+"""
+# +10% subtlety check failure risk
+const RESIDENTIAL_DISTRICT_MODIFIER_BASE: float = 1.1
+# const RESIDENTIAL_DISTRICT_MODIFIER_STAT: subtlety check
+
+"""
+@brief positive effect gained from residential district when over 66 percent sympathy
+"""
+const RESIDENTIAL_DISTRICT_MODIFIER_HIGH_SYMPATHY_VALUE: float = 1.25
+# const RESIDENTIAL_DISTRICT_MODIFIER_HIGH_SYMPATHY_STAT: sympathy
+
+#|==============================|
+#|	Port District Modifiers			|
+#|==============================|
+
+"""
+@brief negative effect of performing an action in a port district
+"""
+# +1 mission duration
+const PORT_DISTRICT_MODIFIER_BASE: int = 1
+# const PORT_DISTRICT_MODIFIER_STAT: mission duration
+
+"""
+@brief positive effect gained from port district when over 66 percent sympathy
+"""
+const PORT_DISTRICT_MODIFIER_HIGH_SYMPATHY_VALUE: float = 0.75
+# const PORT_DISTRICT_MODIFIER_HIGH_SYMPATHY_STAT: heat
+

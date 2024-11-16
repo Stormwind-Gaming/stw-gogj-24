@@ -53,20 +53,24 @@ var in_flight: bool = false
 """
 func _init(config: ActionFactory.ActionConfig):
 	print("BaseAction init")
-	turn_to_end = GameController.turn_number + 1
 
 	self.poi = config.poi
 	self.characters = config.characters
 	self.action_type = config.action_type
 	self.additional_info = config.additional_info
 
-	if config.additional_info.has("associated_plan"):
-		self.associated_plan = config.additional_info["associated_plan"]
-		turn_to_end = GameController.turn_number + self.associated_plan.plan_duration
-
 	# Set all characters to assigned
 	for character in characters:
 		character.char_state = Enums.CharacterState.ASSIGNED
+
+	# Calculate the turn to end
+	turn_to_end = GameController.turn_number + 1
+
+	if additional_info.has("associated_plan"):
+		self.associated_plan = config.additional_info["associated_plan"]
+
+		turn_to_end = GameController.turn_number + StatisticModification.mission_duration_modification(self.associated_plan.plan_duration, poi.parent_district.district_type)
+	
 
 	EventBus.turn_processing_initiated.connect(_on_turn_processing_initiated)
 	EventBus.end_turn_complete.connect(_on_end_turn_completed)
@@ -157,7 +161,8 @@ func _process_danger() -> Array[TurnLog]:
 		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
 
 		# Determine the consequence of the action failure
-		var district_heat: int = poi.parent_district.heat
+		var district: District = poi.parent_district
+		var district_heat: int = StatisticModification.heat_modification(district.heat, district.district_type)
 
 		log_message = "Determining consequence of action failure... district heat is " + str(district_heat)
 		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
@@ -182,29 +187,33 @@ func _process_danger() -> Array[TurnLog]:
 
 
 func _determine_action_failure_consequence(district_heat: int) -> int:
-	# Total probability should equal 1.0 (100%)
-	var base_chances = {
-			Enums.CharacterState.ASSIGNED: 0.85,    # 85% chance nothing happens
-			Enums.CharacterState.MIA: 0.1,          # 10% chance for MIA
-			Enums.CharacterState.DECEASED: 0.05     # 5% chance for death
+	var heat_factor = district_heat / 100.0
+	
+	# Calculate raw probabilities
+	var raw_chances = {
+		Enums.CharacterState.ASSIGNED: Constants.FAILURE_CONSEQUENCE_NONE * (1.0 - heat_factor * Constants.FAILURE_HEAT_MOD_NONE),
+		Enums.CharacterState.MIA: Constants.FAILURE_CONSEQUENCE_MIA + (heat_factor * Constants.FAILURE_HEAT_MOD_MIA),
+		Enums.CharacterState.DECEASED: Constants.FAILURE_CONSEQUENCE_DECEASED + (heat_factor * Constants.FAILURE_HEAT_MOD_DECEASED)
 	}
 	
-	# As heat increases, redistribute probabilities (scaled down by half)
-	var heat_factor = district_heat / 100.0
-	var modified_chances = {
-			Enums.CharacterState.ASSIGNED: base_chances[Enums.CharacterState.ASSIGNED] * (1.0 - heat_factor * 0.5),
-			Enums.CharacterState.MIA: base_chances[Enums.CharacterState.MIA] + (heat_factor * 0.1),
-			Enums.CharacterState.DECEASED: base_chances[Enums.CharacterState.DECEASED] + (heat_factor * 0.1)
-	}
+	# Calculate sum for normalization
+	var total = 0.0
+	for chance in raw_chances.values():
+		total += chance
+	
+	# Normalize probabilities to ensure they sum to 1.0
+	var modified_chances = {}
+	for state in raw_chances:
+		modified_chances[state] = raw_chances[state] / total
 	
 	# Roll the dice
 	var roll = randf()
 	var cumulative_probability = 0.0
 	
 	for consequence in modified_chances:
-			cumulative_probability += modified_chances[consequence]
-			if roll < cumulative_probability:
-					return consequence
+		cumulative_probability += modified_chances[consequence]
+		if roll < cumulative_probability:
+			return consequence
 	
 	return Enums.CharacterState.ASSIGNED
 
