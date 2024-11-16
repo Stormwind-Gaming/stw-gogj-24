@@ -7,7 +7,6 @@ extends Control
 @brief Button to resume the game
 """
 func _on_resume_game_button_pressed() -> void:
-	get_tree().paused = false
 	self.hide()
 
 """

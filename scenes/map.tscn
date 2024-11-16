@@ -12,8 +12,9 @@
 [ext_resource type="PackedScene" uid="uid://bv860whpjsldd" path="res://scenes/gui/footer.tscn" id="11_4nem0"]
 [ext_resource type="PackedScene" uid="uid://kgy3mx1cyya" path="res://scenes/gui/header.tscn" id="12_gdl2t"]
 
-[node name="Map" type="Node2D" node_paths=PackedStringArray("footer")]
+[node name="Map" type="Node2D" node_paths=PackedStringArray("pause_menu", "footer")]
 script = ExtResource("1_ppup2")
+pause_menu = NodePath("PauseMenuCanvasLayer/GamePauseMenu")
 footer = NodePath("CanvasLayer2/Footer")
 
 [node name="Node2D" type="Node2D" parent="."]

@@ -292,7 +292,7 @@ Updates visual state and emits hover signal.
 """
 func _on_mouse_entered() -> void:
 	# check if we have a radial menu instance, if so, don't expand
-	if GameController.radial_menu_open != null or GameController.menus_open:
+	if GameController.radial_menu_open != null or WindowHandler.open_window:
 		return
 	
 	hovered = true
@@ -317,7 +317,7 @@ Processes clicks and emits signals.
 """
 func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	# check if we have a radial menu instance, if so, don't expand
-	if GameController.radial_menu_open != null or GameController.menus_open:
+	if GameController.radial_menu_open != null or WindowHandler.open_window:
 		return
 
 	if event is InputEventMouseButton:

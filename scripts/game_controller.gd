@@ -14,11 +14,6 @@ var town_name: String = ""
 var district_focused: District = null
 
 """
-@brief List of currently open menu IDs
-"""
-var menus_open: Array[String] = []
-
-"""
 @brief POI associated with current radial menu
 """
 var poi_for_radial: PointOfInterest
@@ -232,9 +227,7 @@ func _trigger_resistance_endgame() -> void:
 func set_district_focused(district: District) -> void:
 	district_focused = district
 	EventBus.district_just_focused.emit(district)
-	print("Focused district: ", district)
 	if district == null:
-		print("District is null")
 		_on_radial_option_selected(Enums.ActionType.NONE)
 
 
@@ -270,7 +263,6 @@ func _on_radial_option_selected(option: Enums.ActionType) -> void:
 	if option == Enums.ActionType.NONE:
 		# create a tiny timer to get around erroneous clickthroughs
 		await get_tree().create_timer(0.1).timeout
-		EventBus.close_all_windows.emit()
 		radial_menu_open = null
 		return
 	
@@ -280,7 +272,6 @@ func _on_radial_option_selected(option: Enums.ActionType) -> void:
 		# poi_for_radial.show_info()
 		# create a tiny timer to get around erroneous clickthroughs
 		await get_tree().create_timer(0.1).timeout
-		EventBus.close_all_windows.emit()
 		radial_menu_open = null
 		return
 
@@ -298,20 +289,3 @@ func _on_post_radial_assignment_option_selected(option: Enums.ActionType, select
 	await get_tree().create_timer(0.1).timeout
 	EventBus.close_all_windows.emit()
 	radial_menu_open = null
-
-"""
-@brief Sets the menu open state
-
-@param id The ID of the menu to set as open
-"""
-func set_menu_open(id: String) -> void:
-	menus_open.append(id)
-	emit_signal("menu_opened", id)
-
-"""
-@brief Sets the menu closed state
-
-@param id The ID of the menu to set as closed
-"""
-func set_menu_closed(id: String) -> void:
-	menus_open.erase(id)

@@ -25,6 +25,17 @@ func _ready() -> void:
 	EventBus.log_created.connect(_create_new_event_panel)
 
 #|==============================|
+#|      Methods     				   |
+#|==============================|
+
+"""
+@brief Checks if any windows are open
+"""
+func any_windows_open() -> bool:
+	return !!open_window or !!open_radial_menu
+
+
+#|==============================|
 #|      Event Handlers         |
 #|==============================|
 

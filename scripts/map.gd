@@ -6,6 +6,11 @@ class_name Map
 #|==============================|
 
 """
+@brief Reference to the pause_menu UI control
+"""
+@export var pause_menu: Control
+
+"""
 @brief Reference to the footer UI control
 """
 @export var footer: Control
@@ -45,6 +50,14 @@ func _process(delta: float) -> void:
 	if GameController.district_focused != null:
 		if Input.is_mouse_button_pressed(MOUSE_BUTTON_MIDDLE) or Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
 			_clear_focus()
+	if Input.is_action_just_pressed("ui_cancel"):
+		if pause_menu.visible:
+			pause_menu.hide()
+		else:
+			pause_menu.show()
+		pass
+		# open pause menu
+
 
 #|==============================|
 #|      District Management    |
