@@ -89,9 +89,7 @@ func _on_turn_processing_initiated(num:int) -> void:
 """
 func _on_end_turn_completed(num:int) -> void:
 	if num >= turn_to_end:
-		# Release characters
-		for character in characters:
-			character.char_state = Enums.CharacterState.AVAILABLE
+		_release_characters()
 
 		# Delete the action
 		self.queue_free()
@@ -113,8 +111,7 @@ Unregisters the action from the global registry.
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE:
 		GlobalRegistry.actions.remove_item(self)
-		for character in characters:
-			character.char_state = Enums.CharacterState.AVAILABLE
+		_release_characters()
 
 #|==============================|
 #|      Action Processing      |
@@ -217,6 +214,15 @@ func _get_stats() -> Dictionary:
 		stats["charm"] += StatisticModification.character_stat_modification(character.char_charm, Enums.StatCheckType.CHARM)
 
 	return stats
+
+"""
+@brief Releases characters that are assigned to this action
+"""
+func _release_characters() -> void:
+	for character in characters:
+		# If the character is assigned to this action (e.g. not missing or deceased), set them to available
+		if character.char_state == Enums.CharacterState.ASSIGNED:
+			character.char_state = Enums.CharacterState.AVAILABLE
 
 # """
 # @brief Processes an espionage action
