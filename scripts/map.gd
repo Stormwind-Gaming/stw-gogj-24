@@ -19,10 +19,8 @@ Initializes the map, districts, and starting agents.
 """
 func _ready() -> void:
 	randomize()
-	footer.connect("menu_opened", _clear_focus)
 	GameController.set_town_name(Globals.town_names[randi() % Globals.town_names.size()])
 	EventBus.end_turn_initiated.connect(_clear_focus)
-	EventBus.open_new_window.connect(_clear_focus)
 	EventBus.open_new_window.connect(_disable_interaction)
 	EventBus.close_all_windows.connect(_enable_interaction)
 
@@ -142,6 +140,7 @@ func _disable_interaction(_i = 0) -> void:
 func _enable_interaction() -> void:
 	for district in GlobalRegistry.districts.get_all_items():
 		district.set_enabled()
+	_clear_focus()
 	pass
 #|==============================|
 #|      Character Setup        |

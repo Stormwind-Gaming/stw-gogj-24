@@ -34,8 +34,6 @@ func _ready() -> void:
 func _close_all_windows(emit: bool = true) -> void:
 	if open_window:
 		open_window.queue_free()
-	if open_radial_menu:
-		open_radial_menu.queue_free()
 	
 	open_window = null
 	open_radial_menu = null

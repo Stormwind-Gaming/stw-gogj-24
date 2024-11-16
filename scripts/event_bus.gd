@@ -70,6 +70,11 @@ signal plan_created(plan: Plan)
 """
 signal poi_created(poi: PointOfInterest)
 
+"""
+@brief Emitted when a radial option is selected
+@param option The type of action selected
+"""
+signal selected_radial_option(option: Enums.ActionType)
 
 #|==============================|
 #|      District Management     |

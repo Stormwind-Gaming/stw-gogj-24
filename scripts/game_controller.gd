@@ -51,6 +51,7 @@ var turn_number: int = 0
 """
 func _ready() -> void:
 	calendar = Calendar.new()
+	EventBus.selected_radial_option.connect(_on_radial_option_selected)
 
 #|==============================|
 #|      Getters & Setters      |
@@ -231,6 +232,11 @@ func _trigger_resistance_endgame() -> void:
 func set_district_focused(district: District) -> void:
 	district_focused = district
 	EventBus.district_just_focused.emit(district)
+	print("Focused district: ", district)
+	if district == null:
+		print("District is null")
+		_on_radial_option_selected(Enums.ActionType.NONE)
+
 
 #|==============================|
 #|      Menu Management        |
@@ -242,13 +248,22 @@ func set_district_focused(district: District) -> void:
 @param poi The POI the menu is for
 """
 func open_radial_menu(radial_menu: RadialMenu, poi: PointOfInterest) -> void:
+	print("Opening radial menu for POI: ", poi)
 	if radial_menu_open:
+		print("Radial menu already open, closing")
 		return
 	radial_menu_open = radial_menu
 	poi_for_radial = poi
-	radial_menu.selected_radial_option.connect( _on_radial_option_selected)
 
+"""
+@brief Handles radial option selection
+
+@param option The option selected
+"""
 func _on_radial_option_selected(option: Enums.ActionType) -> void:
+	if not radial_menu_open:
+		return
+
 	radial_menu_open.hide()
 
 	# if quit, do nothing

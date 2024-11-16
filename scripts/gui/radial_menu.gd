@@ -56,15 +56,6 @@ var options: Array[RadialOption]
 var selected_cell = 0
 
 #|==============================|
-#|          Signals            |
-#|==============================|
-"""
-@brief Emitted when a radial option is selected
-@param option The type of action selected
-"""
-signal selected_radial_option(option: Enums.ActionType)
-
-#|==============================|
 #|      Lifecycle Methods      |
 #|==============================|
 """
@@ -179,7 +170,7 @@ func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) 
 	if event is InputEventMouseButton:
 		var mouse_event = event as InputEventMouseButton
 		if mouse_event.button_index == MOUSE_BUTTON_LEFT and mouse_event.pressed:
-			selected_radial_option.emit(options[selected_cell].action_type)
+			EventBus.selected_radial_option.emit(options[selected_cell].action_type)
 
 #|==============================|
 #|      Helper Functions       |
