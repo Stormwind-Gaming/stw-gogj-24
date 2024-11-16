@@ -101,6 +101,7 @@ func set_char_sympathy(sympathy: int) -> void:
 		# This character is sympathetic to the resistance
 		char_recruitment_state = Enums.CharacterRecruitmentState.SYMPATHISER_NOT_RECRUITED
 
+	EventBus.character_sympathy_changed.emit(self)
 	char_sympathy = sympathy
 
 """

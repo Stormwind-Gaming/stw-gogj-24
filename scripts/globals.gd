@@ -17,6 +17,7 @@ var actions_list_scene = preload("res://scenes/gui/actions_list.tscn")
 var post_radial_assignment_scene = preload("res://scenes/gui/post_radial_assignment.tscn")
 var actions_list_action_scene = preload("res://scenes/gui/actions_list_action.tscn")
 var plan_scene = preload("res://scenes/gui/plan.tscn")
+var newspaper_scene = preload("res://scenes/gui/newspaper.tscn")
 
 #|==============================|
 #|       Data Sources          |
@@ -543,11 +544,11 @@ var profile_images = {
 		Enums.CharacterGender.MALE: [
 			preload("res://assets/profile_pictures/belgian/male/belgian-male-1.png"),
 			preload("res://assets/profile_pictures/belgian/male/belgian-male-2.png"),
-			preload("res://assets/profile_pictures/belgian/male/belgian-male-3.png"),
-			preload("res://assets/profile_pictures/belgian/male/belgian-male-4.png"),
-			preload("res://assets/profile_pictures/belgian/male/belgian-male-5.png"),
+			# preload("res://assets/profile_pictures/belgian/male/belgian-male-3.png"),
+			# preload("res://assets/profile_pictures/belgian/male/belgian-male-4.png"),
+			# preload("res://assets/profile_pictures/belgian/male/belgian-male-5.png"),
 			preload("res://assets/profile_pictures/belgian/male/belgian-male-6.png"),
-			preload("res://assets/profile_pictures/belgian/male/belgian-male-7.png"),
+			# preload("res://assets/profile_pictures/belgian/male/belgian-male-7.png"),
 			preload("res://assets/profile_pictures/belgian/male/belgian-male-8.png"),
 			preload("res://assets/profile_pictures/belgian/male/belgian-male-9.png"),
 			preload("res://assets/profile_pictures/belgian/male/belgian-male-10.png"),
@@ -567,9 +568,9 @@ var profile_images = {
 			preload("res://assets/profile_pictures/belgian/female/belgian-female-7.png"),
 			preload("res://assets/profile_pictures/belgian/female/belgian-female-8.png"),
 			preload("res://assets/profile_pictures/belgian/female/belgian-female-9.png"),
-			preload("res://assets/profile_pictures/belgian/female/belgian-female-10.png"),
-			preload("res://assets/profile_pictures/belgian/female/belgian-female-11.png"),
-			preload("res://assets/profile_pictures/belgian/female/belgian-female-12.png"),
+			# preload("res://assets/profile_pictures/belgian/female/belgian-female-10.png"),
+			# preload("res://assets/profile_pictures/belgian/female/belgian-female-11.png"),
+			# preload("res://assets/profile_pictures/belgian/female/belgian-female-12.png"),
 		]
 	},
 	Enums.CharacterNationality.FRENCH: {
@@ -585,7 +586,7 @@ var profile_images = {
 			preload("res://assets/profile_pictures/french/female/french-female-1.png"),
 			preload("res://assets/profile_pictures/french/female/french-female-2.png"),
 			preload("res://assets/profile_pictures/french/female/french-female-3.png"),
-			preload("res://assets/profile_pictures/french/female/french-female-4.png"),
+			# preload("res://assets/profile_pictures/french/female/french-female-4.png"),
 			preload("res://assets/profile_pictures/french/female/french-female-5.png"),
 			preload("res://assets/profile_pictures/french/female/french-female-6.png"),
 		]

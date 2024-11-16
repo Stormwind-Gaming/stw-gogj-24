@@ -36,6 +36,11 @@ signal character_recruitment_state_changed(character: Character)
 """
 signal character_state_changed(character: Character)
 
+"""
+@brief Emitted when a character's sympathy changes
+"""
+signal character_sympathy_changed(character: Character)
+
 #|==============================|
 #|      Action Management       |
 #|==============================|
@@ -73,3 +78,8 @@ signal poi_created(poi: PointOfInterest)
 @brief Emitted when a new district is created
 """
 signal district_created(district: District)
+
+"""
+@brief Emitted when a district's heat level changes
+"""
+signal district_heat_changed(district: District, heat: float)

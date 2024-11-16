@@ -38,6 +38,11 @@ var rumour_text: String = ""
 var heat: float = 0 #TODO: Is there a reason this is a float not an int?
 
 """
+@brief Sympathy level of the district (aggregate of all characters from PoIs)
+"""
+var sympathy: float = 0
+
+"""
 @brief Array of Points of Interest in this district
 """
 var pois: Array[PointOfInterest] = []
@@ -92,6 +97,8 @@ Initializes district properties and sets up POIs.
 func _ready() -> void:
 	# emit district created signal
 	EventBus.district_created.emit(self)
+	EventBus.district_heat_changed.connect(_update_heat_value)
+	EventBus.character_sympathy_changed.connect(_update_sympathy_value)
 
 	# set heat random between min and max
 	heat = MathHelpers.generateBellCurveStat(Constants.DISTRICT_INIT_HEAT_MIN, Constants.DISTRICT_INIT_HEAT_MAX)
@@ -186,8 +193,40 @@ func _process(delta: float) -> void:
 	else:
 		district_popup.visible = false
 
+"""
+@brief updates heat value and visuals
+
+@param district The district to update 
+new_heat The new heat value
+"""
+func _update_heat_value(district: District, new_heat: float) -> void:
+	if district == self:
+		heat += new_heat
+		heat_color.a = heat / 200
+		$Polygon2D.color = heat_color
+	district_popup.set_heat(heat)
+
+"""
+@brief updates sympathy value and visuals
+
+@param character The character to update
+"""
+func _update_sympathy_value(character: Character) -> void:
+	# TODO: for some reason this efficiency enhancement isnt working
+	# if this character is not in this district, return
+	# for poi in pois:
+	# 	if poi.poi_owner == character:
+	# 		print("Character found")
+	var total_sympathy = 0
+	for p in pois:
+		total_sympathy += p.poi_owner.char_sympathy
+	sympathy = total_sympathy / pois.size()
+	district_popup.set_sympathy(sympathy)
+			# return
+
+
 #|==============================|
-#|      District Methods       |
+#|      District Methods        |
 #|==============================|
 """
 @brief Sets the district's details and updates the popup information.
@@ -201,7 +240,7 @@ func set_district_details(district_name_arg: String, district_description_arg: S
 	district_description = district_description_arg
 	rumour_text = rumour_text_arg
 
-	district_popup.set_details("%s %s District" % [district_name, Globals.get_district_type_string(district_type)], "%s\n\nType: %s\n%s Points of Interest\n\nHeat: [font_size=20]%s[/font_size]" % [district_description, Globals.get_district_type_string(district_type), str(pois.size()), str(heat)  + "%"])
+	district_popup.set_initial_details("%s %s District" % [district_name, Globals.get_district_type_string(district_type)], "%s\n\nType: %s\n%s Points of Interest" % [district_description, Globals.get_district_type_string(district_type), str(pois.size())], heat, sympathy)
 
 """
 @brief Gets the center point of the district.

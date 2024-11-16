@@ -142,7 +142,7 @@ func _process_danger() -> Array[String]:
 
 	else:
 		log_message = "Failed subtlety check... heat increased by " + str(Constants.ACTION_EFFECT_FAILED_SUBTLETY)
-		poi.parent_district.heat += Constants.ACTION_EFFECT_FAILED_SUBTLETY
+		EventBus.district_heat_changed.emit(poi.parent_district, Constants.ACTION_EFFECT_FAILED_SUBTLETY)
 		logs.append(log_message)
 
 		# Determine the consequence of the action failure
@@ -198,7 +198,7 @@ func _determine_action_failure_consequence(district_heat: int) -> int:
 	return Enums.CharacterState.ASSIGNED
 
 #|==============================|
-#|      Helper Methods         |
+#|      Helper Methods          |
 #|==============================|
 
 """
@@ -212,9 +212,9 @@ func _get_stats() -> Dictionary:
 	}
 
 	for character in characters:
-		stats["subtlety"] += character.char_subtlety
-		stats["smarts"] += character.char_smarts
-		stats["charm"] += character.char_charm
+		stats["subtlety"] += StatisticModification.character_stat_modification(character.char_subtlety, Enums.StatCheckType.SUBTLETY)
+		stats["smarts"] += StatisticModification.character_stat_modification(character.char_smarts, Enums.StatCheckType.SMARTS)
+		stats["charm"] += StatisticModification.character_stat_modification(character.char_charm, Enums.StatCheckType.CHARM)
 
 	return stats
 

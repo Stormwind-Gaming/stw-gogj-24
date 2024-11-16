@@ -81,7 +81,7 @@ const DISTRICT_INIT_HEAT_MAX: int = 30
 """
 @brief Amount of heat added to a district when an action fails
 """
-const ACTION_EFFECT_FAILED_SUBTLETY: int = 10
+const ACTION_EFFECT_FAILED_SUBTLETY: float = 10.0
 
 const FAILURE_CONSEQUENCE_NONE: float = 0.7
 const FAILURE_CONSEQUENCE_MIA: float = 0.15
