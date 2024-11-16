@@ -119,6 +119,11 @@ func get_char_recruitment_state() -> Enums.CharacterRecruitmentState:
 """
 func set_char_recruitment_state(value: Enums.CharacterRecruitmentState) -> void:
 	char_recruitment_state = value
+
+	# Make sure that if we're setting this character to a sympathiser that they have appropriate sympathy
+	if((value == Enums.CharacterRecruitmentState.SYMPATHISER_NOT_RECRUITED or value == Enums.CharacterRecruitmentState.SYMPATHISER_RECRUITED) and char_sympathy < 80):
+		char_sympathy = 80
+
 	EventBus.character_recruitment_state_changed.emit(self)
 
 """

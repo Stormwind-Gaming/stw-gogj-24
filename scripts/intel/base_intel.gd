@@ -49,5 +49,11 @@ Checks if the intel should expire and frees it if necessary.
 @param turn_number The current turn number
 """
 func _expire_intel(turn_number: int) -> void:
+
+	# If plan has an in flight action then dont expire it
+	var action = GlobalRegistry.actions.find_item(GlobalRegistry.LIST_ALL_ACTIONS, "associated_plan", self)
+	if action and action.in_flight:
+		return
+
 	if expires_on_turn <= turn_number:
 		self.call_deferred("free")

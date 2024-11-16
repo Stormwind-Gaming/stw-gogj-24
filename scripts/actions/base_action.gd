@@ -68,8 +68,6 @@ func _init(config: ActionFactory.ActionConfig):
 	for character in characters:
 		character.char_state = Enums.CharacterState.ASSIGNED
 
-	print("Action turn to end: ", turn_to_end)
-
 	EventBus.turn_processing_initiated.connect(_on_turn_processing_initiated)
 	EventBus.end_turn_complete.connect(_on_end_turn_completed)
 
@@ -89,8 +87,12 @@ func _on_turn_processing_initiated(num:int) -> void:
 		danger_logs = _process_danger()
 		action_logs = _process_action()
 
+		# Make sure the plan is removed at this point
+		if associated_plan:
+			associated_plan.call_deferred("free")
+
 	else:
-		action_logs.append("Action in progress by " + str(characters))
+		action_logs.append("Action in progress by " + _get_character_names())
 		
 	for step in danger_logs + action_logs:
 		GlobalRegistry.turn_logs.add_item(str(GameController.turn_number), step)
@@ -101,7 +103,6 @@ func _on_turn_processing_initiated(num:int) -> void:
 """
 func _on_end_turn_completed(num:int) -> void:
 	if num >= turn_to_end:
-		print("Turn is ending: ", num, " >= ", turn_to_end)
 		_release_characters()
 
 		# Delete the action
@@ -140,7 +141,7 @@ func _process_danger() -> Array[String]:
 	# Get cumulative stats for all characters involved
 	var stats: Dictionary = _get_stats()
 
-	logs.append("Processing danger for action at [u]" + str(poi.poi_name))
+	logs.append("Processing danger for action at [u]" + str(poi.poi_name) + "[/u] by " + _get_character_names())
 
 	var subtle_roll = MathHelpers.bounded_sigmoid_check(stats["subtlety"], true)
 
@@ -236,6 +237,17 @@ func _release_characters() -> void:
 		# If the character is assigned to this action (e.g. not missing or deceased), set them to available
 		if character.char_state == Enums.CharacterState.ASSIGNED:
 			character.char_state = Enums.CharacterState.AVAILABLE
+
+"""
+@brief Gets the names of the characters involved in the action
+"""
+func _get_character_names() -> String:
+	var names: String = ""
+	for character in characters:
+		names += "[u]" + character.char_full_name + "[/u], "
+
+	names = names.left(names.length() - 2)
+	return names
 
 # """
 # @brief Processes an espionage action

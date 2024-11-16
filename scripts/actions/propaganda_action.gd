@@ -7,7 +7,7 @@ func _process_action() -> Array[String]:
 	var logs: Array[String] = []
 	var log_message: String = ""
 
-	logs.append("Processing PROPAGANDA action at [u]" + str(poi.poi_name) + "[/u] by " + str(characters))
+	logs.append("Processing PROPAGANDA action at [u]" + str(poi.poi_name) + "[/u] by " + _get_character_names())
 
 	# Get cumulative stats for all characters involved
 	var stats: Dictionary = _get_stats()
