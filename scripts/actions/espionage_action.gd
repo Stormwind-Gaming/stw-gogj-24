@@ -3,11 +3,11 @@ extends BaseAction
 class_name EspionageAction
 
 
-func _process_action() -> Array[String]:
-	var logs: Array[String] = []
+func _process_action() -> Array[TurnLog]:
+	var logs: Array[TurnLog] = []
 	var log_message: String = ""
 
-	logs.append("Processing ESPIONAGE action at [u]" + str(poi.poi_name) + "[/u] by " + _get_character_names())
+	logs.append(TurnLog.new("Processing ESPIONAGE action at [u]" + str(poi.poi_name) + "[/u] by " + _get_character_names(), Enums.LogType.ACTION_INFO))
 
 	# Get cumulative stats for all characters involved
 	var stats: Dictionary = _get_stats()
@@ -23,15 +23,15 @@ func _process_action() -> Array[String]:
 		
 	if(roll.success):
 		log_message = "Succeeded " + stat_check + " check..."
-		logs.append(log_message)
+		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
 
 		var rumour: Rumour = IntelFactory.create_rumour(poi.rumour_config)
 
 		log_message = "Generated intel of type " + str(rumour.rumour_type)
-		logs.append(log_message)
+		logs.append(TurnLog.new(log_message, Enums.LogType.SUCCESS))
 
 	else:
 		log_message = "Failed " + stat_check + " check..."
-		logs.append(log_message)
+		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
 
 	return logs
