@@ -96,25 +96,6 @@ stretch_mode = 5
 layout_mode = 2
 alignment = 1
 
-[node name="CharmHBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/StatsVBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-alignment = 1
-
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/StatsVBoxContainer/CharmHBoxContainer"]
-layout_mode = 2
-texture = ExtResource("5_apt8c")
-expand_mode = 3
-
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/StatsVBoxContainer/CharmHBoxContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "0"
-
-[node name="Separator" type="HSeparator" parent="MarginContainer/VBoxContainer/HBoxContainer/StatsVBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 0
-
 [node name="SubtletyHBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/StatsVBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -126,6 +107,25 @@ texture = ExtResource("6_i2jue")
 expand_mode = 3
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/StatsVBoxContainer/SubtletyHBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "0"
+
+[node name="Separator" type="HSeparator" parent="MarginContainer/VBoxContainer/HBoxContainer/StatsVBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="CharmHBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/StatsVBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/StatsVBoxContainer/CharmHBoxContainer"]
+layout_mode = 2
+texture = ExtResource("5_apt8c")
+expand_mode = 3
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/StatsVBoxContainer/CharmHBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "0"

@@ -268,6 +268,18 @@ func remove_highlight_color() -> void:
 func set_focus_color() -> void:
 	$Polygon2D.color = no_color
 
+"""
+@brief Sets the district as disabled
+"""
+func set_disabled() -> void:
+	$CollisionPolygon2D.disabled = true
+
+"""
+@brief Sets the district as enabled
+"""
+func set_enabled() -> void:
+	$CollisionPolygon2D.disabled = false
+
 #|==============================|
 #|      Event Handlers         |
 #|==============================|

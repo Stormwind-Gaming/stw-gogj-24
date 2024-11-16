@@ -1,7 +1,6 @@
-[gd_resource type="Theme" load_steps=13 format=3 uid="uid://dexax20p2eewp"]
+[gd_resource type="Theme" load_steps=12 format=3 uid="uid://dexax20p2eewp"]
 
 [ext_resource type="FontFile" uid="uid://djwj10bhtdik" path="res://assets/fonts/veteran typewriter.ttf" id="1_lyhgf"]
-[ext_resource type="Texture2D" uid="uid://brj108w3mvknt" path="res://assets/sprites/panel_sheet_background.png" id="2_f4clh"]
 [ext_resource type="StyleBox" uid="uid://co18tu22sbler" path="res://assets/textures/folder_tab_box_texture_hover.tres" id="2_m063c"]
 [ext_resource type="StyleBox" uid="uid://6241urkjslaf" path="res://assets/textures/tw_button_style_box_texture.tres" id="2_qo8vt"]
 [ext_resource type="StyleBox" uid="uid://deqxdkxwpparc" path="res://assets/textures/tw_button_style_box_texture_hover.tres" id="3_d8d26"]
@@ -24,8 +23,7 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8n68h"]
-texture = ExtResource("2_f4clh")
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hwnya"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kedib"]
 
@@ -46,7 +44,7 @@ CheckButton/fonts/font = ExtResource("1_lyhgf")
 Label/colors/font_color = Color(0, 0, 0, 1)
 Label/font_sizes/font_size = 18
 Label/fonts/font = ExtResource("1_lyhgf")
-PanelContainer/styles/panel = SubResource("StyleBoxTexture_8n68h")
+PanelContainer/styles/panel = SubResource("StyleBoxEmpty_hwnya")
 RichTextLabel/colors/default_color = Color(0, 0, 0, 1)
 RichTextLabel/fonts/bold_font = ExtResource("1_lyhgf")
 RichTextLabel/fonts/normal_font = ExtResource("1_lyhgf")

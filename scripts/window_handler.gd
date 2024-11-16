@@ -21,7 +21,8 @@ func _ready() -> void:
 	EventBus.open_new_window.connect(_open_new_window)
 	EventBus.open_new_radial_menu.connect(_open_radial_menu)
 	EventBus.close_all_windows.connect(_close_all_windows)
-	pass
+	
+	EventBus.log_created.connect(_create_new_event_panel)
 
 #|==============================|
 #|      Event Handlers         |
@@ -65,3 +66,17 @@ func _open_radial_menu(menu: RadialMenu) -> void:
 	if open_radial_menu:
 		open_radial_menu.queue_free()
 	open_radial_menu = menu
+
+"""
+@brief Creates a new event panel
+
+@param log The log to display
+"""
+func _create_new_event_panel(log: TurnLog) -> void:
+	# print("Creating new event panel")
+	# if log.log_type == Enums.LogType.CONSEQUENCE:
+	# 	print("Creating new event panel", log.log_message)
+	# var popup = Globals.event_panel_scene.instantiate()
+	# popup.log = log
+	# _open_new_window(popup)
+	pass
