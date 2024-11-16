@@ -201,8 +201,33 @@ func process_turn() -> void:
 			var turn_log = TurnLog.new(district.district_name + " heat decreased by " + str(reduction), Enums.LogType.WORLD_INFO)
 			GlobalRegistry.turn_logs.add_item(str(GameController.turn_number), turn_log)
 
+	# Check for endgame conditions
+	# TODO: Maybe there should be a property on GameController that tracks if we're in an endgame state and locks out other actions etc.
+	if get_heat_level() > 80:
+		_trigger_heat_endgame()
+	elif get_resistance_level() > 80:
+		_trigger_resistance_endgame()
+
+
 	# Emit the signal to end the turn
 	EventBus.end_turn_complete.emit(turn_number)
+
+
+"""
+@brief Triggers the heat endgame
+"""
+func _trigger_heat_endgame() -> void:
+	# TODO: Create a custom endgame WorldEvent
+	# TODO: Create custom endgame Plan(s)
+	pass
+
+"""
+@brief Triggers the resistance endgame
+"""
+func _trigger_resistance_endgame() -> void:
+	# TODO: Create a custom endgame WorldEvent
+	# TODO: Create custom endgame Plan(s)
+	pass
 
 #|==============================|
 #|      District Management    |
