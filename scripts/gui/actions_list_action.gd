@@ -69,16 +69,11 @@ func set_action(action_attr: BaseAction) -> void:
 		agent_card.set_character(agent)
 		agents.add_child(agent_card)
 	
-	# Handle remove button state based on plan association
-	if not action.associated_plan:
-		# Enable remove button for standalone actions
-		remove_button.disabled = false
+	# Check if the action is in flight
+	if action.in_flight:
+		remove_button.disabled = true
 	else:
-		# For plan actions, check if plan is in progress
-		if action.associated_plan.plan_in_progress:
-			remove_button.disabled = true
-		else:
-			remove_button.disabled = false
+		remove_button.disabled = false
 
 #|==============================|
 #|      Event Handlers         |

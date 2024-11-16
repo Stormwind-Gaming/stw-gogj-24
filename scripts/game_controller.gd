@@ -157,6 +157,13 @@ func add_action(poi: PointOfInterest, characters: Array[Character], action_type:
 	action_config.action_type = action_type
 	action_config.additional_info = additional_info
 
+
+	#TODO: Not sure if this is the best way to handle this
+	if action_type == Enums.ActionType.PLAN:
+		# Find the plan associated with this POI
+		var plan = GlobalRegistry.intel.find_item(GlobalRegistry.LIST_PLANS, "plan_subject_poi", poi)
+		action_config.additional_info["associated_plan"] = plan
+
 	ActionFactory.create_action(action_config)
 
 

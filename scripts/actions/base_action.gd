@@ -31,11 +31,6 @@ var additional_info: Dictionary = {}
 var turn_to_end: int = 0
 
 """
-@brief The turn number when this action will expire if not completed
-"""
-var turn_to_expire: int = 0
-
-"""
 @brief The intelligence plan associated with this action
 """
 var associated_plan: Plan = null
@@ -58,14 +53,22 @@ var in_flight: bool = false
 """
 func _init(config: ActionFactory.ActionConfig):
 	print("BaseAction init")
+	turn_to_end = GameController.turn_number + 1
+
 	self.poi = config.poi
 	self.characters = config.characters
 	self.action_type = config.action_type
 	self.additional_info = config.additional_info
 
+	if config.additional_info.has("associated_plan"):
+		self.associated_plan = config.additional_info["associated_plan"]
+		turn_to_end = GameController.turn_number + self.associated_plan.plan_duration
+
 	# Set all characters to assigned
 	for character in characters:
 		character.char_state = Enums.CharacterState.ASSIGNED
+
+	print("Action turn to end: ", turn_to_end)
 
 	EventBus.turn_processing_initiated.connect(_on_turn_processing_initiated)
 	EventBus.end_turn_complete.connect(_on_end_turn_completed)
@@ -77,9 +80,18 @@ func _init(config: ActionFactory.ActionConfig):
 """
 func _on_turn_processing_initiated(num:int) -> void:
 	in_flight = true
-	var danger_logs = _process_danger()
-	var action_logs = _process_action()
 
+	var danger_logs: Array[String] = []
+	var action_logs: Array[String] = []
+
+	if num >= turn_to_end:
+
+		danger_logs = _process_danger()
+		action_logs = _process_action()
+
+	else:
+		action_logs.append("Action in progress by " + str(characters))
+		
 	for step in danger_logs + action_logs:
 		GlobalRegistry.turn_logs.add_item(str(GameController.turn_number), step)
 
@@ -89,6 +101,7 @@ func _on_turn_processing_initiated(num:int) -> void:
 """
 func _on_end_turn_completed(num:int) -> void:
 	if num >= turn_to_end:
+		print("Turn is ending: ", num, " >= ", turn_to_end)
 		_release_characters()
 
 		# Delete the action
