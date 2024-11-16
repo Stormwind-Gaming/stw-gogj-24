@@ -75,6 +75,16 @@ const DISTRICT_INIT_HEAT_MIN: int = 10
 """
 const DISTRICT_INIT_HEAT_MAX: int = 30
 
+"""
+@brief Minimum amount of heat decreased from a district per turn
+"""
+const DISTRICT_HEAT_DECREASE_PER_TURN_MIN: int = 5
+
+"""
+@brief Maximum amount of heat decreased from a district per turn
+"""
+const DISTRICT_HEAT_DECREASE_PER_TURN_MAX: int = 10
+
 #|==============================|
 #|    Action Effects   |
 #|==============================|

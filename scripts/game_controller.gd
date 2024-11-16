@@ -195,6 +195,14 @@ func process_turn() -> void:
 	
 	# ...actions will receive the signal and process themselves, adding logs, changing statuses, etc.
 
+	# Decrease the heat for each district
+	for district in GlobalRegistry.districts.get_all_items():
+		var reduction:int = MathHelpers.generateBellCurveStat(Constants.DISTRICT_HEAT_DECREASE_PER_TURN_MIN, Constants.DISTRICT_HEAT_DECREASE_PER_TURN_MAX)
+		district.heat -= reduction
+		GlobalRegistry.turn_logs.add_item(str(GameController.turn_number), district.district_name + " heat decreased by " + str(reduction))
+
+	
+
 	# Emit the signal to end the turn
 	EventBus.end_turn_complete.emit(turn_number)
 
