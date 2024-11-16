@@ -125,10 +125,13 @@ func populate_rumour_list():
 			var button_group = intel_data["button_group"]
 			var description_label = intel_data["description_label"]
 
+			button_group.allow_unpress = true
+
 			var check_button = CheckButton.new()
 			check_button.text = rumour.rumour_text + " (Expires in " + str(rumour.expires_on_turn - GameController.turn_number) + " days)"
 			check_button.set_button_group(button_group)
 			check_button.set_autowrap_mode(TextServer.AUTOWRAP_WORD_SMART)
+			check_button.focus_mode = 0
 
 			# Store reference to rumour object
 			check_button.set_meta("rumour", rumour)
@@ -161,6 +164,7 @@ func populate_rumour_list():
 			)
 
 			container.add_child(check_button)
+			container.add_child(HSeparator.new())
 		else:
 			print("Error: Container not found or intel_data is invalid for:", name, "with type:", rumour.type)
 

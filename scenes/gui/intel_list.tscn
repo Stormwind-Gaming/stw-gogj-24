@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://o3h8o46ermjp"]
+[gd_scene load_steps=13 format=3 uid="uid://o3h8o46ermjp"]
 
 [ext_resource type="Script" path="res://scripts/gui/intel_list.gd" id="1_4b1gi"]
 [ext_resource type="Theme" uid="uid://dexax20p2eewp" path="res://assets/themes/base_theme.tres" id="1_4g68a"]
@@ -22,6 +22,14 @@ CheckButton/styles/hover = SubResource("StyleBoxEmpty_xxx3e")
 CheckButton/styles/hover_pressed = SubResource("StyleBoxEmpty_tyofl")
 CheckButton/styles/normal = SubResource("StyleBoxEmpty_s7vqy")
 CheckButton/styles/pressed = SubResource("StyleBoxEmpty_isj6o")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kuk1b"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
 
 [node name="IntelList" type="Window" node_paths=PackedStringArray("plan_holder")]
 auto_translate_mode = 1
@@ -97,36 +105,74 @@ theme_override_constants/margin_bottom = 10
 [node name="IntelListContainer" type="VBoxContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_constants/separation = 10
 
-[node name="WhoContainer" type="VBoxContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VSeparator" type="VSeparator" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxFlat_kuk1b")
+
+[node name="WhoContainer" type="VBoxContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="RichTextLabel" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer/HBoxContainer/WhoContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[u][font_size=20]Missions"
+fit_content = true
+
+[node name="WhoWhatBtnGrpContainer" type="VBoxContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer/HBoxContainer/WhoContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer/WhoContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer"]
 layout_mode = 2
-text = "Missions"
+size_flags_vertical = 3
 
-[node name="WhoWhatBtnGrpContainer" type="VBoxContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer/WhoContainer"]
+[node name="VSeparator" type="VSeparator" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer/HBoxContainer2"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxFlat_kuk1b")
+
+[node name="WhenContainer" type="VBoxContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="RichTextLabel" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer/HBoxContainer2/WhenContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[u][font_size=20]Timings"
+fit_content = true
+
+[node name="WhenBtnGrpContainer" type="VBoxContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer/HBoxContainer2/WhenContainer"]
 layout_mode = 2
 
-[node name="WhereContainer" type="VBoxContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VSeparator" type="VSeparator" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer/HBoxContainer3"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxFlat_kuk1b")
+
+[node name="WhereContainer" type="VBoxContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="RichTextLabel" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer/HBoxContainer3/WhereContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[u][font_size=20]Locations"
+fit_content = true
+
+[node name="WhereBtnGrpContainer" type="VBoxContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer/HBoxContainer3/WhereContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer/WhereContainer"]
+[node name="CheckButton" type="CheckButton" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer"]
 layout_mode = 2
-text = "Locations"
-
-[node name="WhereBtnGrpContainer" type="VBoxContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer/WhereContainer"]
-layout_mode = 2
-
-[node name="WhenContainer" type="VBoxContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer/WhenContainer"]
-layout_mode = 2
-text = "Timings"
-
-[node name="WhenBtnGrpContainer" type="VBoxContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Rumours/MarginContainer/HBoxContainer/LeftScroll/MarginContainerL/IntelListContainer/WhenContainer"]
-layout_mode = 2
+focus_mode = 0
 
 [node name="Plans" type="PanelContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer"]
 visible = false
