@@ -97,6 +97,9 @@ Updates the character's role based on the sympathy value.
 @param sympathy An integer representing the sympathy level (1-99).
 """
 func set_char_sympathy(sympathy: int) -> void:
+	if sympathy > 100:
+		sympathy = 100
+
 	if sympathy > 80 and (char_recruitment_state != Enums.CharacterRecruitmentState.SYMPATHISER_RECRUITED or char_recruitment_state != Enums.CharacterRecruitmentState.SYMPATHISER_NOT_RECRUITED):
 		# This character is sympathetic to the resistance
 		char_recruitment_state = Enums.CharacterRecruitmentState.SYMPATHISER_NOT_RECRUITED
