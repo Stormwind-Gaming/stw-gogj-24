@@ -18,10 +18,10 @@ corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
 [node name="Action" type="MarginContainer" node_paths=PackedStringArray("remove_button", "title", "time_remaining", "agents")]
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 script = ExtResource("1_7wvl1")
 remove_button = NodePath("PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/ActionsCenterContainer/TextureButton")
 title = NodePath("PanelContainer/MarginContainer/VBoxContainer/HeadHBoxContainer/Title")
