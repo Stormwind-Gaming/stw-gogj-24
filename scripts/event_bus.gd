@@ -84,6 +84,17 @@ signal district_created(district: District)
 """
 signal district_heat_changed(district: District, heat: int)
 
+"""
+@brief Emitted when a district becomes focused
+"""
+signal district_just_focused(district: District)
+
+"""
+@brief Emitted when a district is no longer focused
+"""
+signal district_unfocused(district: District)
+
+
 #|==============================|
 #|      Log Management          |
 #|==============================|

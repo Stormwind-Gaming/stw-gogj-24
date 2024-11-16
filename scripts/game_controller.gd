@@ -44,15 +44,6 @@ var calendar: Calendar
 var turn_number: int = 0
 
 #|==============================|
-#|          Signals            |
-#|==============================|
-"""
-@brief Emitted when a district becomes focused
-"""
-signal district_just_focused(district: District)
-
-
-#|==============================|
 #|      Lifecycle Methods      |
 #|==============================|
 """
@@ -239,7 +230,7 @@ func _trigger_resistance_endgame() -> void:
 """
 func set_district_focused(district: District) -> void:
 	district_focused = district
-	emit_signal("district_just_focused", district)
+	EventBus.district_just_focused.emit(district)
 
 #|==============================|
 #|      Menu Management        |
