@@ -109,8 +109,7 @@ func _on_popup_button_pressed() -> void:
 """
 func _on_character_state_changed(character: Character) -> void:
 	if character == self.character:
-		pass
-	pass
+		_set_state_overlay(character.char_state)
 
 """
 @brief Handles changes to the character's knowledge.
@@ -169,6 +168,7 @@ func _assign_character_ui(character: Character) -> void:
 @param state The current state of the character.
 """
 func _set_state_overlay(status: Enums.CharacterState) -> void:
+	print('Setting state overlay', status)
 	self.modulate = Color(1, 1, 1)
 
 	if status == Enums.CharacterState.AVAILABLE:

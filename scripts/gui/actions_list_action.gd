@@ -104,7 +104,16 @@ func set_action(action_attr: BaseAction) -> void:
 Removes the action from the game and emits the remove_action signal.
 """
 func _on_remove_button_pressed() -> void:
-	print("Remove button pressed")
+	var confimation_dialog = Globals.confirmation_dialog_scene.instantiate()
+	confimation_dialog.setup_dialog("Are you sure you want to remove this action?", "Remove", "Cancel")
+	confimation_dialog.on_confirmed.connect(_on_remove_confirmed)
+	add_child(confimation_dialog)
+
+"""
+@brief Handles the remove action confirmation event.
+Removes the action from the game and cleans up the UI elements.
+"""
+func _on_remove_confirmed() -> void:
 	# Remove the action and let it clean up
 	action.queue_free()
 	# Remove this UI element

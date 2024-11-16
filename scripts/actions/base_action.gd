@@ -100,7 +100,7 @@ func _on_turn_processing_initiated(num:int) -> void:
 		
 	for step in danger_logs + action_logs:
 		GlobalRegistry.turn_logs.add_item(str(GameController.turn_number), step)
-
+		
 
 """
 @brief Called when the turn ends
@@ -246,6 +246,7 @@ func _release_characters() -> void:
 		# If the character is assigned to this action (e.g. not missing or deceased), set them to available
 		if character.char_state == Enums.CharacterState.ASSIGNED:
 			character.char_state = Enums.CharacterState.AVAILABLE
+			EventBus.character_state_changed.emit(character)
 
 """
 @brief Gets the names of the characters involved in the action

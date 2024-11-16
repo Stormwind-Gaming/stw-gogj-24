@@ -1,4 +1,4 @@
-extends ConfirmationDialog
+extends Window
 
 """
 How to instanciate in another script:
@@ -17,6 +17,17 @@ How to instanciate in another script:
 @brief Label that displays the dialog text
 """
 @export var text: Label
+
+"""
+@brief Button for the accept button
+"""
+@export var accept_button: Button
+
+"""
+@brief Button for the cancel button
+"""
+@export var cancel_button: Button
+
 
 #|==============================|
 #|          Signals            |
@@ -44,10 +55,8 @@ signal on_canceled()
 func setup_dialog(text: String, accept_text: String = 'Accept', cancel_button: String = 'Cancel') -> void:
 	self.text.text = text
 
-	## these are opposites because the accept button is on the left and the cancel button is on the right
-	## so I've switched them
-	self.ok_button_text = cancel_button
-	self.cancel_button_text = accept_text
+	self.accept_button.text = accept_text
+	self.cancel_button.text = cancel_button
 
 	# center the dialog
 	self.popup_centered()
@@ -60,7 +69,7 @@ func setup_dialog(text: String, accept_text: String = 'Accept', cancel_button: S
 Note: Due to button position swap, this actually emits the confirmed signal.
 """
 func _on_canceled() -> void:
-	on_confirmed.emit()
+	on_canceled.emit()
 	# close the dialog
 	queue_free()
 
@@ -69,6 +78,6 @@ func _on_canceled() -> void:
 Note: Due to button position swap, this actually emits the canceled signal.
 """
 func _on_confirmed() -> void:
-	on_canceled.emit()
+	on_confirmed.emit()
 	# close the dialog
 	queue_free()

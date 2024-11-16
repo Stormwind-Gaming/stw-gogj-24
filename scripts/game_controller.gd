@@ -208,7 +208,6 @@ func process_turn() -> void:
 	elif get_resistance_level() > 80:
 		_trigger_resistance_endgame()
 
-
 	# Emit the signal to end the turn
 	EventBus.end_turn_complete.emit(turn_number)
 

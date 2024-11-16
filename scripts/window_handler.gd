@@ -32,7 +32,6 @@ func _ready() -> void:
 @brief Closes all open windows
 """
 func _close_all_windows(emit: bool = true) -> void:
-	print("Closing all windows")
 	if open_window:
 		open_window.queue_free()
 	if open_radial_menu:
