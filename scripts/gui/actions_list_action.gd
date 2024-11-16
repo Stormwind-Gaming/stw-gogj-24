@@ -14,6 +14,11 @@ extends MarginContainer
 @export var title: Label
 
 """
+@brief Label displaying the action title
+"""
+@export var location_label: RichTextLabel
+
+"""
 @brief Label showing the remaining time for this action
 """
 @export var time_remaining: RichTextLabel
@@ -57,11 +62,27 @@ func set_action(action_attr: BaseAction) -> void:
 	else:
 		type = 'Action'
 	
+	var main_title = ''
+	if action_attr.associated_plan:
+		main_title = action_attr.associated_plan.plan_name
+	else:
+		main_title = Globals.get_action_type_string(action.action_type)
+
 	# Set the title text
-	title.text = "%s - %s" % [Globals.get_action_type_string(action.action_type), type]
+	title.text = "%s - %s" % [main_title, type]
 	
 	# Set the time remaining text
-	time_remaining.bbcode_text = "[b]Time remaining:[/b] " + '1' + " days" #str(action.time_remaining)
+	time_remaining.bbcode_text = "Time remaining: " + str(action.turn_to_end - GameController.turn_number) + " days"
+
+	# set the District and PoI
+	var location_text = ''
+	var poi = action.poi
+	var district = poi.parent_district
+	if district:
+		location_text = "District: %s - %s\n" % [district.district_name, Globals.get_district_type_string(district.district_type)]
+	if poi:
+		location_text += "POI: %s" % poi.poi_name
+	location_label.text = location_text
 
 	# Create and add agent cards for each character in the action
 	for agent in action.characters:

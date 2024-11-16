@@ -17,7 +17,7 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[node name="Action" type="MarginContainer" node_paths=PackedStringArray("remove_button", "title", "time_remaining", "agents")]
+[node name="Action" type="MarginContainer" node_paths=PackedStringArray("remove_button", "title", "location_label", "time_remaining", "agents")]
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 10
@@ -25,6 +25,7 @@ theme_override_constants/margin_bottom = 10
 script = ExtResource("1_7wvl1")
 remove_button = NodePath("PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/ActionsCenterContainer/TextureButton")
 title = NodePath("PanelContainer/MarginContainer/VBoxContainer/HeadHBoxContainer/Title")
+location_label = NodePath("PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/DistrictPoIVBoxContainer/LocationLabel")
 time_remaining = NodePath("PanelContainer/MarginContainer/VBoxContainer/HeadHBoxContainer/RichTextLabel")
 agents = NodePath("PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/AgentsVBoxContainer/GridContainer")
 
@@ -69,24 +70,27 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/DistrictPoIVBoxContainer"]
+[node name="LocationLabel" type="RichTextLabel" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/DistrictPoIVBoxContainer"]
 layout_mode = 2
+bbcode_enabled = true
 text = "District/PoI details"
+fit_content = true
 
 [node name="VSeparator" type="VSeparator" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 
 [node name="AgentsVBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 
 [node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/AgentsVBoxContainer"]
+visible = false
 layout_mode = 2
 text = "Agents
 "
 
 [node name="HSeparator" type="HSeparator" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/AgentsVBoxContainer"]
+visible = false
 layout_mode = 2
 
 [node name="GridContainer" type="GridContainer" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/AgentsVBoxContainer"]

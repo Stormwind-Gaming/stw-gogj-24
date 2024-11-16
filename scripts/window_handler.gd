@@ -6,7 +6,7 @@ extends Node
 """
 @brief Reference to current open window
 """
-var open_windows: Array[Window] = []
+var open_window: Window
 var open_radial_menu: RadialMenu = null
 
 #|==============================|
@@ -33,13 +33,12 @@ func _ready() -> void:
 """
 func _close_all_windows(emit: bool = true) -> void:
 	print("Closing all windows")
-	if open_windows:
-		for window in open_windows:
-			window.queue_free()
+	if open_window:
+		open_window.queue_free()
 	if open_radial_menu:
 		open_radial_menu.queue_free()
 	
-	open_windows = []
+	open_window = null
 	open_radial_menu = null
 
 
@@ -50,10 +49,13 @@ func _close_all_windows(emit: bool = true) -> void:
 @param close_all_windows Whether to close all other windows before opening
 """
 func _open_new_window(window: Window, close_all_windows: bool = true) -> void:
+	if open_window and open_window.name == window.name:
+		_close_all_windows(false)
+		return
 	if close_all_windows:
 		_close_all_windows(false)
 
-	open_windows.append(window)
+	open_window = window
 	add_child(window)
 
 """

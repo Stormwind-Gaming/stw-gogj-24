@@ -80,8 +80,8 @@ signal create_plan
 func set_existing_plan_card(plan_arg: Plan = null) -> void:
 	plan = plan_arg
 	title_label.text = plan.plan_name
-	timing_label.text = plan.plan_timing
-	location_label.text = plan.plan_subject_poi.poi_name
+	timing_label.text = "Available until:\n%s" % plan.plan_timing
+	location_label.text = "District:\n%s - %s\n\nLocation:\n%s" % [plan.plan_subject_poi.parent_district.district_name, Globals.get_district_type_string(plan.plan_subject_poi.parent_district.district_type), plan.plan_subject_poi.poi_name]
 	mission_label.text = plan.plan_text
 	green_star_stamp.visible = true
 
