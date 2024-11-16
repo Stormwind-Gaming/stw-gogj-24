@@ -26,16 +26,32 @@ func load_constants():
     http.request(url)
 
 func _on_constants_loaded(result, response_code, headers, body):
-    if response_code != 200:
-        print('failed to load constants from Google Sheets')
-        push_error("Failed to load constants from Google Sheets")
+    # First check if the request itself was successful
+    if result != HTTPRequest.RESULT_SUCCESS:
+        push_error("HTTP Request failed with result: " + str(result))
         return
         
-    var json = JSON.parse_string(body.get_string_from_utf8())
-    var rows = json.values
+    # Then check the response code
+    if response_code != 200:
+        push_error("Failed to load constants from Google Sheets. Response code: " + str(response_code))
+        return
     
+    # Safely parse JSON
+    var json_string = body.get_string_from_utf8()
+    var json = JSON.new()
+    var parse_result = json.parse(json_string)
+    
+    if parse_result != OK:
+        push_error("Failed to parse JSON: " + json.get_error_message() + " at line " + str(json.get_error_line()))
+        return
+        
+    var data = json.get_data()
+    if not data.has("values"):
+        push_error("JSON response missing 'values' key")
+        return
+        
     # Parse the rows into our values dictionary
-    for row in rows:
+    for row in data.values:
         if row.size() < 2: continue
         var name = row[0]
         var value = parse_value(row[1])
