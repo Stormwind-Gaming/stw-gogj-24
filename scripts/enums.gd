@@ -223,6 +223,19 @@ enum IntelEffect {
 }
 
 #|==============================|
+#|        Log Enums             |
+#|==============================|
+"""
+@brief Types of logs that can be generated
+"""
+enum LogType {
+	WORLD_INFO, # Information about the world e.g. district heat reduced
+	ACTION_INFO, # Information about an action e.g. action in progress
+	CONSEQUENCE, # An action consequence e.g. MIA agent
+	SUCCESS, # An action success e.g. intel generated
+}
+
+#|==============================|
 #|      Event Enums							|
 #|==============================|
 

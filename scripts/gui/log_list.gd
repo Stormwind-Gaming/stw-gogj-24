@@ -32,8 +32,15 @@ func _ready():
 	# Connect the close_requested signal
 	connect("close_requested", Callable(self, "_on_close_requested"))
 	
-	for line in GlobalRegistry.turn_logs.get_list(str(GameController.turn_number)):
-		label.text += line + "\n"
+	for turn_log:TurnLog in GlobalRegistry.turn_logs.get_list(str(GameController.turn_number)):
+		if turn_log.log_type == Enums.LogType.WORLD_INFO:
+			label.text += "[color=yellow]" + turn_log.log_message + "[/color]\n"
+		elif turn_log.log_type == Enums.LogType.ACTION_INFO	:
+			label.text += "[color=blue]" + turn_log.log_message + "[/color]\n"
+		elif turn_log.log_type == Enums.LogType.CONSEQUENCE:
+			label.text += "[color=red]" + turn_log.log_message + "[/color]\n"
+		elif turn_log.log_type == Enums.LogType.SUCCESS:
+			label.text += "[color=green]" + turn_log.log_message + "[/color]\n"
 
 """
 @brief Called every frame to update typewriter effect if enabled.
