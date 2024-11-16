@@ -246,5 +246,4 @@ func _on_tab_changed(tab_index):
 @brief Handles the close button press.
 """
 func _on_close_button_pressed() -> void:
-	GameController.set_menu_closed("IntelList")
-	queue_free()
+	EventBus.close_all_windows.emit()

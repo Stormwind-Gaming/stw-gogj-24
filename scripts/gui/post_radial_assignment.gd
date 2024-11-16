@@ -167,7 +167,7 @@ Emits the assignment completion signal.
 """
 func _on_button_pressed() -> void:
 	emit_signal('post_radial_assignment_option', option, selected_agents, [])
-	queue_free()
+	EventBus.close_all_windows.emit()
 
 """
 @brief Handles the close button press.
@@ -175,7 +175,7 @@ Emits a cancellation signal.
 """
 func _on_close_button_pressed() -> void:
 	emit_signal('post_radial_assignment_option', Enums.ActionType.NONE, selected_agents, [])
-	queue_free()
+	EventBus.close_all_windows.emit()
 
 #|==============================|
 #|      Helper Functions       |

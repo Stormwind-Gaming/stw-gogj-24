@@ -35,7 +35,7 @@ func _ready():
 	for turn_log: TurnLog in GlobalRegistry.turn_logs.get_list(str(GameController.turn_number)):
 		if turn_log.log_type == Enums.LogType.WORLD_INFO:
 			label.text += "[color=yellow]" + turn_log.log_message + "[/color]\n"
-		elif turn_log.log_type == Enums.LogType.ACTION_INFO	:
+		elif turn_log.log_type == Enums.LogType.ACTION_INFO:
 			label.text += "[color=blue]" + turn_log.log_message + "[/color]\n"
 		elif turn_log.log_type == Enums.LogType.CONSEQUENCE:
 			label.text += "[color=red]" + turn_log.log_message + "[/color]\n"
@@ -75,5 +75,4 @@ func is_end_turn_log(type_effect_speed: float = 0.25) -> bool:
 @brief Handles the close button press.
 """
 func _on_close_button_pressed() -> void:
-	GameController.set_menu_closed("LogList")
-	queue_free()
+	EventBus.close_all_windows.emit()
