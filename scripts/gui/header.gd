@@ -12,11 +12,13 @@ extends Control
 @brief Progress bar showing the current heat level
 """
 @export var heat_bar: ProgressBar
+@export var heat_bar_label: Label
 
 """
 @brief Progress bar showing the current resistance level
 """
 @export var resistance_bar: ProgressBar
+@export var resistance_bar_label: Label
 
 """
 @brief Container for agent cards
@@ -36,8 +38,13 @@ func _ready():
 	EventBus.character_recruitment_state_changed.connect(_on_agents_changed)
 	EventBus.action_created.connect(_on_new_assignment)
 
-	resistance_bar.value = GameController.get_resistance_level()
-	heat_bar.value = GameController.get_heat_level()
+	var res = GameController.get_resistance_level()
+	resistance_bar.value = res
+	resistance_bar_label.text = "Resistance - %s" % str(res) + "%"
+
+	var heat = GameController.get_heat_level()
+	heat_bar.value = heat
+	heat_bar_label.text = "Heat - %s" % str(heat) + "%"
 	date.text = GameController.calendar.get_date_string()
 
 	_update_gui(0)
@@ -96,6 +103,13 @@ func _on_new_assignment(action: BaseAction) -> void:
 """
 func _update_gui(number: int) -> void:
 	date.text = GameController.calendar.get_date_string()
-	resistance_bar.value = GameController.get_resistance_level()
-	heat_bar.value = GameController.get_heat_level()
+
+	var res = GameController.get_resistance_level()
+	print("Resistance: %s" % str(res))
+	resistance_bar.value = res
+	resistance_bar_label.text = "Resistance - %s" % str(res) + "%"
+	
+	var heat = GameController.get_heat_level()
+	heat_bar.value = heat
+	heat_bar_label.text = "Heat - %s" % str(heat) + "%"
 	_update_agents_gui()
