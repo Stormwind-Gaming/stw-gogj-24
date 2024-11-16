@@ -221,3 +221,12 @@ enum IntelEffect {
 	D_FOUR_E_FOUR,
 	NONE
 }
+
+#|==============================|
+#|      Event Enums							|
+#|==============================|
+
+enum EventOutcomeType {
+	MIA,
+	KIA
+}

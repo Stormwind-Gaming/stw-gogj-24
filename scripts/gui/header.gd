@@ -31,9 +31,7 @@ extends Control
 Connects signals and initializes UI elements.
 """
 func _ready():
-	# TODO: Is this district created? if so it should go in the eventbus following the same pattern as the other objects
-	GameController.connect("new_district_registered", _on_new_district_registered)
-
+	EventBus.district_created.connect(_on_new_district_registered)
 	EventBus.end_turn_complete.connect(_update_gui)
 	EventBus.character_recruitment_state_changed.connect(_on_agents_changed)
 	EventBus.action_created.connect(_on_new_assignment)

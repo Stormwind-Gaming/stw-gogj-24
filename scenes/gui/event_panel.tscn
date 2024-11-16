@@ -1,0 +1,108 @@
+[gd_scene load_steps=8 format=3 uid="uid://86o624u5iwhf"]
+
+[ext_resource type="Theme" uid="uid://dexax20p2eewp" path="res://assets/themes/base_theme.tres" id="1_q7e31"]
+[ext_resource type="Script" path="res://scripts/gui/event_panel.gd" id="2_qjty7"]
+[ext_resource type="Texture2D" uid="uid://bl48i75s7giwq" path="res://assets/sprites/events/event_popup_base.png" id="2_vgsex"]
+[ext_resource type="Texture2D" uid="uid://2olyv7qtfanj" path="res://assets/sprites/events/event_kia.png" id="3_qaba4"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sfl1o"]
+texture = ExtResource("2_vgsex")
+texture_margin_left = 40.0
+texture_margin_top = 45.0
+texture_margin_right = 40.0
+texture_margin_bottom = 40.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gebxy"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rot6c"]
+
+[node name="EventPanel" type="Window" node_paths=PackedStringArray("event_image", "title_label", "text_label", "button")]
+transparent_bg = true
+initial_position = 2
+size = Vector2i(600, 650)
+exclusive = true
+unresizable = true
+borderless = true
+always_on_top = true
+transparent = true
+max_size = Vector2i(600, 650)
+theme = ExtResource("1_q7e31")
+script = ExtResource("2_qjty7")
+event_image = NodePath("EventTextureRect")
+title_label = NodePath("PanelContainer/VBoxContainer/MarginContainer/PanelContainer/VBoxContainer/Title")
+text_label = NodePath("PanelContainer/VBoxContainer/MarginContainer/PanelContainer/VBoxContainer/MarginContainer/RichTextLabel")
+button = NodePath("PanelContainer/VBoxContainer/MarginContainer/PanelContainer/VBoxContainer/MarginContainer2/Button")
+
+[node name="EventTextureRect" type="TextureRect" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+offset_right = 600.0
+offset_bottom = 650.0
+grow_horizontal = 2
+texture = ExtResource("3_qaba4")
+stretch_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+offset_right = 600.0
+offset_bottom = 650.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_sfl1o")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.4
+theme_override_styles/separator = SubResource("StyleBoxEmpty_gebxy")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_bottom = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_rot6c")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(10, 30)
+layout_mode = 2
+text = "Operation Compromised!"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer/VBoxContainer"]
+modulate = Color(0.637843, 0.637843, 0.637843, 1)
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+text = "Your agent’s luck has run out. In the shadows of [district name], they were cornered by an enemy patrol. [agent] fought valiantly, but overwhelming numbers led to their capture. The enemy now holds them in custody, and it is only a matter of time before they begin interrogations."
+fit_content = true
+
+[node name="MarginContainer2" type="MarginContainer" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "How unfortunate."
+
+[connection signal="button_up" from="PanelContainer/VBoxContainer/MarginContainer/PanelContainer/VBoxContainer/MarginContainer2/Button" to="." method="_on_button_pressed"]

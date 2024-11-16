@@ -51,11 +51,6 @@ var turn_number: int = 0
 """
 signal district_just_focused(district: District)
 
-"""
-@brief Emitted when a new district is registered
-"""
-signal new_district_registered(district: District)
-
 
 #|==============================|
 #|      Lifecycle Methods      |
@@ -200,8 +195,6 @@ func process_turn() -> void:
 		var reduction:int = MathHelpers.generateBellCurveStat(Constants.DISTRICT_HEAT_DECREASE_PER_TURN_MIN, Constants.DISTRICT_HEAT_DECREASE_PER_TURN_MAX)
 		district.heat -= reduction
 		GlobalRegistry.turn_logs.add_item(str(GameController.turn_number), district.district_name + " heat decreased by " + str(reduction))
-
-	
 
 	# Emit the signal to end the turn
 	EventBus.end_turn_complete.emit(turn_number)
