@@ -288,6 +288,8 @@ func _has_plan() -> bool:
 	var has_plan = false
 	for plan in plans:
 		if plan.plan_subject_poi == self:
-			has_plan = true
-			break
+			var action = GlobalRegistry.actions.find_item(GlobalRegistry.LIST_ALL_ACTIONS, "associated_plan", plan)
+			if not action or not action.in_flight:
+				has_plan = true
+				break
 	return has_plan

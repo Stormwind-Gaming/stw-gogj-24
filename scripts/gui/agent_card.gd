@@ -96,7 +96,7 @@ func _on_popup_button_pressed() -> void:
 	)
 	# Popup a full agent_card
 	var agent_card_scene = Globals.agent_card_scene.instantiate()
-	agent_card_scene.set_character(character.id)
+	agent_card_scene.set_character(character)
 	agent_card_scene.disable_card()
 	window.add_child(agent_card_scene)
 	window.show()
