@@ -28,11 +28,13 @@ func load_constants():
 func _on_constants_loaded(result, response_code, headers, body):
     # First check if the request itself was successful
     if result != HTTPRequest.RESULT_SUCCESS:
+        print("HTTP Request failed with result: " + str(result))
         push_error("HTTP Request failed with result: " + str(result))
         return
         
     # Then check the response code
     if response_code != 200:
+        print('failed to load constants from Google Sheets. Response code: ' + str(response_code))
         push_error("Failed to load constants from Google Sheets. Response code: " + str(response_code))
         return
     
@@ -42,11 +44,13 @@ func _on_constants_loaded(result, response_code, headers, body):
     var parse_result = json.parse(json_string)
     
     if parse_result != OK:
+        print('failed to parse JSON: ' + json.get_error_message() + ' at line ' + str(json.get_error_line()))
         push_error("Failed to parse JSON: " + json.get_error_message() + " at line " + str(json.get_error_line()))
         return
         
     var data = json.get_data()
     if not data.has("values"):
+        print('JSON response missing "values" key')
         push_error("JSON response missing 'values' key")
         return
         
