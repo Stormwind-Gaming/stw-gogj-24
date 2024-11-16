@@ -53,20 +53,24 @@ var in_flight: bool = false
 """
 func _init(config: ActionFactory.ActionConfig):
 	print("BaseAction init")
-	turn_to_end = GameController.turn_number + 1
 
 	self.poi = config.poi
 	self.characters = config.characters
 	self.action_type = config.action_type
 	self.additional_info = config.additional_info
 
-	if config.additional_info.has("associated_plan"):
-		self.associated_plan = config.additional_info["associated_plan"]
-		turn_to_end = GameController.turn_number + self.associated_plan.plan_duration
-
 	# Set all characters to assigned
 	for character in characters:
 		character.char_state = Enums.CharacterState.ASSIGNED
+
+	# Calculate the turn to end
+	turn_to_end = GameController.turn_number + 1
+
+	if additional_info.has("associated_plan"):
+		self.associated_plan = config.additional_info["associated_plan"]
+
+		turn_to_end = GameController.turn_number + StatisticModification.mission_duration_modification(self.associated_plan.plan_duration, poi.parent_district.district_type)
+	
 
 	EventBus.turn_processing_initiated.connect(_on_turn_processing_initiated)
 	EventBus.end_turn_complete.connect(_on_end_turn_completed)
@@ -157,7 +161,8 @@ func _process_danger() -> Array[TurnLog]:
 		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
 
 		# Determine the consequence of the action failure
-		var district_heat: int = poi.parent_district.heat
+		var district: District = poi.parent_district
+		var district_heat: int = StatisticModification.heat_modification(district.heat, district.district_type)
 
 		log_message = "Determining consequence of action failure... district heat is " + str(district_heat)
 		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
@@ -198,7 +203,8 @@ func _determine_action_failure_consequence(district_heat: int) -> int:
 	}
 	
 	# Roll the dice
-	var roll = randf()
+	var consequence_modifier: int = StatisticModification.injury_chance_modification(1, poi.parent_district.district_type)
+	var roll = randf() * (2 - consequence_modifier)
 	var cumulative_probability = 0.0
 	
 	for consequence in modified_chances:

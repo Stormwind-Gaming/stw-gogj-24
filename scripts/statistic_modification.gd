@@ -158,7 +158,7 @@ func _ready() -> void:
 """
 @brief Checks if any milestones have been passed
 """
-func _check_milestones(num: int) -> void:
+func _check_milestones(_num: int) -> void:
 	# get districts
 	var districts = GlobalRegistry.districts.get_all_items()
 
@@ -231,7 +231,7 @@ func heat_modification(heat: int, district_type: Enums.DistrictType) -> int:
 	if industry_bonus_active:
 		modifier *= PORT_DISTRICT_MODIFIER_HIGH_SYMPATHY_VALUE
 
-	return heat * modifier
+	return floor(heat * modifier)
 
 """
 @brief Modifies the sympathy based on the district type modifier
@@ -271,9 +271,11 @@ func injury_chance_modification(injury: int, district_type: Enums.DistrictType) 
 @param district_type: the type of the district
 """
 func mission_duration_modification(mission_duration: int, district_type: Enums.DistrictType) -> int:
-	var modifier = 0
+	var modified_mission_duration: int = mission_duration
 
 	if district_type == Enums.DistrictType.PORT:
-		modifier += PORT_DISTRICT_MODIFIER_BASE
+		modified_mission_duration += PORT_DISTRICT_MODIFIER_BASE
+	elif port_bonus_active and district_type == Enums.DistrictType.PORT:
+		modified_mission_duration = floor(modified_mission_duration * PORT_DISTRICT_MODIFIER_HIGH_SYMPATHY_VALUE)
 
-	return mission_duration + modifier
+	return modified_mission_duration
