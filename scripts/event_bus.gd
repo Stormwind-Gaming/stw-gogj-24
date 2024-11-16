@@ -83,3 +83,11 @@ signal district_created(district: District)
 @brief Emitted when a district's heat level changes
 """
 signal district_heat_changed(district: District, heat: float)
+
+#|==============================|
+#|      Log Management          |
+#|==============================|
+"""
+@brief Emitted when a new log is created
+"""
+signal log_created(log: TurnLog)
