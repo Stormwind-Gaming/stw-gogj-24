@@ -30,6 +30,7 @@ const LIST_ALL_DISTRICTS = "all_districts"
 const LIST_ALL_ACTIONS = "all_actions"
 const LIST_RUMOURS = "rumours"
 const LIST_PLANS = "plans"
+const LIST_WORLD_EVENTS = "world_events"
 
 #|==============================|
 #|         Properties          |
@@ -64,6 +65,11 @@ var actions : Registry = Registry.new()
 """
 var turn_logs : Registry = Registry.new()
 
+"""
+@brief Registry instance for managing world-event lists
+"""
+var world_events : Registry = Registry.new()
+
 #|==============================|
 #|      Initialization         |
 #|==============================|
@@ -94,6 +100,9 @@ func _init():
 	# Initialize action-related lists
 	actions.create_list(LIST_ALL_ACTIONS)
 
+	# Initialize world-event-related lists
+	world_events.create_list(LIST_WORLD_EVENTS)
+
 
 func _ready():
 	# Character events
@@ -113,6 +122,9 @@ func _ready():
 
 	# District events
 	EventBus.district_created.connect(_on_district_created)	
+
+	# World-event events
+	EventBus.world_event_created.connect(_on_world_event_created)
 
 #|==============================|
 #|     Character Management    |
@@ -221,3 +233,14 @@ func _on_action_created(action: BaseAction) -> void:
 """
 func _on_district_created(district: District) -> void:
 	districts.add_item(LIST_ALL_DISTRICTS, district)
+
+#|==============================|
+#|     World-event Management  |
+#|==============================|
+"""
+@brief Adds a world-event to the world-events list
+
+@param world_event The world-event to add to the registry
+"""
+func _on_world_event_created(world_event: WorldEvent) -> void:
+	world_events.add_item(LIST_WORLD_EVENTS, world_event)

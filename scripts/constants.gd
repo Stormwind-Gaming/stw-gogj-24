@@ -78,12 +78,12 @@ const DISTRICT_INIT_HEAT_MAX: int = 30
 """
 @brief Minimum amount of heat decreased from a district per turn
 """
-const DISTRICT_HEAT_DECREASE_PER_TURN_MIN: int = 5
+const DISTRICT_HEAT_DECREASE_PER_TURN_MIN: int = 0
 
 """
 @brief Maximum amount of heat decreased from a district per turn
 """
-const DISTRICT_HEAT_DECREASE_PER_TURN_MAX: int = 10
+const DISTRICT_HEAT_DECREASE_PER_TURN_MAX: int = 0
 
 #|==============================|
 #|    Action Effects   |
@@ -274,3 +274,49 @@ const PORT_DISTRICT_MODIFIER_BASE: int = 1
 const PORT_DISTRICT_MODIFIER_HIGH_SYMPATHY_VALUE: float = 0.75
 # const PORT_DISTRICT_MODIFIER_HIGH_SYMPATHY_STAT: heat
 
+#|==============================|
+#|    World Event Settings     |
+#|==============================|
+
+"""
+@brief Minimum chance bounding (%) for a world event check to trigger
+Used in sigmoid probability calculation for event occurrence
+"""
+const WORLD_EVENT_CHECK_MIN_CHANCE: float = 10.0
+
+"""
+@brief Maximum chance bounding (%) for a world event check to trigger
+Used in sigmoid probability calculation for event occurrence
+"""
+const WORLD_EVENT_CHECK_MAX_CHANCE: float = 90.0
+
+"""
+@brief Heat threshold for considering the world "high heat" (>=70)
+Affects world event severity probabilities
+"""
+const HIGH_HEAT_THRESHOLD: int = 70
+
+"""
+@brief Heat threshold for considering the world "medium heat" (>=35)
+Affects world event severity probabilities
+"""
+const MEDIUM_HEAT_THRESHOLD: int = 35
+
+"""
+@brief Chance (%) of getting a minor event in high heat situations
+In high heat: 20% minor, 40% significant, 40% major
+"""
+const HIGH_HEAT_MINOR_CHANCE: float = 0.2
+
+"""
+@brief Chance threshold (%) for significant events in high heat
+Values below this are minor (20%), values between this and 100% are split
+between significant (40%) and major (40%)
+"""
+const HIGH_HEAT_SIGNIFICANT_CHANCE: float = 0.6
+
+"""
+@brief Chance (0-1.0) of getting a minor event in medium heat
+In medium heat: 40% minor, 60% significant
+"""
+const MEDIUM_HEAT_MINOR_CHANCE : float = 0.4

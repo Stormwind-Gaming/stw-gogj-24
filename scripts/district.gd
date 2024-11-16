@@ -35,7 +35,7 @@ var rumour_text: String = ""
 """
 @brief Heat level of the district (attention from authorities)
 """
-var heat: int = 0
+var heat: set = set_heat
 
 """
 @brief Sympathy level of the district (aggregate of all characters from PoIs)
@@ -325,3 +325,15 @@ Forwards POI unhover signals.
 """
 func _on_poi_unhovered() -> void:
 	emit_signal("poi_unhovered")
+
+#|==============================|
+#|      Setters                |
+#|==============================|
+func set_heat(new_heat: int) -> void:
+	# clamp heat between 0 and 100
+	if new_heat < 0:
+		new_heat = 0
+	elif new_heat > 2100:
+		new_heat = 100
+
+	heat = new_heat

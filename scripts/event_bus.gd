@@ -109,3 +109,11 @@ signal open_new_radial_menu(window: RadialMenu)
 @brief Emitted when all windows are closed
 """
 signal close_all_windows()
+
+#|==============================|
+#|      World-event Management |
+#|==============================|
+"""
+@brief Emitted when a new world-event is created
+"""
+signal world_event_created(world_event: WorldEvent)

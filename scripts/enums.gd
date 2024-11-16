@@ -233,6 +233,7 @@ enum LogType {
 	ACTION_INFO, # Information about an action e.g. action in progress
 	CONSEQUENCE, # An action consequence e.g. MIA agent
 	SUCCESS, # An action success e.g. intel generated
+	WORLD_EVENT, # A world event e.g. a random event
 }
 
 #|==============================|
@@ -245,4 +246,13 @@ enum LogType {
 enum EventOutcomeType {
 	MIA,
 	KIA
+}
+
+"""
+@brief Severity of world events
+"""
+enum WorldEventSeverity {
+	MINOR,
+	SIGNIFICANT,
+	MAJOR
 }

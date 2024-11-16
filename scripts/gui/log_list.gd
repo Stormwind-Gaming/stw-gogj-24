@@ -41,6 +41,10 @@ func _ready():
 			label.text += "[color=red]" + turn_log.log_message + "[/color]\n"
 		elif turn_log.log_type == Enums.LogType.SUCCESS:
 			label.text += "[color=green]" + turn_log.log_message + "[/color]\n"
+		elif turn_log.log_type == Enums.LogType.WORLD_EVENT:
+			label.text += "[color=purple]" + turn_log.log_message + "[/color]\n"
+		else:
+			label.text += "[color=grey]" + turn_log.log_message + "[/color]\n"
 
 """
 @brief Called every frame to update typewriter effect if enabled.
