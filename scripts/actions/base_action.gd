@@ -127,11 +127,10 @@ func _process_danger() -> Array[String]:
 
 	var logs: Array[String] = []
 
-	# First figure out the heat of the district
-	var district_heat: int = poi.parent_district.heat
+	# Get cumulative stats for all characters involved
 	var stats: Dictionary = _get_stats()
 
-	logs.append("Processing danger for action at [u]" + str(poi.poi_name) + "[/u] in district with heat " + str(district_heat))
+	logs.append("Processing danger for action at [u]" + str(poi.poi_name))
 
 	var subtle_roll = MathHelpers.bounded_sigmoid_check(stats["subtlety"], true)
 
@@ -146,9 +145,57 @@ func _process_danger() -> Array[String]:
 		poi.parent_district.heat += Constants.ACTION_EFFECT_FAILED_SUBTLETY
 		logs.append(log_message)
 
-		#TODO: Add effect of failure (roll on danger table based on district heat)
+		# Determine the consequence of the action failure
+		var district_heat: int = poi.parent_district.heat
+
+		log_message = "Determining consequence of action failure... district heat is " + str(district_heat)
+		logs.append(log_message)
+
+		match _determine_action_failure_consequence(district_heat):
+			Enums.CharacterState.ASSIGNED:
+				log_message = "No consequence"
+			Enums.CharacterState.MIA:
+				log_message = "One character is missing"
+				characters.shuffle()
+				characters[0].char_state = Enums.CharacterState.MIA
+			Enums.CharacterState.DECEASED:
+				log_message = "One character is deceased"
+				characters.shuffle()
+				characters[0].char_state = Enums.CharacterState.DECEASED
+			_:
+				log_message = "Unknown consequence"
+
+		logs.append(log_message)
 
 	return logs
+
+
+func _determine_action_failure_consequence(district_heat: int) -> int:
+	# Total probability should equal 1.0 (100%)
+	var base_chances = {
+			Enums.CharacterState.ASSIGNED: 0.85,    # 85% chance nothing happens
+			Enums.CharacterState.MIA: 0.1,          # 10% chance for MIA
+			Enums.CharacterState.DECEASED: 0.05     # 5% chance for death
+	}
+	
+	# As heat increases, redistribute probabilities (scaled down by half)
+	var heat_factor = district_heat / 100.0
+	var modified_chances = {
+			Enums.CharacterState.ASSIGNED: base_chances[Enums.CharacterState.ASSIGNED] * (1.0 - heat_factor * 0.5),
+			Enums.CharacterState.MIA: base_chances[Enums.CharacterState.MIA] + (heat_factor * 0.1),
+			Enums.CharacterState.DECEASED: base_chances[Enums.CharacterState.DECEASED] + (heat_factor * 0.1)
+	}
+	
+	# Roll the dice
+	var roll = randf()
+	var cumulative_probability = 0.0
+	
+	for consequence in modified_chances:
+			cumulative_probability += modified_chances[consequence]
+			if roll < cumulative_probability:
+					return consequence
+	
+	return Enums.CharacterState.ASSIGNED
 
 #|==============================|
 #|      Helper Methods         |
@@ -275,9 +322,8 @@ func _get_stats() -> Dictionary:
 # 		action.poi.parent_district.heat += 5
 # 		current_turn_log.append(log_message)
 
-	
 # 	var smarts_roll = MathHelpers.bounded_sigmoid_check(combined_smarts, true)
-	
+# 	
 # 	if(smarts_roll.success):
 # 		log_message = "Succeeded smarts check..."
 # 	# log_message += str(smarts_roll)

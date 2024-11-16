@@ -83,6 +83,16 @@ const DISTRICT_INIT_HEAT_MAX: int = 30
 """
 const ACTION_EFFECT_FAILED_SUBTLETY: int = 10
 
+const FAILURE_CONSEQUENCE_NONE: float = 0.7
+const FAILURE_CONSEQUENCE_MIA: float = 0.15
+const FAILURE_CONSEQUENCE_INCARCERATED: float = 0.1
+const FAILURE_CONSEQUENCE_DECEASED: float = 0.05
+
+const FAILURE_HEAT_MOD_MIA = 0.2
+const FAILURE_HEAT_MOD_INCARCERATED = 0.2
+const FAILURE_HEAT_MOD_DECEASED = 0.2
+
+
 """
 @brief Amount of sympathy added to a character when an action is completed
 """
