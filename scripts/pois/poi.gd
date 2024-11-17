@@ -51,7 +51,7 @@ var parent_district: District
 @brief Configuration for rumour generation chances
 #TODO Dynamically change rumour_config for each POI
 """
-var rumour_config : RumourConfig = RumourConfig.new(25,25,25)
+var rumour_config: RumourConfig = RumourConfig.new(25, 25, 25)
 
 """
 @brief Type of stat check for this POI
@@ -244,7 +244,7 @@ func _on_poi_clicked(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 			if poi_owner.char_recruitment_state == Enums.CharacterRecruitmentState.NON_SYMPATHISER_UNKNOWN:
 				actions.append(Enums.ActionType.SURVEILLANCE)
 
-			if(_has_plan()):
+			if (_has_plan()):
 				actions.append(Enums.ActionType.PLAN)
 
 			radial_menu_instance.set_optional_actions(actions)

@@ -12,8 +12,8 @@ func _process_action() -> Array[TurnLog]:
 	# Get cumulative stats for all characters involved
 	var stats: Dictionary = _get_stats()
 
-	var stat_check:String = ""
-	var roll: Dictionary = { "success": false }
+	var stat_check: String = ""
+	var roll: Dictionary = {"success": false}
 
 	match poi.stat_check_type:
 		Enums.StatCheckType.SMARTS:
@@ -23,7 +23,7 @@ func _process_action() -> Array[TurnLog]:
 			stat_check = "charm"
 			roll = MathHelpers.bounded_sigmoid_check(stats[stat_check], true, Constants.CHARM_CHECK_MIN_CHANCE, Constants.CHARM_CHECK_MAX_CHANCE)
 		
-	if(roll.success):
+	if (roll.success):
 		log_message = "Succeeded " + stat_check + " check..."
 		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
 

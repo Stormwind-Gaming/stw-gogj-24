@@ -285,4 +285,4 @@ func total_items() -> int:
 	var count = 0
 	for list in _registry.values():
 		count += list.size()
-	return count 
+	return count

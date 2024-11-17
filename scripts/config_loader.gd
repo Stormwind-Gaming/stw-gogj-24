@@ -79,4 +79,4 @@ func parse_value(value_str: String):
     return value_str
 
 func get_value(name: String, default = null):
-    return _values.get(name, default) 
+    return _values.get(name, default)

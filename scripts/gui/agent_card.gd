@@ -90,7 +90,7 @@ func _on_popup_button_pressed() -> void:
 	window.borderless = true
 	window.always_on_top = true
 	window.transparent = false
-	window.connect("mouse_exited", 
+	window.connect("mouse_exited",
 		func():
 			window.queue_free()
 	)
@@ -233,4 +233,4 @@ func disable_card() -> void:
 @brief Enables the assignment button on the card.
 """
 func enable_card() -> void:
-	assignment_button.disabled = false 
+	assignment_button.disabled = false

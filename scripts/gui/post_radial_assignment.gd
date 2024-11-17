@@ -98,7 +98,7 @@ func _ready():
 	else:
 		type = 'Action'
 	# set title
-	task_title.text = "%s - %s" % [Globals.get_action_type_string(option), type] 
+	task_title.text = "%s - %s" % [Globals.get_action_type_string(option), type]
 
 	# populate the agents list
 	var agents: Array[Character] = []

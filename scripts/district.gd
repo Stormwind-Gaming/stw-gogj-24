@@ -198,7 +198,7 @@ func _process(delta: float) -> void:
 """
 @brief updates heat value and visuals
 
-@param district The district to update 
+@param district The district to update
 new_heat The new heat value
 """
 func _update_heat_value(district: District, new_heat: int) -> void:

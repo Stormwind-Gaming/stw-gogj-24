@@ -54,7 +54,7 @@ extends Window
 """
 @brief Reference to the current plan scene
 """
-var plan_scene: PanelContainer 
+var plan_scene: PanelContainer
 
 """
 @brief Dictionary to store selected intel for each type
@@ -111,9 +111,9 @@ func populate_rumour_list():
 	clear_container(when_btn_grp_container)
 	
 	var intel_type_to_container = {
-		Enums.RumourType.MISSION: { "container": whowhat_btn_grp_container, "button_group": ButtonGroup.new(), "description_label": whowhat_description },
-		Enums.RumourType.LOCATION: { "container": where_btn_grp_container, "button_group": ButtonGroup.new(), "description_label": where_description },
-		Enums.RumourType.TIME: { "container": when_btn_grp_container, "button_group": ButtonGroup.new(), "description_label": when_description }
+		Enums.RumourType.MISSION: {"container": whowhat_btn_grp_container, "button_group": ButtonGroup.new(), "description_label": whowhat_description},
+		Enums.RumourType.LOCATION: {"container": where_btn_grp_container, "button_group": ButtonGroup.new(), "description_label": where_description},
+		Enums.RumourType.TIME: {"container": when_btn_grp_container, "button_group": ButtonGroup.new(), "description_label": when_description}
 	}
 
 	var rumours = GlobalRegistry.intel.get_list(GlobalRegistry.LIST_RUMOURS)
@@ -137,7 +137,7 @@ func populate_rumour_list():
 			check_button.set_meta("rumour", rumour)
 
 			# Use a lambda to update selected intel and toggle button visibility
-			check_button.toggled.connect(func(pressed, intel_type=rumour.rumour_type, rumour_ref=rumour):
+			check_button.toggled.connect(func(pressed, intel_type = rumour.rumour_type, rumour_ref = rumour):
 				if pressed:
 					selected_intel[intel_type] = rumour_ref
 					match intel_type:

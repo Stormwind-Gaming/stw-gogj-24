@@ -15,7 +15,7 @@ static func generate_random_profile() -> Dictionary:
 	var selected_image = Globals.get_next_profile_image(nationality, gender)
 
 	return {
-		"first_name": name_arr[0], 
+		"first_name": name_arr[0],
 		"last_name": name_arr[1],
 		"nationality": nationality,
 		"gender": gender,
@@ -68,16 +68,16 @@ static func _get_gender_string(gender: int) -> String:
 			return "default"
 
 static func _nationality() -> Enums.CharacterNationality:
-	var rand = randi() % 100  # Generate a random number between 0 and 99
+	var rand = randi() % 100 # Generate a random number between 0 and 99
 	
 	if rand < 50:
-			return Enums.CharacterNationality.BELGIAN  # 50% chance
+			return Enums.CharacterNationality.BELGIAN # 50% chance
 	elif rand < 80:
-		return Enums.CharacterNationality.GERMAN   # 30% chance (50-79)
+		return Enums.CharacterNationality.GERMAN # 30% chance (50-79)
 	elif rand < 95:
-		return Enums.CharacterNationality.FRENCH   # 15% chance (80-94)
+		return Enums.CharacterNationality.FRENCH # 15% chance (80-94)
 	else:
-		return Enums.CharacterNationality.BRITISH  # 5% chance (95-99)
+		return Enums.CharacterNationality.BRITISH # 5% chance (95-99)
 
 # Helper function to get a random image from a specified path
 static func _get_random_image_from_path(path: String) -> String:

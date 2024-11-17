@@ -38,37 +38,37 @@ const LIST_WORLD_EVENTS = "world_events"
 """
 @brief Registry instance for managing character-related lists
 """
-var characters : Registry = Registry.new()
+var characters: Registry = Registry.new()
 
 """
 @brief Registry instance for managing POI-related lists
 """
-var pois : Registry = Registry.new()
+var pois: Registry = Registry.new()
 
 """
 @brief Registry instance for managing district-related lists
 """
-var districts : Registry = Registry.new()
+var districts: Registry = Registry.new()
 
 """
 @brief Registry instance for managing intel-related lists
 """
-var intel : Registry = Registry.new()
+var intel: Registry = Registry.new()
 
 """
 @brief Registry instance for managing action-related lists
 """
-var actions : Registry = Registry.new()
+var actions: Registry = Registry.new()
 
 """
 @brief Registry instance for managing turn-logs lists
 """
-var turn_logs : Registry = Registry.new()
+var turn_logs: Registry = Registry.new()
 
 """
 @brief Registry instance for managing world-event lists
 """
-var world_events : Registry = Registry.new()
+var world_events: Registry = Registry.new()
 
 #|==============================|
 #|      Initialization         |
@@ -121,7 +121,7 @@ func _ready():
 	EventBus.action_created.connect(_on_action_created)
 
 	# District events
-	EventBus.district_created.connect(_on_district_created)	
+	EventBus.district_created.connect(_on_district_created)
 
 	# World-event events
 	EventBus.world_event_created.connect(_on_world_event_created)
@@ -147,7 +147,7 @@ func _on_character_created(character: Character) -> void:
 @param character The character whose state has changed
 """
 func _on_character_changed(character: Character) -> void:
-	if(characters.get_all_items().has(character)):
+	if (characters.get_all_items().has(character)):
 		print('character is in registry')
 		var target_list_name = _get_character_list(character)
 		print('moving character to list: ', target_list_name)

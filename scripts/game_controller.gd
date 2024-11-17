@@ -164,16 +164,16 @@ func remove_all_actions_for_character(character: Character) -> void:
 @brief Processes the current turn and advances game state
 """
 func process_turn() -> void:
-	EventBus.end_turn_initiated.emit(turn_number)  # Emit the end turn signal
+	EventBus.end_turn_initiated.emit(turn_number) # Emit the end turn signal
 
-	turn_number += 1  # Increment the turn number
-	calendar.increment_day()  # Increment the day
+	turn_number += 1 # Increment the turn number
+	calendar.increment_day() # Increment the day
 
 	# Create the turn log list for this turn
 	GlobalRegistry.turn_logs.create_list(str(turn_number))
 
 	# Emit the signal to begin processing the turn
-	EventBus.turn_processing_initiated.emit(turn_number) 
+	EventBus.turn_processing_initiated.emit(turn_number)
 	
 	# ...actions will receive the signal and process themselves, adding logs, changing statuses, etc.
 
@@ -181,10 +181,10 @@ func process_turn() -> void:
 
 	# Decrease the heat for each district
 	for district in GlobalRegistry.districts.get_all_items():
-		var reduction:int = MathHelpers.generateBellCurveStat(Constants.DISTRICT_HEAT_DECREASE_PER_TURN_MIN, Constants.DISTRICT_HEAT_DECREASE_PER_TURN_MAX)
+		var reduction: int = MathHelpers.generateBellCurveStat(Constants.DISTRICT_HEAT_DECREASE_PER_TURN_MIN, Constants.DISTRICT_HEAT_DECREASE_PER_TURN_MAX)
 		district.heat -= reduction
 
-		if(reduction > 0):
+		if (reduction > 0):
 			var turn_log = TurnLog.new(district.district_name + " heat decreased by " + str(reduction), Enums.LogType.WORLD_INFO)
 			GlobalRegistry.turn_logs.add_item(str(GameController.turn_number), turn_log)
 

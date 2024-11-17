@@ -88,4 +88,3 @@ func _init(properties: PlanProperties):
 
 	# Register the object after setting properties
 	EventBus.plan_created.emit(self)
-	

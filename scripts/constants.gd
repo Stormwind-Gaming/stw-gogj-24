@@ -17,42 +17,42 @@ var INIT_MAX_AGENTS: int = 2
 """
 @brief Minimum initial sympathy value for new characters
 """
-var CHARACTER_INIT_SYMPATHY_MIN: int 		= 10
+var CHARACTER_INIT_SYMPATHY_MIN: int = 10
 
 """
 @brief Maximum initial sympathy value for new characters
 """
-var CHARACTER_INIT_SYMPATHY_MAX: int 		= 30
+var CHARACTER_INIT_SYMPATHY_MAX: int = 30
 
 """
 @brief Minimum initial charm stat for new characters
 """
-var CHARACTER_INIT_CHARM_MIN: int 			= 1
+var CHARACTER_INIT_CHARM_MIN: int = 1
 
 """
 @brief Maximum initial charm stat for new characters
 """
-var CHARACTER_INIT_CHARM_MAX: int 			= 10
+var CHARACTER_INIT_CHARM_MAX: int = 10
 
 """
 @brief Minimum initial subtlety stat for new characters
 """
-var CHARACTER_INIT_SUBTLETY_MIN: int 		= 1
+var CHARACTER_INIT_SUBTLETY_MIN: int = 1
 
 """
 @brief Maximum initial subtlety stat for new characters
 """
-var CHARACTER_INIT_SUBTLETY_MAX: int 		= 10
+var CHARACTER_INIT_SUBTLETY_MAX: int = 10
 
 """
 @brief Minimum initial smarts stat for new characters
 """
-var CHARACTER_INIT_SMARTS_MIN: int 			= 1
+var CHARACTER_INIT_SMARTS_MIN: int = 1
 
 """
 @brief Maximum initial smarts stat for new characters
 """
-var CHARACTER_INIT_SMARTS_MAX: int 			= 10
+var CHARACTER_INIT_SMARTS_MAX: int = 10
 
 #|==============================|
 #|    Rumour Initialization    |
@@ -359,7 +359,7 @@ var HIGH_HEAT_SIGNIFICANT_CHANCE: float = 0.6
 @brief Chance (0-1.0) of getting a minor event in medium heat
 In medium heat: 40% minor, 60% significant
 """
-var MEDIUM_HEAT_MINOR_CHANCE : float = 0.4
+var MEDIUM_HEAT_MINOR_CHANCE: float = 0.4
 
 #|==============================|
 #|    Stat Check Bounds        |

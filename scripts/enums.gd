@@ -41,8 +41,8 @@ enum CharacterRecruitmentState {
 """
 @brief Status options for characters
 """
-enum CharacterState { 
-	AVAILABLE, 
+enum CharacterState {
+	AVAILABLE,
 	ASSIGNED,
 	ON_MISSION,
 	MIA,

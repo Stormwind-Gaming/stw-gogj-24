@@ -7,7 +7,7 @@ class_name RadialMenu
 """
 @brief Size of the sprite icons in the menu
 """
-const SPRITE_SIZE = Vector2(64,64)
+const SPRITE_SIZE = Vector2(64, 64)
 
 #|==============================|
 #|      Exported Variables      |
@@ -86,7 +86,7 @@ func _process(delta: float) -> void:
 		selected_cell = 0
 	else:
 		var mouse_rads = fposmod(mouse_pos.angle() * -1, TAU)
-		selected_cell = ceil((mouse_rads / TAU) * (len(options) -1))
+		selected_cell = ceil((mouse_rads / TAU) * (len(options) - 1))
 
 	queue_redraw()
 
@@ -111,7 +111,7 @@ func _draw() -> void:
 	)
 	
 	for i in range(1, len(options)):
-		var start_rads = (TAU * (i-1)) / (len(options) - 1)
+		var start_rads = (TAU * (i - 1)) / (len(options) - 1)
 		var end_rads = (TAU * (i)) / (len(options) - 1)
 		var mid_rads = (start_rads + end_rads) / 2.0 * -1
 		var mid_radius = (inner_radius + outer_radius) / 2
@@ -123,8 +123,8 @@ func _draw() -> void:
 			
 			for j in range(points_per_arc + 1):
 				var angle = start_rads + j * (end_rads - start_rads) / points_per_arc
-				points_inner.append(inner_radius * Vector2.from_angle(TAU-angle))
-				points_outer.append(outer_radius * Vector2.from_angle(TAU-angle))
+				points_inner.append(inner_radius * Vector2.from_angle(TAU - angle))
+				points_outer.append(outer_radius * Vector2.from_angle(TAU - angle))
 			
 			if len(options) >= 3:
 				points_outer.reverse()
@@ -144,12 +144,12 @@ func _draw() -> void:
 	draw_arc(Vector2.ZERO, outer_radius, 0, TAU, 128, line_color, line_width, true)
 	
 	# draw separator lines
-	for i in range(len(options)-1):
-		var rads = TAU * i / (len(options)-1)
+	for i in range(len(options) - 1):
+		var rads = TAU * i / (len(options) - 1)
 		var point = Vector2.from_angle(rads)
 		draw_line(
-			point*inner_radius,
-			point*outer_radius,
+			point * inner_radius,
+			point * outer_radius,
 			line_color,
 			line_width,
 			true

@@ -17,4 +17,3 @@ func _init(init_severity: Enums.WorldEventSeverity) -> void:
 
 	GlobalRegistry.turn_logs.add_item(str(GameController.turn_number), TurnLog.new("A new world event has occurred!", Enums.LogType.WORLD_EVENT))
 	EventBus.world_event_created.emit(self)
-

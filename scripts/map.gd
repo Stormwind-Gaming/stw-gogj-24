@@ -36,9 +36,9 @@ func _ready() -> void:
 	_generate_population()
 
 	# Create initial rumours
-	IntelFactory.create_rumour(RumourConfig.new(100,0,0))
-	IntelFactory.create_rumour(RumourConfig.new(0,100,0))
-	IntelFactory.create_rumour(RumourConfig.new(0,0,100))
+	IntelFactory.create_rumour(RumourConfig.new(100, 0, 0))
+	IntelFactory.create_rumour(RumourConfig.new(0, 100, 0))
+	IntelFactory.create_rumour(RumourConfig.new(0, 0, 100))
 
 """
 @brief Called every frame to handle input.
@@ -118,7 +118,7 @@ func _on_district_unhovered(district: District) -> void:
 @brief Handles district click events
 @param district The district being clicked
 """
-func _on_district_clicked(district: District) -> void:    
+func _on_district_clicked(district: District) -> void:
 	for d in GlobalRegistry.districts.get_all_items():
 		d.remove_highlight_color()
 	

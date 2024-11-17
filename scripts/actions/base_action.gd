@@ -80,7 +80,7 @@ func _init(config: ActionFactory.ActionConfig):
 """
 @brief Called when the turn begins processing
 """
-func _on_turn_processing_initiated(num:int) -> void:
+func _on_turn_processing_initiated(num: int) -> void:
 	in_flight = true
 
 	var danger_logs: Array[TurnLog] = []
@@ -105,7 +105,7 @@ func _on_turn_processing_initiated(num:int) -> void:
 """
 @brief Called when the turn ends
 """
-func _on_end_turn_completed(num:int) -> void:
+func _on_end_turn_completed(num: int) -> void:
 	if num >= turn_to_end:
 		_release_characters()
 
@@ -152,7 +152,7 @@ func _process_danger() -> Array[TurnLog]:
 	var log_message: String = ""
 	var heat_added: int = 0
 		
-	if(subtle_roll.success):
+	if (subtle_roll.success):
 		heat_added = MathHelpers.generateBellCurveStat(Constants.ACTION_EFFECT_SUCCESS_SUBTLETY_MIN, Constants.ACTION_EFFECT_SUCCESS_SUBTLETY_MAX)
 		log_message = "Succeeded subtlety check... heat increased by " + str(heat_added)
 		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))

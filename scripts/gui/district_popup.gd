@@ -12,7 +12,7 @@ extends Window
 @brief RichTextLabel that displays the district details
 """
 @export var text_label: RichTextLabel
-@export var heat_label: RichTextLabel 
+@export var heat_label: RichTextLabel
 @export var sympathy_label: RichTextLabel
 
 #|==============================|

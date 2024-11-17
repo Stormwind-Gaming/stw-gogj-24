@@ -14,7 +14,7 @@ func _process_action() -> Array[TurnLog]:
 
 	var smarts_roll = MathHelpers.bounded_sigmoid_check(stats["smarts"], true, Constants.SMARTS_CHECK_MIN_CHANCE, Constants.SMARTS_CHECK_MAX_CHANCE)
 		
-	if(smarts_roll.success):
+	if (smarts_roll.success):
 		log_message = "Succeeded smarts check..."
 		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
 

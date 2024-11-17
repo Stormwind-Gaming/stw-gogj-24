@@ -45,7 +45,6 @@ func set_note(content: String) -> void:
 	pass
 	
 
-
 #|==============================|
 #|      Event Handlers         |
 #|==============================|

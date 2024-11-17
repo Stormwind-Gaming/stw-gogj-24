@@ -23,7 +23,7 @@ extends Window
 """
 func set_event_text(event_type: Enums.EventOutcomeType, title: String = "", text: String = "", button_text: String = "Ok") -> void:
 	# get the event type image
-	event_image.texture =  Globals.event_images[event_type]
+	event_image.texture = Globals.event_images[event_type]
 	title_label.text = title
 	text_label.text = text
 	button.text = button_text

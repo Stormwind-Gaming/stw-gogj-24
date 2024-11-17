@@ -8,10 +8,10 @@ class_name Calendar
 @brief Dictionary defining the number of days in each month (1-12).
 Note: February (2) is set to 28 days, with leap years handled separately.
 """
-const DAYS_IN_MONTHS = { 
-    1: 31, 2: 28, 3: 31, 4: 30, 
-    5: 31, 6: 30, 7: 31, 8: 31, 
-    9: 30, 10: 31, 11: 30, 12: 31 
+const DAYS_IN_MONTHS = {
+    1: 31, 2: 28, 3: 31, 4: 30,
+    5: 31, 6: 30, 7: 31, 8: 31,
+    9: 30, 10: 31, 11: 30, 12: 31
 }
 
 #|==============================|
@@ -26,9 +26,9 @@ var day: int = 1
 
 # Month name lookup
 var month_names = [
-    "January", "February", "March", 
-    "April", "May", "June", 
-    "July", "August", "September", 
+    "January", "February", "March",
+    "April", "May", "June",
+    "July", "August", "September",
     "October", "November", "December"
 ]
 
@@ -40,7 +40,7 @@ var month_names = [
 """
 func _setup_calendar():
     randomize()
-    month = randi_range(1, 4)  # Start between January and April
+    month = randi_range(1, 4) # Start between January and April
     day = randi_range(1, DAYS_IN_MONTHS[month])
 
 #|==============================|
@@ -59,7 +59,7 @@ func get_date_string(days_offset: int = 0) -> String:
         initialised = true
         
     var offset_day = day
-    var offset_month = month 
+    var offset_month = month
     var offset_year = year
     
     # Apply the offset if non-zero

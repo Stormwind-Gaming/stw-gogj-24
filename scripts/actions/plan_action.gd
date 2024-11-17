@@ -2,7 +2,6 @@ extends BaseAction
 
 class_name PlanAction
 
-
 #|==============================|
 #|      Action Processing      |
 #|==============================|
@@ -50,7 +49,7 @@ func _build_sympathy() -> Array[TurnLog]:
 
 	var charm_roll = MathHelpers.bounded_sigmoid_check(stats["charm"], true, Constants.CHARM_CHECK_MIN_CHANCE, Constants.CHARM_CHECK_MAX_CHANCE)
 		
-	if(charm_roll.success):
+	if (charm_roll.success):
 		var base_sympathy_added: int = MathHelpers.generateBellCurveStat(Constants.ACTION_EFFECT_PLAN_BUILD_SYMPATHY_MIN, Constants.ACTION_EFFECT_PLAN_BUILD_SYMPATHY_MAX)
 		var sympathy_added: int = StatisticModification.sympathy_modification(base_sympathy_added, poi.parent_district.district_type)
 
@@ -80,7 +79,7 @@ func _build_sympathy_all() -> Array[TurnLog]:
 
 	var charm_roll = MathHelpers.bounded_sigmoid_check(stats["charm"], true, Constants.CHARM_CHECK_MIN_CHANCE, Constants.CHARM_CHECK_MAX_CHANCE)
 		
-	if(charm_roll.success):
+	if (charm_roll.success):
 		log_message = "Succeeded charm check..."
 		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
 
@@ -111,7 +110,7 @@ func _discover_all() -> Array[TurnLog]:
 
 	var smarts_roll = MathHelpers.bounded_sigmoid_check(stats["smarts"], true, Constants.SMARTS_CHECK_MIN_CHANCE, Constants.SMARTS_CHECK_MAX_CHANCE)
 		
-	if(smarts_roll.success):
+	if (smarts_roll.success):
 		log_message = "Succeeded smarts check..."
 		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
 
@@ -139,7 +138,7 @@ func _add_agent_slot() -> Array[TurnLog]:
 
 	var smarts_roll = MathHelpers.bounded_sigmoid_check(stats["smarts"], true, Constants.SMARTS_CHECK_MIN_CHANCE, Constants.SMARTS_CHECK_MAX_CHANCE)
 		
-	if(smarts_roll.success):
+	if (smarts_roll.success):
 		log_message = "Succeeded smarts check..."
 		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
 
@@ -166,7 +165,7 @@ func _rescue_agent() -> Array[TurnLog]:
 
 	var smarts_roll = MathHelpers.bounded_sigmoid_check(stats["smarts"], true, Constants.SMARTS_CHECK_MIN_CHANCE, Constants.SMARTS_CHECK_MAX_CHANCE)
 		
-	if(smarts_roll.success):
+	if (smarts_roll.success):
 		log_message = "Succeeded smarts check..."
 		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
 
@@ -191,6 +190,7 @@ func _wildcard_intel() -> Array[TurnLog]:
 
 	return logs
 
+
 """
 @brief Reduces the heat of a specific POI
 """
@@ -203,7 +203,7 @@ func _reduce_heat() -> Array[TurnLog]:
 
 	var smarts_roll = MathHelpers.bounded_sigmoid_check(stats["smarts"], true, Constants.SMARTS_CHECK_MIN_CHANCE, Constants.SMARTS_CHECK_MAX_CHANCE)
 		
-	if(smarts_roll.success):
+	if (smarts_roll.success):
 		log_message = "Succeeded smarts check..."
 		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
 
@@ -234,7 +234,7 @@ func _reduce_heat_all() -> Array[TurnLog]:
 
 	var smarts_roll = MathHelpers.bounded_sigmoid_check(stats["smarts"], true, Constants.SMARTS_CHECK_MIN_CHANCE, Constants.SMARTS_CHECK_MAX_CHANCE)
 		
-	if(smarts_roll.success):
+	if (smarts_roll.success):
 		log_message = "Succeeded smarts check..."
 		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
 

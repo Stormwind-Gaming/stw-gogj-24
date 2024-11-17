@@ -64,4 +64,3 @@ func add_character_card(character_id: String) -> void:
 	var agent_card = Globals.agent_card_scene.instantiate()
 	agent_card.set_character(character_id)
 	$MarginContainer/LeftVBoxContainer/PanelContainer2/MarginContainer/GridContainer.add_child(agent_card)
-	

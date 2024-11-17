@@ -18,8 +18,8 @@ class_name MathHelpers
 """
 static func bounded_sigmoid_check(stat: int, detailed: bool = false, bottom_bound: float = 20.0, upper_bound: float = 80.0) -> Variant:
 	# Calculate the sigmoid-based success chance
-	var k = 1.0  # Steepness of the curve
-	var m = 5.0  # Midpoint of the curve
+	var k = 1.0 # Steepness of the curve
+	var m = 5.0 # Midpoint of the curve
 	var raw_chance = 100 / (1 + exp(-k * (stat - m)))
 	
 	# Scale the raw chance to fit within the bottom and upper bounds
@@ -54,7 +54,7 @@ static func bounded_sigmoid_check(stat: int, detailed: bool = false, bottom_boun
 @returns Random integer between min and max
 """
 static func generateLinearStat(min: int, max: int) -> int:
-	return randi() % max + min 
+	return randi() % max + min
 
 """
 @brief Generates a random integer using a bell curve distribution within a specified range.
@@ -66,12 +66,12 @@ static func generateLinearStat(min: int, max: int) -> int:
 static func generateBellCurveStat(min: int = 1, max: int = 10) -> int:
 	var total = 0
 	for i in range(3):
-		total += randi() % 4 + 1  # Rolls a 4-sided die and adds the result to total
-	total -= 2  # Adjusts the range to produce values between 1 and 10
+		total += randi() % 4 + 1 # Rolls a 4-sided die and adds the result to total
+	total -= 2 # Adjusts the range to produce values between 1 and 10
 
 	# Scale and shift the value to fit within the min and max range
-	var scaled_value = float(total - 1) / (10 - 1)  # Normalize to range [0, 1]
-	return int(round(min + scaled_value * (max - min)))  # Scale to [min, max] and round
+	var scaled_value = float(total - 1) / (10 - 1) # Normalize to range [0, 1]
+	return int(round(min + scaled_value * (max - min))) # Scale to [min, max] and round
 
 """
 @brief Scales a base value based on a progress value within a given range.
