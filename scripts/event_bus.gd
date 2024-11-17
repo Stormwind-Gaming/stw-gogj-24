@@ -1,7 +1,7 @@
 extends Node
 
 #|==============================|
-#|      Turn Management         |
+#|      Game & Turn Management  |
 #|==============================|
 """
 @brief Emitted when a turn ends
@@ -17,6 +17,16 @@ signal turn_processing_initiated(num: int)
 @brief Emitted when turn processing is complete
 """
 signal end_turn_complete(num: int)
+
+"""
+@brief Emitted when an endgame is triggered
+"""
+signal endgame_triggered()
+
+"""
+@brief Emitted when the game ends
+"""
+signal game_ended()
 
 #|==============================|
 #|      Character Management    |

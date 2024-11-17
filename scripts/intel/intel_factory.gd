@@ -189,26 +189,32 @@ static func formulate_plan(mission_rumour: Rumour, location_rumour: Rumour, time
 	location_rumour.queue_free()
 	time_rumour.queue_free()
 	
-	# for rumour in rumours:
-	# 	match rumour.rumour_type:
-	# 		Enums.RumourType.MISSION:
-	# 			mission_rumour = rumour
-	# 		Enums.RumourType.LOCATION:
-	# 			location_rumour = rumour
-	# 		Enums.RumourType.TIME:
-	# 			time_rumour = rumour
-	
-	# # Validate we have all required rumours
-	# if !mission_rumour or !location_rumour or !time_rumour:
-	# 	push_error("Missing required rumours to formulate plan")
-	# 	return null
-	
-	# # Set plan properties based on rumours
-	# plan.plan_who_what = Globals.get_intel_effect_string(mission_rumour.rumour_effect, true)
-	# plan.plan_where = Globals.get_intel_effect_string(location_rumour.rumour_effect, true)
-	# plan.plan_when = Globals.get_intel_effect_string(time_rumour.rumour_effect, true)
-	
-	# # Set plan name (could be more sophisticated)
-	# plan.plan_name = "Operation " + str(randi() % 1000)
-	
+	return plan
+
+static func create_heat_endgame_plan() -> Plan:
+	var plan_properties = Plan.PlanProperties.new()
+
+	var poi = _get_random_poi()
+
+	plan_properties.plan_name = "Heat Endgame Plan"
+	plan_properties.plan_text = "The heat has become unbearable. The authorities have mobilized overwhelming force and our safe houses are compromised. We must evacuate our operatives from the city before it's too late."
+	plan_properties.plan_duration = 1
+	plan_properties.plan_expiry = 1
+	plan_properties.plan_subject_poi = poi
+
+	var plan = Plan.new(plan_properties)
+	return plan
+
+static func create_resistance_endgame_plan() -> Plan:
+	var plan_properties = Plan.PlanProperties.new()
+
+	var poi = _get_random_poi()
+
+	plan_properties.plan_name = "Resistance Endgame Plan"
+	plan_properties.plan_text = "The resistance has grown strong enough to enact our final plan. Our operatives are in position and the people are ready to rise up. The time has come to seize control of the city."
+	plan_properties.plan_duration = 1
+	plan_properties.plan_expiry = 1
+	plan_properties.plan_subject_poi = poi
+
+	var plan = Plan.new(plan_properties)
 	return plan

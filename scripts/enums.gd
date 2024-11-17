@@ -31,11 +31,11 @@ enum CharacterProfession {
 """
 @brief Knowledge states for characters
 """
-enum CharacterRecruitmentState {
-	SYMPATHISER_NOT_RECRUITED,
-	SYMPATHISER_RECRUITED,
+enum CharacterRecruitmentState { # Make sure this is in the correct order so we can use < and > operators on it
 	NON_SYMPATHISER_UNKNOWN,
-	NON_SYMPATHISER_KNOWN
+	NON_SYMPATHISER_KNOWN,
+	SYMPATHISER_NOT_RECRUITED,
+	SYMPATHISER_RECRUITED
 }
 
 """
@@ -254,5 +254,6 @@ enum EventOutcomeType {
 enum WorldEventSeverity {
 	MINOR,
 	SIGNIFICANT,
-	MAJOR
+	MAJOR,
+	ENDGAME
 }

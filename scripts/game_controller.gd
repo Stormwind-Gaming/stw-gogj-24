@@ -38,6 +38,11 @@ var calendar: Calendar
 """
 var turn_number: int = 0
 
+"""
+@brief Whether an endgame has been triggered
+"""
+var endgame_triggered: bool = false
+
 #|==============================|
 #|      Lifecycle Methods      |
 #|==============================|
@@ -57,8 +62,8 @@ func _ready() -> void:
 
 @param name The name of the town
 """
-func set_town_name(name: String) -> void:
-	town_name = name
+func set_town_name(_name: String) -> void:
+	town_name = _name
 
 """
 @brief Gets the town name
@@ -189,11 +194,11 @@ func process_turn() -> void:
 			GlobalRegistry.turn_logs.add_item(str(GameController.turn_number), turn_log)
 
 	# Check for endgame conditions
-	# TODO: Maybe there should be a property on GameController that tracks if we're in an endgame state and locks out other actions etc.
-	if get_heat_level() > 80:
-		_trigger_heat_endgame()
-	elif get_resistance_level() > 80:
-		_trigger_resistance_endgame()
+	if not endgame_triggered:
+		if get_heat_level() > Constants.HEAT_ENDGAME_THRESHOLD:
+			_trigger_heat_endgame()
+		elif get_resistance_level() > Constants.RESISTANCE_ENDGAME_THRESHOLD:
+			_trigger_resistance_endgame()
 
 	# Emit the signal to end the turn
 	EventBus.end_turn_complete.emit(turn_number)
@@ -203,17 +208,29 @@ func process_turn() -> void:
 @brief Triggers the heat endgame
 """
 func _trigger_heat_endgame() -> void:
-	# TODO: Create a custom endgame WorldEvent
-	# TODO: Create custom endgame Plan(s)
-	pass
+	print("Triggering heat endgame")
+	endgame_triggered = true
+	EventBus.endgame_triggered.emit()
+
+	WorldEventFactory.create_world_event(Enums.WorldEventSeverity.ENDGAME)
+	IntelFactory.create_heat_endgame_plan()
+
+	var turn_log = TurnLog.new("Heat endgame triggered - Check Intel for Plans", Enums.LogType.WORLD_EVENT)
+	GlobalRegistry.turn_logs.add_item(str(GameController.turn_number), turn_log)
 
 """
 @brief Triggers the resistance endgame
 """
 func _trigger_resistance_endgame() -> void:
-	# TODO: Create a custom endgame WorldEvent
-	# TODO: Create custom endgame Plan(s)
-	pass
+	print("Triggering resistance endgame")
+	endgame_triggered = true
+	EventBus.endgame_triggered.emit()
+
+	WorldEventFactory.create_world_event(Enums.WorldEventType.ENDGAME)
+	IntelFactory.create_resistance_endgame_plan()
+
+	var turn_log = TurnLog.new("Resistance endgame triggered - Check Intel for Plans", Enums.LogType.WORLD_EVENT)
+	GlobalRegistry.turn_logs.add_item(str(GameController.turn_number), turn_log)
 
 #|==============================|
 #|      District Management    |
@@ -281,7 +298,7 @@ func _on_radial_option_selected(option: Enums.ActionType) -> void:
 	post_radial_assignment.connect('post_radial_assignment_option', _on_post_radial_assignment_option_selected)
 	EventBus.open_new_window.emit(post_radial_assignment)
 
-func _on_post_radial_assignment_option_selected(option: Enums.ActionType, selected_agents: Array[Character], additions: Array) -> void:
+func _on_post_radial_assignment_option_selected(option: Enums.ActionType, selected_agents: Array[Character], _additions: Array) -> void:
 	if option != Enums.ActionType.NONE and option != Enums.ActionType.INFO:
 		GameController.add_action(poi_for_radial, selected_agents, option)
 

@@ -236,14 +236,21 @@ func _on_poi_clicked(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 			var radial_menu_instance = Globals.radial_menu_scene.instantiate()
 			radial_menu_instance.position = get_local_mouse_position()
 
-			var actions = [
-				Enums.ActionType.ESPIONAGE,
-				Enums.ActionType.PROPAGANDA,
-			] as Array[Enums.ActionType]
+			var actions: Array[Enums.ActionType] = []
 
-			if poi_owner.char_recruitment_state == Enums.CharacterRecruitmentState.NON_SYMPATHISER_UNKNOWN:
-				actions.append(Enums.ActionType.SURVEILLANCE)
+			# If the endgame isnt active then add the normal actions
+			if not GameController.endgame_triggered:
+				actions.append(Enums.ActionType.ESPIONAGE)
 
+				# Only non-sympathisers can use propaganda
+				if poi_owner.char_recruitment_state < Enums.CharacterRecruitmentState.SYMPATHISER_NOT_RECRUITED:
+					actions.append(Enums.ActionType.PROPAGANDA)
+
+				# Only unknown non-sympathisers can use surveillance
+				if poi_owner.char_recruitment_state == Enums.CharacterRecruitmentState.NON_SYMPATHISER_UNKNOWN:
+					actions.append(Enums.ActionType.SURVEILLANCE)
+
+			# If the POI has a plan then add the plan action
 			if (_has_plan()):
 				actions.append(Enums.ActionType.PLAN)
 

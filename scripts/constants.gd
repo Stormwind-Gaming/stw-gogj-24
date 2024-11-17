@@ -11,6 +11,16 @@ var config: ConfigLoader
 """
 var INIT_MAX_AGENTS: int = 2
 
+"""
+@brief Heat threshold for triggering the heat endgame
+"""
+var HEAT_ENDGAME_THRESHOLD: int = 40
+
+"""
+@brief Resistance threshold for triggering the resistance endgame
+"""
+var RESISTANCE_ENDGAME_THRESHOLD: int = 40
+
 #|==============================|
 #|    Character Initialization  |
 #|==============================|
@@ -68,7 +78,7 @@ var RUMOUR_EXPIRY_TURNS: int = 3
 """
 @brief Minimum initial heat value for new districts
 """
-var DISTRICT_INIT_HEAT_MIN: int = 10
+var DISTRICT_INIT_HEAT_MIN: int = 39
 
 """
 @brief Maximum initial heat value for new districts
@@ -406,6 +416,8 @@ func _on_constants_loaded():
 
 	# Game Initialization
 	INIT_MAX_AGENTS = config.get_value("INIT_MAX_AGENTS", INIT_MAX_AGENTS)
+	HEAT_ENDGAME_THRESHOLD = config.get_value("HEAT_ENDGAME_THRESHOLD", HEAT_ENDGAME_THRESHOLD)
+	RESISTANCE_ENDGAME_THRESHOLD = config.get_value("RESISTANCE_ENDGAME_THRESHOLD", RESISTANCE_ENDGAME_THRESHOLD)
 	
 	# Character Initialization
 	CHARACTER_INIT_SYMPATHY_MIN = config.get_value("CHARACTER_INIT_SYMPATHY_MIN", CHARACTER_INIT_SYMPATHY_MIN)
