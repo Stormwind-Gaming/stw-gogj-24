@@ -12,7 +12,7 @@ func _process_action() -> Array[TurnLog]:
 	# Get cumulative stats for all characters involved
 	var stats: Dictionary = _get_stats()
 
-	var charm_roll = MathHelpers.bounded_sigmoid_check(stats["charm"], true)
+	var charm_roll = MathHelpers.bounded_sigmoid_check(stats["charm"], true, Constants.CHARM_CHECK_MIN_CHANCE, Constants.CHARM_CHECK_MAX_CHANCE)
 		
 	if(charm_roll.success):
 		var sympathy_added: int = StatisticModification.sympathy_modification(Constants.ACTION_EFFECT_PROPAGANDA_SYMPATHY_MODIFIER, poi.parent_district.district_type)

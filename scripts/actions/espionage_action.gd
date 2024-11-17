@@ -13,13 +13,15 @@ func _process_action() -> Array[TurnLog]:
 	var stats: Dictionary = _get_stats()
 
 	var stat_check:String = ""
+	var roll: Dictionary = { "success": false }
+
 	match poi.stat_check_type:
 		Enums.StatCheckType.SMARTS:
 			stat_check = "smarts"
+			roll = MathHelpers.bounded_sigmoid_check(stats[stat_check], true, Constants.SMARTS_CHECK_MIN_CHANCE, Constants.SMARTS_CHECK_MAX_CHANCE)
 		Enums.StatCheckType.CHARM:
 			stat_check = "charm"
-
-	var roll = MathHelpers.bounded_sigmoid_check(stats[stat_check], true)
+			roll = MathHelpers.bounded_sigmoid_check(stats[stat_check], true, Constants.CHARM_CHECK_MIN_CHANCE, Constants.CHARM_CHECK_MAX_CHANCE)
 		
 	if(roll.success):
 		log_message = "Succeeded " + stat_check + " check..."

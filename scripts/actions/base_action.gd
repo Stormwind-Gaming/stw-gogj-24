@@ -147,7 +147,7 @@ func _process_danger() -> Array[TurnLog]:
 
 	logs.append(TurnLog.new("Processing danger for action at [u]" + str(poi.poi_name) + "[/u] by " + _get_character_names(), Enums.LogType.ACTION_INFO))
 
-	var subtle_roll = MathHelpers.bounded_sigmoid_check(stats["subtlety"], true)
+	var subtle_roll = MathHelpers.bounded_sigmoid_check(stats["subtlety"], true, Constants.SUBTLETY_CHECK_MIN_CHANCE, Constants.SUBTLETY_CHECK_MAX_CHANCE)
 
 	var log_message: String = ""
 		

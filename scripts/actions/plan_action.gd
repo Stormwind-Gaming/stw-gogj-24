@@ -48,7 +48,7 @@ func _build_sympathy() -> Array[TurnLog]:
 	# Get cumulative stats for all characters involved
 	var stats: Dictionary = _get_stats()
 
-	var charm_roll = MathHelpers.bounded_sigmoid_check(stats["charm"], true)
+	var charm_roll = MathHelpers.bounded_sigmoid_check(stats["charm"], true, Constants.CHARM_CHECK_MIN_CHANCE, Constants.CHARM_CHECK_MAX_CHANCE)
 		
 	if(charm_roll.success):
 		var sympathy_added: int = StatisticModification.sympathy_modification(Constants.ACTION_EFFECT_PLAN_BUILD_SYMPATHY_MODIFIER, poi.parent_district.district_type)
@@ -77,7 +77,7 @@ func _build_sympathy_all() -> Array[TurnLog]:
 	# Get cumulative stats for all characters involved
 	var stats: Dictionary = _get_stats()
 
-	var charm_roll = MathHelpers.bounded_sigmoid_check(stats["charm"], true)
+	var charm_roll = MathHelpers.bounded_sigmoid_check(stats["charm"], true, Constants.CHARM_CHECK_MIN_CHANCE, Constants.CHARM_CHECK_MAX_CHANCE)
 		
 	if(charm_roll.success):
 		log_message = "Succeeded charm check..."
@@ -105,7 +105,7 @@ func _discover_all() -> Array[TurnLog]:
 	# Get cumulative stats for all characters involved
 	var stats: Dictionary = _get_stats()
 
-	var smarts_roll = MathHelpers.bounded_sigmoid_check(stats["smarts"], true)
+	var smarts_roll = MathHelpers.bounded_sigmoid_check(stats["smarts"], true, Constants.SMARTS_CHECK_MIN_CHANCE, Constants.SMARTS_CHECK_MAX_CHANCE)
 		
 	if(smarts_roll.success):
 		log_message = "Succeeded smarts check..."
@@ -133,7 +133,7 @@ func _add_agent_slot() -> Array[TurnLog]:
 	# Get cumulative stats for all characters involved
 	var stats: Dictionary = _get_stats()
 
-	var smarts_roll = MathHelpers.bounded_sigmoid_check(stats["smarts"], true)
+	var smarts_roll = MathHelpers.bounded_sigmoid_check(stats["smarts"], true, Constants.SMARTS_CHECK_MIN_CHANCE, Constants.SMARTS_CHECK_MAX_CHANCE)
 		
 	if(smarts_roll.success):
 		log_message = "Succeeded smarts check..."
@@ -160,7 +160,7 @@ func _rescue_agent() -> Array[TurnLog]:
 	# Get cumulative stats for all characters involved
 	var stats: Dictionary = _get_stats()
 
-	var smarts_roll = MathHelpers.bounded_sigmoid_check(stats["smarts"], true)
+	var smarts_roll = MathHelpers.bounded_sigmoid_check(stats["smarts"], true, Constants.SMARTS_CHECK_MIN_CHANCE, Constants.SMARTS_CHECK_MAX_CHANCE)
 		
 	if(smarts_roll.success):
 		log_message = "Succeeded smarts check..."
@@ -197,7 +197,7 @@ func _reduce_heat() -> Array[TurnLog]:
 	# Get cumulative stats for all characters involved
 	var stats: Dictionary = _get_stats()
 
-	var smarts_roll = MathHelpers.bounded_sigmoid_check(stats["smarts"], true)
+	var smarts_roll = MathHelpers.bounded_sigmoid_check(stats["smarts"], true, Constants.SMARTS_CHECK_MIN_CHANCE, Constants.SMARTS_CHECK_MAX_CHANCE)
 		
 	if(smarts_roll.success):
 		log_message = "Succeeded smarts check..."
@@ -224,7 +224,7 @@ func _reduce_heat_all() -> Array[TurnLog]:
 	# Get cumulative stats for all characters involved
 	var stats: Dictionary = _get_stats()
 
-	var smarts_roll = MathHelpers.bounded_sigmoid_check(stats["smarts"], true)
+	var smarts_roll = MathHelpers.bounded_sigmoid_check(stats["smarts"], true, Constants.SMARTS_CHECK_MIN_CHANCE, Constants.SMARTS_CHECK_MAX_CHANCE)
 		
 	if(smarts_roll.success):
 		log_message = "Succeeded smarts check..."

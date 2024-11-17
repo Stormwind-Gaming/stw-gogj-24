@@ -321,6 +321,39 @@ In medium heat: 40% minor, 60% significant
 """
 var MEDIUM_HEAT_MINOR_CHANCE : float = 0.4
 
+#|==============================|
+#|    Stat Check Bounds        |
+#|==============================|
+
+"""
+@brief Minimum possible success chance for subtlety checks (%)
+"""
+var SUBTLETY_CHECK_MIN_CHANCE: float = 20.0
+
+"""
+@brief Maximum possible success chance for subtlety checks (%)
+"""
+var SUBTLETY_CHECK_MAX_CHANCE: float = 80.0
+
+"""
+@brief Minimum possible success chance for smarts checks (%)
+"""
+var SMARTS_CHECK_MIN_CHANCE: float = 20.0
+
+"""
+@brief Maximum possible success chance for smarts checks (%)
+"""
+var SMARTS_CHECK_MAX_CHANCE: float = 80.0
+
+"""
+@brief Minimum possible success chance for charm checks (%)
+"""
+var CHARM_CHECK_MIN_CHANCE: float = 20.0
+
+"""
+@brief Maximum possible success chance for charm checks (%)
+"""
+var CHARM_CHECK_MAX_CHANCE: float = 80.0
 
 func _ready():
 	config = ConfigLoader.new()
@@ -391,3 +424,11 @@ func _on_constants_loaded():
 	HIGH_HEAT_MINOR_CHANCE = config.get_value("HIGH_HEAT_MINOR_CHANCE", HIGH_HEAT_MINOR_CHANCE)
 	HIGH_HEAT_SIGNIFICANT_CHANCE = config.get_value("HIGH_HEAT_SIGNIFICANT_CHANCE", HIGH_HEAT_SIGNIFICANT_CHANCE)
 	MEDIUM_HEAT_MINOR_CHANCE = config.get_value("MEDIUM_HEAT_MINOR_CHANCE", MEDIUM_HEAT_MINOR_CHANCE)
+
+	# Stat Check Bounds
+	SUBTLETY_CHECK_MIN_CHANCE = config.get_value("SUBTLETY_CHECK_MIN_CHANCE", SUBTLETY_CHECK_MIN_CHANCE)
+	SUBTLETY_CHECK_MAX_CHANCE = config.get_value("SUBTLETY_CHECK_MAX_CHANCE", SUBTLETY_CHECK_MAX_CHANCE)
+	SMARTS_CHECK_MIN_CHANCE = config.get_value("SMARTS_CHECK_MIN_CHANCE", SMARTS_CHECK_MIN_CHANCE)
+	SMARTS_CHECK_MAX_CHANCE = config.get_value("SMARTS_CHECK_MAX_CHANCE", SMARTS_CHECK_MAX_CHANCE)
+	CHARM_CHECK_MIN_CHANCE = config.get_value("CHARM_CHECK_MIN_CHANCE", CHARM_CHECK_MIN_CHANCE)
+	CHARM_CHECK_MAX_CHANCE = config.get_value("CHARM_CHECK_MAX_CHANCE", CHARM_CHECK_MAX_CHANCE)
