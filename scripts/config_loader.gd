@@ -18,6 +18,7 @@ func _ready():
 func load_constants():
     # Create HTTP request node
     var http = HTTPRequest.new()
+    http.accept_gzip = false
     add_child(http)
     http.connect("request_completed", _on_constants_loaded)
     

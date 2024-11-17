@@ -15,3 +15,6 @@ mono_crash.*.json
 .DS_Store
 .vscode/settings.json
 .vscode/tasks.json
+
+# Ignore any locally built files
+builds/*
