@@ -59,6 +59,11 @@ signal character_sympathy_changed(character: Character)
 """
 signal action_created(action: BaseAction)
 
+"""
+@brief Emitted when an action is destroyed
+"""
+signal action_destroyed(action: BaseAction)
+
 #|==============================|
 #|      Intel Management        |
 #|==============================|

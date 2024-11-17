@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://c2mmbfyx0bex5"]
+
+[ext_resource type="Texture2D" uid="uid://bj4tjwvodagr6" path="res://assets/black_circle_clipping_mask.png" id="1_2p1oh"]
+[ext_resource type="Texture2D" uid="uid://iryidu1uyagu" path="res://assets/profile_pictures/belgian/male/belgian-male-15.png" id="2_6hhfd"]
+
+[node name="Action" type="Control"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Mask" type="Sprite2D" parent="."]
+clip_children = 1
+position = Vector2(26, 28)
+scale = Vector2(0.0507812, 0.0507812)
+texture = ExtResource("1_2p1oh")
+
+[node name="TextureRect" type="TextureRect" parent="Mask"]
+offset_left = -556.329
+offset_top = -529.732
+offset_right = 536.671
+offset_bottom = 927.268
+texture = ExtResource("2_6hhfd")

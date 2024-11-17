@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://l7oaxvw3d3gl"]
+[gd_scene load_steps=4 format=3 uid="uid://vl61or4exnyi"]
 
 [ext_resource type="Script" path="res://scripts/gui/poi_popup.gd" id="1_pvfqc"]
 [ext_resource type="Theme" uid="uid://dexax20p2eewp" path="res://assets/themes/base_theme.tres" id="1_sfyac"]

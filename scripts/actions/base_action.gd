@@ -129,6 +129,7 @@ Unregisters the action from the global registry.
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE:
 		GlobalRegistry.actions.remove_item(self)
+		EventBus.action_destroyed.emit(self)
 		_release_characters()
 
 #|==============================|

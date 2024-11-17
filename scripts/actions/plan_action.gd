@@ -184,6 +184,7 @@ func _rescue_agent() -> Array[TurnLog]:
 """
 @brief Adds a wildcard intel
 """
+# TODO: Implement wildcard intel
 func _wildcard_intel() -> Array[TurnLog]:
 	var logs: Array[TurnLog] = []
 	var log_message: String = ""
@@ -208,8 +209,6 @@ func _reduce_heat() -> Array[TurnLog]:
 		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
 
 		var base_heat_reduced: int = MathHelpers.generateBellCurveStat(Constants.ACTION_EFFECT_PLAN_REDUCE_HEAT_MIN, Constants.ACTION_EFFECT_PLAN_REDUCE_HEAT_MAX)
-		#TODO: I think this commented out line is wrong, we use heat_modification to modify how much heat a distric has rather than reducing it
-		# var heat_reduced: int = StatisticModification.heat_modification(base_heat_reduced, poi.parent_district.district_type)
 
 		poi.parent_district.heat -= base_heat_reduced
 
@@ -240,7 +239,6 @@ func _reduce_heat_all() -> Array[TurnLog]:
 
 		for district in GlobalRegistry.districts.get_all_items():
 			var base_heat_reduced: int = MathHelpers.generateBellCurveStat(Constants.ACTION_EFFECT_PLAN_REDUCE_HEAT_ALL_MIN, Constants.ACTION_EFFECT_PLAN_REDUCE_HEAT_ALL_MAX)
-			# var heat_reduced: int = StatisticModification.heat_modification(base_heat_reduced, district.district_type)
 
 			district.heat -= base_heat_reduced
 

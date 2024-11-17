@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/pois/poi.gd" id="1_cwy0w"]
 [ext_resource type="Texture2D" uid="uid://dniextr4kn1uv" path="res://assets/PoI.png" id="2_y8567"]
-[ext_resource type="PackedScene" uid="uid://l7oaxvw3d3gl" path="res://scenes/gui/poi_popup.tscn" id="3_0f6jn"]
+[ext_resource type="PackedScene" uid="uid://vl61or4exnyi" path="res://scenes/gui/poi_popup.tscn" id="3_0f6jn"]
 
 [node name="Poi" type="Area2D" node_paths=PackedStringArray("poi_popup")]
 top_level = true
@@ -10,6 +10,8 @@ script = ExtResource("1_cwy0w")
 poi_popup = NodePath("PoIPopup")
 poi_static = false
 poi_static_type = 3
+poi_static_name = null
+poi_static_description = null
 
 [node name="Label" type="Label" parent="."]
 visible = false
@@ -27,6 +29,10 @@ top_level = true
 
 [node name="PoIPopup" parent="." instance=ExtResource("3_0f6jn")]
 visible = false
+
+[node name="ActionContainer" type="HBoxContainer" parent="."]
+offset_right = 50.0
+offset_bottom = 50.0
 
 [connection signal="input_event" from="." to="." method="_on_poi_clicked"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

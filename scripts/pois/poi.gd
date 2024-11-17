@@ -126,6 +126,10 @@ func _ready() -> void:
 	self.poi_owner = CharacterFactory.create_character()
 	self.poi_bonus = _derive_poi_bonus()
 
+	EventBus.action_created.connect(_on_action_created)
+	EventBus.action_destroyed.connect(_on_action_destroyed)
+
+
 """
 @brief Called every frame to update POI state.
 Handles popup visibility based on hover state.
@@ -149,6 +153,16 @@ func setup_poi_visuals():
 	$Polygon2D.position = self.get_global_position()
 	$Polygon2D.polygon = $CollisionPolygon2D.polygon
 	$Polygon2D.color = no_color
+	
+	# Calculate center of polygon
+	var center = Vector2.ZERO
+	var vertices = $CollisionPolygon2D.polygon
+	for vertex in vertices:
+		center += vertex
+	center /= vertices.size()
+	
+	# Position ActionContainer at the center
+	$ActionContainer.position = center
 
 """
 @brief Sets the POI's details based on static or dynamic configuration.
@@ -287,6 +301,32 @@ func _character_state_changed(character: Character) -> void:
 		if character.char_state == Enums.CharacterState.DECEASED:
 			$Polygon2D.color = no_color
 			enabled = false
+
+"""
+@brief Handles action creation events.
+Updates POI state based on action creation.
+
+@param action The action that was created
+"""
+func _on_action_created(action: BaseAction) -> void:
+	if action.poi == self:
+		var action_instance = Globals.action_scene.instantiate()
+		action_instance.set_meta("action_reference", action)
+		action_instance.get_node("Mask/TextureRect").texture = action.characters[0].char_picture
+		$ActionContainer.add_child(action_instance)
+
+"""
+@brief Handles action destruction events.
+Updates POI state based on action destruction.
+
+@param action The action that was destroyed
+"""
+func _on_action_destroyed(action: BaseAction) -> void:
+	if action.poi == self:
+		for child in $ActionContainer.get_children():
+			if child.get_meta("action_reference") == action:
+				child.queue_free()
+				break
 
 #|==============================|
 #|      Helper Functions       |
