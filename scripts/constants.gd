@@ -89,9 +89,24 @@ var DISTRICT_HEAT_DECREASE_PER_TURN_MAX: int = 0
 #|    Action Effects   |
 #|==============================|
 """
-@brief Amount of heat added to a district when an action fails
+@brief Minimum amount of heat added to a district when an action fails
 """
-var ACTION_EFFECT_FAILED_SUBTLETY: int = 10
+var ACTION_EFFECT_FAILED_SUBTLETY_MIN: int = 2
+
+"""
+@brief Maximum amount of heat added to a district when an action fails
+"""
+var ACTION_EFFECT_FAILED_SUBTLETY_MAX: int = 4
+
+"""
+@brief Minimum amount of heat added to a district when an action succeeds
+"""
+var ACTION_EFFECT_SUCCESS_SUBTLETY_MIN: int = 1
+
+"""
+@brief Maximum amount of heat added to a district when an action succeeds
+"""
+var ACTION_EFFECT_SUCCESS_SUBTLETY_MAX: int = 2
 
 """
 @brief Amount of sympathy added to a character when an action is completed
@@ -387,7 +402,10 @@ func _on_constants_loaded():
 	DISTRICT_HEAT_DECREASE_PER_TURN_MAX = config.get_value("DISTRICT_HEAT_DECREASE_PER_TURN_MAX", DISTRICT_HEAT_DECREASE_PER_TURN_MAX)
 	
 	# Action Effects
-	ACTION_EFFECT_FAILED_SUBTLETY = config.get_value("ACTION_EFFECT_FAILED_SUBTLETY", ACTION_EFFECT_FAILED_SUBTLETY)
+	ACTION_EFFECT_FAILED_SUBTLETY_MIN = config.get_value("ACTION_EFFECT_FAILED_SUBTLETY_MIN", ACTION_EFFECT_FAILED_SUBTLETY_MIN)
+	ACTION_EFFECT_FAILED_SUBTLETY_MAX = config.get_value("ACTION_EFFECT_FAILED_SUBTLETY_MAX", ACTION_EFFECT_FAILED_SUBTLETY_MAX)
+	ACTION_EFFECT_SUCCESS_SUBTLETY_MIN = config.get_value("ACTION_EFFECT_SUCCESS_SUBTLETY_MIN", ACTION_EFFECT_SUCCESS_SUBTLETY_MIN)
+	ACTION_EFFECT_SUCCESS_SUBTLETY_MAX = config.get_value("ACTION_EFFECT_SUCCESS_SUBTLETY_MAX", ACTION_EFFECT_SUCCESS_SUBTLETY_MAX)
 	ACTION_EFFECT_PROPAGANDA_SYMPATHY_MODIFIER = config.get_value("ACTION_EFFECT_PROPAGANDA_SYMPATHY_MODIFIER", ACTION_EFFECT_PROPAGANDA_SYMPATHY_MODIFIER)
 	ACTION_EFFECT_PLAN_BUILD_SYMPATHY_MODIFIER = config.get_value("ACTION_EFFECT_PLAN_BUILD_SYMPATHY_MODIFIER", ACTION_EFFECT_PLAN_BUILD_SYMPATHY_MODIFIER)
 	ACTION_EFFECT_PLAN_BUILD_SYMPATHY_ALL_MODIFIER = config.get_value("ACTION_EFFECT_PLAN_BUILD_SYMPATHY_ALL_MODIFIER", ACTION_EFFECT_PLAN_BUILD_SYMPATHY_ALL_MODIFIER)

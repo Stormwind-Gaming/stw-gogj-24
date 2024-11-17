@@ -150,14 +150,18 @@ func _process_danger() -> Array[TurnLog]:
 	var subtle_roll = MathHelpers.bounded_sigmoid_check(stats["subtlety"], true, Constants.SUBTLETY_CHECK_MIN_CHANCE, Constants.SUBTLETY_CHECK_MAX_CHANCE)
 
 	var log_message: String = ""
+	var heat_added: int = 0
 		
 	if(subtle_roll.success):
-		log_message = "Succeeded subtlety check..."
+		heat_added = MathHelpers.generateBellCurveStat(Constants.ACTION_EFFECT_SUCCESS_SUBTLETY_MIN, Constants.ACTION_EFFECT_SUCCESS_SUBTLETY_MAX)
+		log_message = "Succeeded subtlety check... heat increased by " + str(heat_added)
 		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
 
 	else:
-		log_message = "Failed subtlety check... heat increased by " + str(Constants.ACTION_EFFECT_FAILED_SUBTLETY)
-		EventBus.district_heat_changed.emit(poi.parent_district, Constants.ACTION_EFFECT_FAILED_SUBTLETY)
+		heat_added = MathHelpers.generateBellCurveStat(Constants.ACTION_EFFECT_FAILED_SUBTLETY_MIN, Constants.ACTION_EFFECT_FAILED_SUBTLETY_MAX)
+		log_message = "Failed subtlety check... heat increased by " + str(heat_added)
+
+		EventBus.district_heat_changed.emit(poi.parent_district, heat_added)
 		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
 
 		# Determine the consequence of the action failure
