@@ -51,7 +51,8 @@ func _build_sympathy() -> Array[TurnLog]:
 	var charm_roll = MathHelpers.bounded_sigmoid_check(stats["charm"], true, Constants.CHARM_CHECK_MIN_CHANCE, Constants.CHARM_CHECK_MAX_CHANCE)
 		
 	if(charm_roll.success):
-		var sympathy_added: int = StatisticModification.sympathy_modification(Constants.ACTION_EFFECT_PLAN_BUILD_SYMPATHY_MODIFIER, poi.parent_district.district_type)
+		var base_sympathy_added: int = MathHelpers.generateBellCurveStat(Constants.ACTION_EFFECT_PLAN_BUILD_SYMPATHY_MIN, Constants.ACTION_EFFECT_PLAN_BUILD_SYMPATHY_MAX)
+		var sympathy_added: int = StatisticModification.sympathy_modification(base_sympathy_added, poi.parent_district.district_type)
 
 		log_message = "Succeeded charm check..."
 		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
@@ -84,9 +85,12 @@ func _build_sympathy_all() -> Array[TurnLog]:
 		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
 
 		for my_poi in GlobalRegistry.poi.find_all_items(GlobalRegistry.LIST_ALL_POIS, "parent_district", poi.parent_district):
-			my_poi.poi_owner.char_sympathy += Constants.ACTION_EFFECT_PLAN_BUILD_SYMPATHY_ALL_MODIFIER
+			var base_sympathy_added: int = MathHelpers.generateBellCurveStat(Constants.ACTION_EFFECT_PLAN_BUILD_SYMPATHY_ALL_MIN, Constants.ACTION_EFFECT_PLAN_BUILD_SYMPATHY_ALL_MAX)
+			var sympathy_added: int = StatisticModification.sympathy_modification(base_sympathy_added, poi.parent_district.district_type)
 
-			log_message = my_poi.poi_owner.char_full_name + " sympathy increased by " + str(Constants.ACTION_EFFECT_PLAN_BUILD_SYMPATHY_ALL_MODIFIER)
+			my_poi.poi_owner.char_sympathy += sympathy_added
+
+			log_message = my_poi.poi_owner.char_full_name + " sympathy increased by " + str(sympathy_added)
 			logs.append(TurnLog.new(log_message, Enums.LogType.SUCCESS))
 
 	else:
@@ -111,7 +115,7 @@ func _discover_all() -> Array[TurnLog]:
 		log_message = "Succeeded smarts check..."
 		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
 
-		for my_poi in GlobalRegistry.poi.find_all_items(GlobalRegistry.LIST_POI, "parent_district", poi.parent_district):
+		for my_poi in GlobalRegistry.poi.find_all_items(GlobalRegistry.LIST_ALL_POIS, "parent_district", poi.parent_district):
 			my_poi.poi_owner.char_recruitment_state = Enums.CharacterRecruitmentState.NON_SYMPATHISER_KNOWN
 
 			log_message = my_poi.poi_owner.char_full_name + " is now known to us"
@@ -203,9 +207,13 @@ func _reduce_heat() -> Array[TurnLog]:
 		log_message = "Succeeded smarts check..."
 		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
 
-		poi.parent_district.heat -= Constants.ACTION_EFFECT_PLAN_REDUCE_HEAT_MODIFIER
+		var base_heat_reduced: int = MathHelpers.generateBellCurveStat(Constants.ACTION_EFFECT_PLAN_REDUCE_HEAT_MIN, Constants.ACTION_EFFECT_PLAN_REDUCE_HEAT_MAX)
+		#TODO: I think this commented out line is wrong, we use heat_modification to modify how much heat a distric has rather than reducing it
+		# var heat_reduced: int = StatisticModification.heat_modification(base_heat_reduced, poi.parent_district.district_type)
 
-		log_message = poi.parent_district.district_name + " heat reduced by " + str(Constants.ACTION_EFFECT_PLAN_REDUCE_HEAT_MODIFIER)
+		poi.parent_district.heat -= base_heat_reduced
+
+		log_message = poi.parent_district.district_name + " heat reduced by " + str(base_heat_reduced)
 		logs.append(TurnLog.new(log_message, Enums.LogType.SUCCESS))
 
 	else:
@@ -231,9 +239,12 @@ func _reduce_heat_all() -> Array[TurnLog]:
 		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
 
 		for district in GlobalRegistry.districts.get_all_items():
-			district.heat -= Constants.ACTION_EFFECT_PLAN_REDUCE_HEAT_ALL_MODIFIER
+			var base_heat_reduced: int = MathHelpers.generateBellCurveStat(Constants.ACTION_EFFECT_PLAN_REDUCE_HEAT_ALL_MIN, Constants.ACTION_EFFECT_PLAN_REDUCE_HEAT_ALL_MAX)
+			# var heat_reduced: int = StatisticModification.heat_modification(base_heat_reduced, district.district_type)
 
-			log_message = district.district_name + " heat reduced by " + str(Constants.ACTION_EFFECT_PLAN_REDUCE_HEAT_ALL_MODIFIER)
+			district.heat -= base_heat_reduced
+
+			log_message = district.district_name + " heat reduced by " + str(base_heat_reduced)
 			logs.append(TurnLog.new(log_message, Enums.LogType.SUCCESS))
 
 	else:
