@@ -16,8 +16,10 @@
 transparent_bg = true
 initial_position = 1
 size = Vector2i(800, 700)
+exclusive = true
+unresizable = true
 borderless = true
-always_on_top = true
+transparent = true
 theme = ExtResource("1_cgsud")
 script = ExtResource("1_2cqh1")
 task_title = NodePath("NinePatchRect/MarginContainer/LeftPanelContainer/MarginContainer/VBoxContainer/Label")

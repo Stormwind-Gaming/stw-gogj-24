@@ -9,21 +9,21 @@
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_b2gp1"]
 texture = ExtResource("3_j25jh")
 
-[node name="GamePauseMenu" type="Control"]
-top_level = true
-z_index = 4096
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="GamePauseMenu" type="Window"]
+transparent_bg = true
+initial_position = 2
+size = Vector2i(2000, 2000)
+visible = false
+exclusive = true
+unresizable = true
+borderless = true
+always_on_top = true
+transparent = true
 theme = ExtResource("1_o77sk")
 script = ExtResource("2_7517p")
 
 [node name="Control" type="TextureRect" parent="."]
 modulate = Color(0, 0, 0, 0.6)
-layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -32,7 +32,6 @@ grow_vertical = 2
 texture = SubResource("PlaceholderTexture2D_2f674")
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
-layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

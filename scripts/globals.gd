@@ -34,7 +34,8 @@ var load_csvs = {
 	"poi_types": "res://data/poi_types.csv",
 	"poi_names": "res://data/poi_names.csv",
 	"rumour_text": "res://data/rumour_text.csv",
-	"items": "res://data/items.csv"
+	"items": "res://data/items.csv",
+	"event_outcome_text": "res://data/event_outcome_text.csv",
 }
 
 #|==============================|
@@ -50,6 +51,7 @@ var last_names = []
 var poi_types = []
 var poi_names = []
 var rumour_text = []
+var event_outcome_text = {}
 
 #|==============================|
 #|      Data Loading           |
@@ -66,6 +68,7 @@ func _ready() -> void:
 	_load_poi_types(load_csvs["poi_types"])
 	_load_poi_names(load_csvs["poi_names"])
 	_load_rumour_text(load_csvs["rumour_text"])
+	_load_event_outcome_text(load_csvs["event_outcome_text"])
 
 """
 @brief Loads town names from CSV
@@ -141,6 +144,23 @@ func _load_rumour_text(path: String) -> void:
 			"subject": rumour_subject_map[record['subject'].to_upper()]
 		})
 
+func _load_event_outcome_text(path: String) -> void:
+	var csv_data = load(path)
+	for record in csv_data.records:
+		var category = event_outcome_category_map[record["event_category"].to_upper()]
+		var title = record["event_title"]
+		var text = record["event_text"]
+		var button_text = record["event_button_text"]
+
+		if not event_outcome_text.has(category):
+			event_outcome_text[category] = []
+
+		event_outcome_text[category].append({
+			"category": category,
+			"title": title,
+			"text": text,
+			"button_text": button_text
+		})
 #|==============================|
 #|      Data Retrieval         |
 #|==============================|
@@ -340,6 +360,11 @@ var poi_skill_required_map = {
 
 var poi_bonus_map = {
 	"NONE": Enums.POIBonusType.NONE
+}
+
+var event_outcome_category_map = {
+	"MIA": Enums.EventOutcomeType.MIA,
+	"DECEASED": Enums.EventOutcomeType.DECEASED
 }
 
 #|==============================|
@@ -646,5 +671,5 @@ var profile_images = {
 
 var event_images = {
 	Enums.EventOutcomeType.MIA: preload("res://assets/sprites/events/event_mia.png"),
-	Enums.EventOutcomeType.KIA: preload("res://assets/sprites/events/event_kia.png"),
+	Enums.EventOutcomeType.DECEASED: preload("res://assets/sprites/events/event_kia.png"),
 }

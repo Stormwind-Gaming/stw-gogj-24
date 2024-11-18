@@ -244,8 +244,9 @@ enum LogType {
 @brief Types of events that can occur
 """
 enum EventOutcomeType {
+	NONE,
 	MIA,
-	KIA
+	DECEASED
 }
 
 """

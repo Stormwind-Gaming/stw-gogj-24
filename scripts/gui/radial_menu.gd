@@ -42,6 +42,10 @@ const SPRITE_SIZE = Vector2(64, 64)
 """
 @export var line_width: int = 4
 
+"""
+@brief Area that will close the menu when clicked
+"""
+@export var click_away_area: Area2D
 #|==============================|
 #|         Properties          |
 #|==============================|
@@ -183,3 +187,10 @@ func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) 
 func set_optional_actions(options_attr: Array[Enums.ActionType] = []) -> void:
 	for option in options_attr:
 		options.append(RadialOption.new(option))
+
+
+func _on_close_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+	if event is InputEventMouseButton:
+		var mouse_event = event as InputEventMouseButton
+		if mouse_event.button_index == MOUSE_BUTTON_LEFT and mouse_event.pressed:
+			EventBus.close_all_windows.emit()

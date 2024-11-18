@@ -8,6 +8,7 @@ extends Node
 """
 var open_window: Window
 var open_radial_menu: RadialMenu = null
+var open_event_panels: Array[Window] = []
 
 #|==============================|
 #|      Lifecycle Methods       |
@@ -32,7 +33,7 @@ func _ready() -> void:
 @brief Checks if any windows are open
 """
 func any_windows_open() -> bool:
-	return !!open_window or !!open_radial_menu
+	return !!open_window or !!open_radial_menu or open_event_panels.size() > 0
 
 
 #|==============================|
@@ -65,6 +66,9 @@ func _open_new_window(window: Window, close_all_windows: bool = true) -> void:
 
 	open_window = window
 	add_child(window)
+	# if there are any open event panels, move them to the front
+	for panel in open_event_panels:
+		move_child(panel, get_child_count() - 1)
 
 """
 @brief Opens a radial menu
@@ -82,11 +86,25 @@ func _open_radial_menu(menu: RadialMenu) -> void:
 
 @param log The log to display
 """
-func _create_new_event_panel(log: TurnLog) -> void:
-	# print("Creating new event panel")
-	# if log.log_type == Enums.LogType.CONSEQUENCE:
-	# 	print("Creating new event panel", log.log_message)
-	# var popup = Globals.event_panel_scene.instantiate()
-	# popup.log = log
-	# _open_new_window(popup)
+func _create_new_event_panel(log_attr: TurnLog) -> void:
+	if log_attr.event_type == Enums.EventOutcomeType.NONE:
+		return
+	print("Creating new event panel")
+	if log_attr.log_type == Enums.LogType.CONSEQUENCE:
+		print("Creating new event panel", log_attr.log_message)
+	var popup = Globals.event_panel_scene.instantiate()
+	popup.set_event_details(log_attr)
+	add_child(popup)
+	open_event_panels.append(popup)
+	popup.on_close.connect(_on_event_panel_closed)
+	pass
+
+"""
+@brief Handles the event panel being closed
+
+@param event_panel The event panel that was closed
+"""
+func _on_event_panel_closed(event_panel: Window) -> void:
+	open_event_panels.erase(event_panel)
+	event_panel.queue_free()
 	pass

@@ -172,6 +172,7 @@ func _process_danger() -> Array[TurnLog]:
 		log_message = "Determining consequence of action failure... district heat is " + str(district_heat)
 		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
 
+		var consequence_log_type: Enums.EventOutcomeType
 		match _determine_action_failure_consequence(district_heat):
 			Enums.CharacterState.ASSIGNED:
 				log_message = "No consequence"
@@ -179,14 +180,16 @@ func _process_danger() -> Array[TurnLog]:
 				log_message = "One character is missing"
 				characters.shuffle()
 				characters[0].char_state = Enums.CharacterState.MIA
+				consequence_log_type = Enums.EventOutcomeType.MIA
 			Enums.CharacterState.DECEASED:
 				log_message = "One character is deceased"
 				characters.shuffle()
 				characters[0].char_state = Enums.CharacterState.DECEASED
+				consequence_log_type = Enums.EventOutcomeType.DECEASED
 			_:
 				log_message = "Unknown consequence"
 
-		logs.append(TurnLog.new(log_message, Enums.LogType.CONSEQUENCE))
+		logs.append(TurnLog.new(log_message, Enums.LogType.CONSEQUENCE, consequence_log_type, poi, characters))
 
 	return logs
 

@@ -168,7 +168,6 @@ func _assign_character_ui(character: Character) -> void:
 @param state The current state of the character.
 """
 func _set_state_overlay(status: Enums.CharacterState) -> void:
-	print('Setting state overlay', status)
 	self.modulate = Color(1, 1, 1)
 
 	if status == Enums.CharacterState.AVAILABLE:

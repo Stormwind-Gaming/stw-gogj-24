@@ -6,7 +6,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g4xvg"]
 
-[node name="Footer" type="Control" node_paths=PackedStringArray("show_actions_list_button", "show_character_list_button", "show_intel_list_button", "show_log_list_button", "turn_button")]
+[node name="Footer" type="Control" node_paths=PackedStringArray("show_actions_list_button", "show_character_list_button", "show_intel_list_button", "show_log_list_button", "turn_button", "log_list_new_items_container")]
 layout_mode = 3
 anchors_preset = 12
 anchor_top = 1.0
@@ -21,6 +21,7 @@ show_character_list_button = NodePath("PanelContainer/HBoxContainer/HBoxContaine
 show_intel_list_button = NodePath("PanelContainer/HBoxContainer/HBoxContainer/IntelListButton")
 show_log_list_button = NodePath("PanelContainer/HBoxContainer/HBoxContainer/LogListButton")
 turn_button = NodePath("MarginContainer/TurnButton")
+log_list_new_items_container = NodePath("PanelContainer/HBoxContainer/HBoxContainer/LogListButton/MarginContainer")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -72,6 +73,24 @@ layout_mode = 2
 focus_mode = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Log"
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/HBoxContainer/HBoxContainer/LogListButton"]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -15.0
+offset_bottom = 20.0
+grow_horizontal = 0
+theme_override_constants/margin_right = 15
+
+[node name="ColorRect" type="ColorRect" parent="PanelContainer/HBoxContainer/HBoxContainer/LogListButton/MarginContainer"]
+custom_minimum_size = Vector2(15, 20)
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+color = Color(0.81502, 3.58574e-06, 7.70092e-07, 1)
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1

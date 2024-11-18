@@ -28,6 +28,11 @@ extends Control
 """
 @export var turn_button: Button
 
+"""
+@brief Container indicating new items in the actions list
+"""
+@export var log_list_new_items_container: MarginContainer
+
 #|==============================|
 #|      Lifecycle Methods      |
 #|==============================|
@@ -97,6 +102,7 @@ Creates and displays the log list if not already visible.
 @param end_turn_button Whether this log list is being shown after ending a turn
 """
 func _on_show_log_list_button_pressed(end_turn_button: bool = false):
+	# log_list_new_items_container.visible = false
 	# if we already have an instance of the log list, don't create a new one
 	if get_node("LogList") != null:
 		return
@@ -131,4 +137,5 @@ Processes the turn and shows the end turn log.
 """
 func _on_turn_confirmed():
 	GameController.process_turn()
+	# log_list_new_items_container.visible = true
 	_on_show_log_list_button_pressed(true)
