@@ -137,7 +137,6 @@ func _ready():
 """
 func _on_character_created(character: Character) -> void:
 	var target_list_name = _get_character_list(character)
-	print('adding character to list', target_list_name)
 	characters.add_item(target_list_name, character)
 
 
