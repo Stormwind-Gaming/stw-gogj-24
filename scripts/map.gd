@@ -51,6 +51,7 @@ func _process(delta: float) -> void:
 		if Input.is_mouse_button_pressed(MOUSE_BUTTON_MIDDLE) or Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
 			_clear_focus()
 	if Input.is_action_just_pressed("ui_cancel"):
+		EventBus.close_all_windows.emit()
 		if pause_menu.visible:
 			pause_menu.hide()
 		else:

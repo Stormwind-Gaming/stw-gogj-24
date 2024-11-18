@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/district.gd" id="1_epqjp"]
 [ext_resource type="Texture2D" uid="uid://dr1v7la7ll1bf" path="res://assets/new_costal_map_lg.png" id="2_7n30c"]
 [ext_resource type="PackedScene" uid="uid://c0trxtgty6phy" path="res://scenes/pois/poi.tscn" id="3_g4xl4"]
-[ext_resource type="PackedScene" path="res://scenes/gui/district_popup.tscn" id="3_g17pl"]
+[ext_resource type="PackedScene" uid="uid://cf5mn4nfhvkwj" path="res://scenes/gui/district_popup.tscn" id="3_g17pl"]
 
 [node name="District_Civic" type="Area2D" node_paths=PackedStringArray("district_popup")]
 script = ExtResource("1_epqjp")
@@ -72,6 +72,7 @@ poi_static_description = "This is the Town Hall"
 polygon = PackedVector2Array(1117, 5, 1230, -24, 1211, -59, 1106, -40)
 
 [node name="Poi6" parent="pois" instance=ExtResource("3_g4xl4")]
+visible = false
 poi_static_type = 2
 poi_static_name = "Town Hall"
 poi_static_description = "This is the Town Hall"
@@ -80,6 +81,7 @@ poi_static_description = "This is the Town Hall"
 polygon = PackedVector2Array(1102, -87, 1106, -45, 1206, -62, 1191, -93)
 
 [node name="Poi7" parent="pois" instance=ExtResource("3_g4xl4")]
+visible = false
 poi_static_type = 2
 poi_static_name = "Town Hall"
 poi_static_description = "This is the Town Hall"
@@ -88,6 +90,7 @@ poi_static_description = "This is the Town Hall"
 polygon = PackedVector2Array(1097, -94, 1188, -98, 1123, -206, 1059, -194)
 
 [node name="Poi8" parent="pois" instance=ExtResource("3_g4xl4")]
+visible = false
 poi_static_type = 2
 poi_static_name = "Town Hall"
 poi_static_description = "This is the Town Hall"
@@ -96,6 +99,7 @@ poi_static_description = "This is the Town Hall"
 polygon = PackedVector2Array(1097, -94, 1009, -88, 980, -177, 1059, -194)
 
 [node name="Poi9" parent="pois" instance=ExtResource("3_g4xl4")]
+visible = false
 poi_static_type = 2
 poi_static_name = "Town Hall"
 poi_static_description = "This is the Town Hall"

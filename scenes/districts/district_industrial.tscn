@@ -72,6 +72,7 @@ poi_static_description = "This is The Train Station"
 polygon = PackedVector2Array(316, 743, 366, 722, 350, 671, 303, 688)
 
 [node name="Poi5" parent="pois" instance=ExtResource("4_c6rks")]
+visible = false
 poi_static_type = 6
 poi_static_name = "Train Station"
 poi_static_description = "This is The Train Station"
@@ -80,6 +81,7 @@ poi_static_description = "This is The Train Station"
 polygon = PackedVector2Array(294, 691, 253, 706, 251, 717, 258, 761, 309, 744)
 
 [node name="Poi7" parent="pois" instance=ExtResource("4_c6rks")]
+visible = false
 poi_static_type = 6
 poi_static_name = "Train Station"
 poi_static_description = "This is The Train Station"
@@ -88,6 +90,7 @@ poi_static_description = "This is The Train Station"
 polygon = PackedVector2Array(391, 778, 400, 804, 300, 842, 291, 817)
 
 [node name="Poi8" parent="pois" instance=ExtResource("4_c6rks")]
+visible = false
 poi_static_type = 6
 poi_static_name = "Train Station"
 poi_static_description = "This is The Train Station"
@@ -96,6 +99,7 @@ poi_static_description = "This is The Train Station"
 polygon = PackedVector2Array(241, 837, 280, 820, 302, 869, 312, 901, 254, 932, 247, 899, 246, 873, 245, 852)
 
 [node name="Poi9" parent="pois" instance=ExtResource("4_c6rks")]
+visible = false
 poi_static_type = 6
 poi_static_name = "Train Station"
 poi_static_description = "This is The Train Station"
@@ -104,6 +108,7 @@ poi_static_description = "This is The Train Station"
 polygon = PackedVector2Array(413, 843, 316, 882, 300, 842, 400, 804)
 
 [node name="Poi11" parent="pois" instance=ExtResource("4_c6rks")]
+visible = false
 poi_static_type = 6
 poi_static_name = "Train Station"
 poi_static_description = "This is The Train Station"
@@ -112,6 +117,7 @@ poi_static_description = "This is The Train Station"
 polygon = PackedVector2Array(503, 811, 534, 812, 466, 897, 450, 905, 425, 843)
 
 [node name="Poi12" parent="pois" instance=ExtResource("4_c6rks")]
+visible = false
 poi_static_type = 6
 poi_static_name = "Train Station"
 poi_static_description = "This is The Train Station"
@@ -120,6 +126,7 @@ poi_static_description = "This is The Train Station"
 polygon = PackedVector2Array(521, 713, 503, 670, 494, 627, 566, 614, 570, 624, 571, 662, 579, 663, 582, 667, 584, 672, 583, 679, 580, 696, 566, 702)
 
 [node name="Poi13" parent="pois" instance=ExtResource("4_c6rks")]
+visible = false
 poi_static_type = 6
 poi_static_name = "Train Station"
 poi_static_description = "This is The Train Station"
@@ -128,6 +135,7 @@ poi_static_description = "This is The Train Station"
 polygon = PackedVector2Array(536, 722, 554, 762, 565, 777, 574, 771, 579, 763, 567, 741, 573, 723, 570, 710, 559, 711)
 
 [node name="Poi14" parent="pois" instance=ExtResource("4_c6rks")]
+visible = false
 poi_static_type = 6
 poi_static_name = "Train Station"
 poi_static_description = "This is The Train Station"
@@ -136,6 +144,7 @@ poi_static_description = "This is The Train Station"
 polygon = PackedVector2Array(579, 750, 582, 757, 589, 755, 600, 746, 610, 730, 610, 718, 607, 698, 579, 705, 577, 709, 581, 720, 580, 731)
 
 [node name="Poi15" parent="pois" instance=ExtResource("4_c6rks")]
+visible = false
 poi_static_type = 6
 poi_static_name = "Train Station"
 poi_static_description = "This is The Train Station"

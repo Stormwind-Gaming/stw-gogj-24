@@ -114,7 +114,9 @@ func _ready() -> void:
 	$Sprite2D.visible = false
 
 	for poi in $pois.get_children():
-		pois.append(poi)
+		if poi.visible:
+			# get the pois that are visible (enabled)
+			pois.append(poi)
 
 	for poi in pois:
 		# connect signals

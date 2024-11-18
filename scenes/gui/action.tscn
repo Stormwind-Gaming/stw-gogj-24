@@ -10,7 +10,6 @@ anchors_preset = 0
 
 [node name="Mask" type="Sprite2D" parent="."]
 clip_children = 1
-position = Vector2(26, 28)
 scale = Vector2(0.0507812, 0.0507812)
 texture = ExtResource("1_2p1oh")
 

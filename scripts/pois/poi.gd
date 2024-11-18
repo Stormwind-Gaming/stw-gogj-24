@@ -117,6 +117,9 @@ signal poi_unhovered
 Initializes POI properties and connects signals.
 """
 func _ready() -> void:
+	if not self.visible:
+		# If the POI is not visible, then it is not part of the game
+		return
 	parent_district = get_parent().get_parent()
 	EventBus.poi_created.emit(self)
 	EventBus.character_state_changed.connect(_character_state_changed)
