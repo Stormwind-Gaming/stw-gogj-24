@@ -64,7 +64,7 @@ func _init(config: ActionFactory.ActionConfig):
 		character.char_state = Enums.CharacterState.ASSIGNED
 
 	# Calculate the turn to end
-	turn_to_end = GameController.turn_number + 1
+	turn_to_end = GameController.turn_number + StatisticModification.mission_duration_modification(1, poi.parent_district.district_type)
 
 	if additional_info.has("associated_plan"):
 		self.associated_plan = config.additional_info["associated_plan"]

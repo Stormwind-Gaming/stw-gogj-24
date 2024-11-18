@@ -35,7 +35,7 @@ func _process_action() -> Array[TurnLog]:
 
 		var rumour: Rumour = IntelFactory.create_rumour(poi.rumour_config)
 
-		log_message = "Generated intel of type " + str(rumour.rumour_type)
+		log_message = "Discovered a %s intel type." % Globals.get_intel_type_string(rumour.rumour_type)
 		logs.append(TurnLog.new(log_message, Enums.LogType.SUCCESS))
 
 	else:

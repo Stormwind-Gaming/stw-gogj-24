@@ -386,6 +386,19 @@ func get_action_type_string(action_type: Enums.ActionType) -> String:
 		_:
 			return "Unknown"
 
+func get_intel_type_string(intel_type: Enums.RumourType) -> String:
+	match intel_type:
+		Enums.RumourType.MISSION:
+			return "Mission"
+		Enums.RumourType.LOCATION:
+			return "Location"
+		Enums.RumourType.TIME:
+			return "Time"
+		Enums.RumourType.WILDCARD:
+			return "Wildcard"
+		_:
+			return "Unknown"
+
 func get_intel_effect_string(effect, bbcode_enabled: bool = false) -> String:
 
 	match effect:
