@@ -258,12 +258,23 @@ func set_district_details(district_name_arg: String, district_description_arg: S
 	district_popup.set_initial_details("%s %s District" % [district_name, Globals.get_district_type_string(district_type)], "%s\n\nType: %s\n%s Points of Interest" % [district_description, Globals.get_district_type_string(district_type), str(pois.size())], heat, sympathy)
 
 """
-@brief Gets the center point of the district.
+@brief Gets the center point of the district based on the polygon's center.
 
 @returns Vector2 position of the district's center
 """
 func get_district_centerpoint() -> Vector2:
-	return $FocusPoint.position
+	var polygon = $CollisionPolygon2D.polygon
+	if polygon.size() == 0:
+		return Vector2.ZERO
+		
+	# Calculate the center by averaging all points
+	var center = Vector2.ZERO
+	for point in polygon:
+		center += point
+	center /= polygon.size()
+	
+	# Add the district's global position to get world coordinates
+	return self.global_position + center
 
 """
 @brief Sets the highlight color for the district
@@ -295,6 +306,31 @@ func set_disabled() -> void:
 """
 func set_enabled() -> void:
 	$CollisionPolygon2D.disabled = false
+
+"""
+@brief Gets the size of the district based on its collision polygon.
+
+@returns Vector2 containing the width and height of the district
+"""
+func get_district_size() -> Vector2:
+	var polygon = $CollisionPolygon2D.polygon
+	if polygon.size() == 0:
+		return Vector2.ZERO
+		
+	# Find the minimum and maximum coordinates
+	var min_x = polygon[0].x
+	var max_x = polygon[0].x
+	var min_y = polygon[0].y
+	var max_y = polygon[0].y
+	
+	for point in polygon:
+		min_x = min(min_x, point.x)
+		max_x = max(max_x, point.x)
+		min_y = min(min_y, point.y)
+		max_y = max(max_y, point.y)
+	
+	# Return the size as width and height
+	return Vector2(max_x - min_x, max_y - min_y)
 
 #|==============================|
 #|      Event Handlers         |
