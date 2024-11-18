@@ -193,10 +193,28 @@ func _rescue_agent() -> Array[TurnLog]:
 """
 @brief Adds a wildcard intel
 """
-# TODO: Implement wildcard intel
 func _wildcard_intel() -> Array[TurnLog]:
 	var logs: Array[TurnLog] = []
 	var log_message: String = ""
+
+	# Get cumulative stats for all characters involved
+	var stats: Dictionary = _get_stats()
+
+	var smarts_roll = MathHelpers.bounded_sigmoid_check(stats["smarts"], true, Constants.SMARTS_CHECK_MIN_CHANCE, Constants.SMARTS_CHECK_MAX_CHANCE)
+		
+	if (smarts_roll.success):
+		log_message = "Succeeded smarts check..."
+		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
+
+		for i in range(0, 4):
+			IntelFactory.create_rumour(RumourConfig.new(33, 33, 33))
+
+		log_message = "Added 4 rumours"
+		logs.append(TurnLog.new(log_message, Enums.LogType.SUCCESS))
+
+	else:
+		log_message = "Failed smarts check..."
+		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
 
 	return logs
 
