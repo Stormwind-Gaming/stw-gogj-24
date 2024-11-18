@@ -83,6 +83,7 @@ size_flags_vertical = 3
 [node name="AgentsVBoxContainer" type="VBoxContainer" parent="NinePatchRect/MarginContainer/LeftPanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.5
 
 [node name="ScrollContainer" type="ScrollContainer" parent="NinePatchRect/MarginContainer/LeftPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/AgentsVBoxContainer"]
 layout_mode = 2
@@ -122,7 +123,9 @@ autowrap_mode = 2
 [node name="AssignedAgents" type="Label" parent="NinePatchRect/MarginContainer/LeftPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("5_b73pw")
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 22
+vertical_alignment = 1
+autowrap_mode = 2
 
 [node name="Separator" type="HSeparator" parent="NinePatchRect/MarginContainer/LeftPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
