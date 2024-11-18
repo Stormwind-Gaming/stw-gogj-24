@@ -147,9 +147,21 @@ func _process_danger() -> Array[TurnLog]:
 
 	logs.append(TurnLog.new("Processing danger for action at [u]" + str(poi.poi_name) + "[/u] by " + _get_character_names(), Enums.LogType.ACTION_INFO))
 
+	# Add detailed stats logging
+	logs.append(TurnLog.new("Character stats - Subtlety: " + str(stats["subtlety"]) + ", Smarts: " + str(stats["smarts"]) + ", Charm: " + str(stats["charm"]), Enums.LogType.ACTION_INFO))
+
 	var subtle_roll = MathHelpers.bounded_sigmoid_check(stats["subtlety"], true, Constants.SUBTLETY_CHECK_MIN_CHANCE, Constants.SUBTLETY_CHECK_MAX_CHANCE)
 
-	# emit stats change
+	# Add detailed roll logging
+	logs.append(TurnLog.new("Subtlety Check Details:", Enums.LogType.ACTION_INFO))
+	logs.append(TurnLog.new("- Base stat: " + str(subtle_roll.stat), Enums.LogType.ACTION_INFO))
+	logs.append(TurnLog.new("- Raw chance (unbounded): " + str(subtle_roll.raw_chance) + "%", Enums.LogType.ACTION_INFO))
+	logs.append(TurnLog.new("- Min chance: " + str(Constants.SUBTLETY_CHECK_MIN_CHANCE) + "%", Enums.LogType.ACTION_INFO))
+	logs.append(TurnLog.new("- Max chance: " + str(Constants.SUBTLETY_CHECK_MAX_CHANCE) + "%", Enums.LogType.ACTION_INFO))
+	logs.append(TurnLog.new("- Final success chance (bounded): " + str(subtle_roll.success_chance) + "%", Enums.LogType.ACTION_INFO))
+	logs.append(TurnLog.new("- Roll result: " + str(subtle_roll.roll), Enums.LogType.ACTION_INFO))
+	logs.append(TurnLog.new("- Final outcome: " + ("Success" if subtle_roll.success else "Failure"), Enums.LogType.ACTION_INFO))
+
 	EventBus.stat_created.emit("subtlety", subtle_roll.success)
 
 	var log_message: String = ""
@@ -157,25 +169,51 @@ func _process_danger() -> Array[TurnLog]:
 		
 	if (subtle_roll.success):
 		heat_added = MathHelpers.generateBellCurveStat(Constants.ACTION_EFFECT_SUCCESS_SUBTLETY_MIN, Constants.ACTION_EFFECT_SUCCESS_SUBTLETY_MAX)
+		logs.append(TurnLog.new("Success heat calculation:", Enums.LogType.ACTION_INFO))
+		logs.append(TurnLog.new("- Min heat: " + str(Constants.ACTION_EFFECT_SUCCESS_SUBTLETY_MIN), Enums.LogType.ACTION_INFO))
+		logs.append(TurnLog.new("- Max heat: " + str(Constants.ACTION_EFFECT_SUCCESS_SUBTLETY_MAX), Enums.LogType.ACTION_INFO))
+		logs.append(TurnLog.new("- Generated heat: " + str(heat_added), Enums.LogType.ACTION_INFO))
 		log_message = "Succeeded subtlety check... heat increased by " + str(heat_added)
 		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
 
 	else:
 		heat_added = MathHelpers.generateBellCurveStat(Constants.ACTION_EFFECT_FAILED_SUBTLETY_MIN, Constants.ACTION_EFFECT_FAILED_SUBTLETY_MAX)
-		log_message = "Failed subtlety check... heat increased by " + str(heat_added)
+		logs.append(TurnLog.new("Failure heat calculation:", Enums.LogType.ACTION_INFO))
+		logs.append(TurnLog.new("- Min heat: " + str(Constants.ACTION_EFFECT_FAILED_SUBTLETY_MIN), Enums.LogType.ACTION_INFO))
+		logs.append(TurnLog.new("- Max heat: " + str(Constants.ACTION_EFFECT_FAILED_SUBTLETY_MAX), Enums.LogType.ACTION_INFO))
+		logs.append(TurnLog.new("- Generated heat: " + str(heat_added), Enums.LogType.ACTION_INFO))
 
 		EventBus.district_heat_changed.emit(poi.parent_district, heat_added)
-		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
 
-		# Determine the consequence of the action failure
 		var district: District = poi.parent_district
+		var base_district_heat = district.heat
 		var district_heat: int = StatisticModification.heat_modification(district.heat, district.district_type)
+		
+		logs.append(TurnLog.new("District heat calculation:", Enums.LogType.ACTION_INFO))
+		logs.append(TurnLog.new("- Base district heat: " + str(base_district_heat), Enums.LogType.ACTION_INFO))
+		logs.append(TurnLog.new("- District type: " + str(district.district_type), Enums.LogType.ACTION_INFO))
+		logs.append(TurnLog.new("- Modified district heat: " + str(district_heat), Enums.LogType.ACTION_INFO))
 
-		log_message = "Determining consequence of action failure... district heat is " + str(district_heat)
-		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
+		var consequence_result = _determine_action_failure_consequence(district_heat)
+		var probabilities = _get_consequence_probabilities(district_heat)
+		
+		logs.append(TurnLog.new("Consequence calculation:", Enums.LogType.ACTION_INFO))
+		logs.append(TurnLog.new("Base probabilities (before heat):", Enums.LogType.ACTION_INFO))
+		logs.append(TurnLog.new("- No consequence: " + str(probabilities[Enums.CharacterState.ASSIGNED] * 100) + "%", Enums.LogType.ACTION_INFO))
+		logs.append(TurnLog.new("- MIA: " + str(probabilities[Enums.CharacterState.MIA] * 100) + "%", Enums.LogType.ACTION_INFO))
+		logs.append(TurnLog.new("- Death: " + str(probabilities[Enums.CharacterState.DECEASED] * 100) + "%", Enums.LogType.ACTION_INFO))
+		
+		logs.append(TurnLog.new("Heat modification:", Enums.LogType.ACTION_INFO))
+		logs.append(TurnLog.new("- District heat: " + str(district_heat), Enums.LogType.ACTION_INFO))
+		logs.append(TurnLog.new("- Heat factor: " + str(district_heat / 100.0), Enums.LogType.ACTION_INFO))
+		
+		logs.append(TurnLog.new("Modified probabilities (after heat):", Enums.LogType.ACTION_INFO))
+		logs.append(TurnLog.new("- No consequence: " + str(probabilities[Enums.CharacterState.ASSIGNED] * 100) + "%", Enums.LogType.ACTION_INFO))
+		logs.append(TurnLog.new("- MIA: " + str(probabilities[Enums.CharacterState.MIA] * 100) + "%", Enums.LogType.ACTION_INFO))
+		logs.append(TurnLog.new("- Death: " + str(probabilities[Enums.CharacterState.DECEASED] * 100) + "%", Enums.LogType.ACTION_INFO))
 
 		var consequence_log_type: Enums.EventOutcomeType
-		match _determine_action_failure_consequence(district_heat):
+		match consequence_result.result:
 			Enums.CharacterState.ASSIGNED:
 				log_message = "No consequence"
 			Enums.CharacterState.MIA:
@@ -202,36 +240,49 @@ func _process_danger() -> Array[TurnLog]:
 	return logs
 
 
-func _determine_action_failure_consequence(district_heat: int) -> int:
+func _determine_action_failure_consequence(district_heat: int) -> Dictionary:
 	var heat_factor = district_heat / 100.0
 	
 	# Calculate raw probabilities
 	var raw_chances = {
-		Enums.CharacterState.ASSIGNED: Constants.FAILURE_CONSEQUENCE_NONE * (1.0 - heat_factor * Constants.FAILURE_HEAT_MOD_NONE),
-		Enums.CharacterState.MIA: Constants.FAILURE_CONSEQUENCE_MIA + (heat_factor * Constants.FAILURE_HEAT_MOD_MIA),
-		Enums.CharacterState.DECEASED: Constants.FAILURE_CONSEQUENCE_DECEASED + (heat_factor * Constants.FAILURE_HEAT_MOD_DECEASED)
+		Enums.CharacterState.ASSIGNED: Constants.FAILURE_CONSEQUENCE_NONE,
+		Enums.CharacterState.MIA: Constants.FAILURE_CONSEQUENCE_MIA,
+		Enums.CharacterState.DECEASED: Constants.FAILURE_CONSEQUENCE_DECEASED
+	}
+	
+	# Calculate heat-modified probabilities
+	var modified_chances = {
+		Enums.CharacterState.ASSIGNED: raw_chances[Enums.CharacterState.ASSIGNED] * (1.0 - heat_factor * Constants.FAILURE_HEAT_MOD_NONE),
+		Enums.CharacterState.MIA: raw_chances[Enums.CharacterState.MIA] + (heat_factor * Constants.FAILURE_HEAT_MOD_MIA),
+		Enums.CharacterState.DECEASED: raw_chances[Enums.CharacterState.DECEASED] + (heat_factor * Constants.FAILURE_HEAT_MOD_DECEASED)
 	}
 	
 	# Calculate sum for normalization
 	var total = 0.0
-	for chance in raw_chances.values():
+	for chance in modified_chances.values():
 		total += chance
 	
-	# Normalize probabilities to ensure they sum to 1.0
-	var modified_chances = {}
-	for state in raw_chances:
-		modified_chances[state] = raw_chances[state] / total
+	# Normalize probabilities
+	var probabilities = {}
+	for state in modified_chances:
+		probabilities[state] = modified_chances[state] / total
 	
 	# Roll the dice
 	var roll = randf()
 	var cumulative_probability = 0.0
 	
-	for consequence in modified_chances:
-		cumulative_probability += modified_chances[consequence]
+	for consequence in probabilities:
+		cumulative_probability += probabilities[consequence]
 		if roll < cumulative_probability:
-			return consequence
+			return {
+				"result": consequence,
+				"roll": roll
+			}
 	
-	return Enums.CharacterState.ASSIGNED
+	return {
+		"result": Enums.CharacterState.ASSIGNED,
+		"roll": roll
+	}
 
 #|==============================|
 #|      Helper Methods          |
@@ -274,3 +325,32 @@ func _get_character_names() -> String:
 
 	names = names.left(names.length() - 2)
 	return names
+
+func _get_consequence_probabilities(district_heat: int) -> Dictionary:
+	var heat_factor = district_heat / 100.0
+	
+	# Calculate raw probabilities
+	var raw_chances = {
+		Enums.CharacterState.ASSIGNED: Constants.FAILURE_CONSEQUENCE_NONE,
+		Enums.CharacterState.MIA: Constants.FAILURE_CONSEQUENCE_MIA,
+		Enums.CharacterState.DECEASED: Constants.FAILURE_CONSEQUENCE_DECEASED
+	}
+	
+	# Calculate heat-modified probabilities
+	var modified_chances = {
+		Enums.CharacterState.ASSIGNED: raw_chances[Enums.CharacterState.ASSIGNED] * (1.0 - heat_factor * Constants.FAILURE_HEAT_MOD_NONE),
+		Enums.CharacterState.MIA: raw_chances[Enums.CharacterState.MIA] + (heat_factor * Constants.FAILURE_HEAT_MOD_MIA),
+		Enums.CharacterState.DECEASED: raw_chances[Enums.CharacterState.DECEASED] + (heat_factor * Constants.FAILURE_HEAT_MOD_DECEASED)
+	}
+	
+	# Calculate sum for normalization
+	var total = 0.0
+	for chance in modified_chances.values():
+		total += chance
+	
+	# Normalize probabilities
+	var probabilities = {}
+	for state in modified_chances:
+		probabilities[state] = modified_chances[state] / total
+	
+	return probabilities
