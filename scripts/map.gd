@@ -123,7 +123,7 @@ func _on_district_clicked(district: District) -> void:
 	for d in GlobalRegistry.districts.get_all_items():
 		d.remove_highlight_color()
 	
-	district.set_focus_color()
+	district.set_focus()
 	$Camera2D.enabled = false
 	GameController.set_district_focused(district)
 

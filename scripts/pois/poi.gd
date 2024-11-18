@@ -167,6 +167,8 @@ func setup_poi_visuals():
 	# Position ActionContainer at the center
 	$ActionContainer.position = center
 
+	$Polygon2D.visible = false
+
 """
 @brief Sets the POI's details based on static or dynamic configuration.
 
@@ -288,9 +290,11 @@ func _on_district_just_focused(district: District) -> void:
 		$Polygon2D.color = selectable_color
 		await get_tree().create_timer(0.1).timeout
 		enabled = true
+		$Polygon2D.visible = true
 	else:
 		$Polygon2D.color = no_color
 		enabled = false
+		$Polygon2D.visible = false
 
 """
 @brief Handles character state changes.

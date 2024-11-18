@@ -270,8 +270,9 @@ func remove_highlight_color() -> void:
 """
 @brief Sets the focus color for the district
 """
-func set_focus_color() -> void:
-	$Polygon2D.color = no_color
+func set_focus() -> void:
+	$Polygon2D.visible = false
+	$CollisionPolygon2D.visible = false
 
 """
 @brief Sets the district as disabled
@@ -346,6 +347,8 @@ func _on_poi_unhovered() -> void:
 func _reset_highlight_color(district: District) -> void:
 	if district == self:
 		$Polygon2D.color = heat_color
+		$Polygon2D.visible = true
+		$CollisionPolygon2D.visible = true
 
 #|==============================|
 #|      Setters                |
