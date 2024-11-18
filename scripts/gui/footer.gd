@@ -55,10 +55,6 @@ func _ready():
 Creates and displays the actions list if not already visible.
 """
 func _on_show_actions_list_button_pressed():
-	# if we already have an instance of the actions list, don't create a new one
-	if get_node("ActionsList") != null:
-		return
-	
 	# Instance the actions list scene
 	var actions_list_instance = Globals.actions_list_scene.instantiate()
 	
@@ -70,10 +66,6 @@ func _on_show_actions_list_button_pressed():
 Creates and displays the intel list if not already visible.
 """
 func _on_show_intel_list_button_pressed():
-	# if we already have an instance of the intel list, don't create a new one
-	if get_node("IntelList") != null:
-		return
-	
 	# Instance the intel list scene
 	var intel_list_instance = Globals.intel_list_scene.instantiate()
 	
@@ -85,10 +77,6 @@ func _on_show_intel_list_button_pressed():
 Creates and displays the character list if not already visible.
 """
 func _on_show_character_list_button_pressed():
-	# if we already have an instance of the character list, don't create a new one
-	if get_node("CharacterList") != null:
-		return
-	
 	# Instance the character list scene
 	var character_list_instance = Globals.character_list_scene.instantiate()
 	
@@ -102,11 +90,6 @@ Creates and displays the log list if not already visible.
 @param end_turn_button Whether this log list is being shown after ending a turn
 """
 func _on_show_log_list_button_pressed(end_turn_button: bool = false):
-	# log_list_new_items_container.visible = false
-	# if we already have an instance of the log list, don't create a new one
-	if get_node("LogList") != null:
-		return
-
 	# Instance the log list scene
 	var log_list_instance = Globals.log_list_scene.instantiate()
 	if end_turn_button:
@@ -136,6 +119,6 @@ func _on_turn_button_pressed():
 Processes the turn and shows the end turn log.
 """
 func _on_turn_confirmed():
+	_on_show_log_list_button_pressed(true)
 	GameController.process_turn()
 	# log_list_new_items_container.visible = true
-	_on_show_log_list_button_pressed(true)

@@ -28,6 +28,11 @@ signal endgame_triggered()
 """
 signal game_ended()
 
+"""
+@brief Emitted when the game is over
+"""
+signal game_over()
+
 #|==============================|
 #|      Character Management    |
 #|==============================|
