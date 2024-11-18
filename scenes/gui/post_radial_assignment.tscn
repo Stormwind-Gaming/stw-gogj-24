@@ -3,11 +3,11 @@
 [ext_resource type="Script" path="res://scripts/gui/post_radial_assignment.gd" id="1_2cqh1"]
 [ext_resource type="Theme" uid="uid://dexax20p2eewp" path="res://assets/themes/base_theme.tres" id="1_cgsud"]
 [ext_resource type="Texture2D" uid="uid://cymum3g0jnd7l" path="res://assets/sprites/popup_panel_background_75.png" id="2_kog7f"]
-[ext_resource type="Texture2D" uid="uid://csqwxwqhukb2d" path="res://assets/icons/charm.png" id="2_p7nfs"]
-[ext_resource type="Texture2D" uid="uid://dotbv717adkpq" path="res://assets/icons/subtlety.png" id="3_ksjn2"]
-[ext_resource type="Texture2D" uid="uid://kmxekyb2gpex" path="res://assets/icons/smarts.png" id="4_dfhkm"]
 [ext_resource type="Theme" uid="uid://dyewy8pdt73k3" path="res://assets/themes/handwriting_label_theme.tres" id="5_b73pw"]
+[ext_resource type="Texture2D" uid="uid://ci7snqd826tju" path="res://assets/icons/subtlety_2.svg" id="5_f0b55"]
+[ext_resource type="Texture2D" uid="uid://d313p06brjxs0" path="res://assets/icons/charm_2.svg" id="6_2mer5"]
 [ext_resource type="Texture2D" uid="uid://ctiq8sa8m5iv" path="res://assets/sprites/close_ribbon_black.png" id="7_a7quo"]
+[ext_resource type="Texture2D" uid="uid://5a71o8frvad4" path="res://assets/icons/smarts_2.svg" id="7_n8jn2"]
 [ext_resource type="Texture2D" uid="uid://5vk04yychida" path="res://assets/sprites/close_ribbon_white.png" id="8_iwpau"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7d8bq"]
@@ -92,6 +92,9 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
+[node name="VSeparator" type="VSeparator" parent="NinePatchRect/MarginContainer/LeftPanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
 [node name="VBoxContainer" type="VBoxContainer" parent="NinePatchRect/MarginContainer/LeftPanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -128,25 +131,6 @@ theme_override_styles/separator = SubResource("StyleBoxEmpty_7d8bq")
 [node name="HBoxContainer" type="VBoxContainer" parent="NinePatchRect/MarginContainer/LeftPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="CharmHBoxContainer" type="HBoxContainer" parent="NinePatchRect/MarginContainer/LeftPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 5
-
-[node name="TextureRect" type="TextureRect" parent="NinePatchRect/MarginContainer/LeftPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/CharmHBoxContainer"]
-layout_mode = 2
-texture = ExtResource("2_p7nfs")
-expand_mode = 3
-
-[node name="Label" type="Label" parent="NinePatchRect/MarginContainer/LeftPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/CharmHBoxContainer"]
-layout_mode = 2
-text = "Charm: 0"
-
-[node name="Separator" type="HSeparator" parent="NinePatchRect/MarginContainer/LeftPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 0
-
 [node name="SubtletyHBoxContainer" type="HBoxContainer" parent="NinePatchRect/MarginContainer/LeftPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
@@ -155,12 +139,31 @@ theme_override_constants/separation = 5
 
 [node name="TextureRect" type="TextureRect" parent="NinePatchRect/MarginContainer/LeftPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/SubtletyHBoxContainer"]
 layout_mode = 2
-texture = ExtResource("3_ksjn2")
+texture = ExtResource("5_f0b55")
 expand_mode = 3
 
 [node name="Label" type="Label" parent="NinePatchRect/MarginContainer/LeftPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/SubtletyHBoxContainer"]
 layout_mode = 2
 text = "Subtlety: 0"
+
+[node name="Separator" type="HSeparator" parent="NinePatchRect/MarginContainer/LeftPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="CharmHBoxContainer" type="HBoxContainer" parent="NinePatchRect/MarginContainer/LeftPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 5
+
+[node name="TextureRect" type="TextureRect" parent="NinePatchRect/MarginContainer/LeftPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/CharmHBoxContainer"]
+layout_mode = 2
+texture = ExtResource("6_2mer5")
+expand_mode = 3
+
+[node name="Label" type="Label" parent="NinePatchRect/MarginContainer/LeftPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/CharmHBoxContainer"]
+layout_mode = 2
+text = "Charm: 0"
 
 [node name="Separator2" type="HSeparator" parent="NinePatchRect/MarginContainer/LeftPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
@@ -174,7 +177,7 @@ theme_override_constants/separation = 5
 
 [node name="TextureRect" type="TextureRect" parent="NinePatchRect/MarginContainer/LeftPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/SmartsHBoxContainer"]
 layout_mode = 2
-texture = ExtResource("4_dfhkm")
+texture = ExtResource("7_n8jn2")
 expand_mode = 3
 
 [node name="Label" type="Label" parent="NinePatchRect/MarginContainer/LeftPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/SmartsHBoxContainer"]
