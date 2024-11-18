@@ -211,10 +211,11 @@ func get_poi_types(district_type: Enums.DistrictType) -> Array:
 @returns The name of the POI type
 """
 func get_poi_name(poi_type: Enums.POIType) -> String:
-	return poi_names.filter(
+	var filtered_poi_names = poi_names.filter(
 		func(record):
 			return record.poi_type == poi_type
-	)[0].poi_name
+	)
+	return filtered_poi_names[randi() % filtered_poi_names.size()].poi_name
 
 """
 @brief Gets the next profile picture for a given nationality and gender

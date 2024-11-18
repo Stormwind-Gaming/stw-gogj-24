@@ -181,6 +181,16 @@ func _ready() -> void:
 		# get the poi name by type
 		var poi_name = Globals.get_poi_name(selected_poi_type["poi_type"])
 
+		# if poi name is the same as another poi in the district, get a new name
+		while pois.filter(
+			func(poi_to_filter):
+				print(poi_to_filter.poi_name, "%s - %s" % [poi_name, selected_poi_type["poi_name"]])
+				return poi_to_filter.poi_name == "%s - %s" % [poi_name, selected_poi_type["poi_name"]]
+		).size() > 0:
+			print("Duplicate poi name found")
+			poi_name = Globals.get_poi_name(selected_poi_type["poi_type"])
+				
+
 		# set the poi details
 		poi.set_poi_details(self, selected_poi_type["poi_type"], "%s - %s" % [poi_name, selected_poi_type["poi_name"]], selected_poi_type["poi_description"])
 

@@ -411,9 +411,6 @@ func _ready():
 	config.connect("constants_loaded", _on_constants_loaded)
 
 func _on_constants_loaded():
-	print('constants loaded', config._values)
-	print(config.get_value("INIT_MAX_AGENTS"))
-
 	# Game Initialization
 	INIT_MAX_AGENTS = config.get_value("INIT_MAX_AGENTS", INIT_MAX_AGENTS)
 	HEAT_ENDGAME_THRESHOLD = config.get_value("HEAT_ENDGAME_THRESHOLD", HEAT_ENDGAME_THRESHOLD)
