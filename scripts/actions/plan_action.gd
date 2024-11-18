@@ -137,6 +137,9 @@ func _add_agent_slot() -> Array[TurnLog]:
 	var stats: Dictionary = _get_stats()
 
 	var smarts_roll = MathHelpers.bounded_sigmoid_check(stats["smarts"], true, Constants.SMARTS_CHECK_MIN_CHANCE, Constants.SMARTS_CHECK_MAX_CHANCE)
+
+	# emit stats change
+	EventBus.stat_created.emit("smarts", smarts_roll.success)
 		
 	if (smarts_roll.success):
 		log_message = "Succeeded smarts check..."
@@ -150,6 +153,12 @@ func _add_agent_slot() -> Array[TurnLog]:
 	else:
 		log_message = "Failed smarts check..."
 		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
+
+
+	# emit stats change
+	EventBus.stat_created.emit("surveillance", smarts_roll.success)
+	# emit stats change
+	EventBus.stat_created.emit("missions", smarts_roll.success)
 
 	return logs
 

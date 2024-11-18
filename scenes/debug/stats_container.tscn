@@ -1,0 +1,184 @@
+[gd_scene load_steps=3 format=3 uid="uid://csjj4gfy5g6nw"]
+
+[ext_resource type="Script" path="res://scripts/debug/stats_container.gd" id="1_ofirr"]
+
+[sub_resource type="Theme" id="Theme_uh0kr"]
+
+[node name="StatsContainer" type="PanelContainer" node_paths=PackedStringArray("turns", "missions", "subtlety", "smarts", "charm", "espionage", "surveillance", "propaganda", "mia", "dead")]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -59.0
+offset_bottom = 43.0
+grow_horizontal = 0
+mouse_filter = 2
+theme = SubResource("Theme_uh0kr")
+script = ExtResource("1_ofirr")
+turns = NodePath("MarginContainer/VBoxContainer/Turns/Value")
+missions = NodePath("MarginContainer/VBoxContainer/Missons/Value")
+subtlety = NodePath("MarginContainer/VBoxContainer/Subtlety/Value")
+smarts = NodePath("MarginContainer/VBoxContainer/Smarts/Value")
+charm = NodePath("MarginContainer/VBoxContainer/Charm/Value")
+espionage = NodePath("MarginContainer/VBoxContainer/Espionage/Value")
+surveillance = NodePath("MarginContainer/VBoxContainer/Surveillance/Value")
+propaganda = NodePath("MarginContainer/VBoxContainer/Propaganda/Value")
+mia = NodePath("MarginContainer/VBoxContainer/MIAs/Value")
+dead = NodePath("MarginContainer/VBoxContainer/Deaths/Value")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Stats"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Turns" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Turns"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Turns:"
+
+[node name="Value" type="Label" parent="MarginContainer/VBoxContainer/Turns"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Missons" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Missons"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Total missons:"
+
+[node name="Value" type="Label" parent="MarginContainer/VBoxContainer/Missons"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0/0"
+
+[node name="Espionage" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Espionage"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Espionage:"
+
+[node name="Value" type="Label" parent="MarginContainer/VBoxContainer/Espionage"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0/0"
+
+[node name="Surveillance" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Surveillance"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Surveillance:"
+
+[node name="Value" type="Label" parent="MarginContainer/VBoxContainer/Surveillance"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0/0"
+
+[node name="Propaganda" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Propaganda"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Propaganda:"
+
+[node name="Value" type="Label" parent="MarginContainer/VBoxContainer/Propaganda"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0/0"
+
+[node name="HSeparator3" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Subtlety" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Subtlety"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Subtlety:"
+
+[node name="Value" type="Label" parent="MarginContainer/VBoxContainer/Subtlety"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0/0"
+
+[node name="Charm" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Charm"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Charm:"
+
+[node name="Value" type="Label" parent="MarginContainer/VBoxContainer/Charm"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0/0"
+
+[node name="Smarts" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Smarts"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Smarts:"
+
+[node name="Value" type="Label" parent="MarginContainer/VBoxContainer/Smarts"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0/0"
+
+[node name="HSeparator4" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MIAs" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/MIAs"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "MIAs:"
+
+[node name="Value" type="Label" parent="MarginContainer/VBoxContainer/MIAs"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+
+[node name="Deaths" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Deaths"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Deaths:"
+
+[node name="Value" type="Label" parent="MarginContainer/VBoxContainer/Deaths"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"

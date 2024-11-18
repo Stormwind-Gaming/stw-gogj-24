@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://c7y1ejxri1bfk"]
+[gd_scene load_steps=13 format=3 uid="uid://c7y1ejxri1bfk"]
 
 [ext_resource type="Script" path="res://scripts/map.gd" id="1_ppup2"]
 [ext_resource type="Texture2D" uid="uid://dr1v7la7ll1bf" path="res://assets/new_costal_map_lg.png" id="2_2sl0p"]
@@ -10,12 +10,14 @@
 [ext_resource type="PackedScene" uid="uid://d0a4qatowu8vq" path="res://scenes/districts/district_industrial.tscn" id="9_jaoy6"]
 [ext_resource type="PackedScene" uid="uid://vmpgdljfgrr3" path="res://scenes/main/GamePauseMenu.tscn" id="11_2mu8n"]
 [ext_resource type="PackedScene" uid="uid://bv860whpjsldd" path="res://scenes/gui/footer.tscn" id="11_4nem0"]
+[ext_resource type="PackedScene" uid="uid://csjj4gfy5g6nw" path="res://scenes/debug/stats_container.tscn" id="11_spnga"]
 [ext_resource type="PackedScene" uid="uid://kgy3mx1cyya" path="res://scenes/gui/header.tscn" id="12_gdl2t"]
 
-[node name="Map" type="Node2D" node_paths=PackedStringArray("pause_menu", "footer")]
+[node name="Map" type="Node2D" node_paths=PackedStringArray("pause_menu", "footer", "stats_panel")]
 script = ExtResource("1_ppup2")
 pause_menu = NodePath("PauseMenuCanvasLayer/GamePauseMenu")
 footer = NodePath("CanvasLayer2/Footer")
+stats_panel = NodePath("CanvasLayer2/PanelContainer")
 
 [node name="Node2D" type="Node2D" parent="."]
 
@@ -53,6 +55,9 @@ max_offset_y = 1200.0
 [node name="Footer" parent="CanvasLayer2" instance=ExtResource("11_4nem0")]
 
 [node name="Header" parent="CanvasLayer2" instance=ExtResource("12_gdl2t")]
+
+[node name="PanelContainer" parent="CanvasLayer2" instance=ExtResource("11_spnga")]
+visible = false
 
 [node name="PauseMenuCanvasLayer" type="CanvasLayer" parent="."]
 

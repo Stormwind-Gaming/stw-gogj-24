@@ -140,7 +140,6 @@ func _notification(what: int) -> void:
 @brief Processes the danger of an action
 """
 func _process_danger() -> Array[TurnLog]:
-
 	var logs: Array[TurnLog] = []
 
 	# Get cumulative stats for all characters involved
@@ -149,6 +148,9 @@ func _process_danger() -> Array[TurnLog]:
 	logs.append(TurnLog.new("Processing danger for action at [u]" + str(poi.poi_name) + "[/u] by " + _get_character_names(), Enums.LogType.ACTION_INFO))
 
 	var subtle_roll = MathHelpers.bounded_sigmoid_check(stats["subtlety"], true, Constants.SUBTLETY_CHECK_MIN_CHANCE, Constants.SUBTLETY_CHECK_MAX_CHANCE)
+
+	# emit stats change
+	EventBus.stat_created.emit("subtlety", subtle_roll.success)
 
 	var log_message: String = ""
 	var heat_added: int = 0
@@ -181,11 +183,17 @@ func _process_danger() -> Array[TurnLog]:
 				characters.shuffle()
 				characters[0].char_state = Enums.CharacterState.MIA
 				consequence_log_type = Enums.EventOutcomeType.MIA
+
+				# emit stats change
+				EventBus.stat_created.emit("mia", true)
 			Enums.CharacterState.DECEASED:
 				log_message = "One character is deceased"
 				characters.shuffle()
 				characters[0].char_state = Enums.CharacterState.DECEASED
 				consequence_log_type = Enums.EventOutcomeType.DECEASED
+
+				# emit stats change
+				EventBus.stat_created.emit("dead", true)
 			_:
 				log_message = "Unknown consequence"
 

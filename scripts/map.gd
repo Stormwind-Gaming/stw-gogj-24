@@ -15,6 +15,11 @@ class_name Map
 """
 @export var footer: Control
 
+"""
+@brief Reference to the stats panel
+"""
+@export var stats_panel: PanelContainer
+
 #|==============================|
 #|      Lifecycle Methods      |
 #|==============================|
@@ -58,6 +63,8 @@ func _process(delta: float) -> void:
 			pause_menu.show()
 		pass
 		# open pause menu
+	if Input.is_action_just_pressed("open_stats_panel"):
+		stats_panel.visible = not stats_panel.visible
 
 
 #|==============================|

@@ -13,6 +13,9 @@ func _process_action() -> Array[TurnLog]:
 	var stats: Dictionary = _get_stats()
 
 	var charm_roll = MathHelpers.bounded_sigmoid_check(stats["charm"], true, Constants.CHARM_CHECK_MIN_CHANCE, Constants.CHARM_CHECK_MAX_CHANCE)
+	
+	# emit stats change
+	EventBus.stat_created.emit("charm", charm_roll.success)
 		
 	if (charm_roll.success):
 		var base_sympathy_added: int = MathHelpers.generateBellCurveStat(Constants.ACTION_EFFECT_PROPAGANDA_SYMPATHY_MIN, Constants.ACTION_EFFECT_PROPAGANDA_SYMPATHY_MAX)
@@ -29,5 +32,10 @@ func _process_action() -> Array[TurnLog]:
 	else:
 		log_message = "Failed charm check..."
 		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
+
+	# emit stats change
+	EventBus.stat_created.emit("propaganda", charm_roll.success)
+	# emit stats change
+	EventBus.stat_created.emit("missions", charm_roll.success)
 
 	return logs

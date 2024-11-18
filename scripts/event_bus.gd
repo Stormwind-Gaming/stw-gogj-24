@@ -148,3 +148,15 @@ signal close_all_windows()
 @brief Emitted when a new world-event is created
 """
 signal world_event_created(world_event: WorldEvent)
+
+
+
+
+
+#|==============================|
+#|      Stat Counter		       |
+#|==============================|
+"""
+@brief Emitted when a new stat is created
+"""
+signal stat_created(stat: String, success: bool)

@@ -19,9 +19,15 @@ func _process_action() -> Array[TurnLog]:
 		Enums.StatCheckType.SMARTS:
 			stat_check = "smarts"
 			roll = MathHelpers.bounded_sigmoid_check(stats[stat_check], true, Constants.SMARTS_CHECK_MIN_CHANCE, Constants.SMARTS_CHECK_MAX_CHANCE)
+
+			# emit stats change
+			EventBus.stat_created.emit("smarts", roll.success)
 		Enums.StatCheckType.CHARM:
 			stat_check = "charm"
 			roll = MathHelpers.bounded_sigmoid_check(stats[stat_check], true, Constants.CHARM_CHECK_MIN_CHANCE, Constants.CHARM_CHECK_MAX_CHANCE)
+
+			# emit stats change
+			EventBus.stat_created.emit("charm", roll.success)
 		
 	if (roll.success):
 		log_message = "Succeeded " + stat_check + " check..."
@@ -35,5 +41,10 @@ func _process_action() -> Array[TurnLog]:
 	else:
 		log_message = "Failed " + stat_check + " check..."
 		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
+	
+	# emit stats change
+	EventBus.stat_created.emit("espionage", roll.success)
+	# emit stats change
+	EventBus.stat_created.emit("missions", roll.success)
 
 	return logs
