@@ -22,6 +22,7 @@ func _ready() -> void:
 	EventBus.open_new_window.connect(_open_new_window)
 	EventBus.open_new_radial_menu.connect(_open_radial_menu)
 	EventBus.close_all_windows.connect(_close_all_windows)
+	EventBus.game_over.connect(_close_all_windows_and_event_panels)
 	
 	EventBus.log_created.connect(_create_new_event_panel)
 
@@ -41,9 +42,20 @@ func any_windows_open() -> bool:
 #|==============================|
 
 """
+@brief Closes all open windows and event panels
+"""
+func _close_all_windows_and_event_panels() -> void:
+	print("Closing all windows and event panels")
+	_close_all_windows()
+	for panel in open_event_panels:
+		panel.queue_free()
+	open_event_panels.clear()
+
+"""
 @brief Closes all open windows
 """
-func _close_all_windows(emit: bool = true) -> void:
+func _close_all_windows() -> void:
+	print("Closing all windows")
 	if open_window:
 		open_window.queue_free()
 	
@@ -59,10 +71,10 @@ func _close_all_windows(emit: bool = true) -> void:
 """
 func _open_new_window(window: Window, close_all_windows: bool = true) -> void:
 	if open_window and open_window.name == window.name:
-		_close_all_windows(false)
+		_close_all_windows()
 		return
 	if close_all_windows:
-		_close_all_windows(false)
+		_close_all_windows()
 
 	open_window = window
 	add_child(window)

@@ -33,6 +33,7 @@ func _ready() -> void:
 	EventBus.end_turn_initiated.connect(_clear_focus)
 	EventBus.open_new_window.connect(_disable_interaction)
 	EventBus.close_all_windows.connect(_enable_interaction)
+	EventBus.game_over.connect(_game_over)
 
 	for district in GlobalRegistry.districts.get_all_items():
 		_set_district_details(district)
@@ -163,6 +164,22 @@ func _enable_interaction() -> void:
 		district.set_enabled()
 	_clear_focus()
 	pass
+
+"""
+@brief Handles game over event
+"""
+func _game_over() -> void:
+	_disable_interaction(0)
+	$AnimationPlayer.play("fade_out")
+	$AnimationPlayer.animation_finished.connect(_show_game_over)
+
+"""
+@brief Shows the game over screen
+"""
+func _show_game_over(_name: String) -> void:
+	get_tree().change_scene_to_file("res://scenes/gui/game_over.tscn")
+
+
 #|==============================|
 #|      Character Setup        |
 #|==============================|

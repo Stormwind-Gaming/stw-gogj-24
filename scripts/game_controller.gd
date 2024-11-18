@@ -200,8 +200,12 @@ func process_turn() -> void:
 		elif get_resistance_level() > Constants.RESISTANCE_ENDGAME_THRESHOLD:
 			_trigger_resistance_endgame()
 
-	# Emit the signal to end the turn
-	EventBus.end_turn_complete.emit(turn_number)
+	# check if player has any sympathisers left
+	if len(GlobalRegistry.characters.get_list(GlobalRegistry.LIST_SYMPATHISER_RECRUITED)) == 0 and len(GlobalRegistry.characters.get_list(GlobalRegistry.LIST_SYMPATHISER_NOT_RECRUITED)) == 0:
+		EventBus.game_over.emit()
+	else:
+		# Emit the signal to end the turn
+		EventBus.end_turn_complete.emit(turn_number)
 
 
 """
