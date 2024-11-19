@@ -177,6 +177,11 @@ func process_turn() -> void:
 	# Create the turn log list for this turn
 	GlobalRegistry.turn_logs.create_list(str(turn_number))
 
+	# Districts with actions
+	var districts_with_actions = []
+	for action in GlobalRegistry.actions.get_all_items():
+		districts_with_actions.append(action.poi.district)
+
 	# Emit the signal to begin processing the turn
 	EventBus.turn_processing_initiated.emit(turn_number)
 	
@@ -184,14 +189,15 @@ func process_turn() -> void:
 
 	WorldEventFactory.randomise_world_event_from_heat(get_heat_level())
 
-	# Decrease the heat for each district
+	# Decrease the heat for each district where there are no actions
 	for district in GlobalRegistry.districts.get_all_items():
-		var reduction: int = MathHelpers.generateBellCurveStat(Constants.DISTRICT_HEAT_DECREASE_PER_TURN_MIN, Constants.DISTRICT_HEAT_DECREASE_PER_TURN_MAX)
-		district.heat -= reduction
+		if not districts_with_actions.has(district):
+			var reduction: int = MathHelpers.generateBellCurveStat(Constants.DISTRICT_HEAT_DECREASE_PER_TURN_MIN, Constants.DISTRICT_HEAT_DECREASE_PER_TURN_MAX)
+			district.heat -= reduction
 
-		if (reduction > 0):
-			var turn_log = TurnLog.new(district.district_name + " heat decreased by " + str(reduction), Enums.LogType.WORLD_INFO)
-			GlobalRegistry.turn_logs.add_item(str(GameController.turn_number), turn_log)
+			if (reduction > 0):
+				var turn_log = TurnLog.new(district.district_name + " heat decreased by " + str(reduction), Enums.LogType.WORLD_INFO)
+				GlobalRegistry.turn_logs.add_item(str(GameController.turn_number), turn_log)
 
 	# Check for endgame conditions
 	if not endgame_triggered:
@@ -201,7 +207,8 @@ func process_turn() -> void:
 			_trigger_resistance_endgame()
 
 	# check if player has any sympathisers left
-	if len(GlobalRegistry.characters.get_list(GlobalRegistry.LIST_SYMPATHISER_RECRUITED)) == 0 and len(GlobalRegistry.characters.get_list(GlobalRegistry.LIST_SYMPATHISER_NOT_RECRUITED)) == 0:
+	var all_sympathisers = GlobalRegistry.characters.list_size(GlobalRegistry.LIST_SYMPATHISER_RECRUITED) + GlobalRegistry.characters.list_size(GlobalRegistry.LIST_SYMPATHISER_NOT_RECRUITED)
+	if all_sympathisers == 0:
 		EventBus.game_over.emit()
 	else:
 		# Emit the signal to end the turn
