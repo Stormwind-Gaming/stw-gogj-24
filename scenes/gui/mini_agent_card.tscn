@@ -1,10 +1,10 @@
 [gd_scene load_steps=13 format=3 uid="uid://cycbgoiurr4vt"]
 
 [ext_resource type="Script" path="res://scripts/gui/agent_card.gd" id="1_s8gp7"]
-[ext_resource type="Theme" uid="uid://c78hoq7n7ae54" path="res://assets/themes/typewriter_label_theme.tres" id="2_0b4ob"]
+[ext_resource type="Theme" path="res://assets/themes/typewriter_label_theme.tres" id="2_0b4ob"]
 [ext_resource type="Texture2D" uid="uid://c0xlm4ebrvmg4" path="res://assets/profile_pictures/blank.png" id="3_hwy0e"]
-[ext_resource type="Texture2D" uid="uid://ci7snqd826tju" path="res://assets/icons/subtlety_2.svg" id="4_mtrh8"]
-[ext_resource type="Theme" uid="uid://dyewy8pdt73k3" path="res://assets/themes/handwriting_label_theme.tres" id="4_pvda4"]
+[ext_resource type="Texture2D" uid="uid://clrdutcy15h4m" path="res://assets/icons/subtlety_3.svg" id="4_18mac"]
+[ext_resource type="Theme" uid="uid://dlrdh5kyv25hr" path="res://assets/themes/handwriting_label_theme.tres" id="4_pvda4"]
 [ext_resource type="Texture2D" uid="uid://d313p06brjxs0" path="res://assets/icons/charm_2.svg" id="5_25h0w"]
 [ext_resource type="Texture2D" uid="uid://5a71o8frvad4" path="res://assets/icons/smarts_2.svg" id="6_bln0t"]
 [ext_resource type="Texture2D" uid="uid://blme3dsuykhey" path="res://assets/character_status/assigned.png" id="8_bryry"]
@@ -103,7 +103,7 @@ alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/StatsVBoxContainer/SubtletyHBoxContainer"]
 layout_mode = 2
-texture = ExtResource("4_mtrh8")
+texture = ExtResource("4_18mac")
 expand_mode = 3
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/StatsVBoxContainer/SubtletyHBoxContainer"]
