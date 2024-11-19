@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://c7y1ejxri1bfk"]
+[gd_scene load_steps=21 format=3 uid="uid://c7y1ejxri1bfk"]
 
 [ext_resource type="Script" path="res://scripts/map.gd" id="1_ppup2"]
 [ext_resource type="Texture2D" uid="uid://dr1v7la7ll1bf" path="res://assets/new_costal_map_lg.png" id="2_2sl0p"]
@@ -12,6 +12,16 @@
 [ext_resource type="PackedScene" uid="uid://bv860whpjsldd" path="res://scenes/gui/footer.tscn" id="11_4nem0"]
 [ext_resource type="PackedScene" uid="uid://csjj4gfy5g6nw" path="res://scenes/debug/stats_container.tscn" id="11_spnga"]
 [ext_resource type="PackedScene" uid="uid://kgy3mx1cyya" path="res://scenes/gui/header.tscn" id="12_gdl2t"]
+[ext_resource type="AudioStream" uid="uid://85fe3hfa7hdg" path="res://assets/audio/cold-wind-sound-effect-127448.mp3" id="13_lkxq1"]
+[ext_resource type="Shader" path="res://scripts/shaders/clouds.gdshader" id="14_76xur"]
+[ext_resource type="Texture2D" uid="uid://btpe1th2shtoe" path="res://assets/cloud_noise.png" id="15_ecuqb"]
+[ext_resource type="AudioStream" uid="uid://dkpbe25l0jh1i" path="res://assets/audio/street-night-calm-16893.mp3" id="16_885ay"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e1tus"]
+shader = ExtResource("14_76xur")
+shader_parameter/density = 1.0
+shader_parameter/speed = Vector2(0.02, 0.01)
+shader_parameter/noise_texture = ExtResource("15_ecuqb")
 
 [sub_resource type="Animation" id="Animation_aor1t"]
 length = 0.001
@@ -184,6 +194,21 @@ parallax_strength_x = 1100.0
 parallax_strength_y = 1500.0
 max_offset_y = 1200.0
 
+[node name="Clouds" type="ParallaxBackground" parent="."]
+layer = 0
+scroll_ignore_camera_zoom = true
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="Clouds"]
+show_behind_parent = true
+visibility_layer = 2
+motion_scale = Vector2(0, 0)
+
+[node name="ColorRect" type="ColorRect" parent="Clouds/ParallaxLayer"]
+material = SubResource("ShaderMaterial_e1tus")
+offset_right = 1600.0
+offset_bottom = 1024.0
+mouse_filter = 2
+
 [node name="CanvasLayer2" type="CanvasLayer" parent="."]
 
 [node name="Footer" parent="CanvasLayer2" instance=ExtResource("11_4nem0")]
@@ -201,3 +226,14 @@ visible = false
 libraries = {
 "": SubResource("AnimationLibrary_42scy")
 }
+
+[node name="WindEffect" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("13_lkxq1")
+autoplay = true
+parameters/looping = true
+
+[node name="StreetEffect" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("16_885ay")
+volume_db = -80.0
+autoplay = true
+parameters/looping = true

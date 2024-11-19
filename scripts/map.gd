@@ -135,6 +135,15 @@ func _on_district_clicked(district: District) -> void:
 	$Camera2D.enabled = false
 	GameController.set_district_focused(district)
 
+	var clouds_tween = create_tween()
+	clouds_tween.tween_property($Clouds/ParallaxLayer, "modulate", Color($Clouds/ParallaxLayer.modulate, 0), 1.0).set_ease(Tween.EASE_IN)
+
+	var wind_tween = create_tween()
+	wind_tween.tween_property($WindEffect, "volume_db", -80, 1.0).set_ease(Tween.EASE_OUT)
+
+	var street_tween = create_tween()
+	street_tween.tween_property($StreetEffect, "volume_db", -10, 1.0).set_ease(Tween.EASE_IN)
+
 """
 @brief Handles POI hover events
 @param poi The POI being hovered
@@ -163,6 +172,15 @@ func _enable_interaction() -> void:
 	for district in GlobalRegistry.districts.get_all_items():
 		district.set_enabled()
 	_clear_focus()
+
+	var clouds_tween = create_tween()
+	clouds_tween.tween_property($Clouds/ParallaxLayer, "modulate", Color($Clouds/ParallaxLayer.modulate, 1), 1.0).set_ease(Tween.EASE_IN)
+
+	var wind_tween = create_tween()
+	wind_tween.tween_property($WindEffect, "volume_db", 0, 1.0).set_ease(Tween.EASE_IN)
+
+	var street_tween = create_tween()
+	street_tween.tween_property($StreetEffect, "volume_db", -80, 1.0).set_ease(Tween.EASE_OUT)
 	pass
 
 """

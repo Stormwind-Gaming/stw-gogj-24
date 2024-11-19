@@ -128,9 +128,9 @@ func _process(delta):
 		var base_zoom = min(zoom_x, zoom_y)
 		
 		# Add more padding for smaller districts
-		var padding_multiplier = 0.6 # Default padding
+		var padding_multiplier = 0.8 # Default padding
 		if base_zoom > 2.0: # If we're zooming in a lot (small district)
-			padding_multiplier = 0.3 # Use more padding (less zoom)
+			padding_multiplier = 0.6 # Use more padding (less zoom)
 		
 		# Clamp the zoom to prevent extreme values
 		var target_zoom_value = min(base_zoom * padding_multiplier, 2.0) # Maximum zoom of 2.0
