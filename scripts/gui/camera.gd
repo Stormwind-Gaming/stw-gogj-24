@@ -1,4 +1,4 @@
-extends Node2D
+extends Camera2D
 
 #|==============================|
 #|      Exported Variables      |
@@ -6,12 +6,12 @@ extends Node2D
 """
 @brief Strength of the parallax effect in the x direction
 """
-@export var parallax_strength_x: float = 1000.0
+@export var parallax_strength_x: float = 0.5
 
 """
 @brief Strength of the parallax effect in the y direction
 """
-@export var parallax_strength_y: float = 1000.0
+@export var parallax_strength_y: float = 0.5
 
 """
 @brief Maximum distance the image can move horizontally
@@ -29,7 +29,7 @@ extends Node2D
 """
 @brief Whether the camera movement is enabled
 """
-var enabled: bool = true
+var camera_enabled: bool = true
 
 """
 @brief The initial position of the camera
@@ -73,12 +73,9 @@ func _ready():
 	target_position = position
 	
 	# Store initial zoom from the camera and set current zoom
-	var camera = get_viewport().get_camera_2d()
-	if camera:
-		initial_zoom = camera.zoom
-		current_zoom = initial_zoom
-		target_zoom = initial_zoom
-		camera.zoom = initial_zoom # Ensure camera starts at initial zoom
+	initial_zoom = self.zoom
+	current_zoom = initial_zoom
+	target_zoom = initial_zoom
 
 """
 @brief Called every frame to update camera position.
@@ -89,35 +86,29 @@ func _process(delta):
 	
 	# Check if the right mouse button is held down
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_MIDDLE) or Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
-		EventBus.close_all_windows.emit()
-		if not WindowHandler.any_windows_open():
-			if enabled:
-				# Lerp back to initial zoom instead of instant change
-				var camera = get_viewport().get_camera_2d()
-				if camera:
-					current_zoom = current_zoom.lerp(initial_zoom, 0.1)
-					camera.zoom = current_zoom
-					
-				# Calculate the viewport size and mouse position
-				var viewport_size = get_viewport_rect().size
-				var mouse_position = get_viewport().get_mouse_position()
+		if WindowHandler.any_windows_open():
+			EventBus.close_all_windows.emit()
+		if camera_enabled:				
+			# Calculate the viewport size and mouse position
+			var viewport_size = get_viewport_rect().size
+			var mouse_position = get_viewport().get_mouse_position()
 
-				# Calculate the horizontal offset based on mouse position, normalized from -1 to 1
-				var horizontal_offset = (mouse_position.x / viewport_size.x) * 2 - 1
-				var vertical_offset = (mouse_position.y / viewport_size.y) * 2 - 1
-				
-				# Calculate the new target x and y positions using parallax strengths, then clamp them
-				var target_x = clamp(horizontal_offset * parallax_strength_x, -max_offset_x, max_offset_x)
-				var target_y = clamp(vertical_offset * parallax_strength_y, -max_offset_y, max_offset_y)
-				
-				# Set the target position based on the initial position offset
-				target_position.x = initial_position.x + target_x
-				target_position.y = initial_position.y + target_y
-				
-				# Move the position to the target position
-				position.x = target_position.x
-				position.y = target_position.y
-	elif !enabled:
+			# Calculate the horizontal offset based on mouse position, normalized from -1 to 1
+			var horizontal_offset = (mouse_position.x / viewport_size.x) * 2 - 1
+			var vertical_offset = (mouse_position.y / viewport_size.y) * 2 - 1
+			
+			# Calculate the new target x and y positions using parallax strengths, then clamp them
+			var target_x = clamp(horizontal_offset * parallax_strength_x, -max_offset_x, max_offset_x)
+			var target_y = clamp(vertical_offset * parallax_strength_y, -max_offset_y, max_offset_y)
+			
+			# Set the target position based on the initial position offset
+			target_position.x = initial_position.x + target_x
+			target_position.y = initial_position.y + target_y
+			
+			# Move the position to the target position
+			position.x = target_position.x
+			position.y = target_position.y
+	elif !camera_enabled:
 		# Calculate zoom to fit district
 		var district_size = GameController.district_focused.get_district_size()
 		var viewport_size = get_viewport_rect().size
@@ -144,42 +135,44 @@ func _process(delta):
 		point_to_focus_on -= viewport_offset / 2
 		
 		# Lerp position directly to the district center
-		position = position.lerp(point_to_focus_on, 0.1)
+		position = position.lerp(point_to_focus_on, 0.05)
 		
-		# Find and use the Camera2D node
-		var camera = get_viewport().get_camera_2d()
-		if camera:
-			# Lerp the zoom
-			current_zoom = current_zoom.lerp(target_zoom, 0.1)
-			camera.zoom = current_zoom
+		# Lerp the zoom
+		current_zoom = current_zoom.lerp(target_zoom, 0.05)
+		self.zoom = current_zoom
+	
+	# if not at initial zoom, lerp back to it
+	if current_zoom != initial_zoom:
+		current_zoom = current_zoom.lerp(initial_zoom, 0.05)
+		self.zoom = current_zoom
 
-func _draw():
-	if debug_draw and !enabled and GameController.district_focused != null:
-		# Draw point to focus on
-		var point = GameController.district_focused.get_district_centerpoint()
-		draw_circle(point - position, 15, Color.RED)
+# func _draw():
+# 	if debug_draw and !camera_enabled and GameController.district_focused != null:
+# 		# Draw point to focus on
+# 		var point = GameController.district_focused.get_district_centerpoint()
+# 		draw_circle(point - position, 15, Color.RED)
 		
-		# Draw district bounds
-		var district_size = GameController.district_focused.get_district_size()
-		var district_center = GameController.district_focused.get_district_centerpoint()
-		var rect_pos = district_center - district_size / 2 - position
-		draw_rect(Rect2(rect_pos, district_size), Color.RED, false, 3.0)
+# 		# Draw district bounds
+# 		var district_size = GameController.district_focused.get_district_size()
+# 		var district_center = GameController.district_focused.get_district_centerpoint()
+# 		var rect_pos = district_center - district_size / 2 - position
+# 		draw_rect(Rect2(rect_pos, district_size), Color.RED, false, 3.0)
 		
-		# Draw the actual polygon points in a different color
-		var polygon = GameController.district_focused.get_node("CollisionPolygon2D").polygon
-		var color = Color.BLUE
-		color.a = 0.5 # Make it semi-transparent
+# 		# Draw the actual polygon points in a different color
+# 		var polygon = GameController.district_focused.get_node("CollisionPolygon2D").polygon
+# 		var color = Color.BLUE
+# 		color.a = 0.5 # Make it semi-transparent
 		
-		# Draw lines between polygon points
-		for i in range(polygon.size()):
-			var start = polygon[i] - position
-			var end = polygon[(i + 1) % polygon.size()] - position
-			draw_line(start, end, color, 3.0)
+# 		# Draw lines between polygon points
+# 		for i in range(polygon.size()):
+# 			var start = polygon[i] - position
+# 			var end = polygon[(i + 1) % polygon.size()] - position
+# 			draw_line(start, end, color, 3.0)
 			
-			# Draw points at each vertex
-			draw_circle(start, 5, Color.GREEN)
-	else:
-		print("Not drawing debug because:")
-		print("debug_draw: ", debug_draw)
-		print("enabled: ", enabled)
-		print("district_focused: ", GameController.district_focused)
+# 			# Draw points at each vertex
+# 			draw_circle(start, 5, Color.GREEN)
+# 	else:
+# 		print("Not drawing debug because:")
+# 		print("debug_draw: ", debug_draw)
+# 		print("camera_enabled: ", camera_enabled)
+# 		print("district_focused: ", GameController.district_focused)

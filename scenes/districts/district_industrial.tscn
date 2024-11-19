@@ -22,7 +22,7 @@ polygon = PackedVector2Array(864, 538, 886, 541, 890, 553, 906, 697, 908, 723, 8
 [node name="Polygon2D" type="Polygon2D" parent="."]
 
 [node name="FocusPoint" type="Node2D" parent="."]
-position = Vector2(501, 1017)
+position = Vector2(318, 898)
 
 [node name="DistrictPopup" parent="." instance=ExtResource("3_immi2")]
 visible = false

@@ -22,7 +22,7 @@ polygon = PackedVector2Array(1055, -820, 1218, -766, 1402, -694, 1331, -546, 134
 [node name="Polygon2D" type="Polygon2D" parent="."]
 
 [node name="FocusPoint" type="Node2D" parent="."]
-position = Vector2(848, -350)
+position = Vector2(630, -522.42)
 
 [node name="DistrictPopup" parent="." instance=ExtResource("3_mgjpb")]
 visible = false
@@ -48,22 +48,16 @@ poi_static_description = "This is the Garrison"
 polygon = PackedVector2Array(916, -711, 958, -788, 962, -794, 976, -797, 996, -818, 1008, -823, 1029, -821, 1063, -815, 1118, -796, 1214, -763, 1323, -719, 1397, -694, 1404, -678, 1416, -671, 1421, -663, 1403, -634, 1393, -627, 1354, -542, 1311, -530, 1261, -518, 1217, -519, 1166, -535, 1130, -535, 1083, -540, 1061, -544, 1019, -563, 984, -572, 972, -585, 969, -595, 972, -612, 964, -638, 951, -662, 928, -690, 916, -704)
 
 [node name="Poi3" parent="pois" instance=ExtResource("4_jxi4m")]
-poi_static_name = ""
-poi_static_description = ""
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi3"]
 polygon = PackedVector2Array(819, -621, 821, -606, 834, -606, 835, -553, 900, -545, 899, -589)
 
 [node name="Poi4" parent="pois" instance=ExtResource("4_jxi4m")]
-poi_static_name = ""
-poi_static_description = ""
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi4"]
 polygon = PackedVector2Array(927, -256, 1018, -266, 1069, -324, 1101, -350, 920, -361)
 
 [node name="Poi5" parent="pois" instance=ExtResource("4_jxi4m")]
-poi_static_name = ""
-poi_static_description = ""
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi5"]
 polygon = PackedVector2Array(780, -655, 808, -690, 870, -689, 887, -671, 904, -608)

@@ -188,12 +188,12 @@ func set_poi_details(parent_district_arg: District, poi_type_arg: Enums.POIType,
 		poi_name = poi_name_arg
 		poi_description = poi_description_arg
 	
-	var desc = ''
-	desc += 'Owner: ' + poi_owner.get_full_name()
-	desc += '\n'
-	desc += 'Bonus: ' + Globals.get_poi_bonus_string(poi_bonus)
+	poi_description += '\n'
+	poi_description += 'Owner: ' + poi_owner.get_full_name()
+	poi_description += '\n'
+	poi_description += 'Bonus: ' + Globals.get_poi_bonus_string(poi_bonus)
 	
-	poi_popup.set_details(poi_name, desc)
+	poi_popup.set_details(poi_name, poi_description)
 
 #|==============================|
 #|      Event Handlers         |

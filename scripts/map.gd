@@ -77,7 +77,7 @@ func _process(delta: float) -> void:
 func _clear_focus(_i = null) -> void:
 	EventBus.district_unfocused.emit(GameController.district_focused)
 	GameController.set_district_focused(null)
-	$Camera2D.enabled = true
+	$Camera2D.camera_enabled = true
 
 """
 @brief Sets up a district with random name and description
@@ -130,13 +130,14 @@ func _on_district_unhovered(district: District) -> void:
 func _on_district_clicked(district: District) -> void:
 	for d in GlobalRegistry.districts.get_all_items():
 		d.remove_highlight_color()
+		d.unset_focus()
 	
 	district.set_focus()
-	$Camera2D.enabled = false
+	$Camera2D.camera_enabled = false
 	GameController.set_district_focused(district)
 
-	var clouds_tween = create_tween()
-	clouds_tween.tween_property($Clouds/ParallaxLayer, "modulate", Color($Clouds/ParallaxLayer.modulate, 0), 1.0).set_ease(Tween.EASE_IN)
+	# var clouds_tween = create_tween()
+	# clouds_tween.tween_property($Clouds/ParallaxLayer, "modulate", Color($Clouds/ParallaxLayer.modulate, 0), 1.0).set_ease(Tween.EASE_IN)
 
 	var wind_tween = create_tween()
 	wind_tween.tween_property($WindEffect, "volume_db", -80, 1.0).set_ease(Tween.EASE_OUT)
@@ -173,8 +174,8 @@ func _enable_interaction() -> void:
 		district.set_enabled()
 	_clear_focus()
 
-	var clouds_tween = create_tween()
-	clouds_tween.tween_property($Clouds/ParallaxLayer, "modulate", Color($Clouds/ParallaxLayer.modulate, 1), 1.0).set_ease(Tween.EASE_IN)
+	# var clouds_tween = create_tween()
+	# clouds_tween.tween_property($Clouds/ParallaxLayer, "modulate", Color($Clouds/ParallaxLayer.modulate, 1), 1.0).set_ease(Tween.EASE_IN)
 
 	var wind_tween = create_tween()
 	wind_tween.tween_property($WindEffect, "volume_db", 0, 1.0).set_ease(Tween.EASE_IN)

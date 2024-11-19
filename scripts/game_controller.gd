@@ -180,7 +180,7 @@ func process_turn() -> void:
 	# Districts with actions
 	var districts_with_actions = []
 	for action in GlobalRegistry.actions.get_all_items():
-		districts_with_actions.append(action.poi.district)
+		districts_with_actions.append(action.poi.parent_district)
 
 	# Emit the signal to begin processing the turn
 	EventBus.turn_processing_initiated.emit(turn_number)

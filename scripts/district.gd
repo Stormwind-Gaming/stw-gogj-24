@@ -263,18 +263,19 @@ func set_district_details(district_name_arg: String, district_description_arg: S
 @returns Vector2 position of the district's center
 """
 func get_district_centerpoint() -> Vector2:
-	var polygon = $CollisionPolygon2D.polygon
-	if polygon.size() == 0:
-		return Vector2.ZERO
+	return $FocusPoint.position
+	# var polygon = $CollisionPolygon2D.polygon
+	# if polygon.size() == 0:
+	# 	return Vector2.ZERO
 		
-	# Calculate the center by averaging all points
-	var center = Vector2.ZERO
-	for point in polygon:
-		center += point
-	center /= polygon.size()
+	# # Calculate the center by averaging all points
+	# var center = Vector2.ZERO
+	# for point in polygon:
+	# 	center += point
+	# center /= polygon.size()
 	
-	# Add the district's global position to get world coordinates
-	return self.global_position + center
+	# # Add the district's global position to get world coordinates
+	# return self.global_position + center
 
 """
 @brief Sets the highlight color for the district
@@ -292,8 +293,16 @@ func remove_highlight_color() -> void:
 @brief Sets the focus color for the district
 """
 func set_focus() -> void:
+	print("Setting focus")
 	$Polygon2D.visible = false
 	$CollisionPolygon2D.visible = false
+
+"""
+@brief Unsets the focus color for the district
+"""
+func unset_focus() -> void:
+	$Polygon2D.visible = true
+	$CollisionPolygon2D.visible = true
 
 """
 @brief Sets the district as disabled
