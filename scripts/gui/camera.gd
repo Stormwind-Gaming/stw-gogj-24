@@ -72,10 +72,13 @@ func _ready():
 	initial_position = position
 	target_position = position
 	
-	# Store initial zoom from the camera
+	# Store initial zoom from the camera and set current zoom
 	var camera = get_viewport().get_camera_2d()
 	if camera:
 		initial_zoom = camera.zoom
+		current_zoom = initial_zoom
+		target_zoom = initial_zoom
+		camera.zoom = initial_zoom # Ensure camera starts at initial zoom
 
 """
 @brief Called every frame to update camera position.
