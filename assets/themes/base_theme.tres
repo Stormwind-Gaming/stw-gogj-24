@@ -2,12 +2,12 @@
 
 [ext_resource type="FontFile" uid="uid://djwj10bhtdik" path="res://assets/fonts/veteran typewriter.ttf" id="1_lyhgf"]
 [ext_resource type="StyleBox" uid="uid://co18tu22sbler" path="res://assets/textures/folder_tab_box_texture_hover.tres" id="2_m063c"]
-[ext_resource type="StyleBox" path="res://assets/textures/tw_button_style_box_texture.tres" id="2_qo8vt"]
-[ext_resource type="StyleBox" path="res://assets/textures/tw_button_style_box_texture_hover.tres" id="3_d8d26"]
+[ext_resource type="StyleBox" uid="uid://6241urkjslaf" path="res://assets/textures/tw_button_style_box_texture.tres" id="2_qo8vt"]
+[ext_resource type="StyleBox" uid="uid://deqxdkxwpparc" path="res://assets/textures/tw_button_style_box_texture_hover.tres" id="3_d8d26"]
 [ext_resource type="StyleBox" uid="uid://d1vg5m2df7td2" path="res://assets/textures/folder_tab_box_texture.tres" id="3_in4tj"]
 [ext_resource type="Texture2D" uid="uid://455da6nc8v33" path="res://assets/icons/ticked.png" id="4_43qrq"]
 [ext_resource type="Texture2D" uid="uid://dqp5w62mpq7pt" path="res://assets/icons/unticked.png" id="5_defve"]
-[ext_resource type="StyleBox" path="res://assets/textures/folder_tab_box_texture_selected.tres" id="6_h240h"]
+[ext_resource type="StyleBox" uid="uid://b4hyjh8fafst3" path="res://assets/textures/folder_tab_box_texture_selected.tres" id="6_h240h"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cfsho"]
 content_margin_left = 10.0

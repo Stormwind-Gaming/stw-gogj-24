@@ -14,6 +14,11 @@ extends Camera2D
 @export var parallax_strength_y: float = 0.5
 
 """
+@brief Sensitivity of the camera movement
+"""
+@export var sensitivity: float = 2.5
+
+"""
 @brief Maximum distance the image can move horizontally
 """
 @export var max_offset_x: float = 800.0
@@ -61,6 +66,15 @@ var debug_draw: bool = false
 """
 var current_zoom: Vector2 = Vector2(1, 1)
 
+"""
+@brief The previous mouse position
+"""
+var previous_mouse_position: Vector2 = Vector2.ZERO
+
+"""
+@brief Whether the mouse is currently dragging
+"""
+var is_dragging: bool = false
 #|==============================|
 #|      Lifecycle Methods      |
 #|==============================|
@@ -88,26 +102,25 @@ func _process(delta):
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_MIDDLE) or Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
 		if WindowHandler.any_windows_open():
 			EventBus.close_all_windows.emit()
-		if camera_enabled:				
-			# Calculate the viewport size and mouse position
-			var viewport_size = get_viewport_rect().size
+		if camera_enabled:
+			if not is_dragging:
+				is_dragging = true
+				previous_mouse_position = get_viewport().get_mouse_position()
+			# Get the current mouse position
 			var mouse_position = get_viewport().get_mouse_position()
 
-			# Calculate the horizontal offset based on mouse position, normalized from -1 to 1
-			var horizontal_offset = (mouse_position.x / viewport_size.x) * 2 - 1
-			var vertical_offset = (mouse_position.y / viewport_size.y) * 2 - 1
-			
-			# Calculate the new target x and y positions using parallax strengths, then clamp them
-			var target_x = clamp(horizontal_offset * parallax_strength_x, -max_offset_x, max_offset_x)
-			var target_y = clamp(vertical_offset * parallax_strength_y, -max_offset_y, max_offset_y)
-			
-			# Set the target position based on the initial position offset
-			target_position.x = initial_position.x + target_x
-			target_position.y = initial_position.y + target_y
-			
-			# Move the position to the target position
-			position.x = target_position.x
-			position.y = target_position.y
+			# Calculate the delta since the last frame
+			var mouse_delta = mouse_position - previous_mouse_position
+
+			# Apply the movement to the camera
+			position += mouse_delta * sensitivity
+
+			# Clamp the position within the maximum offsets
+			position.x = clamp(position.x, initial_position.x - max_offset_x, initial_position.x + max_offset_x)
+			position.y = clamp(position.y, initial_position.y - max_offset_y, initial_position.y + max_offset_y)
+
+			# Update the previous_mouse_position for consistent movement
+			previous_mouse_position = mouse_position
 	elif !camera_enabled:
 		# Calculate zoom to fit district
 		var district_size = GameController.district_focused.get_district_size()
@@ -140,7 +153,10 @@ func _process(delta):
 		# Lerp the zoom
 		current_zoom = current_zoom.lerp(target_zoom, 0.05)
 		self.zoom = current_zoom
+	else:
+		is_dragging = false
 	
+
 	# if not at initial zoom, lerp back to it
 	if current_zoom != initial_zoom:
 		current_zoom = current_zoom.lerp(initial_zoom, 0.05)
