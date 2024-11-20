@@ -292,7 +292,6 @@ layout_mode = 2
 theme_override_constants/margin_top = 1
 
 [node name="ProgressBar" type="ProgressBar" parent="MarginContainer/VBoxContainer/Sympathy"]
-visible = false
 layout_mode = 2
 theme_override_styles/fill = SubResource("StyleBoxFlat_vppwv")
 min_value = 1.0
