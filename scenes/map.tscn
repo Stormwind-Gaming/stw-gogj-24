@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://c7y1ejxri1bfk"]
+[gd_scene load_steps=20 format=3 uid="uid://c7y1ejxri1bfk"]
 
 [ext_resource type="Script" path="res://scripts/map.gd" id="1_ppup2"]
 [ext_resource type="Texture2D" uid="uid://dr1v7la7ll1bf" path="res://assets/new_costal_map_lg.png" id="2_2sl0p"]
@@ -10,18 +10,15 @@
 [ext_resource type="PackedScene" uid="uid://d0a4qatowu8vq" path="res://scenes/districts/district_industrial.tscn" id="9_jaoy6"]
 [ext_resource type="PackedScene" uid="uid://vmpgdljfgrr3" path="res://scenes/main/GamePauseMenu.tscn" id="11_2mu8n"]
 [ext_resource type="PackedScene" uid="uid://bv860whpjsldd" path="res://scenes/gui/footer.tscn" id="11_4nem0"]
+[ext_resource type="Material" uid="uid://gin61bvv8xbw" path="res://assets/materials/cloud_shader_material.tres" id="11_daxsb"]
 [ext_resource type="PackedScene" uid="uid://csjj4gfy5g6nw" path="res://scenes/debug/stats_container.tscn" id="11_spnga"]
 [ext_resource type="PackedScene" uid="uid://kgy3mx1cyya" path="res://scenes/gui/header.tscn" id="12_gdl2t"]
 [ext_resource type="AudioStream" uid="uid://85fe3hfa7hdg" path="res://assets/audio/cold-wind-sound-effect-127448.mp3" id="13_lkxq1"]
-[ext_resource type="Shader" path="res://scripts/shaders/clouds.gdshader" id="14_76xur"]
-[ext_resource type="Texture2D" uid="uid://btpe1th2shtoe" path="res://assets/cloud_noise.png" id="15_ecuqb"]
 [ext_resource type="AudioStream" uid="uid://dkpbe25l0jh1i" path="res://assets/audio/street-night-calm-16893.mp3" id="16_885ay"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_e1tus"]
-shader = ExtResource("14_76xur")
-shader_parameter/density = 1.0
-shader_parameter/speed = Vector2(0.02, 0.01)
-shader_parameter/noise_texture = ExtResource("15_ecuqb")
+[sub_resource type="PlaneMesh" id="PlaneMesh_r6h60"]
+size = Vector2(20, 20)
+orientation = 2
 
 [sub_resource type="Animation" id="Animation_aor1t"]
 length = 0.001
@@ -76,7 +73,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Node2D/map_background:modulate")
+tracks/4/path = NodePath("Map/map_background:modulate")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -141,7 +138,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Node2D/map_background:modulate")
+tracks/4/path = NodePath("Map/map_background:modulate")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -157,30 +154,30 @@ _data = {
 "fade_out": SubResource("Animation_wn1g1")
 }
 
-[node name="Map" type="Node2D" node_paths=PackedStringArray("pause_menu", "footer", "stats_panel")]
+[node name="Main" type="Node2D" node_paths=PackedStringArray("pause_menu", "footer", "stats_panel")]
 script = ExtResource("1_ppup2")
 pause_menu = NodePath("PauseMenuCanvasLayer/GamePauseMenu")
 footer = NodePath("CanvasLayer2/Footer")
 stats_panel = NodePath("CanvasLayer2/PanelContainer")
 
-[node name="Node2D" type="Node2D" parent="."]
+[node name="Map" type="Node2D" parent="."]
 
-[node name="map_background" type="Sprite2D" parent="Node2D"]
+[node name="map_background" type="Sprite2D" parent="Map"]
 position = Vector2(800, 450)
 scale = Vector2(1.5, 1.5)
 texture = ExtResource("2_2sl0p")
 
-[node name="Districts" type="Node2D" parent="Node2D"]
+[node name="Districts" type="Node2D" parent="Map"]
 
-[node name="District_Port" parent="Node2D/Districts" instance=ExtResource("3_jl581")]
+[node name="District_Port" parent="Map/Districts" instance=ExtResource("3_jl581")]
 
-[node name="District_Industrial" parent="Node2D/Districts" instance=ExtResource("9_jaoy6")]
+[node name="District_Industrial" parent="Map/Districts" instance=ExtResource("9_jaoy6")]
 
-[node name="District_Civic" parent="Node2D/Districts" instance=ExtResource("5_hdi3m")]
+[node name="District_Civic" parent="Map/Districts" instance=ExtResource("5_hdi3m")]
 
-[node name="District_Military" parent="Node2D/Districts" instance=ExtResource("6_0oqea")]
+[node name="District_Military" parent="Map/Districts" instance=ExtResource("6_0oqea")]
 
-[node name="District_Residential" parent="Node2D/Districts" instance=ExtResource("7_ortub")]
+[node name="District_Residential" parent="Map/Districts" instance=ExtResource("7_ortub")]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(-400, -300)
@@ -194,20 +191,13 @@ parallax_strength_x = 1100.0
 parallax_strength_y = 1500.0
 max_offset_y = 1200.0
 
-[node name="Clouds" type="ParallaxBackground" parent="."]
-layer = 0
-scroll_ignore_camera_zoom = true
-
-[node name="ParallaxLayer" type="ParallaxLayer" parent="Clouds"]
-show_behind_parent = true
-visibility_layer = 2
-motion_scale = Vector2(0, 0)
-
-[node name="ColorRect" type="ColorRect" parent="Clouds/ParallaxLayer"]
-material = SubResource("ShaderMaterial_e1tus")
-offset_right = 1600.0
-offset_bottom = 1024.0
-mouse_filter = 2
+[node name="Clouds" type="MeshInstance2D" parent="."]
+light_mask = 0
+z_index = 5
+material = ExtResource("11_daxsb")
+position = Vector2(795, 446.5)
+scale = Vector2(204.5, 204.45)
+mesh = SubResource("PlaneMesh_r6h60")
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="."]
 

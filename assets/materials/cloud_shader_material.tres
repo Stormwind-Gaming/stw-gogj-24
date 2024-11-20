@@ -1,0 +1,24 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://gin61bvv8xbw"]
+
+[ext_resource type="Shader" path="res://scripts/shaders/clouds_new.gdshader" id="1_7moql"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_y03fn"]
+noise_type = 2
+domain_warp_enabled = true
+domain_warp_fractal_octaves = 2
+domain_warp_fractal_lacunarity = 3.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_k0q4y"]
+generate_mipmaps = false
+seamless = true
+noise = SubResource("FastNoiseLite_y03fn")
+
+[resource]
+shader = ExtResource("1_7moql")
+shader_parameter/isSoft = false
+shader_parameter/speed = 0.005
+shader_parameter/brightness = 1.08
+shader_parameter/threshold = 0.533
+shader_parameter/fluffiness = 0.0
+shader_parameter/alpha_multiplier = 0.7
+shader_parameter/noiseTexture = SubResource("NoiseTexture2D_k0q4y")

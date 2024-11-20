@@ -4,11 +4,11 @@
 [ext_resource type="Script" path="res://scripts/gui/agent_card.gd" id="1_dtlic"]
 [ext_resource type="Theme" uid="uid://dlrdh5kyv25hr" path="res://assets/themes/handwriting_label_theme.tres" id="2_wiqf1"]
 [ext_resource type="Texture2D" uid="uid://hy5wv55fu1rx" path="res://assets/sprites/emblem.png" id="3_uiwnq"]
-[ext_resource type="Theme" path="res://assets/themes/typewriter_label_theme.tres" id="4_j67y3"]
+[ext_resource type="Theme" uid="uid://c78hoq7n7ae54" path="res://assets/themes/typewriter_label_theme.tres" id="4_j67y3"]
 [ext_resource type="Texture2D" uid="uid://c0xlm4ebrvmg4" path="res://assets/profile_pictures/blank.png" id="5_gbp2g"]
 [ext_resource type="Texture2D" uid="uid://blme3dsuykhey" path="res://assets/character_status/assigned.png" id="6_6ampm"]
-[ext_resource type="Texture2D" uid="uid://clrdutcy15h4m" path="res://assets/icons/subtlety_3.svg" id="7_nove7"]
 [ext_resource type="Texture2D" uid="uid://dym5qqj722706" path="res://assets/select_cover.png" id="7_pqda2"]
+[ext_resource type="Texture2D" uid="uid://filfa2qem5i2" path="res://assets/icons/drama-masks.svg" id="7_s1d5g"]
 [ext_resource type="Texture2D" uid="uid://d313p06brjxs0" path="res://assets/icons/charm_2.svg" id="8_wqbjq"]
 [ext_resource type="Texture2D" uid="uid://5a71o8frvad4" path="res://assets/icons/smarts_2.svg" id="9_uvjkd"]
 
@@ -280,7 +280,7 @@ alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/StatsVBoxContainer/SubtletyHBoxContainer"]
 layout_mode = 2
-texture = ExtResource("7_nove7")
+texture = ExtResource("7_s1d5g")
 expand_mode = 3
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/StatsVBoxContainer/SubtletyHBoxContainer"]
