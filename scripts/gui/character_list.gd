@@ -141,7 +141,7 @@ func _on_character_button_pressed(character: Character) -> void:
 @brief Handles the close button press event.
 """
 func _on_close_button_pressed() -> void:
-	EventBus.close_all_windows.emit()
+	EventBus.close_window.emit()
 
 #|==============================|
 #|      Helper Functions       |

@@ -88,4 +88,4 @@ func is_end_turn_log(type_effect_speed: float = 0.25) -> bool:
 @brief Handles the close button press.
 """
 func _on_close_button_pressed() -> void:
-	EventBus.close_all_windows.emit()
+	EventBus.close_window.emit()

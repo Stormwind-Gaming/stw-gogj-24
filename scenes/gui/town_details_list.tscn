@@ -1,0 +1,124 @@
+[gd_scene load_steps=12 format=3 uid="uid://ddpshfqye7g1r"]
+
+[ext_resource type="Theme" uid="uid://dexax20p2eewp" path="res://assets/themes/base_theme.tres" id="1_bqvp7"]
+[ext_resource type="Script" path="res://scripts/gui/town_details_list.gd" id="2_7nxqr"]
+[ext_resource type="Texture2D" uid="uid://cymum3g0jnd7l" path="res://assets/sprites/popup_panel_background_75.png" id="3_yqtpu"]
+[ext_resource type="Texture2D" uid="uid://ctiq8sa8m5iv" path="res://assets/sprites/close_ribbon_black.png" id="4_dts33"]
+[ext_resource type="Texture2D" uid="uid://5vk04yychida" path="res://assets/sprites/close_ribbon_white.png" id="5_bktpt"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t22im"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xxx3e"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tyofl"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s7vqy"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_isj6o"]
+
+[sub_resource type="Theme" id="Theme_uh6bt"]
+CheckButton/styles/focus = SubResource("StyleBoxEmpty_t22im")
+CheckButton/styles/hover = SubResource("StyleBoxEmpty_xxx3e")
+CheckButton/styles/hover_pressed = SubResource("StyleBoxEmpty_tyofl")
+CheckButton/styles/normal = SubResource("StyleBoxEmpty_s7vqy")
+CheckButton/styles/pressed = SubResource("StyleBoxEmpty_isj6o")
+
+[node name="TownDetails" type="Window"]
+auto_translate_mode = 1
+transparent_bg = true
+initial_position = 2
+size = Vector2i(800, 700)
+exclusive = true
+unresizable = true
+borderless = true
+transparent = true
+theme = ExtResource("1_bqvp7")
+script = ExtResource("2_7nxqr")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_yqtpu")
+patch_margin_left = 90
+patch_margin_top = 53
+patch_margin_right = 138
+patch_margin_bottom = 26
+
+[node name="MarginContainer" type="MarginContainer" parent="NinePatchRect"]
+layout_mode = 2
+offset_right = 750.0
+offset_bottom = 600.0
+theme_override_constants/margin_left = 89
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 78
+theme_override_constants/margin_bottom = -84
+
+[node name="VBoxContainer" type="VBoxContainer" parent="NinePatchRect/MarginContainer"]
+layout_mode = 2
+
+[node name="TabContainer" type="TabContainer" parent="NinePatchRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+current_tab = 0
+
+[node name="Town" type="PanelContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer"]
+layout_mode = 2
+theme = SubResource("Theme_uh6bt")
+metadata/_tab_index = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Districts" type="PanelContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Districts"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Points of Interest" type="PanelContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Points of Interest"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -100.0
+offset_bottom = 100.0
+grow_horizontal = 0
+theme_override_constants/margin_right = 20
+
+[node name="TextureButton" type="TextureButton" parent="MarginContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+focus_mode = 0
+texture_normal = ExtResource("4_dts33")
+texture_pressed = ExtResource("4_dts33")
+texture_hover = ExtResource("5_bktpt")
+
+[node name="Label" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 21.0
+
+[connection signal="pressed" from="MarginContainer/TextureButton" to="." method="_on_close_button_pressed"]

@@ -42,7 +42,7 @@ layout_mode = 2
 offset_right = 750.0
 offset_bottom = 600.0
 theme_override_constants/margin_left = 89
-theme_override_constants/margin_top = 19
+theme_override_constants/margin_top = 11
 theme_override_constants/margin_right = 78
 theme_override_constants/margin_bottom = -84
 

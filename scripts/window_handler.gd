@@ -22,6 +22,8 @@ func _ready() -> void:
 	EventBus.open_new_window.connect(_open_new_window)
 	EventBus.open_new_radial_menu.connect(_open_radial_menu)
 	EventBus.close_all_windows.connect(_close_all_windows)
+	EventBus.close_window.connect(_close_window)
+	EventBus.close_radial_menu.connect(_close_radial_menu)
 	EventBus.game_over.connect(_close_all_windows_and_event_panels)
 	
 	EventBus.log_created.connect(_create_new_event_panel)
@@ -58,10 +60,27 @@ func _close_all_windows() -> void:
 	print("Closing all windows")
 	if open_window:
 		open_window.queue_free()
+	if open_radial_menu:
+		open_radial_menu.queue_free()
 	
 	open_window = null
 	open_radial_menu = null
 
+"""
+@brief Closes the current window
+"""
+func _close_window() -> void:
+	if open_window:
+		open_window.queue_free()
+	open_window = null
+
+"""
+@brief Closes the radial menu
+"""
+func _close_radial_menu() -> void:
+	if open_radial_menu:
+		open_radial_menu.queue_free()
+	open_radial_menu = null
 
 """
 @brief Opens a new window

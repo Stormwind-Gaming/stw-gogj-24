@@ -26,7 +26,7 @@ func _ready() -> void:
 Notifies the GameController and removes this window.
 """
 func _on_close_button_pressed() -> void:
-	EventBus.close_all_windows.emit()
+	EventBus.close_window.emit()
 
 #|==============================|
 #|      Helper Functions       |

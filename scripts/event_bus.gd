@@ -146,6 +146,16 @@ signal open_new_radial_menu(window: RadialMenu)
 """
 signal close_all_windows()
 
+"""
+@brief Emitted when a window is closed
+"""
+signal close_window()
+
+"""
+@brief Emitted when a radial menu is closed
+"""
+signal close_radial_menu()
+
 #|==============================|
 #|      World-event Management |
 #|==============================|

@@ -19,6 +19,11 @@ extends Control
 @export var show_intel_list_button: Button
 
 """
+@brief Button that shows the town details list
+"""
+@export var show_town_details_list_button: Button
+
+"""
 @brief Button that shows the log list
 """
 @export var show_log_list_button: Button
@@ -45,6 +50,7 @@ func _ready():
 	show_character_list_button.connect("pressed", Callable(self, "_on_show_character_list_button_pressed"))
 	show_intel_list_button.connect("pressed", Callable(self, "_on_show_intel_list_button_pressed"))
 	show_log_list_button.connect("pressed", Callable(self, "_on_show_log_list_button_pressed"))
+	show_town_details_list_button.connect("pressed", Callable(self, "_on_show_town_details_list_button_pressed"))
 	turn_button.connect("pressed", Callable(self, "_on_turn_button_pressed"))
 
 #|==============================|
@@ -97,6 +103,17 @@ func _on_show_log_list_button_pressed(end_turn_button: bool = false):
 	
 	# Add the instance to the scene tree
 	EventBus.open_new_window.emit(log_list_instance)
+
+"""
+@brief Handles the show town details list button press.
+Creates and displays the town details list if not already visible.
+"""
+func _on_show_town_details_list_button_pressed():
+	# Instance the town details list scene
+	var town_details_list_instance = Globals.town_details_list_scene.instantiate()
+
+	EventBus.open_new_window.emit(town_details_list_instance)
+
 
 """
 @brief Handles the turn button press.

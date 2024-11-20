@@ -40,7 +40,7 @@ func _init(type: Enums.ActionType) -> void:
 			radial_option_name = "Surveillance"
 			region = Rect2(128, 0, 64, 64)
 		Enums.ActionType.PROPAGANDA:
-			radial_option_name = "Sabotage"
+			radial_option_name = "Propaganda"
 			region = Rect2(192, 0, 64, 64)
 		Enums.ActionType.PLAN:
 			radial_option_name = "Plan"

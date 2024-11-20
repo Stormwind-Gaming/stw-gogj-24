@@ -36,6 +36,7 @@ func _ready() -> void:
 	EventBus.end_turn_initiated.connect(_clear_focus)
 	EventBus.open_new_window.connect(_disable_interaction)
 	EventBus.close_all_windows.connect(_enable_interaction)
+	EventBus.close_window.connect(_enable_interaction)
 	EventBus.game_over.connect(_game_over)
 
 	for district in GlobalRegistry.districts.get_all_items():
@@ -60,7 +61,6 @@ func _process(delta: float) -> void:
 		if Input.is_mouse_button_pressed(MOUSE_BUTTON_MIDDLE) or Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
 			_clear_focus()
 	if Input.is_action_just_pressed("ui_cancel"):
-		# EventBus.close_all_windows.emit()
 		if pause_menu.visible:
 			pause_menu.hide()
 		else:
@@ -186,7 +186,6 @@ func _on_poi_unhovered() -> void:
 func _disable_interaction(_i = 0) -> void:
 	for district in GlobalRegistry.districts.get_all_items():
 		district.set_disabled()
-	pass
 
 """
 @brief Enables interaction with the map
@@ -194,7 +193,6 @@ func _disable_interaction(_i = 0) -> void:
 func _enable_interaction() -> void:
 	for district in GlobalRegistry.districts.get_all_items():
 		district.set_enabled()
-	_clear_focus()
 
 """
 @brief Handles game over event

@@ -6,7 +6,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g4xvg"]
 
-[node name="Footer" type="Control" node_paths=PackedStringArray("show_actions_list_button", "show_character_list_button", "show_intel_list_button", "show_log_list_button", "turn_button", "log_list_new_items_container")]
+[node name="Footer" type="Control" node_paths=PackedStringArray("show_actions_list_button", "show_character_list_button", "show_intel_list_button", "show_town_details_list_button", "show_log_list_button", "turn_button", "log_list_new_items_container")]
 layout_mode = 3
 anchors_preset = 12
 anchor_top = 1.0
@@ -19,6 +19,7 @@ script = ExtResource("1_hd6ji")
 show_actions_list_button = NodePath("PanelContainer/HBoxContainer/HBoxContainer/ActionsListButton")
 show_character_list_button = NodePath("PanelContainer/HBoxContainer/HBoxContainer/CharacterListButton")
 show_intel_list_button = NodePath("PanelContainer/HBoxContainer/HBoxContainer/IntelListButton")
+show_town_details_list_button = NodePath("PanelContainer/HBoxContainer/HBoxContainer/TownInfoButton")
 show_log_list_button = NodePath("PanelContainer/HBoxContainer/HBoxContainer/LogListButton")
 turn_button = NodePath("MarginContainer/TurnButton")
 log_list_new_items_container = NodePath("PanelContainer/HBoxContainer/HBoxContainer/LogListButton/MarginContainer")
@@ -51,7 +52,6 @@ custom_minimum_size = Vector2(150, 30)
 layout_mode = 2
 focus_mode = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-disabled = true
 text = "Town"
 
 [node name="ActionsListButton" type="Button" parent="PanelContainer/HBoxContainer/HBoxContainer"]

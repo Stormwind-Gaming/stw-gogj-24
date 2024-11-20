@@ -250,4 +250,4 @@ func _on_tab_changed(tab_index):
 @brief Handles the close button press.
 """
 func _on_close_button_pressed() -> void:
-	EventBus.close_all_windows.emit()
+	EventBus.close_window.emit()
