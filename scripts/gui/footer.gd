@@ -119,6 +119,6 @@ func _on_turn_button_pressed():
 Processes the turn and shows the end turn log.
 """
 func _on_turn_confirmed():
-	_on_show_log_list_button_pressed(true)
 	GameController.process_turn()
+	_on_show_log_list_button_pressed(true)
 	# log_list_new_items_container.visible = true
