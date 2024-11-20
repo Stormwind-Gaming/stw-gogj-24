@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://korcycvmfqpq"
-path="res://.godot/imported/injured.png-819ea6976b9cea634c778bc28ba7b238.ctex"
+uid="uid://0awcccsordm5"
+path="res://.godot/imported/injured_2.png-72ae5b71850dced6ce091822e8fa7a3a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/character_status/injured.png"
-dest_files=["res://.godot/imported/injured.png-819ea6976b9cea634c778bc28ba7b238.ctex"]
+source_file="res://assets/character_status/injured_2.png"
+dest_files=["res://.godot/imported/injured_2.png-72ae5b71850dced6ce091822e8fa7a3a.ctex"]
 
 [params]
 

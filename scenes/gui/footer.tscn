@@ -46,6 +46,14 @@ size_flags_vertical = 8
 theme = ExtResource("2_3ln20")
 theme_override_constants/separation = -8
 
+[node name="TownInfoButton" type="Button" parent="PanelContainer/HBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(150, 30)
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+disabled = true
+text = "Town"
+
 [node name="ActionsListButton" type="Button" parent="PanelContainer/HBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(150, 30)
 layout_mode = 2
