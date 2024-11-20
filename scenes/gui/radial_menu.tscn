@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://b8bqeoiwunxro"]
+[gd_scene load_steps=7 format=3 uid="uid://b8bqeoiwunxro"]
 
 [ext_resource type="Texture2D" uid="uid://dniextr4kn1uv" path="res://assets/PoI.png" id="1_2stv7"]
 [ext_resource type="Script" path="res://scripts/gui/radial_menu.gd" id="1_dcp7t"]
+[ext_resource type="Theme" uid="uid://dexax20p2eewp" path="res://assets/themes/base_theme.tres" id="1_dhrl2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_twyrx"]
 size = Vector2(2000, 2000)
@@ -9,7 +10,19 @@ size = Vector2(2000, 2000)
 [sub_resource type="CircleShape2D" id="CircleShape2D_03ohq"]
 radius = 128.0
 
-[node name="RadialMenu" type="Control" node_paths=PackedStringArray("click_away_area")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kvols"]
+bg_color = Color(0.929412, 0.85098, 0.713726, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="RadialMenu" type="Control" node_paths=PackedStringArray("click_away_area", "radial_popup")]
 z_index = 100
 layout_mode = 3
 anchors_preset = 8
@@ -19,10 +32,12 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_dhrl2")
 script = ExtResource("1_dcp7t")
 background_color = Color(0.929412, 0.85098, 0.713726, 0.678431)
 highlight_color = Color(0.929412, 0.85098, 0.713726, 1)
 click_away_area = NodePath("CloseArea2D")
+radial_popup = NodePath("Popup")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 visible = false
@@ -52,6 +67,40 @@ priority = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_03ohq")
+
+[node name="Popup" type="Window" parent="."]
+transparent_bg = true
+size = Vector2i(150, 45)
+visible = false
+unresizable = true
+borderless = true
+transparent = true
+popup_window = true
+
+[node name="PanelContainer" type="PanelContainer" parent="Popup"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_kvols")
+
+[node name="MarginContainer" type="MarginContainer" parent="Popup/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Popup/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Popup/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "<title>"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="input_event" from="CloseArea2D" to="." method="_on_close_area_2d_input_event"]
 [connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]

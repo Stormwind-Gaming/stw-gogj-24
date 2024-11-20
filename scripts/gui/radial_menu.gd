@@ -46,6 +46,11 @@ const SPRITE_SIZE = Vector2(64, 64)
 @brief Area that will close the menu when clicked
 """
 @export var click_away_area: Area2D
+
+"""
+@brief Window radial popup
+"""
+@export var radial_popup: Window
 #|==============================|
 #|         Properties          |
 #|==============================|
@@ -85,12 +90,19 @@ func _process(delta: float) -> void:
 	var mouse_radius = mouse_pos.length()
 	
 	if mouse_radius > outer_radius:
+		radial_popup.visible = false
 		selected_cell = -1
 	elif mouse_radius < inner_radius:
+		radial_popup.visible = false
 		selected_cell = 0
 	else:
 		var mouse_rads = fposmod(mouse_pos.angle() * -1, TAU)
 		selected_cell = ceil((mouse_rads / TAU) * (len(options) - 1))
+		
+		# popup at mouse position
+		radial_popup.visible = true
+		$Popup/PanelContainer/MarginContainer/VBoxContainer/Label.text = options[selected_cell].radial_option_name
+		radial_popup.set_position(get_viewport().get_mouse_position() + Vector2(10, 10))
 
 	queue_redraw()
 

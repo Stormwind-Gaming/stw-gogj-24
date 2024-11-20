@@ -161,7 +161,7 @@ layout_mode = 2
 theme = ExtResource("4_j67y3")
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 10
-text = "Geburtsdatum: "
+text = "G.Datum: "
 horizontal_alignment = 1
 vertical_alignment = 1
 
