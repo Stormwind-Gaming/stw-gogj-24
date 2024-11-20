@@ -31,6 +31,8 @@ Connects signals and populates the log with current turn entries.
 func _ready():
 	# Connect the close_requested signal
 	connect("close_requested", Callable(self, "_on_close_requested"))
+
+	label.text = "Turn " + str(GameController.turn_number) + "\n\n"
 	
 	for turn_log: TurnLog in GlobalRegistry.turn_logs.get_list(str(GameController.turn_number)):
 		if turn_log.log_type == Enums.LogType.WORLD_INFO:
