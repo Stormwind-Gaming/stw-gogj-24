@@ -1,18 +1,20 @@
-poi_name,poi_description,district_type,spawn_chance,max_spawn_quantity,skill_required,bonus_type,what_chance,where_chance,when_chance
-Cinema,,civic,100,1,charm,none,1,1,1
-Grocer,,civic,75,-1,smarts,none,1,1,1
-Shop,,civic,75,-1,charm,none,1,1,1
-Pub,,civic,50,-1,smarts,none,1,1,1
-Restaurant,,civic,50,-1,charm,none,1,1,1
-Residence,,civic,25,-1,smarts,none,1,1,1
-Factory,,industrial,75,-1,charm,none,1,1,1
-Workshop,,industrial,75,-1,smarts,none,1,1,1
-Warehouse,,"industrial,port",75,-1,charm,none,1,1,1
-Office,,"industrial,port",50,-1,smarts,none,1,1,1
-Anti Air Emplacement,,military,50,-1,charm,none,1,1,1
-Residence,,residential,75,-1,smarts,none,1,1,1
-Pub,,residential,50,3,charm,none,1,1,1
-Cafe,,residential,50,3,smarts,none,1,1,1
-Shop,,residential,50,3,charm,none,1,1,1
-Church,,residential,50,2,smarts,none,1,1,1
-Restaurant,,residential,25,3,charm,none,1,1,1
+poi_name,poi_short description,poi_description,district_type,spawn_chance,max_spawn_quantity,skill_required,bonus_type,what_chance,where_chance,when_chance,,
+Cinema,,,civic,100,1,charm,none,50,25,25,,100
+Grocer,,,civic,75,-1,smarts,none,70,20,10,,100
+Shop,,,civic,75,-1,charm,none,67,22,11,,100
+Pub,The Flemish equivalent of the Crown and Pepper,A place to go and drink,civic,50,-1,smarts,none,25,25,50,,100
+Restaurant,,,civic,50,-1,charm,none,25,50,25,,100
+Residence,{character name}'s home,,civic,25,-1,smarts,none,33,33,34,,100
+Factory,A sheet metal factory,"This factory has often been a target of allied bombing, but it still stands. The foundry products steel castings for vehicles and tanks for the war effort. We see deliveries leaving every day with new material to support the enemies war effort.",industrial,75,-1,charm,none,20,60,20,,100
+Workshop,,,industrial,75,-1,smarts,none,10,25,65,,100
+Warehouse,,,"industrial, port",75,-1,charm,none,40,40,20,,100
+Office,,,"industrial, port",50,-1,smarts,none,15,10,75,,100
+Anti Air Emplacement,,,military,50,-1,charm,none,20,30,50,,100
+Residence,,,residential,75,-1,smarts,none,30,60,10,,100
+Pub,The Dutch equivalent of the Skylark,,residential,50,3,charm,none,50,30,20,,100
+Cafe,,,residential,50,3,smarts,none,30,50,20,,100
+Shop,,,residential,50,3,charm,none,20,30,50,,100
+Church,St Mary and Joseph's,,residential,50,2,smarts,none,20,20,60,,100
+Restaurant,,,residential,25,3,charm,none,20,65,15,,100
+Gestapo Post,,,"civic, industrial, residential, port, military",25,3,smarts,none,40,20,40,,100
+Air Base,,,military,50,1,smarts,none,50,20,30,,100

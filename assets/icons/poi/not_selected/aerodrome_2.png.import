@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://sgxlenjb5p13"
-path="res://.godot/imported/aerodrome_2.png-01bb31ea788a9a8e2dad092f042cd79f.ctex"
+path="res://.godot/imported/aerodrome_2.png-ac5f34a61aa6536cb79c3402bf147ebe.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icons/poi/aerodrome_2.png"
-dest_files=["res://.godot/imported/aerodrome_2.png-01bb31ea788a9a8e2dad092f042cd79f.ctex"]
+source_file="res://assets/icons/poi/not_selected/aerodrome_2.png"
+dest_files=["res://.godot/imported/aerodrome_2.png-ac5f34a61aa6536cb79c3402bf147ebe.ctex"]
 
 [params]
 

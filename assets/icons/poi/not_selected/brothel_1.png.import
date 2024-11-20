@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://qb7w3f1jgew4"
-path="res://.godot/imported/brothel_1.png-08430765446a654d8064d9deb2064706.ctex"
+path="res://.godot/imported/brothel_1.png-81df2707b9faf080576946a340c756a9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icons/poi/brothel_1.png"
-dest_files=["res://.godot/imported/brothel_1.png-08430765446a654d8064d9deb2064706.ctex"]
+source_file="res://assets/icons/poi/not_selected/brothel_1.png"
+dest_files=["res://.godot/imported/brothel_1.png-81df2707b9faf080576946a340c756a9.ctex"]
 
 [params]
 

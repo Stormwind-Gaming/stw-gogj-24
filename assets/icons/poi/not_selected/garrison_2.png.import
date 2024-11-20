@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://drlv17lid28d8"
-path="res://.godot/imported/garrison_2.png-eb82cf548ac5eb27f359383b57dea6d2.ctex"
+path="res://.godot/imported/garrison_2.png-4d4da33fd855f12f3a1ec1c2b80471b2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icons/poi/garrison_2.png"
-dest_files=["res://.godot/imported/garrison_2.png-eb82cf548ac5eb27f359383b57dea6d2.ctex"]
+source_file="res://assets/icons/poi/not_selected/garrison_2.png"
+dest_files=["res://.godot/imported/garrison_2.png-4d4da33fd855f12f3a1ec1c2b80471b2.ctex"]
 
 [params]
 

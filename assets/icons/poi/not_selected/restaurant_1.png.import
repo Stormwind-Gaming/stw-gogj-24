@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cabrio0s6ewpo"
-path="res://.godot/imported/restaurant_1.png-b8eea369e12910cfd3a3989c25af5c0f.ctex"
+path="res://.godot/imported/restaurant_1.png-5378cec79444de0ec4b5ac0444be2d3b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icons/poi/restaurant_1.png"
-dest_files=["res://.godot/imported/restaurant_1.png-b8eea369e12910cfd3a3989c25af5c0f.ctex"]
+source_file="res://assets/icons/poi/not_selected/restaurant_1.png"
+dest_files=["res://.godot/imported/restaurant_1.png-5378cec79444de0ec4b5ac0444be2d3b.ctex"]
 
 [params]
 
