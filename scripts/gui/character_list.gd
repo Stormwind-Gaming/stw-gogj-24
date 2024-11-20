@@ -14,9 +14,14 @@ extends Window
 @export var mia_list_container: GridContainer
 
 """
-@brief Container for the list of all characters
+@brief Container for the list of known characters
 """
-@export var all_character_list_container: GridContainer
+@export var known_character_list_container: GridContainer
+
+"""
+@brief Container for the list of unknown characters
+"""
+@export var unknown_character_list_container: GridContainer
 
 """
 @brief Container for the list of sympathiser characters
@@ -56,7 +61,9 @@ Sorts and distributes characters to appropriate lists based on their status.
 func populate_character_lists():
 	print('populating character lists')
 	# Clear existing children in all containers
-	for child in all_character_list_container.get_children():
+	for child in known_character_list_container.get_children():
+		child.queue_free()
+	for child in unknown_character_list_container.get_children():
 		child.queue_free()
 	for child in sympathiser_list_container.get_children():
 		child.queue_free()
@@ -82,10 +89,15 @@ func populate_character_lists():
 		deceased_list_container.add_child(mini_agent_card_scene)
 
 	for character in GlobalRegistry.characters.get_list(GlobalRegistry.LIST_NON_SYMPATHISER_KNOWN):
-		all_characters.append(character)
+		var mini_agent_card_scene = Globals.mini_agent_card_scene.instantiate()
+		mini_agent_card_scene.enable_popup_interaction()
+		mini_agent_card_scene.set_character(character)
+		known_character_list_container.add_child(mini_agent_card_scene)
 
 	for character in GlobalRegistry.characters.get_list(GlobalRegistry.LIST_NON_SYMPATHISER_UNKNOWN):
-		all_characters.append(character)
+		var mini_agent_card_scene = Globals.mini_agent_card_scene.instantiate()
+		mini_agent_card_scene.set_character(character)
+		unknown_character_list_container.add_child(mini_agent_card_scene)
 
 	for character in GlobalRegistry.characters.get_list(GlobalRegistry.LIST_SYMPATHISER_RECRUITED):
 		var agent_card_scene = Globals.agent_card_scene.instantiate()
@@ -100,23 +112,7 @@ func populate_character_lists():
 		mini_agent_card_scene.set_character(character)
 		mini_agent_card_scene.connect("character_card_pressed", _on_character_button_pressed)
 		sympathiser_list_container.add_child(mini_agent_card_scene)
-			
 
-	# Sort characters by known status
-	all_characters.sort_custom(func(a, b):
-		if a.char_recruitment_state == Enums.CharacterRecruitmentState.NON_SYMPATHISER_UNKNOWN and not b.char_recruitment_state == Enums.CharacterRecruitmentState.NON_SYMPATHISER_UNKNOWN:
-			return false
-		else:
-			return true
-	)
-
-	# Add sorted characters to the all characters list
-	for character in all_characters:
-		var mini_agent_card_scene = Globals.mini_agent_card_scene.instantiate()
-		if character.char_recruitment_state == Enums.CharacterRecruitmentState.NON_SYMPATHISER_KNOWN:
-			mini_agent_card_scene.enable_popup_interaction()
-		mini_agent_card_scene.set_character(character)
-		all_character_list_container.add_child(mini_agent_card_scene)
 
 #|==============================|
 #|      Event Handlers         |

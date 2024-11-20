@@ -8,7 +8,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vt46n"]
 
-[node name="CharacterList" type="Window" node_paths=PackedStringArray("deceased_list_container", "mia_list_container", "all_character_list_container", "sympathiser_list_container", "agent_list_container", "agents_label")]
+[node name="CharacterList" type="Window" node_paths=PackedStringArray("deceased_list_container", "mia_list_container", "known_character_list_container", "unknown_character_list_container", "sympathiser_list_container", "agent_list_container", "agents_label")]
 transparent_bg = true
 initial_position = 2
 size = Vector2i(800, 700)
@@ -19,7 +19,8 @@ theme = ExtResource("3_7dsct")
 script = ExtResource("1_dabvh")
 deceased_list_container = NodePath("NinePatchRect/MarginContainer/TabContainer/Deceased/MarginContainer/ScrollContainer/GridContainer")
 mia_list_container = NodePath("NinePatchRect/MarginContainer/TabContainer/MIA/MarginContainer/ScrollContainer/GridContainer")
-all_character_list_container = NodePath("NinePatchRect/MarginContainer/TabContainer/Known Characters/MarginContainer/ScrollContainer/AllGridContainer")
+known_character_list_container = NodePath("NinePatchRect/MarginContainer/TabContainer/Known Characters/MarginContainer/VBoxContainer/ScrollContainer/KnownGridContainer")
+unknown_character_list_container = NodePath("NinePatchRect/MarginContainer/TabContainer/Known Characters/MarginContainer/VBoxContainer/ScrollContainer2/UnknownGridContainer")
 sympathiser_list_container = NodePath("NinePatchRect/MarginContainer/TabContainer/Sympathisers/MarginContainer/HBoxContainer/VBoxContainer2/ScrollContainer/SympathiserContainer")
 agent_list_container = NodePath("NinePatchRect/MarginContainer/TabContainer/Sympathisers/MarginContainer/HBoxContainer/VBoxContainer/AgentVBoxContainer")
 agents_label = NodePath("NinePatchRect/MarginContainer/TabContainer/Sympathisers/MarginContainer/HBoxContainer/VBoxContainer/Label")
@@ -105,15 +106,41 @@ metadata/_tab_index = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="NinePatchRect/MarginContainer/TabContainer/Known Characters"]
 layout_mode = 2
-theme_override_constants/margin_left = 10
+theme_override_constants/margin_left = 15
 theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 10
+theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="ScrollContainer" type="ScrollContainer" parent="NinePatchRect/MarginContainer/TabContainer/Known Characters/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="NinePatchRect/MarginContainer/TabContainer/Known Characters/MarginContainer"]
 layout_mode = 2
 
-[node name="AllGridContainer" type="GridContainer" parent="NinePatchRect/MarginContainer/TabContainer/Known Characters/MarginContainer/ScrollContainer"]
+[node name="Known" type="Label" parent="NinePatchRect/MarginContainer/TabContainer/Known Characters/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Known characters"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="NinePatchRect/MarginContainer/TabContainer/Known Characters/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="KnownGridContainer" type="GridContainer" parent="NinePatchRect/MarginContainer/TabContainer/Known Characters/MarginContainer/VBoxContainer/ScrollContainer"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 4
+
+[node name="HSeparator" type="HSeparator" parent="NinePatchRect/MarginContainer/TabContainer/Known Characters/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Unknown" type="Label" parent="NinePatchRect/MarginContainer/TabContainer/Known Characters/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Unknown characters"
+
+[node name="ScrollContainer2" type="ScrollContainer" parent="NinePatchRect/MarginContainer/TabContainer/Known Characters/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="UnknownGridContainer" type="GridContainer" parent="NinePatchRect/MarginContainer/TabContainer/Known Characters/MarginContainer/VBoxContainer/ScrollContainer2"]
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
 size_flags_horizontal = 3

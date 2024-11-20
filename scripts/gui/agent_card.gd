@@ -59,6 +59,9 @@ func set_character(my_character: Character):
 	subtlety_label.text = stats.subtlety
 	smarts_label.text = stats.smarts
 
+	if character.char_state == Enums.CharacterRecruitmentState.NON_SYMPATHISER_KNOWN:
+		sympathy_progress.visible = true
+
 #|==============================|
 #|       Event Listeners        |
 #|==============================|
@@ -195,6 +198,7 @@ func check_assignment_selection(poi: PointOfInterest, option: Enums.ActionType) 
 		var actions = GlobalRegistry.actions.get_all_items()
 		for action in actions:
 			if action.characters.has(character) and action.poi == poi and action.action_type == option:
+				self.modulate = Color(1, 1, 1)
 				print('Character is already assigned to this action')
 				status_overlay.visible = false
 				assignment_button.button_pressed = true

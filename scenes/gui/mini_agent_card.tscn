@@ -49,7 +49,7 @@ dob_label = NodePath("MarginContainer/VBoxContainer/HBoxContainer/FluffVBoxConta
 nationality_label = NodePath("MarginContainer/VBoxContainer/HBoxContainer/FluffVBoxContainer/HBoxContainer6/Nationality")
 profession_label = NodePath("MarginContainer/VBoxContainer/HBoxContainer/FluffVBoxContainer/HBoxContainer2/Profession")
 national_id_label = NodePath("MarginContainer/VBoxContainer/HBoxContainer/FluffVBoxContainer/HBoxContainer4/IDNumber")
-sympathy_progress = NodePath("MarginContainer/VBoxContainer/HBoxContainer/FluffVBoxContainer/HBoxContainer5/ProgressBar")
+sympathy_progress = NodePath("MarginContainer/VBoxContainer/Sympathy/ProgressBar")
 charm_label = NodePath("MarginContainer/VBoxContainer/HBoxContainer/StatsVBoxContainer/CharmHBoxContainer/Label")
 subtlety_label = NodePath("MarginContainer/VBoxContainer/HBoxContainer/StatsVBoxContainer/SubtletyHBoxContainer/Label")
 smarts_label = NodePath("MarginContainer/VBoxContainer/HBoxContainer/StatsVBoxContainer/SmartsHBoxContainer/Label")
@@ -287,7 +287,12 @@ text = "Sympathy
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/VBoxContainer/HBoxContainer/FluffVBoxContainer/HBoxContainer5"]
+[node name="Sympathy" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/VBoxContainer/Sympathy"]
+visible = false
 layout_mode = 2
 theme_override_styles/fill = SubResource("StyleBoxFlat_vppwv")
 min_value = 1.0
