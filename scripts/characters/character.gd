@@ -144,6 +144,11 @@ func get_char_state() -> Enums.CharacterState:
 """
 func set_char_state(value: Enums.CharacterState) -> void:
 	char_state = value
+
+	# If the character is injured, they are no longer in the team
+	if char_state == Enums.CharacterState.INJURED:
+		char_recruitment_state = Enums.CharacterRecruitmentState.SYMPATHISER_NOT_RECRUITED
+
 	EventBus.character_state_changed.emit(self)
 
 """

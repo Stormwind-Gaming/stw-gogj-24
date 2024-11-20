@@ -321,7 +321,7 @@ var rumour_subject_map = {
 	"NON_SYMPATHISER_CHARACTER": Enums.RumourSubject.NON_SYMPATHISER_CHARACTER,
 	"SYMPATHISER_CHARACTER": Enums.RumourSubject.SYMPATHISER_CHARACTER,
 	"MIA_CHARACTER": Enums.RumourSubject.MIA_CHARACTER,
-	"INCARCERATED_CHARACTER": Enums.RumourSubject.INCARCERATED_CHARACTER,
+	"INJURED_CHARACTER": Enums.RumourSubject.INJURED_CHARACTER,
 	"ANY_POI": Enums.RumourSubject.ANY_POI,
 	"NONE": Enums.RumourSubject.NONE
 }
@@ -369,6 +369,7 @@ var poi_bonus_map = {
 
 var event_outcome_category_map = {
 	"MIA": Enums.EventOutcomeType.MIA,
+	"INJURED": Enums.EventOutcomeType.INJURED,
 	"DECEASED": Enums.EventOutcomeType.DECEASED
 }
 
@@ -520,8 +521,8 @@ func get_character_state_string(status: Enums.CharacterState) -> String:
 			return "Assigned"
 		Enums.CharacterState.MIA:
 			return "MIA"
-		Enums.CharacterState.INCARCERATED:
-			return "Incarcerated"
+		Enums.CharacterState.INJURED:
+			return "Injured"
 		Enums.CharacterState.DECEASED:
 			return "Deceased"
 		_:
@@ -689,5 +690,6 @@ var profile_images = {
 
 var event_images = {
 	Enums.EventOutcomeType.MIA: preload("res://assets/sprites/events/event_mia.png"),
+	Enums.EventOutcomeType.INJURED: preload("res://assets/sprites/events/event_mia.png"), # TODO: Add injured event image
 	Enums.EventOutcomeType.DECEASED: preload("res://assets/sprites/events/event_kia.png"),
 }

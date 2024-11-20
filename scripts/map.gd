@@ -166,7 +166,6 @@ func _on_district_clicked(district: District) -> void:
 	street_tween.tween_property($StreetEffect, "volume_db", -10, 1.0).set_ease(Tween.EASE_IN)
 
 
-
 """
 @brief Handles POI hover events
 @param poi The POI being hovered
@@ -240,3 +239,5 @@ func _setup_agents() -> void:
 	agent2.char_sympathy = 80
 	agent2.char_recruitment_state = Enums.CharacterRecruitmentState.SYMPATHISER_RECRUITED
 	agent3.char_sympathy = 90
+
+	agent1.char_state = Enums.CharacterState.INJURED

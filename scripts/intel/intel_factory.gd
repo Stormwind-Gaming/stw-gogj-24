@@ -35,8 +35,8 @@ static func create_rumour(config: RumourConfig) -> Rumour:
 			rumour_properties.rumour_subject_character = _get_random_sympathiser_character()
 		Enums.RumourSubject.MIA_CHARACTER:
 			rumour_properties.rumour_subject_character = _get_random_mia_character()
-		Enums.RumourSubject.INCARCERATED_CHARACTER:
-			rumour_properties.rumour_subject_character = _get_random_incarcerated_character()
+		Enums.RumourSubject.INJURED_CHARACTER:
+			rumour_properties.rumour_subject_character = _get_random_injured_character()
 
 	# Check if the rumour has a specific effect that requires duration and expiry
 	if rumour_data.effect in [Enums.IntelEffect.D_ONE_E_ONE, Enums.IntelEffect.D_ONE_E_TWO, Enums.IntelEffect.D_ONE_E_THREE, Enums.IntelEffect.D_ONE_E_FOUR,
@@ -98,20 +98,20 @@ static func _get_random_sympathiser_character() -> Character:
 	return all_sympathisers[randi() % all_sympathisers.size()]
 
 """
-@brief Retrieves a random MIA character (currently returns null).
+@brief Retrieves a random MIA character
 
-@returns A null value (placeholder for future implementation)
+@returns A random Character object that is MIA
 """
 static func _get_random_mia_character() -> Character:
 	return GlobalRegistry.characters.get_random_item_from_list(GlobalRegistry.LIST_MIA)
 
 """
-@brief Retrieves a random incarcerated character (currently returns null).
+@brief Retrieves a random injured character
 
-@returns A null value (placeholder for future implementation)
+@returns A random Character object that is injured
 """
-static func _get_random_incarcerated_character() -> Character:
-	return GlobalRegistry.characters.get_random_item_from_list(GlobalRegistry.LIST_INCARCERATED)
+static func _get_random_injured_character() -> Character:
+	return GlobalRegistry.characters.get_random_item_from_list(GlobalRegistry.LIST_INJURED)
 
 #|==============================|
 #|   Duration and Expiry Logic   |

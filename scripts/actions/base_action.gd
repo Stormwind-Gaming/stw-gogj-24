@@ -200,6 +200,7 @@ func _process_danger() -> Array[TurnLog]:
 		logs.append(TurnLog.new("Consequence calculation:", Enums.LogType.ACTION_INFO))
 		logs.append(TurnLog.new("Base probabilities (before heat):", Enums.LogType.ACTION_INFO))
 		logs.append(TurnLog.new("- No consequence: " + str(probabilities[Enums.CharacterState.ASSIGNED] * 100) + "%", Enums.LogType.ACTION_INFO))
+		logs.append(TurnLog.new("- Injured: " + str(probabilities[Enums.CharacterState.INJURED] * 100) + "%", Enums.LogType.ACTION_INFO))
 		logs.append(TurnLog.new("- MIA: " + str(probabilities[Enums.CharacterState.MIA] * 100) + "%", Enums.LogType.ACTION_INFO))
 		logs.append(TurnLog.new("- Death: " + str(probabilities[Enums.CharacterState.DECEASED] * 100) + "%", Enums.LogType.ACTION_INFO))
 		
@@ -209,6 +210,7 @@ func _process_danger() -> Array[TurnLog]:
 		
 		logs.append(TurnLog.new("Modified probabilities (after heat):", Enums.LogType.ACTION_INFO))
 		logs.append(TurnLog.new("- No consequence: " + str(probabilities[Enums.CharacterState.ASSIGNED] * 100) + "%", Enums.LogType.ACTION_INFO))
+		logs.append(TurnLog.new("- Injured: " + str(probabilities[Enums.CharacterState.INJURED] * 100) + "%", Enums.LogType.ACTION_INFO))
 		logs.append(TurnLog.new("- MIA: " + str(probabilities[Enums.CharacterState.MIA] * 100) + "%", Enums.LogType.ACTION_INFO))
 		logs.append(TurnLog.new("- Death: " + str(probabilities[Enums.CharacterState.DECEASED] * 100) + "%", Enums.LogType.ACTION_INFO))
 
@@ -216,6 +218,11 @@ func _process_danger() -> Array[TurnLog]:
 		match consequence_result.result:
 			Enums.CharacterState.ASSIGNED:
 				log_message = "No consequence"
+			Enums.CharacterState.INJURED:
+				log_message = "One character is injured"
+				characters.shuffle()
+				characters[0].char_state = Enums.CharacterState.INJURED
+				consequence_log_type = Enums.EventOutcomeType.INJURED
 			Enums.CharacterState.MIA:
 				log_message = "One character is missing"
 				characters.shuffle()
@@ -246,6 +253,7 @@ func _determine_action_failure_consequence(district_heat: int) -> Dictionary:
 	# Calculate raw probabilities
 	var raw_chances = {
 		Enums.CharacterState.ASSIGNED: Constants.FAILURE_CONSEQUENCE_NONE,
+		Enums.CharacterState.INJURED: Constants.FAILURE_CONSEQUENCE_INJURED,
 		Enums.CharacterState.MIA: Constants.FAILURE_CONSEQUENCE_MIA,
 		Enums.CharacterState.DECEASED: Constants.FAILURE_CONSEQUENCE_DECEASED
 	}
@@ -253,6 +261,7 @@ func _determine_action_failure_consequence(district_heat: int) -> Dictionary:
 	# Calculate heat-modified probabilities
 	var modified_chances = {
 		Enums.CharacterState.ASSIGNED: raw_chances[Enums.CharacterState.ASSIGNED] * (1.0 - heat_factor * Constants.FAILURE_HEAT_MOD_NONE),
+		Enums.CharacterState.INJURED: raw_chances[Enums.CharacterState.INJURED] + (heat_factor * Constants.FAILURE_HEAT_MOD_INJURED),
 		Enums.CharacterState.MIA: raw_chances[Enums.CharacterState.MIA] + (heat_factor * Constants.FAILURE_HEAT_MOD_MIA),
 		Enums.CharacterState.DECEASED: raw_chances[Enums.CharacterState.DECEASED] + (heat_factor * Constants.FAILURE_HEAT_MOD_DECEASED)
 	}
@@ -332,6 +341,7 @@ func _get_consequence_probabilities(district_heat: int) -> Dictionary:
 	# Calculate raw probabilities
 	var raw_chances = {
 		Enums.CharacterState.ASSIGNED: Constants.FAILURE_CONSEQUENCE_NONE,
+		Enums.CharacterState.INJURED: Constants.FAILURE_CONSEQUENCE_INJURED,
 		Enums.CharacterState.MIA: Constants.FAILURE_CONSEQUENCE_MIA,
 		Enums.CharacterState.DECEASED: Constants.FAILURE_CONSEQUENCE_DECEASED
 	}
@@ -339,6 +349,7 @@ func _get_consequence_probabilities(district_heat: int) -> Dictionary:
 	# Calculate heat-modified probabilities
 	var modified_chances = {
 		Enums.CharacterState.ASSIGNED: raw_chances[Enums.CharacterState.ASSIGNED] * (1.0 - heat_factor * Constants.FAILURE_HEAT_MOD_NONE),
+		Enums.CharacterState.INJURED: raw_chances[Enums.CharacterState.INJURED] + (heat_factor * Constants.FAILURE_HEAT_MOD_INJURED),
 		Enums.CharacterState.MIA: raw_chances[Enums.CharacterState.MIA] + (heat_factor * Constants.FAILURE_HEAT_MOD_MIA),
 		Enums.CharacterState.DECEASED: raw_chances[Enums.CharacterState.DECEASED] + (heat_factor * Constants.FAILURE_HEAT_MOD_DECEASED)
 	}
