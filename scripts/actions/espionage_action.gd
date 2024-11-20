@@ -33,6 +33,13 @@ func _process_action() -> Array[TurnLog]:
 		log_message = "Succeeded " + stat_check + " check..."
 		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
 
+		log_message = "Mission chance: " + str(poi.rumour_config.mission_chance)
+		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
+		log_message = "Location chance: " + str(poi.rumour_config.location_chance)
+		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
+		log_message = "Time chance: " + str(poi.rumour_config.time_chance)
+		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
+
 		var rumour: Rumour = IntelFactory.create_rumour(poi.rumour_config)
 
 		log_message = "Discovered a %s intel type." % Globals.get_intel_type_string(rumour.rumour_type)

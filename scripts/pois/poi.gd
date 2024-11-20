@@ -177,7 +177,7 @@ func setup_poi_visuals():
 @param poi_name_arg The name of the POI
 @param poi_description_arg The description of the POI
 """
-func set_poi_details(parent_district_arg: District, poi_type_arg: Enums.POIType, poi_name_arg: String, poi_description_arg: String) -> void:
+func set_poi_details(parent_district_arg: District, poi_type_arg: Enums.POIType, poi_name_arg: String, poi_description_arg: String, what_chance: int, where_chance: int, when_chance: int) -> void:
 	parent_district = parent_district_arg
 	if poi_static:
 		poi_type = poi_static_type
@@ -187,7 +187,8 @@ func set_poi_details(parent_district_arg: District, poi_type_arg: Enums.POIType,
 		poi_type = poi_type_arg
 		poi_name = poi_name_arg
 		poi_description = poi_description_arg
-	
+		rumour_config = RumourConfig.new(what_chance, where_chance, when_chance)
+
 	poi_description += '\n'
 	poi_description += 'Owner: ' + poi_owner.get_full_name()
 	poi_description += '\n'

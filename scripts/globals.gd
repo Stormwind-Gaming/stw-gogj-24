@@ -107,10 +107,10 @@ func _load_last_names(path: String) -> void:
 func _load_poi_types(path: String) -> void:
 	var csv_data = load(path)
 	for record in csv_data.records:
-		var poi_type = poi_type_map[record["poi_name"].to_upper()]
+		var poi_type = poi_type_map[record["poi_name"].replace(" ", "_").to_upper()]
 		var district_type = []
 		for type in record["district_type"].split(","):
-			district_type.append(district_type_map[type.to_upper()])
+			district_type.append(district_type_map[type.strip_edges().to_upper()])
 		var skill_required = poi_skill_required_map[record["skill_required"].to_upper()]
 		var bonus_type = poi_bonus_map[record["bonus_type"].to_upper()]
 		poi_types.append({
@@ -122,6 +122,9 @@ func _load_poi_types(path: String) -> void:
 			"max_spawn_quantity": record["max_spawn_quantity"],
 			"skill_required": skill_required,
 			"bonus_type": bonus_type,
+			"what_chance": record["what_chance"],
+			"where_chance": record["where_chance"],
+			"when_chance": record["when_chance"]
 		})
 	
 func _load_poi_names(path: String) -> void:
@@ -290,7 +293,7 @@ var poi_type_map = {
 	"SUBMARINE_PEN": Enums.POIType.SUBMARINE_PEN,
 	"SUBMARINE PEN": Enums.POIType.SUBMARINE_PEN,
 	"CATHEDRAL": Enums.POIType.CATHEDRAL,
-	"AERODROME": Enums.POIType.AERODROME,
+	"AIR_BASE": Enums.POIType.AIR_BASE,
 	"GARRISON": Enums.POIType.GARRISON,
 	"AMMO_FACTORY": Enums.POIType.AMMO_FACTORY,
 	"AMMO FACTORY": Enums.POIType.AMMO_FACTORY,
