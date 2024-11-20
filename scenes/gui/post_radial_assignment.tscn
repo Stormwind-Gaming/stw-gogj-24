@@ -3,8 +3,8 @@
 [ext_resource type="Script" path="res://scripts/gui/post_radial_assignment.gd" id="1_2cqh1"]
 [ext_resource type="Theme" uid="uid://dexax20p2eewp" path="res://assets/themes/base_theme.tres" id="1_cgsud"]
 [ext_resource type="Texture2D" uid="uid://cymum3g0jnd7l" path="res://assets/sprites/popup_panel_background_75.png" id="2_kog7f"]
+[ext_resource type="Texture2D" uid="uid://filfa2qem5i2" path="res://assets/icons/drama-masks.svg" id="5_aueon"]
 [ext_resource type="Theme" uid="uid://dlrdh5kyv25hr" path="res://assets/themes/handwriting_label_theme.tres" id="5_b73pw"]
-[ext_resource type="Texture2D" uid="uid://clrdutcy15h4m" path="res://assets/icons/subtlety_3.svg" id="5_x6btv"]
 [ext_resource type="Texture2D" uid="uid://d313p06brjxs0" path="res://assets/icons/charm_2.svg" id="6_2mer5"]
 [ext_resource type="Texture2D" uid="uid://ctiq8sa8m5iv" path="res://assets/sprites/close_ribbon_black.png" id="7_a7quo"]
 [ext_resource type="Texture2D" uid="uid://5a71o8frvad4" path="res://assets/icons/smarts_2.svg" id="7_n8jn2"]
@@ -145,7 +145,7 @@ theme_override_constants/separation = 5
 
 [node name="TextureRect" type="TextureRect" parent="NinePatchRect/MarginContainer/LeftPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/SubtletyHBoxContainer"]
 layout_mode = 2
-texture = ExtResource("5_x6btv")
+texture = ExtResource("5_aueon")
 expand_mode = 3
 
 [node name="Label" type="Label" parent="NinePatchRect/MarginContainer/LeftPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer/SubtletyHBoxContainer"]
