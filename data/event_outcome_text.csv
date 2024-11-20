@@ -1,3 +1,4 @@
 event_category,event_title,event_text,event_button_text
-mia,Operation Compromised!,"Your agent’s luck has run out. In the shadows of [district], they were cornered by an enemy patrol. [agent] fought valiantly, but overwhelming numbers led to their capture. The enemy now holds them in custody, and it is only a matter of time before they begin interrogations.",How unfortunate
+mia,Operation Compromised!,"Our agent’s luck has run out. In the shadows of [district], they were cornered by an enemy patrol. [agent] fought valiantly, but overwhelming numbers led to their capture. The enemy now holds them in custody, and it is only a matter of time before they begin interrogations.",How unfortunate
 deceased,Agent Killed in Action,"Dark news from [district]. [agent] was intercepted during a mission and tragically killed in the line of duty. Despite their skill and bravery, the enemy's presence proved overwhelming, leaving no chance for escape.",Their sacrifice won’t be forgotten
+injured,Agent Injured in Action,Blah blah blah an agent was injured,Hope they get better soon!

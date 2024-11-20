@@ -110,7 +110,8 @@ func populate_character_lists():
 		var mini_agent_card_scene = Globals.mini_agent_card_scene.instantiate()
 		mini_agent_card_scene.on_character_list_page()
 		mini_agent_card_scene.set_character(character)
-		mini_agent_card_scene.connect("character_card_pressed", _on_character_button_pressed)
+		if not character.char_state == Enums.CharacterState.INJURED:
+			mini_agent_card_scene.connect("character_card_pressed", _on_character_button_pressed)
 		sympathiser_list_container.add_child(mini_agent_card_scene)
 
 
