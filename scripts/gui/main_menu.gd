@@ -7,6 +7,8 @@ extends Control
 @brief Button to start a new game
 """
 func _on_new_game_button_pressed() -> void:
+	var audio_tween = create_tween()
+	audio_tween.tween_property($AudioStreamPlayer2D, "volume_db", -80, 1.0).set_ease(Tween.EASE_OUT)
 	$AnimationPlayer.play("fade_out")
 	$AnimationPlayer.animation_finished.connect(_show_new_game_screen)
 
