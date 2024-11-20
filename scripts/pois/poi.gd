@@ -247,6 +247,8 @@ func _on_poi_clicked(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 		return
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			poi_popup.visible = false
+			
 			if GameController.radial_menu_open != null:
 				return
 			
