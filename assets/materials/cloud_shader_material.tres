@@ -20,5 +20,5 @@ shader_parameter/speed = 0.005
 shader_parameter/brightness = 1.08
 shader_parameter/threshold = 0.533
 shader_parameter/fluffiness = 0.0
-shader_parameter/alpha_multiplier = 0.7
+shader_parameter/alpha_multiplier = 0.0
 shader_parameter/noiseTexture = SubResource("NoiseTexture2D_k0q4y")

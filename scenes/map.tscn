@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://c7y1ejxri1bfk"]
+[gd_scene load_steps=21 format=3 uid="uid://c7y1ejxri1bfk"]
 
 [ext_resource type="Script" path="res://scripts/map.gd" id="1_ppup2"]
 [ext_resource type="Texture2D" uid="uid://dr1v7la7ll1bf" path="res://assets/new_costal_map_lg.png" id="2_2sl0p"]
@@ -22,6 +22,10 @@ orientation = 2
 
 [sub_resource type="Animation" id="Animation_aor1t"]
 length = 0.001
+
+[sub_resource type="Animation" id="Animation_6037l"]
+resource_name = "fade_in"
+step = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -29,15 +33,15 @@ tracks/0/path = NodePath(".:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 1)]
+"values": [Color(0, 0, 0, 1), Color(1, 1, 1, 1)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath(".:visible")
+tracks/1/path = NodePath("CanvasLayer2:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -49,38 +53,62 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("CanvasLayer2:visible")
+tracks/2/path = NodePath("Map/map_background:modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(1, 1, 1, 1)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("PauseMenuCanvasLayer:visible")
+tracks/3/path = NodePath("Clouds:material:shader_parameter/alpha_multiplier")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.7]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Map/map_background:modulate")
+tracks/4/path = NodePath("Map:modulate")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 1)]
+"values": [Color(0, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("CanvasLayer2/Footer:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("CanvasLayer2/Header:modulate")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_wn1g1"]
@@ -151,18 +179,22 @@ tracks/4/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_42scy"]
 _data = {
 "RESET": SubResource("Animation_aor1t"),
+"fade_in": SubResource("Animation_6037l"),
 "fade_out": SubResource("Animation_wn1g1")
 }
 
 [node name="Main" type="Node2D" node_paths=PackedStringArray("pause_menu", "footer", "stats_panel")]
+modulate = Color(0, 0, 0, 1)
 script = ExtResource("1_ppup2")
 pause_menu = NodePath("PauseMenuCanvasLayer/GamePauseMenu")
 footer = NodePath("CanvasLayer2/Footer")
 stats_panel = NodePath("CanvasLayer2/PanelContainer")
 
 [node name="Map" type="Node2D" parent="."]
+modulate = Color(0, 0, 0, 1)
 
 [node name="map_background" type="Sprite2D" parent="Map"]
+modulate = Color(0, 0, 0, 1)
 position = Vector2(800, 450)
 scale = Vector2(1.5, 1.5)
 texture = ExtResource("2_2sl0p")
@@ -202,8 +234,10 @@ mesh = SubResource("PlaneMesh_r6h60")
 [node name="CanvasLayer2" type="CanvasLayer" parent="."]
 
 [node name="Footer" parent="CanvasLayer2" instance=ExtResource("11_4nem0")]
+modulate = Color(0, 0, 0, 1)
 
 [node name="Header" parent="CanvasLayer2" instance=ExtResource("12_gdl2t")]
+modulate = Color(0, 0, 0, 1)
 
 [node name="PanelContainer" parent="CanvasLayer2" instance=ExtResource("11_spnga")]
 visible = false

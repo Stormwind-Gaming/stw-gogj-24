@@ -18,7 +18,7 @@ corner_radius_bottom_left = 5
 [node name="DistrictPopup" type="Window" node_paths=PackedStringArray("title_label", "text_label", "heat_label", "sympathy_label")]
 auto_translate_mode = 1
 transparent_bg = true
-size = Vector2i(200, 200)
+size = Vector2i(200, 220)
 unresizable = true
 borderless = true
 transparent = true

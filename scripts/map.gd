@@ -29,6 +29,9 @@ Initializes the map, districts, and starting agents.
 """
 func _ready() -> void:
 	randomize()
+	$AnimationPlayer.play("fade_in")
+	#TODO: # randomise cloud noise (currently disabled due to jumping when scene loads)
+	$Clouds.material.get_shader_parameter("noiseTexture").noise.seed = randi()
 	GameController.set_town_name(Globals.town_names[randi() % Globals.town_names.size()])
 	EventBus.end_turn_initiated.connect(_clear_focus)
 	EventBus.open_new_window.connect(_disable_interaction)
