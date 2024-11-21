@@ -22,7 +22,7 @@ mia_list_container = NodePath("NinePatchRect/MarginContainer/TabContainer/MIA/Ma
 known_character_list_container = NodePath("NinePatchRect/MarginContainer/TabContainer/Known Characters/MarginContainer/VBoxContainer/ScrollContainer/KnownGridContainer")
 unknown_character_list_container = NodePath("NinePatchRect/MarginContainer/TabContainer/Known Characters/MarginContainer/VBoxContainer/ScrollContainer2/UnknownGridContainer")
 sympathiser_list_container = NodePath("NinePatchRect/MarginContainer/TabContainer/Sympathisers/MarginContainer/HBoxContainer/VBoxContainer2/ScrollContainer/SympathiserContainer")
-agent_list_container = NodePath("NinePatchRect/MarginContainer/TabContainer/Sympathisers/MarginContainer/HBoxContainer/VBoxContainer/AgentVBoxContainer")
+agent_list_container = NodePath("NinePatchRect/MarginContainer/TabContainer/Sympathisers/MarginContainer/HBoxContainer/VBoxContainer/ScrollContainer2/AgentVBoxContainer")
 agents_label = NodePath("NinePatchRect/MarginContainer/TabContainer/Sympathisers/MarginContainer/HBoxContainer/VBoxContainer/Label")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
@@ -57,10 +57,10 @@ metadata/_tab_index = 0
 
 [node name="MarginContainer" type="MarginContainer" parent="NinePatchRect/MarginContainer/TabContainer/Sympathisers"]
 layout_mode = 2
-theme_override_constants/margin_left = 10
+theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 30
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 20
 
 [node name="HBoxContainer" type="HBoxContainer" parent="NinePatchRect/MarginContainer/TabContainer/Sympathisers/MarginContainer"]
 layout_mode = 2
@@ -73,13 +73,17 @@ size_flags_horizontal = 3
 layout_mode = 2
 text = "Agents"
 
-[node name="AgentVBoxContainer" type="VBoxContainer" parent="NinePatchRect/MarginContainer/TabContainer/Sympathisers/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="ScrollContainer2" type="ScrollContainer" parent="NinePatchRect/MarginContainer/TabContainer/Sympathisers/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="AgentVBoxContainer" type="VBoxContainer" parent="NinePatchRect/MarginContainer/TabContainer/Sympathisers/MarginContainer/HBoxContainer/VBoxContainer/ScrollContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="VSeparator" type="VSeparator" parent="NinePatchRect/MarginContainer/TabContainer/Sympathisers/MarginContainer/HBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 0
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="NinePatchRect/MarginContainer/TabContainer/Sympathisers/MarginContainer/HBoxContainer"]
 layout_mode = 2

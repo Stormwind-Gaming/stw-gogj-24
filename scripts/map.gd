@@ -234,10 +234,11 @@ func _setup_agents() -> void:
 	population.erase(agent2)
 	var agent3 = population[randi() % population.size()]
 	
-	agent1.char_sympathy = 80
+	agent1.char_sympathy = randi_range(80, 100)
 	agent1.char_recruitment_state = Enums.CharacterRecruitmentState.SYMPATHISER_RECRUITED
-	agent2.char_sympathy = 80
+	agent2.char_sympathy = randi_range(80, 100)
 	agent2.char_recruitment_state = Enums.CharacterRecruitmentState.SYMPATHISER_RECRUITED
-	agent3.char_sympathy = 90
+	agent3.char_sympathy = randi_range(80, 100)
+	agent3.char_recruitment_state = Enums.CharacterRecruitmentState.SYMPATHISER_RECRUITED
 
 	agent1.char_state = Enums.CharacterState.INJURED
