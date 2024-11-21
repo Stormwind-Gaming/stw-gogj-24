@@ -142,6 +142,22 @@ func action_duration(base_duration: int) -> int:
 
 	return base_duration
 
+func intel_added(base_intel: int) -> int:
+	print("--- INTEL ADDED ---")
+	print("Base intel: ", base_intel)
+
+	for modifier in modifiers:
+		print("Modifier: ", modifier.modifier_name, " ", base_intel, " + ", modifier.modifier_intel_spawn_flat)
+		base_intel += modifier.modifier_intel_spawn_flat
+
+	for modifier in modifiers:
+		print("Modifier: ", modifier.modifier_name, " ", base_intel, " * ", modifier.modifier_intel_spawn_multiplier)
+		base_intel *= modifier.modifier_intel_spawn_multiplier
+
+	print("--- END INTEL ADDED ---")
+
+	return base_intel
+
 func _get_all_modifiers() -> Array:
 	return GlobalRegistry.modifiers.get_all_items().filter(func(_modifier: Modifier) -> bool:
 		if not _modifier.active:

@@ -27,10 +27,11 @@ func _process_action() -> Array[TurnLog]:
 		log_message = "Succeeded " + stat_check + " check..."
 		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
 
-		var rumour: Rumour = IntelFactory.create_rumour(poi.rumour_config)
+		for i in range(statistic_check.intel_added(1)):
+			var rumour: Rumour = IntelFactory.create_rumour(poi.rumour_config)
 
-		log_message = "Discovered a %s intel type." % Globals.get_intel_type_string(rumour.rumour_type)
-		logs.append(TurnLog.new(log_message, Enums.LogType.SUCCESS))
+			log_message = "Discovered a %s intel type." % Globals.get_intel_type_string(rumour.rumour_type)
+			logs.append(TurnLog.new(log_message, Enums.LogType.SUCCESS))
 
 	else:
 		log_message = "Failed " + stat_check + " check..."
