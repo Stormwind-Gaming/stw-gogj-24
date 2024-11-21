@@ -192,7 +192,7 @@ func _ready() -> void:
 				
 
 		# set the poi details
-		poi.set_poi_details(self, selected_poi_type["poi_type"], "%s - %s" % [poi_name, selected_poi_type["poi_name"]], selected_poi_type["poi_description"], selected_poi_type["what_chance"], selected_poi_type["where_chance"], selected_poi_type["when_chance"])
+		poi.set_poi_details(self, selected_poi_type["poi_type"], "%s - %s" % [poi_name, selected_poi_type["poi_name"]], selected_poi_type["poi_short_description"], selected_poi_type["what_chance"], selected_poi_type["where_chance"], selected_poi_type["when_chance"])
 
 """
 @brief Called every frame to update district state.

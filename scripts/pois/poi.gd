@@ -30,6 +30,11 @@ class_name PointOfInterest
 @export var poi_static_name: String = ""
 
 """
+@brief Predefined short description for static POIs
+"""
+@export var poi_static_short_description: String = ""
+
+"""
 @brief Predefined description for static POIs
 """
 @export_multiline var poi_static_description: String = ""
@@ -68,6 +73,11 @@ var poi_type: Enums.POIType
 @brief Name of this POI
 """
 var poi_name: String = ""
+
+"""
+@brief Short description of this POI
+"""
+var poi_short_description: String = ""
 
 """
 @brief Description of this POI

@@ -119,6 +119,7 @@ func _load_poi_types(path: String) -> void:
 		poi_types.append({
 			"poi_type": poi_type,
 			"poi_name": record["poi_name"],
+			"poi_short_description": record["poi_short_description"],
 			"poi_description": record["poi_description"],
 			"district_type": district_type,
 			"spawn_chance": record["spawn_chance"],
