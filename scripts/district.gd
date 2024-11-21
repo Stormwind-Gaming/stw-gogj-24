@@ -348,19 +348,28 @@ func _setup_modifiers() -> void:
 
 			# --- There is no base modifier for residential districts ---
 
-			var _bonus_residential_district_modifier: Modifier = Modifier.new({
+			# First create the variable
+			var _bonus_residential_district_modifier: Modifier
+			
+			# Define the closure separately
+			var residential_closure = func(mod: Modifier):
+				var is_active = sympathy > Constants.RESIDENTIAL_DISTRICT_BONUS_BREAKPOINT
+				if is_active and not mod.active:
+					EventBus.create_new_event_panel.emit(Enums.EventOutcomeType.EVENT_RESIDENTIAL_MILESTONE, [] as Array[Character], self.pois[0])
+				return is_active
+			
+			# Then create the modifier
+			_bonus_residential_district_modifier = Modifier.new({
 				"scope": Enums.ModifierScope.WORLD,
 				"district": self,
 				"modifier_name": "Residential District Modifier",
 				"active": false,
-				"modifier_active_closure": func():
-					var is_active = sympathy > Constants.RESIDENTIAL_DISTRICT_BONUS_BREAKPOINT
-					if is_active:
-						EventBus.create_new_event_panel.emit(Enums.EventOutcomeType.EVENT_RESIDENTIAL_MILESTONE, [] as Array[Character], self.pois[0])
-					return is_active
 			}, {
 				"modifier_sympathy_multiplier": Constants.RESIDENTIAL_DISTRICT_MODIFIER_HIGH_SYMPATHY_VALUE
 			})
+
+			# Set the closure to the modifier
+			_bonus_residential_district_modifier.modifier_active_closure = residential_closure.bind(_bonus_residential_district_modifier)
 		
 		# Port district modifiers
 		Enums.DistrictType.PORT:
