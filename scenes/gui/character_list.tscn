@@ -60,7 +60,7 @@ layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 20
+theme_override_constants/margin_bottom = 30
 
 [node name="HBoxContainer" type="HBoxContainer" parent="NinePatchRect/MarginContainer/TabContainer/Sympathisers/MarginContainer"]
 layout_mode = 2

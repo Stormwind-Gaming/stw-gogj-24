@@ -3,7 +3,7 @@
 [ext_resource type="Theme" uid="uid://dexax20p2eewp" path="res://assets/themes/base_theme.tres" id="1_q7e31"]
 [ext_resource type="Script" path="res://scripts/gui/event_panel.gd" id="2_qjty7"]
 [ext_resource type="Texture2D" uid="uid://bl48i75s7giwq" path="res://assets/sprites/events/event_popup_base.png" id="2_vgsex"]
-[ext_resource type="Texture2D" uid="uid://2olyv7qtfanj" path="res://assets/sprites/events/event_kia.png" id="3_qaba4"]
+[ext_resource type="Texture2D" path="res://assets/sprites/events/event_kia.png" id="3_qaba4"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sfl1o"]
 texture = ExtResource("2_vgsex")
@@ -92,6 +92,7 @@ theme_override_constants/margin_bottom = 10
 
 [node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
+theme_override_font_sizes/normal_font_size = 15
 text = "Your agent’s luck has run out. In the shadows of [district name], they were cornered by an enemy patrol. [agent] fought valiantly, but overwhelming numbers led to their capture. The enemy now holds them in custody, and it is only a matter of time before they begin interrogations."
 fit_content = true
 

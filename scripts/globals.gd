@@ -264,12 +264,15 @@ func get_next_profile_image(nationality: Enums.CharacterNationality, gender: Enu
 @param severity The severity of the world event to get the text for
 @returns The text for the world event
 """
-func get_world_event_text(severity: Enums.WorldEventSeverity) -> Dictionary:
+func get_world_event_text(severity: Enums.WorldEventSeverity):
 	var world_event_text_copy = world_event_text.duplicate()
 	var filtered_world_event_text = world_event_text_copy.filter(
 		func(record):
 			return record.event_severity == severity
 	)
+	# If no text is found, return null to prevent error
+	if filtered_world_event_text.size() == 0:
+		return null
 	return filtered_world_event_text[randi() % filtered_world_event_text.size()]
 
 #|==============================|
@@ -746,12 +749,12 @@ var event_images = {
 	Enums.EventOutcomeType.NEW_SYMPATHISER: preload("res://assets/sprites/events/event_new_sympathiser.png"),
 	Enums.EventOutcomeType.HEAT_BREAKPOINT_MEDIUM: preload("res://assets/sprites/events/event_heat_breakpoint_medium.png"),
 	Enums.EventOutcomeType.HEAT_BREAKPOINT_HIGH: preload("res://assets/sprites/events/event_heat_breakpoint_high.png"),
-	Enums.EventOutcomeType.EVENT_CIVIC_MILESTONE: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add civic milestone image
-	Enums.EventOutcomeType.EVENT_INDUSTRIAL_MILESTONE: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add industrial milestone image
-	Enums.EventOutcomeType.EVENT_RESIDENTIAL_MILESTONE: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add residential milestone image
-	Enums.EventOutcomeType.EVENT_PORT_MILESTONE: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add port milestone image
-	Enums.EventOutcomeType.EVENT_MILITARY_MILESTONE: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add military milestone image
-	Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_LOW: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add sympathy breakpoint image
-	Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_MEDIUM: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add sympathy breakpoint image
-	Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_HIGH: preload("res://assets/sprites/events/event_blank.png") # TODO: Add sympathy breakpoint image
+	Enums.EventOutcomeType.EVENT_CIVIC_MILESTONE: preload("res://assets/sprites/events/event_civic_milestone.png"),
+	Enums.EventOutcomeType.EVENT_INDUSTRIAL_MILESTONE: preload("res://assets/sprites/events/event_industrial_milestone.png"),
+	Enums.EventOutcomeType.EVENT_RESIDENTIAL_MILESTONE: preload("res://assets/sprites/events/event_residential_milestone.png"),
+	Enums.EventOutcomeType.EVENT_PORT_MILESTONE: preload("res://assets/sprites/events/event_port_milestone.png"),
+	Enums.EventOutcomeType.EVENT_MILITARY_MILESTONE: preload("res://assets/sprites/events/event_military_milestone.png"),
+	Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_LOW: preload("res://assets/sprites/events/sympathy_breakpoint_low.png"),
+	Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_MEDIUM: preload("res://assets/sprites/events/sympathy_breakpoint_medium.png"),
+	Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_HIGH: preload("res://assets/sprites/events/sympathy_breakpoint_high.png")
 }

@@ -55,6 +55,10 @@ static func create_world_event(severity: Enums.WorldEventSeverity) -> WorldEvent
 		pass
 
 	var event_text = Globals.get_world_event_text(severity)
+	# check event text as can return null if no event text found
+	if not event_text:
+		push_error("No world event text found for severity: ", severity)
+		return
 	var event: WorldEvent
 	var config: WorldEventConfig = WorldEventConfig.new(event_text)
 
