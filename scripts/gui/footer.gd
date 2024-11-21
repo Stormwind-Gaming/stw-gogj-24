@@ -98,8 +98,8 @@ Creates and displays the log list if not already visible.
 func _on_show_log_list_button_pressed(end_turn_button: bool = false):
 	# Instance the log list scene
 	var log_list_instance = Globals.log_list_scene.instantiate()
-	if end_turn_button:
-		log_list_instance.is_end_turn_log()
+	# if end_turn_button:
+	# 	log_list_instance.is_end_turn_log()
 	
 	# Add the instance to the scene tree
 	EventBus.open_new_window.emit(log_list_instance)

@@ -20,6 +20,7 @@ var actions_list_action_scene = preload("res://scenes/gui/actions_list_action.ts
 var plan_scene = preload("res://scenes/gui/plan.tscn")
 var event_panel_scene = preload("res://scenes/gui/event_panel.tscn")
 var action_scene = preload("res://scenes/gui/action.tscn")
+var day_log_scene = preload("res://scenes/gui/day_log.tscn")
 
 #|==============================|
 #|       Data Sources          |
@@ -119,6 +120,7 @@ func _load_poi_types(path: String) -> void:
 		poi_types.append({
 			"poi_type": poi_type,
 			"poi_name": record["poi_name"],
+			"poi_short_description": record["poi_short_description"],
 			"poi_description": record["poi_description"],
 			"district_type": district_type,
 			"spawn_chance": record["spawn_chance"],
@@ -621,6 +623,36 @@ func get_district_type_string(district_type: Enums.DistrictType) -> String:
 			return "Port"
 		Enums.DistrictType.MILITARY:
 			return "Military"
+		_:
+			return "Unknown"
+
+func get_district_type_bonus_string(district_type: Enums.DistrictType) -> String:
+	match district_type:
+		Enums.DistrictType.CIVIC:
+			return "+1 to all Subtlety actions"
+		Enums.DistrictType.INDUSTRIAL:
+			return "+1 to all Smarts actions"
+		Enums.DistrictType.RESIDENTIAL:
+			return "+25% to all Sympathy gains"
+		Enums.DistrictType.PORT:
+			return "-25% to all Heat gains"
+		Enums.DistrictType.MILITARY:
+			return "+1 to all Charm actions"
+		_:
+			return "Unknown"
+
+func get_district_type_base_effect_string(district_type: Enums.DistrictType) -> String:
+	match district_type:
+		Enums.DistrictType.CIVIC:
+			return "+25% to all Heat gains"
+		Enums.DistrictType.INDUSTRIAL:
+			return "+10% injury chance"
+		Enums.DistrictType.RESIDENTIAL:
+			return "+10% Subtlety failure chance"
+		Enums.DistrictType.PORT:
+			return "+1 day to all action durations"
+		Enums.DistrictType.MILITARY:
+			return "-50% to all Sympathy gains."
 		_:
 			return "Unknown"
 

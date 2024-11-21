@@ -53,34 +53,51 @@ Optionally offsets the date by the given number of days.
 @param days_offset Optional number of days to offset the date by (default: 0)
 @return A formatted string representation of the current/offset date.
 """
-func get_date_string(days_offset: int = 0) -> String:
+func get_date_string(days_offset: int = 0, show_year: bool = true) -> String:
     if not initialised:
         _setup_calendar()
         initialised = true
-        
+
     var offset_day = day
     var offset_month = month
     var offset_year = year
-    
-    # Apply the offset if non-zero
-    for i in range(days_offset):
-        offset_day += 1
-        
-        # Check if we need to increment month
-        var days_in_current_month = DAYS_IN_MONTHS[offset_month]
-        if offset_month == 2 and is_leap_year(offset_year):
-            days_in_current_month = 29
+
+    if days_offset > 0:
+        for i in range(days_offset):
+            offset_day += 1
             
-        if offset_day > days_in_current_month:
-            offset_day = 1
-            offset_month += 1
-            
-            # Check if we need to increment year
-            if offset_month > 12:
-                offset_month = 1
-                offset_year += 1
+            # Check if we need to increment the month
+            var days_in_current_month = DAYS_IN_MONTHS[offset_month]
+            if offset_month == 2 and is_leap_year(offset_year):
+                days_in_current_month = 29
                 
-    return "%02d %s %04d" % [offset_day, month_names[offset_month - 1], offset_year]
+            if offset_day > days_in_current_month:
+                offset_day = 1
+                offset_month += 1
+                
+                # Check if we need to increment the year
+                if offset_month > 12:
+                    offset_month = 1
+                    offset_year += 1
+    elif days_offset < 0:
+        for i in range(-days_offset):
+            offset_day -= 1
+            
+            # Check if we need to decrement the month
+            if offset_day < 1:
+                offset_month -= 1
+                if offset_month < 1:
+                    offset_month = 12
+                    offset_year -= 1
+                    
+                offset_day = DAYS_IN_MONTHS[offset_month]
+                if offset_month == 2 and is_leap_year(offset_year):
+                    offset_day = 29
+
+    if show_year:
+        return "%02d %s %04d" % [offset_day, month_names[offset_month - 1], offset_year]
+    else:
+        return "%02d %s" % [offset_day, month_names[offset_month - 1]]
 
 """
 @brief Generates a random birthdate for character creation.

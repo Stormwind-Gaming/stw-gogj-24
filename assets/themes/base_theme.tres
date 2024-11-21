@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=14 format=3 uid="uid://dexax20p2eewp"]
+[gd_resource type="Theme" load_steps=16 format=3 uid="uid://dexax20p2eewp"]
 
 [ext_resource type="FontFile" uid="uid://djwj10bhtdik" path="res://assets/fonts/veteran typewriter.ttf" id="1_lyhgf"]
 [ext_resource type="StyleBox" uid="uid://co18tu22sbler" path="res://assets/textures/folder_tab_box_texture_hover.tres" id="2_m063c"]
@@ -7,7 +7,9 @@
 [ext_resource type="StyleBox" uid="uid://d1vg5m2df7td2" path="res://assets/textures/folder_tab_box_texture.tres" id="3_in4tj"]
 [ext_resource type="Texture2D" uid="uid://455da6nc8v33" path="res://assets/icons/ticked.png" id="4_43qrq"]
 [ext_resource type="Texture2D" uid="uid://dqp5w62mpq7pt" path="res://assets/icons/unticked.png" id="5_defve"]
+[ext_resource type="Texture2D" uid="uid://ci1j5kbaiq0u5" path="res://assets/icons/arrow-left-bold-box.png" id="6_6bif1"]
 [ext_resource type="StyleBox" uid="uid://b4hyjh8fafst3" path="res://assets/textures/folder_tab_box_texture_selected.tres" id="6_h240h"]
+[ext_resource type="Texture2D" uid="uid://bbur8c3oj6230" path="res://assets/icons/arrow-right-bold-box.png" id="7_7n547"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cfsho"]
 content_margin_left = 10.0
@@ -57,6 +59,10 @@ RichTextLabel/fonts/normal_font = ExtResource("1_lyhgf")
 TabContainer/colors/font_selected_color = Color(1, 1, 1, 1)
 TabContainer/colors/font_unselected_color = Color(0, 0, 0, 1)
 TabContainer/fonts/font = ExtResource("1_lyhgf")
+TabContainer/icons/decrement = ExtResource("6_6bif1")
+TabContainer/icons/decrement_highlight = ExtResource("6_6bif1")
+TabContainer/icons/increment = ExtResource("7_7n547")
+TabContainer/icons/increment_highlight = ExtResource("7_7n547")
 TabContainer/styles/panel = SubResource("StyleBoxEmpty_kedib")
 TabContainer/styles/tab_focus = SubResource("StyleBoxEmpty_31g3q")
 TabContainer/styles/tab_hovered = ExtResource("2_m063c")
