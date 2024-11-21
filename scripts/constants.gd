@@ -412,6 +412,52 @@ var CHARM_CHECK_MIN_CHANCE: float = 20.0
 """
 var CHARM_CHECK_MAX_CHANCE: float = 80.0
 
+
+#|==============================|
+#| World Event Durations       |
+#|==============================|
+
+"""
+@brief Duration of minor secret police world events (turns)
+"""
+var WORLD_EVENT_MINOR_SECRET_POLICE_DURATION: int = 2
+
+"""
+@brief Heat change from minor secret police world events
+"""
+var WORLD_EVENT_MINOR_SECRET_POLICE_HEAT_CHANGE: int = 5
+
+"""
+@brief Action duration increase from minor secret police world events
+"""
+var WORLD_EVENT_MINOR_SECRET_POLICE_ACTION_DURATION: int = 1
+
+"""
+@brief Duration of minor airbase world events (turns)
+"""
+var WORLD_EVENT_MINOR_AIRBASE_DURATION: int = 7
+
+"""
+@brief Heat change from minor airbase world events
+"""
+var WORLD_EVENT_MINOR_AIRBASE_HEAT_CHANGE: int = 20
+
+"""
+@brief Intel spawn increase from minor airbase world events
+"""
+var WORLD_EVENT_MINOR_AIRBASE_INTEL_SPAWN_INCREASE: int = 1
+
+"""
+@brief Duration of minor increased patrols world events (turns)
+"""
+var WORLD_EVENT_MINOR_INCREASED_PATROLS_DURATION: int = 5
+
+"""
+@brief Heat change from minor increased patrols world events
+"""
+var WORLD_EVENT_MINOR_INCREASED_PATROLS_HEAT_CHANGE: int = 20
+
+
 func _ready():
 	config = ConfigLoader.new()
 	add_child(config)
@@ -496,3 +542,11 @@ func _on_constants_loaded():
 	SMARTS_CHECK_MAX_CHANCE = config.get_value("SMARTS_CHECK_MAX_CHANCE", SMARTS_CHECK_MAX_CHANCE)
 	CHARM_CHECK_MIN_CHANCE = config.get_value("CHARM_CHECK_MIN_CHANCE", CHARM_CHECK_MIN_CHANCE)
 	CHARM_CHECK_MAX_CHANCE = config.get_value("CHARM_CHECK_MAX_CHANCE", CHARM_CHECK_MAX_CHANCE)
+
+	# World Event Durations
+	WORLD_EVENT_MINOR_SECRET_POLICE_DURATION = config.get_value("WORLD_EVENT_MINOR_SECRET_POLICE_DURATION", WORLD_EVENT_MINOR_SECRET_POLICE_DURATION)
+	WORLD_EVENT_MINOR_SECRET_POLICE_HEAT_CHANGE = config.get_value("WORLD_EVENT_MINOR_SECRET_POLICE_HEAT_CHANGE", WORLD_EVENT_MINOR_SECRET_POLICE_HEAT_CHANGE)
+	WORLD_EVENT_MINOR_AIRBASE_DURATION = config.get_value("WORLD_EVENT_MINOR_AIRBASE_DURATION", WORLD_EVENT_MINOR_AIRBASE_DURATION)
+	WORLD_EVENT_MINOR_AIRBASE_HEAT_CHANGE = config.get_value("WORLD_EVENT_MINOR_AIRBASE_HEAT_CHANGE", WORLD_EVENT_MINOR_AIRBASE_HEAT_CHANGE)
+	WORLD_EVENT_MINOR_INCREASED_PATROLS_DURATION = config.get_value("WORLD_EVENT_MINOR_INCREASED_PATROLS_DURATION", WORLD_EVENT_MINOR_INCREASED_PATROLS_DURATION)
+	WORLD_EVENT_MINOR_INCREASED_PATROLS_HEAT_CHANGE = config.get_value("WORLD_EVENT_MINOR_INCREASED_PATROLS_HEAT_CHANGE", WORLD_EVENT_MINOR_INCREASED_PATROLS_HEAT_CHANGE)

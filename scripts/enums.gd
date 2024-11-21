@@ -270,3 +270,12 @@ enum WorldEventSeverity {
 	MAJOR,
 	ENDGAME
 }
+
+"""
+@brief Types of world events
+"""
+enum WorldEventType {
+	MINOR_INCREASED_PATROLS,
+	MINOR_SECRET_POLICE,
+	MINOR_AIRBASE,
+}

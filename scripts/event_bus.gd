@@ -169,8 +169,10 @@ signal close_radial_menu()
 """
 signal world_event_created(world_event: WorldEvent)
 
-
-
+"""
+@brief Emitted when a world-event ends
+"""
+signal world_event_ended(world_event: WorldEvent)
 
 
 #|==============================|

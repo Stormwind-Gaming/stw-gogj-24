@@ -37,6 +37,7 @@ var load_csvs = {
 	"rumour_text": "res://data/rumour_text.csv",
 	"items": "res://data/items.csv",
 	"event_outcome_text": "res://data/event_outcome_text.csv",
+	"world_event_text": "res://data/world_event_text.csv",
 }
 
 #|==============================|
@@ -53,7 +54,7 @@ var poi_types = []
 var poi_names = []
 var rumour_text = []
 var event_outcome_text = {}
-
+var world_event_text = []
 #|==============================|
 #|      Data Loading           |
 #|==============================|
@@ -70,6 +71,7 @@ func _ready() -> void:
 	_load_poi_names(load_csvs["poi_names"])
 	_load_rumour_text(load_csvs["rumour_text"])
 	_load_event_outcome_text(load_csvs["event_outcome_text"])
+	_load_world_event_text(load_csvs["world_event_text"])
 
 """
 @brief Loads town names from CSV
@@ -165,6 +167,19 @@ func _load_event_outcome_text(path: String) -> void:
 			"text": text,
 			"button_text": button_text
 		})
+
+func _load_world_event_text(path: String) -> void:
+	var csv_data = load(path)
+	for record in csv_data.records:
+
+		world_event_text.append({
+			"event_severity": world_event_category_map[record["event_severity"].to_upper().strip_edges()],
+			"event_type": world_event_type_map[record["event_type"].to_upper().strip_edges()],
+			"event_text": record["event_text"].strip_edges(),
+			"effect_text": record["effect_text"].strip_edges(),
+			"event_end_text": record["event_end_text"].strip_edges()
+		})
+		
 #|==============================|
 #|      Data Retrieval         |
 #|==============================|
@@ -174,7 +189,7 @@ func _load_event_outcome_text(path: String) -> void:
 @returns Array of last names
 """
 func get_all_last_names(nationality: Enums.CharacterNationality) -> Array:
-	return last_names.filter(func(name): return name.nationality == nationality)
+	return last_names.filter(func(char_name): return char_name.nationality == nationality)
 
 """
 @brief Retrieves all first names for a given gender and nationality
@@ -183,7 +198,7 @@ func get_all_last_names(nationality: Enums.CharacterNationality) -> Array:
 @returns Array of first names
 """
 func get_all_first_names(gender: Enums.CharacterGender, nationality: Enums.CharacterNationality) -> Array:
-	return first_names.filter(func(name): return name.gender == gender and name.nationality == nationality)
+	return first_names.filter(func(char_name): return char_name.gender == gender and char_name.nationality == nationality)
 
 """
 @brief Gets random rumour data of specified type
@@ -243,6 +258,19 @@ func get_next_profile_image(nationality: Enums.CharacterNationality, gender: Enu
 	
 	# Return and remove the last image from the pool
 	return profile_images.pools[pool_key].pop_back()
+
+"""
+@brief Gets the text for a world event of a given severity
+@param severity The severity of the world event to get the text for
+@returns The text for the world event
+"""
+func get_world_event_text(severity: Enums.WorldEventSeverity) -> Dictionary:
+	var world_event_text_copy = world_event_text.duplicate()
+	var filtered_world_event_text = world_event_text_copy.filter(
+		func(record):
+			return record.event_severity == severity
+	)
+	return filtered_world_event_text[randi() % filtered_world_event_text.size()]
 
 #|==============================|
 #|      Enum Mappings          |
@@ -382,6 +410,18 @@ var event_outcome_category_map = {
 	"SYMPATHY_BREAKPOINT_LOW": Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_LOW,
 	"SYMPATHY_BREAKPOINT_MEDIUM": Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_MEDIUM,
 	"SYMPATHY_BREAKPOINT_HIGH": Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_HIGH
+}
+
+var world_event_category_map = {
+	"MINOR": Enums.WorldEventSeverity.MINOR,
+	"SIGNIFICANT": Enums.WorldEventSeverity.SIGNIFICANT,
+	"MAJOR": Enums.WorldEventSeverity.MAJOR
+}
+
+var world_event_type_map = {
+	"MINOR_INCREASED_PATROLS": Enums.WorldEventType.MINOR_INCREASED_PATROLS,
+	"MINOR_SECRET_POLICE": Enums.WorldEventType.MINOR_SECRET_POLICE,
+	"MINOR_AIRBASE": Enums.WorldEventType.MINOR_AIRBASE,
 }
 
 #|==============================|
@@ -706,12 +746,12 @@ var event_images = {
 	Enums.EventOutcomeType.NEW_SYMPATHISER: preload("res://assets/sprites/events/event_new_sympathiser.png"),
 	Enums.EventOutcomeType.HEAT_BREAKPOINT_MEDIUM: preload("res://assets/sprites/events/event_heat_breakpoint_medium.png"),
 	Enums.EventOutcomeType.HEAT_BREAKPOINT_HIGH: preload("res://assets/sprites/events/event_heat_breakpoint_high.png"),
-	Enums.EventOutcomeType.EVENT_CIVIC_MILESTONE: preload("res://assets/sprites/events/event_blank.png"), #TODO: Add civic milestone image
-	Enums.EventOutcomeType.EVENT_INDUSTRIAL_MILESTONE: preload("res://assets/sprites/events/event_blank.png"), #TODO: Add industrial milestone image
-	Enums.EventOutcomeType.EVENT_RESIDENTIAL_MILESTONE: preload("res://assets/sprites/events/event_blank.png"), #TODO: Add residential milestone image
-	Enums.EventOutcomeType.EVENT_PORT_MILESTONE: preload("res://assets/sprites/events/event_blank.png"), #TODO: Add port milestone image
-	Enums.EventOutcomeType.EVENT_MILITARY_MILESTONE: preload("res://assets/sprites/events/event_blank.png"), #TODO: Add military milestone image
-	Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_LOW: preload("res://assets/sprites/events/event_blank.png"), #TODO: Add sympathy breakpoint image
-	Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_MEDIUM: preload("res://assets/sprites/events/event_blank.png"), #TODO: Add sympathy breakpoint image
-	Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_HIGH: preload("res://assets/sprites/events/event_blank.png") #TODO: Add sympathy breakpoint image
+	Enums.EventOutcomeType.EVENT_CIVIC_MILESTONE: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add civic milestone image
+	Enums.EventOutcomeType.EVENT_INDUSTRIAL_MILESTONE: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add industrial milestone image
+	Enums.EventOutcomeType.EVENT_RESIDENTIAL_MILESTONE: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add residential milestone image
+	Enums.EventOutcomeType.EVENT_PORT_MILESTONE: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add port milestone image
+	Enums.EventOutcomeType.EVENT_MILITARY_MILESTONE: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add military milestone image
+	Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_LOW: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add sympathy breakpoint image
+	Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_MEDIUM: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add sympathy breakpoint image
+	Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_HIGH: preload("res://assets/sprites/events/event_blank.png") # TODO: Add sympathy breakpoint image
 }
