@@ -265,7 +265,8 @@ func get_next_profile_image(nationality: Enums.CharacterNationality, gender: Enu
 @returns The text for the world event
 """
 func get_world_event_text(severity: Enums.WorldEventSeverity) -> Dictionary:
-	var filtered_world_event_text = world_event_text.filter(
+	var world_event_text_copy = world_event_text.duplicate()
+	var filtered_world_event_text = world_event_text_copy.filter(
 		func(record):
 			return record.event_severity == severity
 	)
@@ -742,9 +743,9 @@ var event_images = {
 	Enums.EventOutcomeType.NEW_SYMPATHISER: preload("res://assets/sprites/events/event_new_sympathiser.png"),
 	Enums.EventOutcomeType.HEAT_BREAKPOINT_MEDIUM: preload("res://assets/sprites/events/event_heat_breakpoint_medium.png"),
 	Enums.EventOutcomeType.HEAT_BREAKPOINT_HIGH: preload("res://assets/sprites/events/event_heat_breakpoint_high.png"),
-	Enums.EventOutcomeType.EVENT_CIVIC_MILESTONE: preload("res://assets/sprites/events/event_blank.png"), #TODO: Add civic milestone image
-	Enums.EventOutcomeType.EVENT_INDUSTRIAL_MILESTONE: preload("res://assets/sprites/events/event_blank.png"), #TODO: Add industrial milestone image
-	Enums.EventOutcomeType.EVENT_RESIDENTIAL_MILESTONE: preload("res://assets/sprites/events/event_blank.png"), #TODO: Add residential milestone image
-	Enums.EventOutcomeType.EVENT_PORT_MILESTONE: preload("res://assets/sprites/events/event_blank.png"), #TODO: Add port milestone image
-	Enums.EventOutcomeType.EVENT_MILITARY_MILESTONE: preload("res://assets/sprites/events/event_blank.png"), #TODO: Add military milestone image
+	Enums.EventOutcomeType.EVENT_CIVIC_MILESTONE: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add civic milestone image
+	Enums.EventOutcomeType.EVENT_INDUSTRIAL_MILESTONE: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add industrial milestone image
+	Enums.EventOutcomeType.EVENT_RESIDENTIAL_MILESTONE: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add residential milestone image
+	Enums.EventOutcomeType.EVENT_PORT_MILESTONE: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add port milestone image
+	Enums.EventOutcomeType.EVENT_MILITARY_MILESTONE: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add military milestone image
 }

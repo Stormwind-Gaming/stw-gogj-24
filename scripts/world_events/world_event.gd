@@ -36,7 +36,7 @@ func _init(init_severity: Enums.WorldEventSeverity) -> void:
 	GlobalRegistry.turn_logs.add_item(str(GameController.turn_number), TurnLog.new(event_text, Enums.LogType.WORLD_EVENT))
 	EventBus.world_event_created.emit(self)
 
-	EventBus.end_turn_initiated.connect(_on_end_turn)
+	EventBus.turn_processing_initiated.connect(_on_end_turn)
 
 """
 @brief The function that is called when the world-event starts
