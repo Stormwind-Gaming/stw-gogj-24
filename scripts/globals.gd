@@ -20,6 +20,7 @@ var actions_list_action_scene = preload("res://scenes/gui/actions_list_action.ts
 var plan_scene = preload("res://scenes/gui/plan.tscn")
 var event_panel_scene = preload("res://scenes/gui/event_panel.tscn")
 var action_scene = preload("res://scenes/gui/action.tscn")
+var day_log_scene = preload("res://scenes/gui/day_log.tscn")
 
 #|==============================|
 #|       Data Sources          |

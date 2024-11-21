@@ -2,8 +2,9 @@
 
 [ext_resource type="Script" path="res://scripts/gui/day_log.gd" id="1_pkh8c"]
 
-[node name="DayLog" type="PanelContainer"]
+[node name="DayLog" type="PanelContainer" node_paths=PackedStringArray("label")]
 script = ExtResource("1_pkh8c")
+label = NodePath("MarginContainer/LogListContainer/Label")
 metadata/_tab_index = 0
 
 [node name="MarginContainer" type="MarginContainer" parent="."]

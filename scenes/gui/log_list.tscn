@@ -1,13 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://2nutrwy075lc"]
+[gd_scene load_steps=6 format=3 uid="uid://2nutrwy075lc"]
 
 [ext_resource type="Script" path="res://scripts/gui/log_list.gd" id="1_t6t8q"]
 [ext_resource type="Theme" uid="uid://dexax20p2eewp" path="res://assets/themes/base_theme.tres" id="1_t8il6"]
 [ext_resource type="Texture2D" uid="uid://cymum3g0jnd7l" path="res://assets/sprites/popup_panel_background_75.png" id="2_r58ff"]
-[ext_resource type="Script" path="res://scripts/gui/day_log.gd" id="4_ail5y"]
 [ext_resource type="Texture2D" uid="uid://ctiq8sa8m5iv" path="res://assets/sprites/close_ribbon_black.png" id="4_w7iby"]
 [ext_resource type="Texture2D" uid="uid://5vk04yychida" path="res://assets/sprites/close_ribbon_white.png" id="5_4hoot"]
 
-[node name="LogList" type="Window" node_paths=PackedStringArray("label")]
+[node name="LogList" type="Window" node_paths=PackedStringArray("day_tab_container")]
 transparent_bg = true
 initial_position = 2
 size = Vector2i(800, 700)
@@ -17,7 +16,7 @@ borderless = true
 transparent = true
 theme = ExtResource("1_t8il6")
 script = ExtResource("1_t6t8q")
-label = NodePath("NinePatchRect/MarginContainer/TabContainer/DayLog2/MarginContainer/LogListContainer/Label")
+day_tab_container = NodePath("NinePatchRect/MarginContainer/TabContainer")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
 anchors_preset = 15
@@ -35,36 +34,13 @@ patch_margin_bottom = 26
 layout_mode = 2
 offset_right = 750.0
 offset_bottom = 600.0
-theme_override_constants/margin_left = 88
+theme_override_constants/margin_left = 75
 theme_override_constants/margin_top = 11
-theme_override_constants/margin_right = 76
+theme_override_constants/margin_right = 72
 theme_override_constants/margin_bottom = -81
 
 [node name="TabContainer" type="TabContainer" parent="NinePatchRect/MarginContainer"]
 layout_mode = 2
-current_tab = 0
-
-[node name="DayLog2" type="PanelContainer" parent="NinePatchRect/MarginContainer/TabContainer"]
-layout_mode = 2
-script = ExtResource("4_ail5y")
-metadata/_tab_index = 0
-
-[node name="MarginContainer" type="MarginContainer" parent="NinePatchRect/MarginContainer/TabContainer/DayLog2"]
-layout_mode = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
-
-[node name="LogListContainer" type="VBoxContainer" parent="NinePatchRect/MarginContainer/TabContainer/DayLog2/MarginContainer"]
-layout_mode = 2
-
-[node name="Label" type="RichTextLabel" parent="NinePatchRect/MarginContainer/TabContainer/DayLog2/MarginContainer/LogListContainer"]
-custom_minimum_size = Vector2(10, 10)
-layout_mode = 2
-size_flags_vertical = 3
-bbcode_enabled = true
-autowrap_mode = 2
 
 [node name="MarginContainer2" type="MarginContainer" parent="NinePatchRect"]
 layout_mode = 1
