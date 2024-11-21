@@ -149,10 +149,6 @@ func _check_milestones(_num: int) -> void:
 	
 	
 
-	
-
-
-
 #|==============================|
 #|    Value Management          |
 #|==============================|
@@ -239,3 +235,28 @@ func mission_duration_modification(mission_duration: int, district_type: Enums.D
 		modified_mission_duration += Constants.PORT_DISTRICT_MODIFIER_BASE
 
 	return modified_mission_duration
+
+
+#|==============================|
+#|      Milestone Checks        |
+#|==============================|
+
+"""
+@brief Checks if the district milestone has been passed
+
+@param district_type: the type of the district
+@return: true if the milestone has been passed
+"""
+func check_milestone(district_type: Enums.DistrictType) -> bool:
+	if district_type == Enums.DistrictType.MILITARY:
+		return military_bonus_active
+	elif district_type == Enums.DistrictType.CIVIC:
+		return civic_bonus_active
+	elif district_type == Enums.DistrictType.INDUSTRIAL:
+		return industry_bonus_active
+	elif district_type == Enums.DistrictType.RESIDENTIAL:
+		return residential_bonus_active
+	elif district_type == Enums.DistrictType.PORT:
+		return port_bonus_active
+	else:
+		return false

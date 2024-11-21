@@ -625,6 +625,36 @@ func get_district_type_string(district_type: Enums.DistrictType) -> String:
 		_:
 			return "Unknown"
 
+func get_district_type_bonus_string(district_type: Enums.DistrictType) -> String:
+	match district_type:
+		Enums.DistrictType.CIVIC:
+			return "+1 to all Subtlety actions"
+		Enums.DistrictType.INDUSTRIAL:
+			return "+1 to all Smarts actions"
+		Enums.DistrictType.RESIDENTIAL:
+			return "+25% to all Sympathy gains"
+		Enums.DistrictType.PORT:
+			return "-25% to all Heat gains"
+		Enums.DistrictType.MILITARY:
+			return "+1 to all Charm actions"
+		_:
+			return "Unknown"
+
+func get_district_type_base_effect_string(district_type: Enums.DistrictType) -> String:
+	match district_type:
+		Enums.DistrictType.CIVIC:
+			return "+25% to all Heat gains"
+		Enums.DistrictType.INDUSTRIAL:
+			return "+10% injury chance"
+		Enums.DistrictType.RESIDENTIAL:
+			return "+10% Subtlety failure chance"
+		Enums.DistrictType.PORT:
+			return "+1 day to all action durations"
+		Enums.DistrictType.MILITARY:
+			return "-50% to all Sympathy gains."
+		_:
+			return "Unknown"
+
 #|==============================|
 #|      Asset References       |
 #|==============================|

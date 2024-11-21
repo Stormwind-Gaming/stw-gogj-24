@@ -39,6 +39,21 @@ class_name PointOfInterest
 """
 @export_multiline var poi_static_description: String = ""
 
+"""
+@brief Predefined Misson intel chance
+"""
+@export var mission_chance: int = 1
+
+"""
+@brief Predefined Location intel chance
+"""
+@export var location_chance: int = 1
+
+"""
+@brief Predefined Timing intel chance
+"""
+@export var timing_chance: int = 1
+
 #|==============================|
 #|         Properties          |
 #|==============================|
@@ -93,6 +108,11 @@ var poi_owner: Character
 @brief Bonus type provided by this POI
 """
 var poi_bonus: Enums.POIBonusType = Enums.POIBonusType.NONE
+
+"""
+@brief The most likely intel type for this POI
+"""
+var most_likely_intel_type: String
 
 """
 @brief Visual state colors
@@ -151,8 +171,11 @@ Handles popup visibility based on hover state.
 """
 func _process(delta: float) -> void:
 	if hovered and GameController.district_focused == parent_district:
+		if not poi_popup.visible:
 			poi_popup.visible = true
-			poi_popup.set_position(get_viewport().get_mouse_position() + Vector2(10, 10))
+			poi_popup.check_details()
+
+		poi_popup.set_position(get_viewport().get_mouse_position() + Vector2(10, 10))
 	else:
 			poi_popup.visible = false
 
@@ -187,24 +210,30 @@ func setup_poi_visuals():
 @param poi_name_arg The name of the POI
 @param poi_description_arg The description of the POI
 """
-func set_poi_details(parent_district_arg: District, poi_type_arg: Enums.POIType, poi_name_arg: String, poi_description_arg: String, what_chance: int, where_chance: int, when_chance: int) -> void:
+func set_poi_details(parent_district_arg: District, poi_type_arg: Enums.POIType, poi_name_arg: String, poi_short_description_arg: String, poi_description_arg: String, what_chance: int, where_chance: int, when_chance: int) -> void:
 	parent_district = parent_district_arg
 	if poi_static:
 		poi_type = poi_static_type
 		poi_name = poi_static_name
 		poi_description = poi_static_description
+		poi_short_description = poi_static_short_description
 	else:
 		poi_type = poi_type_arg
 		poi_name = poi_name_arg
 		poi_description = poi_description_arg
-		rumour_config = RumourConfig.new(what_chance, where_chance, when_chance)
-
-	poi_description += '\n'
-	poi_description += 'Owner: ' + poi_owner.get_full_name()
-	poi_description += '\n'
-	poi_description += 'Bonus: ' + Globals.get_poi_bonus_string(poi_bonus)
+		poi_short_description = poi_short_description_arg
 	
-	poi_popup.set_details(poi_name, poi_description)
+	rumour_config = RumourConfig.new(what_chance, where_chance, when_chance)
+
+	# Set the most likely intel type for this POI
+	if what_chance > where_chance and what_chance > when_chance:
+		most_likely_intel_type = "Mission"
+	elif where_chance > what_chance and where_chance > when_chance:
+		most_likely_intel_type = "Location"
+	else:
+		most_likely_intel_type = "Timing"
+
+	poi_popup.set_details(self)
 
 #|==============================|
 #|      Event Handlers         |
@@ -317,7 +346,7 @@ Updates POI popup details based on owner changes.
 """
 func _character_state_changed(character: Character) -> void:
 	if character == poi_owner:
-		poi_popup.set_details(poi_name, poi_description)
+		poi_popup.set_details(self)
 		if character.char_state == Enums.CharacterState.DECEASED:
 			$Polygon2D.color = no_color
 			enabled = false

@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://4q7pwlj3ohlv"]
+
+[ext_resource type="Script" path="res://scripts/gui/day_log.gd" id="1_pkh8c"]
+
+[node name="DayLog" type="PanelContainer"]
+script = ExtResource("1_pkh8c")
+metadata/_tab_index = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="LogListContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="RichTextLabel" parent="MarginContainer/LogListContainer"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+autowrap_mode = 2
