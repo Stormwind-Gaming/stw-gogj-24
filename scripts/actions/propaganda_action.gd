@@ -9,17 +9,12 @@ func _process_action() -> Array[TurnLog]:
 
 	logs.append(TurnLog.new("Processing PROPAGANDA action at [u]" + str(poi.poi_name) + "[/u] by " + _get_character_names(), Enums.LogType.ACTION_INFO))
 
-	# Get cumulative stats for all characters involved
-	var stats: Dictionary = _get_stats()
+	var statistic_check: StatisticCheck = StatisticCheck.new(characters, poi.parent_district, poi)
 
-	var charm_roll = MathHelpers.bounded_sigmoid_check(stats["charm"], true, Constants.CHARM_CHECK_MIN_CHANCE, Constants.CHARM_CHECK_MAX_CHANCE)
-	
-	# emit stats change
-	EventBus.stat_created.emit("charm", charm_roll.success)
+	var charm_roll = statistic_check.charm_check()
 		
-	if (charm_roll.success):
-		var base_sympathy_added: int = MathHelpers.generateBellCurveStat(Constants.ACTION_EFFECT_PROPAGANDA_SYMPATHY_MIN, Constants.ACTION_EFFECT_PROPAGANDA_SYMPATHY_MAX)
-		var sympathy_added: int = StatisticModification.sympathy_modification(base_sympathy_added, poi.parent_district.district_type)
+	if (charm_roll):
+		var sympathy_added: int = statistic_check.sympathy_added(Constants.ACTION_EFFECT_PROPAGANDA_SYMPATHY_MIN, Constants.ACTION_EFFECT_PROPAGANDA_SYMPATHY_MAX)
 
 		log_message = "Succeeded charm check..."
 		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
@@ -34,9 +29,9 @@ func _process_action() -> Array[TurnLog]:
 		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
 
 	# emit stats change
-	EventBus.stat_created.emit("propaganda", charm_roll.success)
+	EventBus.stat_created.emit("propaganda", charm_roll)
 	# emit stats change
-	EventBus.stat_created.emit("missions", charm_roll.success)
+	EventBus.stat_created.emit("missions", charm_roll)
 
 	if poi.poi_owner.char_sympathy >= Constants.NEW_SYMPATHISER_THRESHOLD:
 		print("Sympathy is now high enough to trigger a new sympathiser event")

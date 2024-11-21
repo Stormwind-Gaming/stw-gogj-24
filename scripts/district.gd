@@ -101,6 +101,9 @@ func _ready() -> void:
 	EventBus.character_sympathy_changed.connect(_update_sympathy_value)
 	EventBus.district_unfocused.connect(_reset_highlight_color)
 
+	# Setup the district modifiers
+	_setup_modifiers()
+
 	# set heat random between min and max
 	heat = MathHelpers.generateBellCurveStat(Constants.DISTRICT_INIT_HEAT_MIN, Constants.DISTRICT_INIT_HEAT_MAX)
 
@@ -238,6 +241,159 @@ func _update_sympathy_value(character: Character) -> void:
 	district_popup.set_sympathy(sympathy)
 			# return
 
+func _setup_modifiers() -> void:
+	match district_type:
+
+		# Military district modifiers
+		Enums.DistrictType.MILITARY:
+			var _base_military_district_modifier: Modifier = Modifier.new({
+				"scope": Enums.ModifierScope.DISTRICT,
+				"district": self,
+				"modifier_name": "Military District Effect"
+			}, {
+				"modifier_sympathy_multiplier": Constants.MILITARY_DISTRICT_MODIFIER_BASE
+			})
+
+			# First create the variable
+			var _bonus_military_district_modifier: Modifier
+			
+			# Define the closure separately
+			var military_closure = func(mod: Modifier):
+				var is_active = sympathy > Constants.MILITARY_DISTRICT_BONUS_BREAKPOINT
+				if is_active and not mod.active:
+					EventBus.create_new_event_panel.emit(Enums.EventOutcomeType.EVENT_MILITARY_MILESTONE, [] as Array[Character], self.pois[0])
+				return is_active
+
+			# Then create the modifier
+			_bonus_military_district_modifier = Modifier.new({
+				"scope": Enums.ModifierScope.WORLD,
+				"district": self,
+				"modifier_name": "Military District Modifier",
+				"active": false,
+			}, {
+				"modifier_subtlety_flat": Constants.MILITARY_DISTRICT_MODIFIER_HIGH_SYMPATHY_VALUE
+			})
+
+			# Set the closure to the modifier
+			_bonus_military_district_modifier.modifier_active_closure = military_closure.bind(_bonus_military_district_modifier)
+
+		# Civic district modifiers
+		Enums.DistrictType.CIVIC:
+			var _base_civic_district_modifier: Modifier = Modifier.new({
+				"scope": Enums.ModifierScope.DISTRICT,
+				"district": self,
+				"modifier_name": "Civic District Effect"
+			}, {
+				"modifier_heat_multiplier": Constants.CIVIC_DISTRICT_MODIFIER_BASE
+			})
+
+			# First create the variable
+			var _bonus_civic_district_modifier: Modifier
+			
+			# Define the closure separately
+			var civic_closure = func(mod: Modifier):
+				var is_active = sympathy > Constants.CIVIC_DISTRICT_BONUS_BREAKPOINT
+				if is_active and not mod.active:
+					EventBus.create_new_event_panel.emit(Enums.EventOutcomeType.EVENT_CIVIC_MILESTONE, [] as Array[Character], self.pois[0])
+				return is_active
+
+			# Then create the modifier
+			_bonus_civic_district_modifier = Modifier.new({
+				"scope": Enums.ModifierScope.WORLD,
+				"district": self,
+				"modifier_name": "Civic District Modifier",
+				"active": false,
+			}, {
+				"modifier_charm_flat": Constants.CIVIC_DISTRICT_MODIFIER_HIGH_SYMPATHY_VALUE
+			})
+
+			# Set the closure to the modifier
+			_bonus_civic_district_modifier.modifier_active_closure = civic_closure.bind(_bonus_civic_district_modifier)
+
+		# Industrial district modifiers
+		Enums.DistrictType.INDUSTRIAL:
+			var _base_industrial_district_modifier: Modifier = Modifier.new({
+				"scope": Enums.ModifierScope.DISTRICT,
+				"district": self,
+				"modifier_name": "Industrial District Effect"
+			}, {
+				"modifier_consequence_multiplier": Constants.INDUSTRY_DISTRICT_MODIFIER_BASE
+			})
+
+			# First create the variable
+			var _bonus_industrial_district_modifier: Modifier
+			
+			# Define the closure separately
+			var industrial_closure = func(mod: Modifier):
+				var is_active = sympathy > Constants.INDUSTRY_DISTRICT_BONUS_BREAKPOINT
+				if is_active and not mod.active:
+					EventBus.create_new_event_panel.emit(Enums.EventOutcomeType.EVENT_INDUSTRIAL_MILESTONE, [] as Array[Character], self.pois[0])
+				return is_active
+
+			# Then create the modifier
+			_bonus_industrial_district_modifier = Modifier.new({
+				"scope": Enums.ModifierScope.WORLD,
+				"district": self,
+				"modifier_name": "Industrial District Modifier",
+				"active": false,
+			}, {
+				"modifier_smarts_flat": Constants.INDUSTRY_DISTRICT_MODIFIER_HIGH_SYMPATHY_VALUE
+			})
+
+			# Set the closure to the modifier
+			_bonus_industrial_district_modifier.modifier_active_closure = industrial_closure.bind(_bonus_industrial_district_modifier)
+
+		# Residential district modifiers
+		Enums.DistrictType.RESIDENTIAL:
+
+			# --- There is no base modifier for residential districts ---
+
+			var _bonus_residential_district_modifier: Modifier = Modifier.new({
+				"scope": Enums.ModifierScope.WORLD,
+				"district": self,
+				"modifier_name": "Residential District Modifier",
+				"active": false,
+				"modifier_active_closure": func():
+					var is_active = sympathy > Constants.RESIDENTIAL_DISTRICT_BONUS_BREAKPOINT
+					if is_active:
+						EventBus.create_new_event_panel.emit(Enums.EventOutcomeType.EVENT_RESIDENTIAL_MILESTONE, [] as Array[Character], self.pois[0])
+					return is_active
+			}, {
+				"modifier_sympathy_multiplier": Constants.RESIDENTIAL_DISTRICT_MODIFIER_HIGH_SYMPATHY_VALUE
+			})
+		
+		# Port district modifiers
+		Enums.DistrictType.PORT:
+			var _base_port_district_modifier: Modifier = Modifier.new({
+				"scope": Enums.ModifierScope.DISTRICT,
+				"district": self,
+				"modifier_name": "Port District Effect"
+			}, {
+				"modifier_action_duration_flat": Constants.PORT_DISTRICT_MODIFIER_BASE
+			})
+
+			# First create the variable
+			var _bonus_port_district_modifier: Modifier
+			
+			# Define the closure separately
+			var port_closure = func(mod: Modifier):
+				var is_active = sympathy > Constants.PORT_DISTRICT_BONUS_BREAKPOINT
+				if is_active and not mod.active:
+					EventBus.create_new_event_panel.emit(Enums.EventOutcomeType.EVENT_PORT_MILESTONE, [] as Array[Character], self.pois[0])
+				return is_active
+			
+			# Then create the modifier
+			_bonus_port_district_modifier = Modifier.new({
+				"scope": Enums.ModifierScope.WORLD,
+				"district": self,
+				"modifier_name": "Port District Modifier",
+				"active": false,
+			}, {
+				"modifier_heat_multiplier": Constants.PORT_DISTRICT_MODIFIER_HIGH_SYMPATHY_VALUE
+			})
+
+			# Set the closure to the modifier
+			_bonus_port_district_modifier.modifier_active_closure = port_closure.bind(_bonus_port_district_modifier)
 
 #|==============================|
 #|      District Methods        |
