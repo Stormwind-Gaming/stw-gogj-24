@@ -378,7 +378,10 @@ var event_outcome_category_map = {
 	"EVENT_INDUSTRIAL_MILESTONE": Enums.EventOutcomeType.EVENT_INDUSTRIAL_MILESTONE,
 	"EVENT_RESIDENTIAL_MILESTONE": Enums.EventOutcomeType.EVENT_RESIDENTIAL_MILESTONE,
 	"EVENT_PORT_MILESTONE": Enums.EventOutcomeType.EVENT_PORT_MILESTONE,
-	"EVENT_MILITARY_MILESTONE": Enums.EventOutcomeType.EVENT_MILITARY_MILESTONE
+	"EVENT_MILITARY_MILESTONE": Enums.EventOutcomeType.EVENT_MILITARY_MILESTONE,
+	"SYMPATHY_BREAKPOINT_LOW": Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_LOW,
+	"SYMPATHY_BREAKPOINT_MEDIUM": Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_MEDIUM,
+	"SYMPATHY_BREAKPOINT_HIGH": Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_HIGH
 }
 
 #|==============================|
@@ -708,4 +711,7 @@ var event_images = {
 	Enums.EventOutcomeType.EVENT_RESIDENTIAL_MILESTONE: preload("res://assets/sprites/events/event_blank.png"), #TODO: Add residential milestone image
 	Enums.EventOutcomeType.EVENT_PORT_MILESTONE: preload("res://assets/sprites/events/event_blank.png"), #TODO: Add port milestone image
 	Enums.EventOutcomeType.EVENT_MILITARY_MILESTONE: preload("res://assets/sprites/events/event_blank.png"), #TODO: Add military milestone image
+	Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_LOW: preload("res://assets/sprites/events/event_blank.png"), #TODO: Add sympathy breakpoint image
+	Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_MEDIUM: preload("res://assets/sprites/events/event_blank.png"), #TODO: Add sympathy breakpoint image
+	Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_HIGH: preload("res://assets/sprites/events/event_blank.png") #TODO: Add sympathy breakpoint image
 }

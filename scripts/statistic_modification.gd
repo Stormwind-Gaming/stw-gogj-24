@@ -85,31 +85,31 @@ func _check_milestones(_num: int) -> void:
 
 	# check if any of the districts have passed the milestone
 	for district in districts:
-		if district.district_type == Enums.DistrictType.MILITARY:
+		if not military_bonus_active and district.district_type == Enums.DistrictType.MILITARY:
 			if district.heat > 66:
 				set_military_bonus(true)
 				EventBus.create_new_event_panel.emit(Enums.EventOutcomeType.EVENT_MILITARY_MILESTONE, [] as Array[Character], district.pois[0])
 			else:
 				set_military_bonus(false)
-		elif district.district_type == Enums.DistrictType.CIVIC:
+		elif not civic_bonus_active and district.district_type == Enums.DistrictType.CIVIC:
 			if district.heat > 66:
 				set_civic_bonus(true)
 				EventBus.create_new_event_panel.emit(Enums.EventOutcomeType.EVENT_CIVIC_MILESTONE, [] as Array[Character], district.pois[0])
 			else:
 				set_civic_bonus(false)
-		elif district.district_type == Enums.DistrictType.INDUSTRIAL:
+		elif not industry_bonus_active and district.district_type == Enums.DistrictType.INDUSTRIAL:
 			if district.heat > 66:
 				set_industry_bonus(true)
 				EventBus.create_new_event_panel.emit(Enums.EventOutcomeType.EVENT_INDUSTRIAL_MILESTONE, [] as Array[Character], district.pois[0])
 			else:
 				set_industry_bonus(false)
-		elif district.district_type == Enums.DistrictType.RESIDENTIAL:
+		elif not residential_bonus_active and district.district_type == Enums.DistrictType.RESIDENTIAL:
 			if district.heat > 66:
 				set_residential_bonus(true)
 				EventBus.create_new_event_panel.emit(Enums.EventOutcomeType.EVENT_RESIDENTIAL_MILESTONE, [] as Array[Character], district.pois[0])
 			else:
 				set_residential_bonus(false)
-		elif district.district_type == Enums.DistrictType.PORT:
+		elif not port_bonus_active and district.district_type == Enums.DistrictType.PORT:
 			if district.heat > 66:
 				set_port_bonus(true)
 				EventBus.create_new_event_panel.emit(Enums.EventOutcomeType.EVENT_PORT_MILESTONE, [] as Array[Character], district.pois[0])
@@ -130,10 +130,25 @@ func _check_milestones(_num: int) -> void:
 
 	if not global_sympathy_breakpoint_low and global_sympathy >= 30:
 		global_sympathy_breakpoint_low = true
+		EventBus.create_new_event_panel.emit(Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_LOW, [] as Array[Character], null)
 	if not global_sympathy_breakpoint_medium and global_sympathy >= 45:
 		global_sympathy_breakpoint_medium = true
+		EventBus.create_new_event_panel.emit(Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_MEDIUM, [] as Array[Character], null)
 	if not global_sympathy_breakpoint_high and global_sympathy >= 60:
 		global_sympathy_breakpoint_high = true
+		EventBus.create_new_event_panel.emit(Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_HIGH, [] as Array[Character], null)
+	
+	if global_sympathy_breakpoint_high:
+		GameController.max_agents = 5
+	elif global_sympathy_breakpoint_medium:
+		GameController.max_agents = 4
+	elif global_sympathy_breakpoint_low:
+		GameController.max_agents = 3
+	else:
+		GameController.max_agents = 2
+	
+	
+
 	
 
 

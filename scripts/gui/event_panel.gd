@@ -58,10 +58,13 @@ func set_event_details(event_type: Enums.EventOutcomeType, characters: Array[Cha
 	
 	# replace the placeholders in the text
 	text_label.text = text_label.text.replace("{town}", GameController.town_name)
+	title_label.text = title_label.text.replace("{town}", GameController.town_name)
 	if characters.size() > 0:
 		text_label.text = text_label.text.replace("{character}", characters[0].get_full_name())
+		title_label.text = title_label.text.replace("{character}", characters[0].get_full_name())
 	if poi:
 		text_label.text = text_label.text.replace("{district}", poi.parent_district.district_name).replace("{poi}", poi.poi_name)
+		title_label.text = title_label.text.replace("{district}", poi.parent_district.district_name).replace("{poi}", poi.poi_name)
 	
 
 #|==============================|
