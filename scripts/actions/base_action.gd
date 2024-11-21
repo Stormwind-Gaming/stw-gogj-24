@@ -242,7 +242,8 @@ func _process_danger() -> Array[TurnLog]:
 			_:
 				log_message = "Unknown consequence"
 
-		logs.append(TurnLog.new(log_message, Enums.LogType.CONSEQUENCE, consequence_log_type, poi, characters))
+		logs.append(TurnLog.new(log_message, Enums.LogType.CONSEQUENCE, poi, characters))
+		EventBus.create_new_event_panel.emit(consequence_log_type, characters, poi)
 
 	return logs
 

@@ -38,4 +38,8 @@ func _process_action() -> Array[TurnLog]:
 	# emit stats change
 	EventBus.stat_created.emit("missions", charm_roll.success)
 
+	if poi.poi_owner.char_sympathy >= Constants.NEW_SYMPATHISER_THRESHOLD:
+		print("Sympathy is now high enough to trigger a new sympathiser event")
+		EventBus.create_new_event_panel.emit(Enums.EventOutcomeType.NEW_SYMPATHISER, [poi.poi_owner] as Array[Character], poi)
+
 	return logs

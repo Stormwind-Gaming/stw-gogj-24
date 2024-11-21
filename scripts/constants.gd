@@ -373,6 +373,11 @@ In medium heat: 40% minor, 60% significant
 """
 var MEDIUM_HEAT_MINOR_CHANCE: float = 0.4
 
+"""
+@brief Recruitment threshold for triggering a new sympathiser
+"""
+var NEW_SYMPATHISER_THRESHOLD: int = 80
+
 #|==============================|
 #|    Stat Check Bounds        |
 #|==============================|

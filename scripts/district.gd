@@ -214,7 +214,6 @@ func _process(delta: float) -> void:
 new_heat The new heat value
 """
 func _update_heat_value(district: District, new_heat: int) -> void:
-	print("Updating heat value")
 	if district == self:
 		heat += new_heat
 		heat_color.a = heat / 200
