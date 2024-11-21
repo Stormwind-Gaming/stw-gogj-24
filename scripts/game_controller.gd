@@ -244,7 +244,7 @@ func _trigger_resistance_endgame() -> void:
 	endgame_triggered = true
 	EventBus.endgame_triggered.emit()
 
-	WorldEventFactory.create_world_event(Enums.WorldEventType.ENDGAME)
+	WorldEventFactory.create_world_event(Enums.WorldEventSeverity.ENDGAME)
 	IntelFactory.create_resistance_endgame_plan()
 
 	var turn_log = TurnLog.new("Resistance endgame triggered - Check Intel for Plans", Enums.LogType.WORLD_EVENT)

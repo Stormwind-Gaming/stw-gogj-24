@@ -1,0 +1,18 @@
+event_severity,event_type,event_text,event_end_text,effect_text
+MINOR,MINOR_INCREASED_PATROLS,"Increased patrols in {district}. Our actions have been noticed by the authorities, they don’t know who we are yet, but they are on the look out
+
+",The increased patrols have now left.,"+20 heat in {district} for 5 turns
+
+"
+MINOR,"MINOR_SECRET_POLICE
+
+","The secret police are aware there is a resistance movement operating in {town}. They are starting to install checkpoints on the main roads between the districts. We need to find new routes
+
+",The secret police have now left.,"+1 mission duration for 2 turns
++ 5 heat in random {district}
++ 5 heat in random {district}"
+MINOR,MINOR_AIRBASE,"We have learned that the Air Force are using the base as a staging post for an additional fighter squadron for the next few days, it will be much harder to investigate the airbase until the military presence reduces
+
+",The Air Force has now left.,"+20 heat in {district} for 7 turns
++1 intel for each espionage mission conducted
+"

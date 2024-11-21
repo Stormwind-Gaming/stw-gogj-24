@@ -37,6 +37,7 @@ var load_csvs = {
 	"rumour_text": "res://data/rumour_text.csv",
 	"items": "res://data/items.csv",
 	"event_outcome_text": "res://data/event_outcome_text.csv",
+	"world_event_text": "res://data/world_event_text.csv",
 }
 
 #|==============================|
@@ -53,7 +54,7 @@ var poi_types = []
 var poi_names = []
 var rumour_text = []
 var event_outcome_text = {}
-
+var world_event_text = []
 #|==============================|
 #|      Data Loading           |
 #|==============================|
@@ -70,6 +71,7 @@ func _ready() -> void:
 	_load_poi_names(load_csvs["poi_names"])
 	_load_rumour_text(load_csvs["rumour_text"])
 	_load_event_outcome_text(load_csvs["event_outcome_text"])
+	_load_world_event_text(load_csvs["world_event_text"])
 
 """
 @brief Loads town names from CSV
@@ -165,6 +167,19 @@ func _load_event_outcome_text(path: String) -> void:
 			"text": text,
 			"button_text": button_text
 		})
+
+func _load_world_event_text(path: String) -> void:
+	var csv_data = load(path)
+	for record in csv_data.records:
+
+		world_event_text.append({
+			"event_severity": world_event_category_map[record["event_severity"].to_upper().strip_edges()],
+			"event_type": world_event_type_map[record["event_type"].to_upper().strip_edges()],
+			"event_text": record["event_text"].strip_edges(),
+			"effect_text": record["effect_text"].strip_edges(),
+			"event_end_text": record["event_end_text"].strip_edges()
+		})
+		
 #|==============================|
 #|      Data Retrieval         |
 #|==============================|
@@ -243,6 +258,18 @@ func get_next_profile_image(nationality: Enums.CharacterNationality, gender: Enu
 	
 	# Return and remove the last image from the pool
 	return profile_images.pools[pool_key].pop_back()
+
+"""
+@brief Gets the text for a world event of a given severity
+@param severity The severity of the world event to get the text for
+@returns The text for the world event
+"""
+func get_world_event_text(severity: Enums.WorldEventSeverity) -> Dictionary:
+	var filtered_world_event_text = world_event_text.filter(
+		func(record):
+			return record.event_severity == severity
+	)
+	return filtered_world_event_text[randi() % filtered_world_event_text.size()]
 
 #|==============================|
 #|      Enum Mappings          |
@@ -371,6 +398,18 @@ var event_outcome_category_map = {
 	"MIA": Enums.EventOutcomeType.MIA,
 	"INJURED": Enums.EventOutcomeType.INJURED,
 	"DECEASED": Enums.EventOutcomeType.DECEASED
+}
+
+var world_event_category_map = {
+	"MINOR": Enums.WorldEventSeverity.MINOR,
+	"SIGNIFICANT": Enums.WorldEventSeverity.SIGNIFICANT,
+	"MAJOR": Enums.WorldEventSeverity.MAJOR
+}
+
+var world_event_type_map = {
+	"MINOR_INCREASED_PATROLS": Enums.WorldEventType.MINOR_INCREASED_PATROLS,
+	"MINOR_SECRET_POLICE": Enums.WorldEventType.MINOR_SECRET_POLICE,
+	"MINOR_AIRBASE": Enums.WorldEventType.MINOR_AIRBASE,
 }
 
 #|==============================|
