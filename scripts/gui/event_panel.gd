@@ -15,7 +15,7 @@ extends Window
 """
 @brief The log that this event panel is displaying
 """
-var log: TurnLog
+# var log: TurnLog
 
 #|==============================|
 #|      Signals					       	|
@@ -37,12 +37,10 @@ signal on_close(event_panel: Window)
 @param text The text of the event.
 @param button_text The text of the button.
 """
-func set_event_details(log_attr: TurnLog, title_attr: String = "", text_attr: String = "", button_text_attr: String = "") -> void:
-	# set the log
-	log = log_attr
+func set_event_details(event_type: Enums.EventOutcomeType, characters: Array[Character], poi: PointOfInterest, title_attr: String = "", text_attr: String = "", button_text_attr: String = "") -> void:
 	# get the event type image
-	event_image.texture = Globals.event_images[log.event_type]
-	var event_outcome_text_objects = Globals.event_outcome_text[log.event_type]
+	event_image.texture = Globals.event_images[event_type]
+	var event_outcome_text_objects = Globals.event_outcome_text[event_type]
 	var event_outcome_text_object = event_outcome_text_objects[randi() % event_outcome_text_objects.size()]
 	# set the title, text, and button text
 	if title_attr == "":
@@ -58,7 +56,13 @@ func set_event_details(log_attr: TurnLog, title_attr: String = "", text_attr: St
 	else:
 		button.text = button_text_attr
 	
-	text_label.text = text_label.text.replace("[district]", log.poi.parent_district.district_name).replace("[agent]", log.agents[0].get_full_name())
+	# replace the placeholders in the text
+	text_label.text = text_label.text.replace("{town}", GameController.town_name)
+	if characters.size() > 0:
+		text_label.text = text_label.text.replace("{character}", characters[0].get_full_name())
+	if poi:
+		text_label.text = text_label.text.replace("{district}", poi.parent_district.district_name).replace("{poi}", poi.poi_name)
+	
 
 #|==============================|
 #|       Event Listeners        |

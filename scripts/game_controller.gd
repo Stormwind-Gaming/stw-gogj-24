@@ -116,21 +116,12 @@ func get_heat_level() -> int:
 @param additional_info Optional additional data for the action
 """
 func add_action(poi: PointOfInterest, characters: Array[Character], action_type: Enums.ActionType, additional_info: Dictionary = {}) -> void:
-	print("Adding action: ", action_type, " to POI: ", poi.poi_name)
 	var actions = GlobalRegistry.actions.get_all_items()
 
-	print("Actions: ", actions.size())
-
-	for character in characters:
-		print("Action character: ", character.get_full_name())
 	# check if this character is already assigned to an action
 	for action in actions:
-		print("Action: ", action.action_type)
-		for character in action.characters:
-			print("Test Action character: ", character.get_full_name())
 		# check if any of the characters are already assigned to this action
 		if action.characters.any(func(c): return characters.has(c)) and action.in_flight == false:
-			print("Deleting previous action that character is already assigned to")
 			action.queue_free()
 		# for existing_action_character in action.characters:
 		# 	for new_action_character in characters:
@@ -244,11 +235,13 @@ func _trigger_resistance_endgame() -> void:
 	endgame_triggered = true
 	EventBus.endgame_triggered.emit()
 
-	WorldEventFactory.create_world_event(Enums.WorldEventType.ENDGAME)
+	## TODO: this is causing a type error - Enums.WorldEventType doesnt exist
+	# WorldEventFactory.create_world_event(Enums.WorldEventType.ENDGAME)
 	IntelFactory.create_resistance_endgame_plan()
 
 	var turn_log = TurnLog.new("Resistance endgame triggered - Check Intel for Plans", Enums.LogType.WORLD_EVENT)
 	GlobalRegistry.turn_logs.add_item(str(GameController.turn_number), turn_log)
+	pass
 
 #|==============================|
 #|      District Management    |
@@ -276,7 +269,6 @@ func set_district_focused(district: District) -> void:
 @param poi The POI the menu is for
 """
 func open_radial_menu(radial_menu: RadialMenu, poi: PointOfInterest) -> void:
-	print("Opening radial menu for POI: ", poi)
 	if radial_menu_open:
 		print("Radial menu already open, closing")
 		return

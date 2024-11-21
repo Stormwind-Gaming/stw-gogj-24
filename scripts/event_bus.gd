@@ -142,6 +142,11 @@ signal open_new_window(window: Window)
 signal open_new_radial_menu(window: RadialMenu)
 
 """
+@brief Emitted when a event is created
+"""
+signal create_new_event_panel(event_type: Enums.EventOutcomeType, characters: Array[Character], poi: PointOfInterest)
+
+"""
 @brief Emitted when all windows are closed
 """
 signal close_all_windows()

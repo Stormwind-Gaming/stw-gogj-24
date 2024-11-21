@@ -59,7 +59,7 @@ Sorts and distributes characters to appropriate lists based on their status.
 @param characters Dictionary of all characters to be distributed
 """
 func populate_character_lists():
-	print('populating character lists')
+	# print('populating character lists')
 	# Clear existing children in all containers
 	for child in known_character_list_container.get_children():
 		child.queue_free()

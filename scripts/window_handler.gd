@@ -26,7 +26,7 @@ func _ready() -> void:
 	EventBus.close_radial_menu.connect(_close_radial_menu)
 	EventBus.game_over.connect(_close_all_windows_and_event_panels)
 	
-	EventBus.log_created.connect(_create_new_event_panel)
+	EventBus.create_new_event_panel.connect(_create_new_event_panel)
 
 #|==============================|
 #|      Methods     				   |
@@ -47,7 +47,6 @@ func any_windows_open() -> bool:
 @brief Closes all open windows and event panels
 """
 func _close_all_windows_and_event_panels() -> void:
-	print("Closing all windows and event panels")
 	_close_all_windows()
 	for panel in open_event_panels:
 		panel.queue_free()
@@ -57,7 +56,6 @@ func _close_all_windows_and_event_panels() -> void:
 @brief Closes all open windows
 """
 func _close_all_windows() -> void:
-	print("Closing all windows")
 	if open_window:
 		open_window.queue_free()
 	if open_radial_menu:
@@ -117,18 +115,14 @@ func _open_radial_menu(menu: RadialMenu) -> void:
 
 @param log The log to display
 """
-func _create_new_event_panel(log_attr: TurnLog) -> void:
-	if log_attr.event_type == Enums.EventOutcomeType.NONE:
+func _create_new_event_panel(event_type: Enums.EventOutcomeType, character: Array[Character], poi: PointOfInterest) -> void:
+	if event_type == Enums.EventOutcomeType.NONE:
 		return
-	print("Creating new event panel")
-	if log_attr.log_type == Enums.LogType.CONSEQUENCE:
-		print("Creating new event panel", log_attr.log_message)
 	var popup = Globals.event_panel_scene.instantiate()
-	popup.set_event_details(log_attr)
+	popup.set_event_details(event_type, character, poi)
 	add_child(popup)
 	open_event_panels.append(popup)
 	popup.on_close.connect(_on_event_panel_closed)
-	pass
 
 """
 @brief Handles the event panel being closed
@@ -138,4 +132,3 @@ func _create_new_event_panel(log_attr: TurnLog) -> void:
 func _on_event_panel_closed(event_panel: Window) -> void:
 	open_event_panels.erase(event_panel)
 	event_panel.queue_free()
-	pass

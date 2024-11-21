@@ -13,6 +13,13 @@ var industry_bonus_active: bool = false
 var residential_bonus_active: bool = false
 var port_bonus_active: bool = false
 
+var global_heat_breakpoint_low: bool = true # 0
+var global_heat_breakpoint_medium: bool = false # 35
+var global_heat_breakpoint_high: bool = false # 70
+
+var global_sympathy_breakpoint_low: bool = false # 30
+var global_sympathy_breakpoint_medium: bool = false # 45
+var global_sympathy_breakpoint_high: bool = false # 60
 
 #|==============================|
 #|    Milestones management     |
@@ -81,28 +88,54 @@ func _check_milestones(_num: int) -> void:
 		if district.district_type == Enums.DistrictType.MILITARY:
 			if district.heat > 66:
 				set_military_bonus(true)
+				EventBus.create_new_event_panel.emit(Enums.EventOutcomeType.EVENT_MILITARY_MILESTONE, [] as Array[Character], district.pois[0])
 			else:
 				set_military_bonus(false)
 		elif district.district_type == Enums.DistrictType.CIVIC:
 			if district.heat > 66:
 				set_civic_bonus(true)
+				EventBus.create_new_event_panel.emit(Enums.EventOutcomeType.EVENT_CIVIC_MILESTONE, [] as Array[Character], district.pois[0])
 			else:
 				set_civic_bonus(false)
 		elif district.district_type == Enums.DistrictType.INDUSTRIAL:
 			if district.heat > 66:
 				set_industry_bonus(true)
+				EventBus.create_new_event_panel.emit(Enums.EventOutcomeType.EVENT_INDUSTRIAL_MILESTONE, [] as Array[Character], district.pois[0])
 			else:
 				set_industry_bonus(false)
 		elif district.district_type == Enums.DistrictType.RESIDENTIAL:
 			if district.heat > 66:
 				set_residential_bonus(true)
+				EventBus.create_new_event_panel.emit(Enums.EventOutcomeType.EVENT_RESIDENTIAL_MILESTONE, [] as Array[Character], district.pois[0])
 			else:
 				set_residential_bonus(false)
 		elif district.district_type == Enums.DistrictType.PORT:
 			if district.heat > 66:
 				set_port_bonus(true)
+				EventBus.create_new_event_panel.emit(Enums.EventOutcomeType.EVENT_PORT_MILESTONE, [] as Array[Character], district.pois[0])
 			else:
 				set_port_bonus(false)
+	
+	# check if any global milestones have been passed
+	var global_heat = GameController.get_heat_level()
+
+	if not global_heat_breakpoint_medium and global_heat >= 35:
+		global_heat_breakpoint_medium = true
+		EventBus.create_new_event_panel.emit(Enums.EventOutcomeType.HEAT_BREAKPOINT_MEDIUM, [] as Array[Character], null)
+	if not global_heat_breakpoint_high and global_heat >= 70:
+		global_heat_breakpoint_high = true
+		EventBus.create_new_event_panel.emit(Enums.EventOutcomeType.HEAT_BREAKPOINT_HIGH, [] as Array[Character], null)
+
+	var global_sympathy = GameController.get_resistance_level()
+
+	if not global_sympathy_breakpoint_low and global_sympathy >= 30:
+		global_sympathy_breakpoint_low = true
+	if not global_sympathy_breakpoint_medium and global_sympathy >= 45:
+		global_sympathy_breakpoint_medium = true
+	if not global_sympathy_breakpoint_high and global_sympathy >= 60:
+		global_sympathy_breakpoint_high = true
+	
+
 
 
 #|==============================|

@@ -370,7 +370,15 @@ var poi_bonus_map = {
 var event_outcome_category_map = {
 	"MIA": Enums.EventOutcomeType.MIA,
 	"INJURED": Enums.EventOutcomeType.INJURED,
-	"DECEASED": Enums.EventOutcomeType.DECEASED
+	"DECEASED": Enums.EventOutcomeType.DECEASED,
+	"NEW_SYMPATHISER": Enums.EventOutcomeType.NEW_SYMPATHISER,
+	"HEAT_BREAKPOINT_MEDIUM": Enums.EventOutcomeType.HEAT_BREAKPOINT_MEDIUM,
+	"HEAT_BREAKPOINT_HIGH": Enums.EventOutcomeType.HEAT_BREAKPOINT_HIGH,
+	"EVENT_CIVIC_MILESTONE": Enums.EventOutcomeType.EVENT_CIVIC_MILESTONE,
+	"EVENT_INDUSTRIAL_MILESTONE": Enums.EventOutcomeType.EVENT_INDUSTRIAL_MILESTONE,
+	"EVENT_RESIDENTIAL_MILESTONE": Enums.EventOutcomeType.EVENT_RESIDENTIAL_MILESTONE,
+	"EVENT_PORT_MILESTONE": Enums.EventOutcomeType.EVENT_PORT_MILESTONE,
+	"EVENT_MILITARY_MILESTONE": Enums.EventOutcomeType.EVENT_MILITARY_MILESTONE
 }
 
 #|==============================|
@@ -690,6 +698,14 @@ var profile_images = {
 
 var event_images = {
 	Enums.EventOutcomeType.MIA: preload("res://assets/sprites/events/event_mia.png"),
-	Enums.EventOutcomeType.INJURED: preload("res://assets/sprites/events/event_mia.png"), # TODO: Add injured event image
-	Enums.EventOutcomeType.DECEASED: preload("res://assets/sprites/events/event_kia.png"),
+	Enums.EventOutcomeType.INJURED: preload("res://assets/sprites/events/event_injured.png"),
+	Enums.EventOutcomeType.DECEASED: preload("res://assets/sprites/events/event_deceased.png"),
+	Enums.EventOutcomeType.NEW_SYMPATHISER: preload("res://assets/sprites/events/event_new_sympathiser.png"),
+	Enums.EventOutcomeType.HEAT_BREAKPOINT_MEDIUM: preload("res://assets/sprites/events/event_heat_breakpoint_medium.png"),
+	Enums.EventOutcomeType.HEAT_BREAKPOINT_HIGH: preload("res://assets/sprites/events/event_heat_breakpoint_high.png"),
+	Enums.EventOutcomeType.EVENT_CIVIC_MILESTONE: preload("res://assets/sprites/events/event_blank.png"), #TODO: Add civic milestone image
+	Enums.EventOutcomeType.EVENT_INDUSTRIAL_MILESTONE: preload("res://assets/sprites/events/event_blank.png"), #TODO: Add industrial milestone image
+	Enums.EventOutcomeType.EVENT_RESIDENTIAL_MILESTONE: preload("res://assets/sprites/events/event_blank.png"), #TODO: Add residential milestone image
+	Enums.EventOutcomeType.EVENT_PORT_MILESTONE: preload("res://assets/sprites/events/event_blank.png"), #TODO: Add port milestone image
+	Enums.EventOutcomeType.EVENT_MILITARY_MILESTONE: preload("res://assets/sprites/events/event_blank.png"), #TODO: Add military milestone image
 }
