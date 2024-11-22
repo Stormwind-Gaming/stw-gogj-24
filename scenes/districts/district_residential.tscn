@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/district.gd" id="1_cj7mk"]
 [ext_resource type="Texture2D" uid="uid://dr1v7la7ll1bf" path="res://assets/new_costal_map_lg.png" id="2_py33n"]
 [ext_resource type="PackedScene" uid="uid://c0trxtgty6phy" path="res://scenes/pois/poi.tscn" id="3_c5tls"]
-[ext_resource type="PackedScene" uid="uid://cf5mn4nfhvkwj" path="res://scenes/gui/district_popup.tscn" id="3_ppqo0"]
+[ext_resource type="PackedScene" uid="uid://cf5mn4nfhvkwj" path="res://scenes/gui/popups/district_popup.tscn" id="3_ppqo0"]
 
 [node name="District_Residential" type="Area2D" node_paths=PackedStringArray("district_popup")]
 script = ExtResource("1_cj7mk")

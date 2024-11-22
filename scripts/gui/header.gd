@@ -105,7 +105,6 @@ func _update_gui(number: int) -> void:
 	date.text = GameController.calendar.get_date_string()
 
 	var res = GameController.get_resistance_level()
-	# print("Resistance: %s" % str(res))
 	resistance_bar.value = res
 	resistance_bar_label.text = "Resistance - %s" % str(res) + "%"
 	

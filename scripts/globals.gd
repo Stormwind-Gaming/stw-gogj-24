@@ -6,22 +6,22 @@ extends Node
 """
 @brief Preloaded scene references for UI elements
 """
-var confirmation_dialog_scene = preload("res://scenes/gui/confirmation_dialog.tscn")
-var agent_card_scene = preload("res://scenes/gui/agent_card.tscn")
-var mini_agent_card_scene = preload("res://scenes/gui/mini_agent_card.tscn")
-var blank_agent_card_scene = preload("res://scenes/gui/blank_agent_card.tscn")
-var radial_menu_scene = preload("res://scenes/gui/radial_menu.tscn")
-var character_list_scene = preload("res://scenes/gui/character_list.tscn")
-var intel_list_scene = preload("res://scenes/gui/intel_list.tscn")
-var log_list_scene = preload("res://scenes/gui/log_list.tscn")
-var town_details_list_scene = preload("res://scenes/gui/town_details_list.tscn")
-var actions_list_scene = preload("res://scenes/gui/actions_list.tscn")
-var post_radial_assignment_scene = preload("res://scenes/gui/post_radial_assignment.tscn")
-var actions_list_action_scene = preload("res://scenes/gui/actions_list_action.tscn")
-var plan_scene = preload("res://scenes/gui/plan.tscn")
-var event_panel_scene = preload("res://scenes/gui/event_panel.tscn")
+var confirmation_dialog_scene = preload("res://scenes/gui/menus/confirmation_dialog.tscn")
+var agent_card_scene = preload("res://scenes/gui/agent_cards/agent_card.tscn")
+var mini_agent_card_scene = preload("res://scenes/gui/agent_cards/mini_agent_card.tscn")
+var blank_agent_card_scene = preload("res://scenes/gui/agent_cards/blank_agent_card.tscn")
+var radial_menu_scene = preload("res://scenes/gui/menus/radial_menu.tscn")
+var character_list_scene = preload("res://scenes/gui/menus/character_list.tscn")
+var intel_list_scene = preload("res://scenes/gui/menus/intel_list.tscn")
+var log_list_scene = preload("res://scenes/gui/menus/log_list.tscn")
+var town_details_list_scene = preload("res://scenes/gui/menus/town_menus/town_details_list.tscn")
+var actions_list_scene = preload("res://scenes/gui/menus/actions_list.tscn")
+var post_radial_assignment_scene = preload("res://scenes/gui/menus/post_radial_assignment.tscn")
+var actions_list_action_scene = preload("res://scenes/gui/menus/actions_list_action.tscn")
+var plan_scene = preload("res://scenes/gui/menus/plan.tscn")
+var event_panel_scene = preload("res://scenes/gui/menus/event_panel.tscn")
 var action_scene = preload("res://scenes/gui/action.tscn")
-var day_log_scene = preload("res://scenes/gui/day_log.tscn")
+var day_log_scene = preload("res://scenes/gui/menus/day_log.tscn")
 
 #|==============================|
 #|       Data Sources          |

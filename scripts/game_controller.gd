@@ -29,6 +29,11 @@ var radial_menu_open: RadialMenu
 var calendar: Calendar
 
 """
+@brief TownDetails instance for managing town details
+"""
+var town_details: TownDetails
+
+"""
 @brief Maximum number of agents that can be assigned
 """
 @onready var max_agents: int = Constants.INIT_MAX_AGENTS
@@ -51,6 +56,7 @@ var endgame_triggered: bool = false
 """
 func _ready() -> void:
 	calendar = Calendar.new()
+	town_details = TownDetails.new()
 	EventBus.selected_radial_option.connect(_on_radial_option_selected)
 
 #|==============================|
@@ -58,19 +64,11 @@ func _ready() -> void:
 #|==============================|
 
 """
-@breif Sets the town name
-
-@param name The name of the town
-"""
-func set_town_name(_name: String) -> void:
-	town_name = _name
-
-"""
 @brief Gets the town name
 @returns The name of the town
 """
 func get_town_name() -> String:
-	return town_name
+	return town_details.town_name
 
 """
 @brief Gets the current resistance level
