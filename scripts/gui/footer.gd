@@ -121,7 +121,17 @@ Processes the turn and shows the end turn log.
 """
 func _on_turn_button_pressed():
 	# check if the player has unassigned agents
-	for agent in GlobalRegistry.characters.get_list(GlobalRegistry.LIST_SYMPATHISER_RECRUITED):
+	var agents = GlobalRegistry.characters.get_list(GlobalRegistry.LIST_SYMPATHISER_RECRUITED)
+	var sympathisers = GlobalRegistry.characters.get_list(GlobalRegistry.LIST_SYMPATHISER_NOT_RECRUITED).filter(func(x): return x.char_state == Enums.CharacterState.AVAILABLE)
+	print(len(agents) < GameController.max_agents, len(sympathisers) > 0)
+	if len(agents) < GameController.max_agents and len(sympathisers) > 0:
+		# if so, show a warning and return
+		var popup = Globals.confirmation_dialog_scene.instantiate()
+		popup.setup_dialog("You available agent slots. Are you sure you want to end the turn?", "End Turn", "Cancel")
+		popup.on_confirmed.connect(_on_turn_confirmed)
+		add_child(popup)
+		return
+	for agent in agents:
 		if agent.char_state == Enums.CharacterState.AVAILABLE:
 			# if so, show a warning and return
 			var popup = Globals.confirmation_dialog_scene.instantiate()
