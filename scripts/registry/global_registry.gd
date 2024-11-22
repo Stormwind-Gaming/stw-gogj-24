@@ -30,6 +30,8 @@ const LIST_ALL_ACTIONS = "all_actions"
 const LIST_RUMOURS = "rumours"
 const LIST_PLANS = "plans"
 const LIST_WORLD_EVENTS = "world_events"
+const LIST_DISTRICT_MODIFIERS = "district_modifiers"
+const LIST_GLOBAL_MODIFIERS = "global_modifiers"
 
 #|==============================|
 #|         Properties          |
@@ -69,6 +71,11 @@ var turn_logs: Registry = Registry.new()
 """
 var world_events: Registry = Registry.new()
 
+"""
+@brief Registry instance for managing modifier lists
+"""
+var modifiers: Registry = Registry.new()
+
 #|==============================|
 #|      Initialization         |
 #|==============================|
@@ -101,6 +108,9 @@ func _init():
 	# Initialize world-event-related lists
 	world_events.create_list(LIST_WORLD_EVENTS)
 
+	modifiers.create_list(LIST_DISTRICT_MODIFIERS)
+	modifiers.create_list(LIST_GLOBAL_MODIFIERS)
+
 
 func _ready():
 	# Character events
@@ -123,6 +133,9 @@ func _ready():
 
 	# World-event events
 	EventBus.world_event_created.connect(_on_world_event_created)
+
+	# Modifier events
+	EventBus.modifier_created.connect(_on_modifier_created)
 
 #|==============================|
 #|     Character Management    |
@@ -238,3 +251,17 @@ func _on_district_created(district: District) -> void:
 """
 func _on_world_event_created(world_event: WorldEvent) -> void:
 	world_events.add_item(LIST_WORLD_EVENTS, world_event)
+
+#|==============================|
+#|     Modifier Management    |
+#|==============================|
+"""
+@brief Adds a modifier to the modifiers list
+
+@param modifier The modifier to add to the registry
+"""
+func _on_modifier_created(modifier: Modifier) -> void:
+	if modifier.scope == Enums.ModifierScope.DISTRICT:
+		modifiers.add_item(LIST_DISTRICT_MODIFIERS, modifier)
+	else:
+		modifiers.add_item(LIST_GLOBAL_MODIFIERS, modifier)

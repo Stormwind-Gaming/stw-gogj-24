@@ -51,7 +51,8 @@ func _build_sympathy() -> Array[TurnLog]:
 		
 	if (charm_roll.success):
 		var base_sympathy_added: int = MathHelpers.generateBellCurveStat(Constants.ACTION_EFFECT_PLAN_BUILD_SYMPATHY_MIN, Constants.ACTION_EFFECT_PLAN_BUILD_SYMPATHY_MAX)
-		var sympathy_added: int = StatisticModification.sympathy_modification(base_sympathy_added, poi.parent_district.district_type)
+		# var sympathy_added: int = StatisticModification.sympathy_modification(base_sympathy_added, poi.parent_district.district_type)
+		var sympathy_added: int = base_sympathy_added
 
 		log_message = "Succeeded charm check..."
 		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
@@ -85,7 +86,8 @@ func _build_sympathy_all() -> Array[TurnLog]:
 
 		for my_poi in GlobalRegistry.poi.find_all_items(GlobalRegistry.LIST_ALL_POIS, "parent_district", poi.parent_district):
 			var base_sympathy_added: int = MathHelpers.generateBellCurveStat(Constants.ACTION_EFFECT_PLAN_BUILD_SYMPATHY_ALL_MIN, Constants.ACTION_EFFECT_PLAN_BUILD_SYMPATHY_ALL_MAX)
-			var sympathy_added: int = StatisticModification.sympathy_modification(base_sympathy_added, poi.parent_district.district_type)
+			# var sympathy_added: int = StatisticModification.sympathy_modification(base_sympathy_added, poi.parent_district.district_type)
+			var sympathy_added: int = base_sympathy_added
 
 			my_poi.poi_owner.char_sympathy += sympathy_added
 

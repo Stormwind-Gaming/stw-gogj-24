@@ -1,4 +1,4 @@
-extends Object
+extends Node
 
 class_name WorldEvent
 
@@ -54,7 +54,6 @@ func _on_end_turn(turn_number: int) -> void:
 	print("Checking if world-event should end", turn_number, "==", turn_to_end)
 	if turn_number == turn_to_end:
 		print("World-event ended", event_end_text)
-		# TODO: Why is this log not showing?
 		GlobalRegistry.turn_logs.add_item(str(GameController.turn_number), TurnLog.new(event_end_text, Enums.LogType.WORLD_EVENT))
 		EventBus.world_event_ended.emit(self)
 		_event_end()

@@ -9,49 +9,37 @@ func _process_action() -> Array[TurnLog]:
 
 	logs.append(TurnLog.new("Processing ESPIONAGE action at [u]" + str(poi.poi_name) + "[/u] by " + _get_character_names(), Enums.LogType.ACTION_INFO))
 
-	# Get cumulative stats for all characters involved
-	var stats: Dictionary = _get_stats()
+	var statistic_check: StatisticCheck = StatisticCheck.new(characters, poi.parent_district, poi)
 
 	var stat_check: String = ""
-	var roll: Dictionary = {"success": false}
+	var success: bool = false
 
 	match poi.stat_check_type:
 		Enums.StatCheckType.SMARTS:
 			stat_check = "smarts"
-			roll = MathHelpers.bounded_sigmoid_check(stats[stat_check], true, Constants.SMARTS_CHECK_MIN_CHANCE, Constants.SMARTS_CHECK_MAX_CHANCE)
+			success = statistic_check.smarts_check()
 
-			# emit stats change
-			EventBus.stat_created.emit("smarts", roll.success)
 		Enums.StatCheckType.CHARM:
 			stat_check = "charm"
-			roll = MathHelpers.bounded_sigmoid_check(stats[stat_check], true, Constants.CHARM_CHECK_MIN_CHANCE, Constants.CHARM_CHECK_MAX_CHANCE)
-
-			# emit stats change
-			EventBus.stat_created.emit("charm", roll.success)
+			success = statistic_check.charm_check()
 		
-	if (roll.success):
+	if (success):
 		log_message = "Succeeded " + stat_check + " check..."
 		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
 
-		log_message = "Mission chance: " + str(poi.rumour_config.mission_chance)
-		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
-		log_message = "Location chance: " + str(poi.rumour_config.location_chance)
-		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
-		log_message = "Time chance: " + str(poi.rumour_config.time_chance)
-		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
+		for i in range(statistic_check.intel_added(1)):
+			var rumour: Rumour = IntelFactory.create_rumour(poi.rumour_config)
 
-		var rumour: Rumour = IntelFactory.create_rumour(poi.rumour_config)
-
-		log_message = "Discovered a %s intel type." % Globals.get_intel_type_string(rumour.rumour_type)
-		logs.append(TurnLog.new(log_message, Enums.LogType.SUCCESS))
+			log_message = "Discovered a %s intel type." % Globals.get_intel_type_string(rumour.rumour_type)
+			logs.append(TurnLog.new(log_message, Enums.LogType.SUCCESS))
 
 	else:
 		log_message = "Failed " + stat_check + " check..."
 		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
 	
 	# emit stats change
-	EventBus.stat_created.emit("espionage", roll.success)
+	EventBus.stat_created.emit("espionage", success)
 	# emit stats change
-	EventBus.stat_created.emit("missions", roll.success)
+	EventBus.stat_created.emit("missions", success)
 
 	return logs

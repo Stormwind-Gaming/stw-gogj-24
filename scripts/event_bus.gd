@@ -182,3 +182,16 @@ signal world_event_ended(world_event: WorldEvent)
 @brief Emitted when a new stat is created
 """
 signal stat_created(stat: String, success: bool)
+
+#|==============================|
+#|      Modifier Management    |
+#|==============================|
+"""
+@brief Emitted when a modifier is created
+"""
+signal modifier_created(modifier: Modifier)
+
+"""
+@brief Emitted when a modifier is destroyed
+"""
+signal modifier_destroyed(modifier: Modifier)

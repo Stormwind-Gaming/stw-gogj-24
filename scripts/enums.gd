@@ -279,3 +279,14 @@ enum WorldEventType {
 	MINOR_SECRET_POLICE,
 	MINOR_AIRBASE,
 }
+
+#|==============================|
+#|        Modifier Enums          |
+#|==============================|
+"""
+@brief Scope of modifiers
+"""
+enum ModifierScope {
+	DISTRICT,
+	WORLD
+}

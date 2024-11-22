@@ -9,15 +9,10 @@ func _process_action() -> Array[TurnLog]:
 
 	logs.append(TurnLog.new("Processing SURVEILLANCE action at [u]" + str(poi.poi_name) + "[/u] by " + _get_character_names(), Enums.LogType.ACTION_INFO))
 
-	# Get cumulative stats for all characters involved
-	var stats: Dictionary = _get_stats()
+	var statistic_check: StatisticCheck = StatisticCheck.new(characters, poi.parent_district, poi)
+	var smarts_roll = statistic_check.smarts_check()
 
-	var smarts_roll = MathHelpers.bounded_sigmoid_check(stats["smarts"], true, Constants.SMARTS_CHECK_MIN_CHANCE, Constants.SMARTS_CHECK_MAX_CHANCE)
-
-	# emit stats change
-	EventBus.stat_created.emit("smarts", smarts_roll.success)
-
-	if (smarts_roll.success):
+	if (smarts_roll):
 		log_message = "Succeeded smarts check..."
 		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
 
@@ -31,8 +26,8 @@ func _process_action() -> Array[TurnLog]:
 		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
 
 	# emit stats change
-	EventBus.stat_created.emit("surveillance", smarts_roll.success)
+	EventBus.stat_created.emit("surveillance", smarts_roll)
 	# emit stats change
-	EventBus.stat_created.emit("missions", smarts_roll.success)
+	EventBus.stat_created.emit("missions", smarts_roll)
 
 	return logs
