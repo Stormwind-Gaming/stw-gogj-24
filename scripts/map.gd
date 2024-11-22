@@ -42,13 +42,13 @@ func _ready() -> void:
 	for district in GlobalRegistry.districts.get_all_items():
 		_set_district_details(district)
 
-	_setup_agents()
 	_generate_population()
+	_setup_agents()
 
 	# Create initial rumours
-	# IntelFactory.create_rumour(RumourConfig.new(100, 0, 0))
-	# IntelFactory.create_rumour(RumourConfig.new(0, 100, 0))
-	# IntelFactory.create_rumour(RumourConfig.new(0, 0, 100))
+	IntelFactory.create_rumour(RumourConfig.new(100, 0, 0))
+	IntelFactory.create_rumour(RumourConfig.new(0, 100, 0))
+	IntelFactory.create_rumour(RumourConfig.new(0, 0, 100))
 
 """
 @brief Called every frame to handle input.
@@ -215,17 +215,20 @@ func _show_game_over(_name: String) -> void:
 @brief Generates initial population including some special cases
 """
 func _generate_population() -> void:
-	var dead = CharacterFactory.create_character()
-	var mia = CharacterFactory.create_character()
-
-	dead.char_state = Enums.CharacterState.DECEASED
+	var population = GlobalRegistry.characters.get_all_items()
+	# set one character to deceased and one to MIA
+	var deceased = population[randi() % population.size()]
+	deceased.char_state = Enums.CharacterState.DECEASED
+	population.erase(deceased)
+	var mia = population[randi() % population.size()]
 	mia.char_state = Enums.CharacterState.MIA
+	mia.char_sympathy = randi_range(80, 100)
 
 """
 @brief Sets up initial agent characters with high sympathy
 """
 func _setup_agents() -> void:
-	var population = GlobalRegistry.characters.get_all_items()
+	var population = GlobalRegistry.characters.get_all_items().filter(func(x): return x.char_state == Enums.CharacterState.AVAILABLE)
 	
 	# Pick three random characters to be initial agents
 	var agent1 = population[randi() % population.size()]
@@ -235,7 +238,10 @@ func _setup_agents() -> void:
 	var agent3 = population[randi() % population.size()]
 	
 	agent1.char_sympathy = randi_range(80, 100)
+	agent1.char_recruitment_state = Enums.CharacterRecruitmentState.SYMPATHISER_RECRUITED
 	agent2.char_sympathy = randi_range(80, 100)
+	agent2.char_recruitment_state = Enums.CharacterRecruitmentState.SYMPATHISER_RECRUITED
 	agent3.char_sympathy = randi_range(80, 100)
+	agent3.char_recruitment_state = Enums.CharacterRecruitmentState.SYMPATHISER_RECRUITED
 
 	agent1.char_state = Enums.CharacterState.INJURED

@@ -40,12 +40,24 @@ func _generate_action_list() -> void:
 	for child in actions_list.get_children():
 		child.queue_free()
 	
+	var actions = GlobalRegistry.actions.get_list(GlobalRegistry.LIST_ALL_ACTIONS)
+
 	# for each action, create a new action card
-	for action in GlobalRegistry.actions.get_list(GlobalRegistry.LIST_ALL_ACTIONS):
+	for action in actions:
 		var actions_list_action = Globals.actions_list_action_scene.instantiate()
 		actions_list_action.set_action(action)
 		actions_list_action.connect("remove_action", _generate_action_list)
 		actions_list.add_child(actions_list_action)
+	
+	if len(actions) == 0:
+		# create a label to indicate no actions
+		var margin_container = MarginContainer.new()
+		margin_container.add_theme_constant_override("margin_top", 5)
+		margin_container.add_theme_constant_override("margin_left", 15)
+		var label = Label.new()
+		label.text = "No actions available, assign agents on the map to create actions."
+		margin_container.add_child(label)
+		actions_list.add_child(margin_container)
 	
 	# center the window
 	popup_centered()

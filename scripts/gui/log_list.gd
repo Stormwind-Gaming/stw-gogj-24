@@ -26,6 +26,21 @@ func _ready():
 		var day_log = Globals.day_log_scene.instantiate()
 		day_log.set_turn_logs(i)
 		day_tab_container.add_child(day_log)
+	
+	# if turns are empty, create a label to indicate no logs
+	if len(turns) == 0:
+		var margin_container = MarginContainer.new()
+		margin_container.add_theme_constant_override("margin_top", 25)
+		margin_container.add_theme_constant_override("margin_left", 25)
+		margin_container.name = GameController.calendar.get_date_string(-1, false)
+		# add vbox container to hold label
+		var vbox = VBoxContainer.new()
+		margin_container.add_child(vbox)
+		var label = Label.new()
+		label.text = "No logs today."
+		vbox.add_child(label)
+		margin_container.add_child(vbox)
+		day_tab_container.add_child(margin_container)
 
 
 #|==============================|
