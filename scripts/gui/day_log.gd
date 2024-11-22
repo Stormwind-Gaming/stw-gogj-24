@@ -74,6 +74,10 @@ func set_turn_logs(turn_number_attr: int) -> void:
 			label.text += "[color=purple]" + turn_log.log_message + "[/color]\n"
 		else:
 			label.text += "[color=grey]" + turn_log.log_message + "[/color]\n"
+	
+	# if no logs, display message
+	if label.text == "":
+		label.text = "No logs today."
 
 """
 @brief Enables the typewriter effect for log display.
