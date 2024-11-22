@@ -16,7 +16,7 @@ extends Camera2D
 """
 @brief Sensitivity of the camera movement
 """
-@export var sensitivity: float = 2.5
+@export var sensitivity: float = 3.5
 
 """
 @brief Maximum distance the image can move horizontally

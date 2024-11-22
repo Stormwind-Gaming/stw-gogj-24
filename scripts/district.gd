@@ -97,7 +97,6 @@ Initializes district properties and sets up POIs.
 func _ready() -> void:
 	# emit district created signal
 	EventBus.district_created.emit(self)
-	EventBus.district_heat_changed.connect(_update_heat_value)
 	EventBus.character_sympathy_changed.connect(_update_sympathy_value)
 	EventBus.district_unfocused.connect(_reset_highlight_color)
 
@@ -214,12 +213,12 @@ func _process(delta: float) -> void:
 @param district The district to update
 new_heat The new heat value
 """
-func _update_heat_value(district: District, new_heat: int) -> void:
-	if district == self:
-		heat += new_heat
-		heat_color.a = heat / 200
-		$Polygon2D.color = heat_color
-	district_popup.set_heat(heat)
+# func _update_heat_value(district: District, new_heat: int) -> void:
+# 	if district == self:
+# 		heat += new_heat
+# 		heat_color.a = heat / 200
+# 		$Polygon2D.color = heat_color
+# 	district_popup.set_heat(heat)
 
 """
 @brief updates sympathy value and visuals
@@ -570,6 +569,8 @@ func _reset_highlight_color(district: District) -> void:
 #|==============================|
 #|      Setters                |
 #|==============================|
+
 func set_heat(new_heat: int) -> void:
 	# clamp heat between 0 and 100
 	heat = clamp(new_heat, 0, 100)
+	district_popup.set_heat(heat)

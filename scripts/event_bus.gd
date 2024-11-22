@@ -105,11 +105,6 @@ signal selected_radial_option(option: Enums.ActionType)
 signal district_created(district: District)
 
 """
-@brief Emitted when a district's heat level changes
-"""
-signal district_heat_changed(district: District, heat: int)
-
-"""
 @brief Emitted when a district becomes focused
 """
 signal district_just_focused(district: District)

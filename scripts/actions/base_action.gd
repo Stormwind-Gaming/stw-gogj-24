@@ -160,12 +160,11 @@ func _process_danger() -> Array[TurnLog]:
 
 		log_message = "Succeeded subtlety check... heat increased by " + str(heat_added)
 		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
-		EventBus.district_heat_changed.emit(poi.parent_district, heat_added)
+		poi.parent_district.heat += heat_added
 
 	else:
 		heat_added = statistic_check.heat_added(Constants.ACTION_EFFECT_FAILED_SUBTLETY_MIN, Constants.ACTION_EFFECT_FAILED_SUBTLETY_MAX)
-
-		EventBus.district_heat_changed.emit(poi.parent_district, heat_added)
+		poi.parent_district.heat += heat_added
 
 		var district: District = poi.parent_district
 		var base_district_heat = district.heat
