@@ -34,4 +34,5 @@ func set_details(poi: PointOfInterest) -> void:
 	# 	text_label.text += 'District bonus: [font_size=16]' + Globals.get_district_type_base_effect_string(poi.parent_district.district_type) + '[/font_size]'
 
 func check_details() -> void:
+	# TODO: IF we're adding the bonuses to the popup, we need to check them here 
 	print("Checking details")

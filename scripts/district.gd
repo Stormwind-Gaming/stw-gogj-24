@@ -109,7 +109,6 @@ func _ready() -> void:
 
 	# set heat color alpha based on heat between 0 and 0.5
 	heat_color.a = float(heat) / 200.0
-	print("Heat color: %s" % heat_color.a)
 
 	# Set up the Polygon2D for visual appearance
 	$Polygon2D.polygon = $CollisionPolygon2D.polygon
@@ -187,7 +186,6 @@ func _ready() -> void:
 		# if poi name is the same as another poi in the district, get a new name
 		while pois.filter(
 			func(poi_to_filter):
-				print(poi_to_filter.poi_name, "%s - %s" % [poi_name, selected_poi_type["poi_name"]])
 				return poi_to_filter.poi_name == "%s - %s" % [poi_name, selected_poi_type["poi_name"]]
 		).size() > 0:
 			print("Duplicate poi name found")

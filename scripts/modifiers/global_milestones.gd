@@ -32,22 +32,22 @@ func _check_milestones(_num: int) -> void:
 	# check if any global milestones have been passed
 	var global_heat = GameController.get_heat_level()
 
-	if not global_heat_breakpoint_medium and global_heat >= 35:
+	if not global_heat_breakpoint_medium and global_heat >= Constants.GLOBAL_HEAT_BREAKPOINT_MEDIUM:
 		global_heat_breakpoint_medium = true
 		EventBus.create_new_event_panel.emit(Enums.EventOutcomeType.HEAT_BREAKPOINT_MEDIUM, [] as Array[Character], null)
-	if not global_heat_breakpoint_high and global_heat >= 70:
+	if not global_heat_breakpoint_high and global_heat >= Constants.GLOBAL_HEAT_BREAKPOINT_HIGH:
 		global_heat_breakpoint_high = true
 		EventBus.create_new_event_panel.emit(Enums.EventOutcomeType.HEAT_BREAKPOINT_HIGH, [] as Array[Character], null)
 
 	var global_sympathy = GameController.get_resistance_level()
 
-	if not global_sympathy_breakpoint_low and global_sympathy >= 30:
+	if not global_sympathy_breakpoint_low and global_sympathy >= Constants.GLOBAL_SYMPATHY_BREAKPOINT_LOW:
 		global_sympathy_breakpoint_low = true
 		EventBus.create_new_event_panel.emit(Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_LOW, [] as Array[Character], null)
-	if not global_sympathy_breakpoint_medium and global_sympathy >= 45:
+	if not global_sympathy_breakpoint_medium and global_sympathy >= Constants.GLOBAL_SYMPATHY_BREAKPOINT_MEDIUM:
 		global_sympathy_breakpoint_medium = true
 		EventBus.create_new_event_panel.emit(Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_MEDIUM, [] as Array[Character], null)
-	if not global_sympathy_breakpoint_high and global_sympathy >= 60:
+	if not global_sympathy_breakpoint_high and global_sympathy >= Constants.GLOBAL_SYMPATHY_BREAKPOINT_HIGH:
 		global_sympathy_breakpoint_high = true
 		EventBus.create_new_event_panel.emit(Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_HIGH, [] as Array[Character], null)
 	
