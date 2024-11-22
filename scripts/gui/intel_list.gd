@@ -111,9 +111,9 @@ func populate_rumour_list():
 	clear_container(when_btn_grp_container)
 	
 	var intel_type_to_container = {
-		Enums.RumourType.MISSION: {"container": whowhat_btn_grp_container, "button_group": ButtonGroup.new(), "description_label": whowhat_description},
-		Enums.RumourType.LOCATION: {"container": where_btn_grp_container, "button_group": ButtonGroup.new(), "description_label": where_description},
-		Enums.RumourType.TIME: {"container": when_btn_grp_container, "button_group": ButtonGroup.new(), "description_label": when_description}
+		Enums.RumourType.MISSION: {"container": whowhat_btn_grp_container, "button_group": ButtonGroup.new(), "description_label": whowhat_description, "intel_type": Enums.RumourType.MISSION},
+		Enums.RumourType.LOCATION: {"container": where_btn_grp_container, "button_group": ButtonGroup.new(), "description_label": where_description, "intel_type": Enums.RumourType.LOCATION},
+		Enums.RumourType.TIME: {"container": when_btn_grp_container, "button_group": ButtonGroup.new(), "description_label": when_description, "intel_type": Enums.RumourType.TIME}
 	}
 
 	var rumours = GlobalRegistry.intel.get_list(GlobalRegistry.LIST_RUMOURS)
@@ -167,6 +167,15 @@ func populate_rumour_list():
 			container.add_child(HSeparator.new())
 		else:
 			print("Error: Container not found or intel_data is invalid for:", name, "with type:", rumour.type)
+	
+	# if any container is empty, show a message
+	for intel_data in intel_type_to_container.values():
+		if intel_data["container"].get_child_count() == 0:
+			# create a label
+			var label = Label.new()
+			label.text = "No %s type intel available" % Globals.get_intel_type_string(intel_data["intel_type"])
+			label.add_theme_font_size_override("font_size", 14)
+			intel_data["container"].add_child(label)
 
 """
 @brief Populates the plan list with existing plans.
@@ -186,6 +195,16 @@ func populate_plan_list():
 		new_plan_scene.set_existing_plan_card(plan)
 		new_plan_scene.create_plan.connect(_on_create_plan_btn_pressed)
 		plan_list_container.add_child(new_plan_scene)
+	
+	if len(plans) == 0:
+		# create a label
+		var margin_container = MarginContainer.new()
+		margin_container.add_theme_constant_override("margin_top", 20)
+		margin_container.add_theme_constant_override("margin_left", 10)
+		var label = Label.new()
+		label.text = "No plans available, combine Rumours to formulate a new plan."
+		margin_container.add_child(label)
+		plan_list_container.add_child(margin_container)
 
 """
 @brief Checks if a plan can be created and updates button visibility.

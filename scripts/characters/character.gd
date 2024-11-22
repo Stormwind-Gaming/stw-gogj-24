@@ -121,12 +121,12 @@ func get_char_recruitment_state() -> Enums.CharacterRecruitmentState:
 @param value The new knowledge status to set.
 """
 func set_char_recruitment_state(value: Enums.CharacterRecruitmentState) -> void:
-	char_recruitment_state = value
-
 	# Make sure that if we're setting this character to a sympathiser that they have appropriate sympathy
-	if ((value == Enums.CharacterRecruitmentState.SYMPATHISER_NOT_RECRUITED or value == Enums.CharacterRecruitmentState.SYMPATHISER_RECRUITED) and char_sympathy < 80):
-		char_sympathy = 80
-
+	if ((value == Enums.CharacterRecruitmentState.SYMPATHISER_NOT_RECRUITED or value == Enums.CharacterRecruitmentState.SYMPATHISER_RECRUITED) and char_sympathy < Constants.NEW_SYMPATHISER_THRESHOLD):
+		push_warning('Character sympathy level is too low to be recruited as a sympathiser.')
+		return
+	
+	char_recruitment_state = value
 	EventBus.character_recruitment_state_changed.emit(self)
 
 """

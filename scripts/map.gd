@@ -46,9 +46,9 @@ func _ready() -> void:
 	_generate_population()
 
 	# Create initial rumours
-	IntelFactory.create_rumour(RumourConfig.new(100, 0, 0))
-	IntelFactory.create_rumour(RumourConfig.new(0, 100, 0))
-	IntelFactory.create_rumour(RumourConfig.new(0, 0, 100))
+	# IntelFactory.create_rumour(RumourConfig.new(100, 0, 0))
+	# IntelFactory.create_rumour(RumourConfig.new(0, 100, 0))
+	# IntelFactory.create_rumour(RumourConfig.new(0, 0, 100))
 
 """
 @brief Called every frame to handle input.
@@ -235,10 +235,7 @@ func _setup_agents() -> void:
 	var agent3 = population[randi() % population.size()]
 	
 	agent1.char_sympathy = randi_range(80, 100)
-	agent1.char_recruitment_state = Enums.CharacterRecruitmentState.SYMPATHISER_RECRUITED
 	agent2.char_sympathy = randi_range(80, 100)
-	agent2.char_recruitment_state = Enums.CharacterRecruitmentState.SYMPATHISER_RECRUITED
 	agent3.char_sympathy = randi_range(80, 100)
-	agent3.char_recruitment_state = Enums.CharacterRecruitmentState.SYMPATHISER_RECRUITED
 
 	agent1.char_state = Enums.CharacterState.INJURED
