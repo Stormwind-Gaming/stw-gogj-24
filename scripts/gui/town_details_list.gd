@@ -90,6 +90,13 @@ func _on_district_button_pressed(district_enum: Enums.DistrictType) -> void:
 	district_submenu.set_district(GlobalRegistry.districts.find_item(GlobalRegistry.LIST_ALL_DISTRICTS, "district_type", district_enum))
 	tab_container.add_child(district_submenu)
 	tab_container.set_current_tab(tab_container.get_tab_count() - 1)
+	district_submenu.poi_selected.connect(_on_poi_button_pressed)
+
+func _on_poi_button_pressed(poi: PointOfInterest) -> void:
+	var poi_submenu = poi_submenu_scene.instantiate()
+	poi_submenu.set_poi(poi)
+	tab_container.add_child(poi_submenu)
+	tab_container.set_current_tab(tab_container.get_tab_count() - 1)
 	
 """
 @brief Called when the tab is changed

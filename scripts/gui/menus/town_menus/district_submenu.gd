@@ -1,5 +1,7 @@
 extends PanelContainer
 
+
+
 #|==============================|
 #|       Properties            |
 #|==============================|
@@ -44,6 +46,12 @@ var district: District
 @export var poi_buttons: GridContainer
 
 #|==============================|
+#|       Signals               |
+#|==============================|
+
+signal poi_selected(poi: PointOfInterest)
+
+#|==============================|
 #|       Methods               |
 #|==============================|
 """
@@ -77,9 +85,13 @@ func set_district(district: District) -> void:
 @brief Handles the pressing of a PoI button
 """
 func _on_poi_button_pressed() -> void:
-	print("Pressed PoI button")
-	pass
+	# var poi = self.district.pois[poi_int]
+	# self.poi_selected.emit(poi)
+	print("PoI button pressed")
 
+"""
+@brief Event handler for the focus button
+"""
 func _on_foucus_button_pressed() -> void:
 	WindowHandler._close_all_windows()
 	district.district_clicked.emit(district)

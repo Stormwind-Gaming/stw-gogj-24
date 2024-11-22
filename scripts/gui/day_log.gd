@@ -76,7 +76,7 @@ func set_turn_logs(turn_number_attr: int) -> void:
 			label.text += "[color=grey]" + turn_log.log_message + "[/color]\n"
 	
 	# if no logs, display message
-	if label.text == "":
+	if len(turn_logs) == 0:
 		label.text = "No logs today."
 
 """

@@ -1,6 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://1bqgo8p0njo8"]
+[gd_scene load_steps=10 format=3 uid="uid://1bqgo8p0njo8"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cct2p"]
+[ext_resource type="Script" path="res://scripts/gui/menus/town_menus/poi_submenu.gd" id="1_db8ic"]
+[ext_resource type="Texture2D" uid="uid://5t6xu00wsvwi" path="res://assets/icons/target.png" id="2_ekirq"]
+[ext_resource type="Texture2D" uid="uid://bcsjhr1sajkmw" path="res://assets/icons/target_hover.png" id="3_hl2hv"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yi6e4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fvm0u"]
 bg_color = Color(1, 1, 1, 0)
 border_width_left = 1
 border_width_top = 1
@@ -12,12 +18,27 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[node name="DistrictSubmenu" type="PanelContainer"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g2o8u"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qsy8h"]
+bg_color = Color(0.839216, 0, 0.121569, 0.529412)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_joq0m"]
+bg_color = Color(0.290196, 0.709804, 0, 0.505882)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_n3id1"]
+grow_begin = 0.0
+grow_end = 0.0
+
+[node name="PoISubmenu" type="PanelContainer" node_paths=PackedStringArray("poi_name", "description")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_db8ic")
+poi_name = NodePath("MarginContainer/VBoxContainer/HBoxContainer/PoIName")
+description = NodePath("MarginContainer/VBoxContainer/RichTextLabel")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -32,21 +53,97 @@ layout_mode = 2
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="TownName" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="PoIName" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 theme_override_font_sizes/font_size = 25
-text = "District Name"
+text = "PoI Name"
 
-[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/separator = SubResource("StyleBoxEmpty_yi6e4")
+
+[node name="TextureButton" type="TextureButton" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+texture_normal = ExtResource("2_ekirq")
+texture_pressed = ExtResource("2_ekirq")
+texture_hover = ExtResource("3_hl2hv")
 
 [node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_cct2p")
+theme_override_styles/panel = SubResource("StyleBoxFlat_fvm0u")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+theme_override_styles/separator = SubResource("StyleBoxEmpty_g2o8u")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="HeatProgressBar" type="ProgressBar" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_styles/fill = SubResource("StyleBoxFlat_qsy8h")
+step = 1.0
+value = 50.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/HeatProgressBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "Heat - 00%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ResistanceProgressBar" type="ProgressBar" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_styles/fill = SubResource("StyleBoxFlat_joq0m")
+step = 1.0
+value = 50.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/ResistanceProgressBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "Resistance - 00%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+theme_override_styles/separator = SubResource("StyleBoxLine_n3id1")
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "PoIs"
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 14
-text = "estled along the coast where the river meets the sea, %s thrives as a hub of trade and indu"
 fit_content = true
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/TextureButton" to="." method="_on_focus_button_pressed"]
