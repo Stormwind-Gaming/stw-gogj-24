@@ -35,6 +35,9 @@ poi_static_type = 27
 poi_static_name = "Ammo Factory"
 poi_static_short_description = "A vital production site for munitions."
 poi_static_description = "The ammo factory operates day and night, producing bullets, shells, and explosives for the enemy’s armies. Guards and overseers ensure strict discipline, but resistance members have found ways to infiltrate the workforce. A single act of sabotage could result in catastrophic delays for the enemy and provide much-needed supplies for the resistance."
+mission_static_chance = 60
+location_static_chance = 30
+timing_static_chance = 10
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi_Ammo_Factory"]
 polygon = PackedVector2Array(588, -78, 674, -72, 674, -164, 611, -177)
@@ -45,6 +48,9 @@ poi_static_type = 4
 poi_static_name = "Post Office"
 poi_static_short_description = "A communications hub for the district."
 poi_static_description = "The post office manages mail and messages for both civilians and the occupying forces. Resistance operatives often monitor the facility, intercepting letters and documents that may contain valuable intelligence. While the guards are not as numerous here, the risk of discovery is ever-present, as the enemy keeps a close watch on communications."
+mission_static_chance = 30
+location_static_chance = 10
+timing_static_chance = 60
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi_Post_Office"]
 polygon = PackedVector2Array(325, -99, 392, -91, 405, -208, 344, -216)
@@ -55,6 +61,9 @@ poi_static_type = 5
 poi_static_name = "Police Station"
 poi_static_short_description = "The local base for law enforcement."
 poi_static_description = "The police station is a symbol of control and order in the district, staffed by collaborators and enemy officials. It’s used to monitor civilian activity, coordinate arrests, and suppress resistance efforts. Breaking into the station could yield critical records, but it is a well-guarded and dangerous location."
+mission_static_chance = 10
+location_static_chance = 70
+timing_static_chance = 20
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi_Police_Station"]
 polygon = PackedVector2Array(577, 12, 556, 66, 617, 89, 638, 90, 641, 83, 772, 58, 765, 26, 754, 3, 734, -5, 705, -14, 693, -17, 680, -11, 680, 21, 685, 29, 686, 42, 686, 50, 636, 46, 640, 30)

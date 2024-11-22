@@ -35,6 +35,9 @@ poi_static_type = 25
 poi_static_name = "Airfield"
 poi_static_short_description = "A hub for enemy aircraft operations."
 poi_static_description = "The airfield is a critical asset for the enemy, hosting planes and personnel that carry out reconnaissance and bombing missions. Its vast expanse of runways, hangars, and barracks is heavily guarded. Sabotaging aircraft or fuel depots here could severely disrupt enemy operations, but the risks are immense due to the constant activity and patrols."
+mission_static_chance = 64
+location_static_chance = 18
+timing_static_chance = 18
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi_Airfield"]
 polygon = PackedVector2Array(256, -439, 781, -381, 767, -532, 759, -628, 751, -641, 288, -689, 215, -692, 184, -649, 212, -586, 233, -440)
@@ -45,6 +48,9 @@ poi_static_type = 26
 poi_static_name = "Garrison"
 poi_static_short_description = "A heavily fortified enemy barracks."
 poi_static_description = "The garrison houses enemy soldiers and their equipment, serving as a launch point for patrols and raids. The high walls and watchtowers make infiltration almost impossible, but the supplies and weapons stored here are tempting targets. Resistance members dream of turning the garrison’s strength against itself with carefully planned sabotage."
+mission_static_chance = 40
+location_static_chance = 50
+timing_static_chance = 10
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi_Garrison"]
 polygon = PackedVector2Array(916, -711, 958, -788, 962, -794, 976, -797, 996, -818, 1008, -823, 1029, -821, 1063, -815, 1118, -796, 1214, -763, 1323, -719, 1397, -694, 1404, -678, 1416, -671, 1421, -663, 1403, -634, 1393, -627, 1354, -542, 1311, -530, 1261, -518, 1217, -519, 1166, -535, 1130, -535, 1083, -540, 1061, -544, 1019, -563, 984, -572, 972, -585, 969, -595, 972, -612, 964, -638, 951, -662, 928, -690, 916, -704)

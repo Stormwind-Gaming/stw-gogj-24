@@ -2,7 +2,7 @@ poi_name,poi_short_description,poi_description,district_type,spawn_chance,max_sp
 Cinema,A quiet cinema in the district,A local cinema that screens both propaganda and occasional foreign films. It's a popular place for locals but often watched by the authorities.,civic,100,1,charm,none,50,25,25
 Grocer,A small grocery store,A modest shop selling fresh produce and essential goods. The owner is known for being sympathetic to the community's struggles.,civic,75,-1,smarts,none,70,20,10
 Shop,A general store,"A store stocked with various household items, tools, and occasionally black market goods, if you know who to ask.",civic,75,-1,charm,none,67,22,11
-Pub,A Flemish pub,A cozy place to drink and share news. Resistance members occasionally meet here under the cover of noisy patrons.,civic,50,-1,smarts,none,25,25,50
+Pub,A Walloon pub,A cozy place to drink and share news. Resistance members occasionally meet here under the cover of noisy patrons.,civic,50,-1,smarts,none,25,25,50
 Restaurant,A family-run eatery,This quaint restaurant serves simple but hearty meals. It's a hub for local gossip and a potential meeting point for resistance.,civic,50,-1,charm,none,25,50,25
 Residence,{character}'s home,A modest home where {character} lives. It may hold personal or important resistance-related items.,civic,25,-1,smarts,none,33,33,34
 Factory,A sheet metal factory,"This factory has often been a target of allied bombing, but it still stands. The foundry produces steel castings for vehicles and tanks for the war effort. We see deliveries leaving every day with new material to support the enemy's war effort.",industrial,75,-1,charm,none,20,60,20
@@ -11,7 +11,7 @@ Warehouse,A storage depot,This large storage facility houses goods ranging from 
 Office,A small administrative office,An unassuming office handling paperwork and logistics for the district. It might contain sensitive information.,"industrial, port",50,-1,smarts,none,15,10,75
 Anti Air Emplacement,A defensive artillery position,"A heavily fortified position housing anti-aircraft guns, used to defend against allied bombers.",military,50,-1,charm,none,20,30,50
 Residence,A local household,A typical residence that blends into the neighborhood. It may hide secrets or sympathetic occupants.,residential,75,-1,smarts,none,30,60,10
-Pub,A Dutch pub,"A lively drinking spot with a rowdy reputation. Locals come here to unwind, and sometimes resistance plans are whispered in dark corners.",residential,50,3,charm,none,50,30,20
+Pub,A Flemish pub,"A lively drinking spot with a rowdy reputation. Locals come here to unwind, and sometimes resistance plans are whispered in dark corners.",residential,50,3,charm,none,50,30,20
 Cafe,A charming little cafe,A quaint cafe where locals gather for coffee and quiet conversation. It's a good place to pick up on rumors or meet discreetly.,residential,50,3,smarts,none,30,50,20
 Shop,A clothing shop,A small shop specializing in repairing and selling clothing. The tailor is known for being resourceful and helpful to trusted patrons.,residential,50,3,charm,none,20,30,50
 Church,St Mary and Joseph's,"This old stone church serves as a beacon of hope in the district. The priest is known for helping those in need, sometimes risking his safety.",residential,50,2,smarts,none,20,20,60

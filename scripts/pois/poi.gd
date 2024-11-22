@@ -42,17 +42,17 @@ class_name PointOfInterest
 """
 @brief Predefined Misson intel chance
 """
-@export var mission_chance: int = 1
+@export var mission_static_chance: int = 1
 
 """
 @brief Predefined Location intel chance
 """
-@export var location_chance: int = 1
+@export var location_static_chance: int = 1
 
 """
 @brief Predefined Timing intel chance
 """
-@export var timing_chance: int = 1
+@export var timing_static_chance: int = 1
 
 #|==============================|
 #|         Properties          |
@@ -210,28 +210,44 @@ func setup_poi_visuals():
 @param poi_name_arg The name of the POI
 @param poi_description_arg The description of the POI
 """
-func set_poi_details(parent_district_arg: District, poi_type_arg: Enums.POIType, poi_name_arg: String, poi_short_description_arg: String, poi_description_arg: String, what_chance: int, where_chance: int, when_chance: int) -> void:
+func set_poi_details(parent_district_arg: District, poi_type_arg: Enums.POIType, poi_name_arg: String, poi_short_description_arg: String, poi_description_arg: String, what_chance_arg: int, where_chance_arg: int, when_chance_arg: int) -> void:
+	var what_tmp
+	var where_tmp
+	var when_tmp
 	parent_district = parent_district_arg
 	if poi_static:
 		poi_type = poi_static_type
 		poi_name = poi_static_name
 		poi_description = poi_static_description
 		poi_short_description = poi_static_short_description
+		what_tmp = mission_static_chance
+		where_tmp = location_static_chance
+		when_tmp = timing_static_chance
+		print("Setting static POI details")
+		print("what %s - where %s - when %s" % [what_tmp, where_tmp, when_tmp])
 	else:
 		poi_type = poi_type_arg
 		poi_name = poi_name_arg
 		poi_description = poi_description_arg
 		poi_short_description = poi_short_description_arg
+		what_tmp = what_chance_arg
+		where_tmp = where_chance_arg
+		when_tmp = when_chance_arg
+
 	
-	rumour_config = RumourConfig.new(what_chance, where_chance, when_chance)
+	rumour_config = RumourConfig.new(what_tmp, where_tmp, when_tmp)
 
 	# Set the most likely intel type for this POI
-	if what_chance > where_chance and what_chance > when_chance:
+	if what_tmp == where_tmp and what_tmp == when_tmp:
+		most_likely_intel_type = "Even"
+	elif what_tmp > where_tmp and what_tmp > when_tmp:
 		most_likely_intel_type = "Mission"
-	elif where_chance > what_chance and where_chance > when_chance:
+	elif where_tmp > what_tmp and where_tmp > when_tmp:
 		most_likely_intel_type = "Location"
 	else:
 		most_likely_intel_type = "Timing"
+
+	print("what %s - where %s - when %s - most likely %s" % [what_tmp, where_tmp, when_tmp, most_likely_intel_type])
 
 	poi_popup.set_details(self)
 

@@ -35,6 +35,9 @@ poi_static_type = 1
 poi_static_name = "Gestapo HQ"
 poi_static_short_description = "The headquarters of the Gestapo."
 poi_static_description = "A dark and imposing building that casts a shadow over the district, the Gestapo HQ is a symbol of fear and control. Inside, interrogations, espionage, and the coordination of crackdowns take place. Breaking into this stronghold would be a bold and dangerous operation, but the intelligence hidden within could turn the tide of the resistance’s efforts."
+mission_static_chance = 15
+location_static_chance = 15
+timing_static_chance = 70
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi_Gestapo_HQ"]
 polygon = PackedVector2Array(957, 34, 1023, 24, 1016, -27, 1006, -80, 958, -75, 949, -71)
@@ -45,6 +48,9 @@ poi_static_type = 2
 poi_static_name = "Town Hall"
 poi_static_short_description = "The administrative heart of the district."
 poi_static_description = "The town hall serves as the center of governance, where bureaucrats manage civilian life under the enemy’s occupation. While public-facing activities seem mundane, the archives and offices hold valuable information about supply routes, personnel, and enemy plans. Resistance members often look for weak links among the staff to gain access to the secrets hidden within."
+mission_static_chance = 33
+location_static_chance = 33
+timing_static_chance = 34
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi_Town_Hall"]
 polygon = PackedVector2Array(827, 62, 940, 43, 952, 38, 942, -72, 815, -67, 828, 8, 825, 17)

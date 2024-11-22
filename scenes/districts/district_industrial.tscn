@@ -35,6 +35,9 @@ poi_static_type = 6
 poi_static_name = "Train Station"
 poi_static_short_description = "A busy hub of transport and logistics."
 poi_static_description = "The train station serves as a vital link for supplies, troops, and civilians moving through the region. Heavily monitored by guards and informants, it’s both a lifeline and a danger zone. The resistance often uses the station to intercept messages, smuggle contraband, or sabotage enemy shipments. Its bustling environment provides excellent cover for covert operations, but the stakes are always high."
+mission_static_chance = 34
+location_static_chance = 33
+timing_static_chance = 33
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi_Train_Station"]
 polygon = PackedVector2Array(650, 754, 677, 741, 686, 742, 693, 745, 700, 755, 711, 757, 786, 746, 869, 724, 897, 727, 878, 550, 866, 537, 722, 565, 735, 646, 669, 654, 662, 690, 635, 742)
@@ -45,6 +48,9 @@ poi_static_type = 28
 poi_static_name = "Foundry"
 poi_static_short_description = "A sprawling industrial site."
 poi_static_description = "The foundry churns out steel and machinery, essential for the enemy's war effort. Workers endure grueling conditions under strict surveillance, producing critical components for tanks and weapons. The heat and noise mask the occasional act of sabotage, with resistance sympathizers risking everything to delay production. The foundry is both a source of oppression and an opportunity for disruption."
+mission_static_chance = 33
+location_static_chance = 34
+timing_static_chance = 33
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi_Foundry"]
 polygon = PackedVector2Array(527, 724, 537, 749, 560, 782, 539, 809, 505, 807, 427, 836, 400, 774)

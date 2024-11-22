@@ -127,7 +127,7 @@ func _ready() -> void:
 		poi.setup_poi_visuals()
 
 		if poi.poi_static:
-			poi.set_poi_details(self, Enums.POIType.NONE, "", "", "", 33, 33, 33)
+			poi.set_poi_details(self, Enums.POIType.NONE, "", "", "", 1, 1, 1)
 			continue
 
 		# get a random poi type
