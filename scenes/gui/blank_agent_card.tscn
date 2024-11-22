@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://barp7h51w71og"]
+
+[ext_resource type="Theme" uid="uid://dexax20p2eewp" path="res://assets/themes/base_theme.tres" id="1_5okdw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mm4m2"]
+bg_color = Color(0.929412, 0.85098, 0.713726, 0)
+border_width_left = 3
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="AgentCard" type="PanelContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 198)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_5okdw")
+theme_override_styles/panel = SubResource("StyleBoxFlat_mm4m2")

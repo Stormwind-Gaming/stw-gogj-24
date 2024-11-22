@@ -110,6 +110,11 @@ func populate_character_lists():
 		agent_card_scene.set_character(character)
 		agent_card_scene.connect("character_card_pressed", _on_character_button_pressed)
 		agent_list_container.add_child(agent_card_scene)
+	
+	var spare_agent_slots = GameController.max_agents - len(characters_sympathiser_recruited)
+	for i in range(spare_agent_slots):
+		var agent_card_scene = Globals.blank_agent_card_scene.instantiate()
+		agent_list_container.add_child(agent_card_scene)
 
 	var characters_sympathiser = GlobalRegistry.characters.get_list(GlobalRegistry.LIST_SYMPATHISER_NOT_RECRUITED)
 	for character in characters_sympathiser:

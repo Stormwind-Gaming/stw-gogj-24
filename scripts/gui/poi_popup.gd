@@ -35,4 +35,5 @@ func set_details(poi: PointOfInterest) -> void:
 
 func check_details() -> void:
 	# TODO: IF we're adding the bonuses to the popup, we need to check them here 
-	print("Checking details")
+	# print("Checking details")
+	pass

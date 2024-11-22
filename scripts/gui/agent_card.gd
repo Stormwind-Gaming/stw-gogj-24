@@ -176,9 +176,17 @@ func _set_state_overlay(status: Enums.CharacterState) -> void:
 	if status == Enums.CharacterState.AVAILABLE:
 		status_overlay.visible = false
 		return
-	if status == Enums.CharacterState.DECEASED:
+	if status == Enums.CharacterState.DECEASED or status == Enums.CharacterState.INJURED or status == Enums.CharacterState.MIA:
 		self.modulate = Color(0.5, 0.5, 0.5)
-		pass
+
+	if status == Enums.CharacterState.INJURED:
+		var label = Label.new()
+		label.text = '1' # Turns is currently always 1
+		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		label.add_theme_color_override("font_color", Color(1, 1, 1))
+		label.add_theme_font_size_override("font_size", 24)
+		self.add_child(label)
+		pass 
 	
 	var status_texture = load('res://assets/character_status/' + Globals.get_character_state_string(status).to_lower() + '.png')
 	status_overlay.texture = status_texture

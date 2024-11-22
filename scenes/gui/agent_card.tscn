@@ -333,7 +333,7 @@ toggle_mode = true
 texture_pressed = ExtResource("6_6ampm")
 texture_hover = ExtResource("7_pqda2")
 ignore_texture_size = true
-stretch_mode = 0
+stretch_mode = 6
 
 [node name="CharacterPageButton" type="TextureButton" parent="."]
 visible = false
@@ -357,7 +357,8 @@ stretch_mode = 6
 visible = false
 layout_mode = 2
 texture = ExtResource("6_6ampm")
-expand_mode = 3
+expand_mode = 5
+stretch_mode = 6
 
 [connection signal="toggled" from="AssignmentButton" to="." method="_on_assignment_button_toggled"]
 [connection signal="pressed" from="CharacterPageButton" to="." method="_on_set_unset_agent_button_pressed"]

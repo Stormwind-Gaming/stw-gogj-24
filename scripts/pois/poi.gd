@@ -170,11 +170,11 @@ Handles popup visibility based on hover state.
 @param delta Time elapsed since the last frame
 """
 func _process(delta: float) -> void:
-	if hovered and GameController.district_focused == parent_district:
+	if hovered and GameController.district_focused == parent_district and not WindowHandler.any_windows_open():
 		if not poi_popup.visible:
 			poi_popup.visible = true
 			poi_popup.check_details()
-
+		
 		poi_popup.set_position(get_viewport().get_mouse_position() + Vector2(10, 10))
 	else:
 			poi_popup.visible = false
@@ -243,7 +243,7 @@ func set_poi_details(parent_district_arg: District, poi_type_arg: Enums.POIType,
 Updates visual state and emits hover signal.
 """
 func _on_mouse_entered():
-	if not enabled:
+	if not enabled or WindowHandler.any_windows_open():
 		return
 
 	if GameController.radial_menu_open != null:
