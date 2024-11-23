@@ -816,20 +816,20 @@ var event_images = {
 	Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_MEDIUM: preload("res://assets/sprites/events/sympathy_breakpoint_medium.png"),
 	Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_HIGH: preload("res://assets/sprites/events/sympathy_breakpoint_high.png"),
 	# Endgame Events
-	Enums.EventOutcomeType.HEAT_ENDGAME: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add endgame heat image
-	Enums.EventOutcomeType.RESISTANCE_ENDGAME: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add endgame resistance image
+	Enums.EventOutcomeType.HEAT_ENDGAME: preload("res://assets/sprites/events/event_heat_endgame.png"),
+	Enums.EventOutcomeType.RESISTANCE_ENDGAME: preload("res://assets/sprites/events/event_heat_resistance.png"),
 }
 
 var world_event_images = {
 	# World Events
-	Enums.WorldEventType.MINOR_INCREASED_PATROLS: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add increased patrols image
-	Enums.WorldEventType.MINOR_SECRET_POLICE: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add secret police image
-	Enums.WorldEventType.MINOR_AIRBASE: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add airbase image
-	Enums.WorldEventType.MINOR_INFORMER: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add informer image
-	Enums.WorldEventType.SIGNIFICANT_SYMPATHISER_CAPTURED: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add captured sympathiser image
-	Enums.WorldEventType.SIGNIFICANT_WEAPONS_CACHE: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add weapons cache image
-	Enums.WorldEventType.SIGNIFICANT_MILITARY_SHIP: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add military ship image
-	Enums.WorldEventType.MAJOR_SECRET_POLICE: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add major secret police image
-	Enums.WorldEventType.MAJOR_POLICE_COMMANDER: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add police commander image
-	Enums.WorldEventType.MAJOR_SAFEHOUSE_DISCOVERED: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add safehouse discovered image
+	Enums.WorldEventType.MINOR_INCREASED_PATROLS: preload("res://assets/sprites/events/event_minor_increased_patrols.png"),
+	Enums.WorldEventType.MINOR_SECRET_POLICE: preload("res://assets/sprites/events/event_minor_secret_police.png"),
+	Enums.WorldEventType.MINOR_AIRBASE: preload("res://assets/sprites/events/event_minor_airbase.png"),
+	Enums.WorldEventType.MINOR_INFORMER: preload("res://assets/sprites/events/event_minor_informer.png"),
+	Enums.WorldEventType.SIGNIFICANT_SYMPATHISER_CAPTURED: preload("res://assets/sprites/events/event_significant_sympathiser_captured.png"),
+	Enums.WorldEventType.SIGNIFICANT_WEAPONS_CACHE: preload("res://assets/sprites/events/event_significant_weapons_cache.png"),
+	Enums.WorldEventType.SIGNIFICANT_MILITARY_SHIP: preload("res://assets/sprites/events/event_significant_military_ship.png"),
+	Enums.WorldEventType.MAJOR_SECRET_POLICE: preload("res://assets/sprites/events/event_major_secret_police.png"),
+	Enums.WorldEventType.MAJOR_POLICE_COMMANDER: preload("res://assets/sprites/events/event_major_police_commander.png"),
+	Enums.WorldEventType.MAJOR_SAFEHOUSE_DISCOVERED: preload("res://assets/sprites/events/event_major_safehouse_discovered.png"),
 }
