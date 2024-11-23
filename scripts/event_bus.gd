@@ -156,6 +156,11 @@ signal close_window()
 """
 signal close_radial_menu()
 
+"""
+@brief Emitted when a poi information window is requested
+"""
+signal open_poi_information(poi: PointOfInterest)
+
 #|==============================|
 #|      World-event Management |
 #|==============================|

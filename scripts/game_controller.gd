@@ -296,8 +296,11 @@ func _on_radial_option_selected(option: Enums.ActionType) -> void:
 	
 	# if info, show info
 	if option == Enums.ActionType.INFO:
-		print("Showing info for POI: ", poi_for_radial)
-		# poi_for_radial.show_info()
+		var town_details_list_instance = Globals.town_details_list_scene.instantiate()
+		EventBus.open_new_window.emit(town_details_list_instance)
+		
+		EventBus.open_poi_information.emit(poi_for_radial)
+
 		# create a tiny timer to get around erroneous clickthroughs
 		await get_tree().create_timer(0.1).timeout
 		radial_menu_open = null

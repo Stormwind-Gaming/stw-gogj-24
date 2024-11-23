@@ -39,6 +39,6 @@ func set_poi(poi: PointOfInterest) -> void:
 """
 @brief Event handler for the focus button
 """
-func _on_foucus_button_pressed() -> void:
+func _on_focus_button_pressed() -> void:
 	WindowHandler._close_all_windows()
 	poi.parent_district.district_clicked.emit(poi.parent_district)

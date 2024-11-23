@@ -39,6 +39,9 @@ Sets the initial status overlay based on the character's current status.
 func _ready():
 	_set_state_overlay(character.char_state)
 	_bind_character_signals()
+	
+	if not character.char_associated_poi:
+		$JumpToButton.visible = false
 
 #|==============================|
 #|    Getters and Setters       |

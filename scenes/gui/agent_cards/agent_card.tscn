@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dv6koqcesevck"]
+[gd_scene load_steps=18 format=3 uid="uid://dv6koqcesevck"]
 
 [ext_resource type="Theme" uid="uid://dexax20p2eewp" path="res://assets/themes/base_theme.tres" id="1_6ufjg"]
 [ext_resource type="Script" path="res://scripts/gui/agent_card.gd" id="1_dtlic"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://d313p06brjxs0" path="res://assets/icons/charm_2.svg" id="8_wqbjq"]
 [ext_resource type="Texture2D" uid="uid://5a71o8frvad4" path="res://assets/icons/smarts_2.svg" id="9_uvjkd"]
 [ext_resource type="Texture2D" uid="uid://5t6xu00wsvwi" path="res://assets/icons/target.png" id="12_j84nd"]
+[ext_resource type="Texture2D" uid="uid://bcsjhr1sajkmw" path="res://assets/icons/target_hover.png" id="13_o8tpi"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mm4m2"]
 bg_color = Color(0.929412, 0.85098, 0.713726, 1)
@@ -374,8 +375,10 @@ custom_minimum_size = Vector2(15, 15)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
+focus_mode = 0
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("12_j84nd")
+texture_hover = ExtResource("13_o8tpi")
 ignore_texture_size = true
 stretch_mode = 0
 

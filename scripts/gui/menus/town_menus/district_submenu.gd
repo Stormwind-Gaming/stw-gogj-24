@@ -72,7 +72,7 @@ func set_district(district: District) -> void:
 	for poi in district.pois:
 		var button = Button.new()
 		button.text = poi.poi_name
-		button.pressed.connect(_on_poi_button_pressed)
+		button.pressed.connect(_on_poi_button_pressed.bind(poi))
 		button.size_flags_horizontal = HORIZONTAL_ALIGNMENT_FILL 
 		self.poi_buttons.add_child(button)
 	
@@ -84,14 +84,12 @@ func set_district(district: District) -> void:
 """
 @brief Handles the pressing of a PoI button
 """
-func _on_poi_button_pressed() -> void:
-	# var poi = self.district.pois[poi_int]
-	# self.poi_selected.emit(poi)
-	print("PoI button pressed")
+func _on_poi_button_pressed(poi: PointOfInterest) -> void:
+	self.poi_selected.emit(poi)
 
 """
 @brief Event handler for the focus button
 """
-func _on_foucus_button_pressed() -> void:
+func _on_focus_button_pressed() -> void:
 	WindowHandler._close_all_windows()
 	district.district_clicked.emit(district)
