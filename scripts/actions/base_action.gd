@@ -183,6 +183,9 @@ func _process_danger() -> Array[TurnLog]:
 				characters.shuffle()
 				characters[0].char_state = Enums.CharacterState.INJURED
 				consequence_log_type = Enums.EventOutcomeType.INJURED
+
+				# emit stats change
+				EventBus.stat_created.emit("injured", true)
 			Enums.CharacterState.MIA:
 				log_message = "One character is missing"
 				characters.shuffle()

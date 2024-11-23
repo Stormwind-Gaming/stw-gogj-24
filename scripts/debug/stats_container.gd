@@ -50,6 +50,11 @@ extends PanelContainer
 @export var mia: Label
 
 """
+@brief Label Injured 
+"""
+@export var injured: Label
+
+"""
 @brief Label Dead
 """
 @export var dead: Label
@@ -89,6 +94,7 @@ var stats: Dictionary = {
 		"success": 0
 	},
 	"mia": 0,
+	"injured": 0,
 	"dead": 0
 }
 
@@ -124,6 +130,7 @@ func _update_gui(i: int):
 	surveillance.text = "%s/%s" % [str(stats.surveillance.success), str(stats.surveillance.total)]
 	propaganda.text = "%s/%s" % [str(stats.propaganda.success), str(stats.propaganda.total)]
 	mia.text = str(stats.mia)
+	injured.text = str(stats.injured)
 	dead.text = str(stats.dead)
 
 """
@@ -161,6 +168,8 @@ func _update_stat(stat: String, success: bool = false) -> void:
 				stats.propaganda.success += 1
 		"mia":
 			stats.mia += 1
+		"injured":
+			stats.injured += 1
 		"dead":
 			stats.dead += 1
 		_:
