@@ -225,6 +225,8 @@ func _trigger_heat_endgame() -> void:
 	var turn_log = TurnLog.new("Heat endgame triggered - Check Intel for Plans", Enums.LogType.WORLD_EVENT)
 	GlobalRegistry.turn_logs.add_item(str(GameController.turn_number), turn_log)
 
+	EventBus.create_new_event_panel.emit(Enums.EventOutcomeType.HEAT_ENDGAME, [] as Array[Character], null)
+
 """
 @brief Triggers the resistance endgame
 """
@@ -239,7 +241,8 @@ func _trigger_resistance_endgame() -> void:
 
 	var turn_log = TurnLog.new("Resistance endgame triggered - Check Intel for Plans", Enums.LogType.WORLD_EVENT)
 	GlobalRegistry.turn_logs.add_item(str(GameController.turn_number), turn_log)
-	pass
+
+	EventBus.create_new_event_panel.emit(Enums.EventOutcomeType.RESISTANCE_ENDGAME, [] as Array[Character], null)
 
 #|==============================|
 #|      District Management    |

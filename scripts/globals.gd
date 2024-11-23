@@ -415,7 +415,9 @@ var event_outcome_category_map = {
 	"EVENT_MILITARY_MILESTONE": Enums.EventOutcomeType.EVENT_MILITARY_MILESTONE,
 	"SYMPATHY_BREAKPOINT_LOW": Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_LOW,
 	"SYMPATHY_BREAKPOINT_MEDIUM": Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_MEDIUM,
-	"SYMPATHY_BREAKPOINT_HIGH": Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_HIGH
+	"SYMPATHY_BREAKPOINT_HIGH": Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_HIGH,
+	"HEAT_ENDGAME": Enums.EventOutcomeType.HEAT_ENDGAME,
+	"RESISTANCE_ENDGAME": Enums.EventOutcomeType.RESISTANCE_ENDGAME
 }
 
 var world_event_category_map = {
@@ -789,5 +791,7 @@ var event_images = {
 	Enums.EventOutcomeType.EVENT_MILITARY_MILESTONE: preload("res://assets/sprites/events/event_military_milestone.png"),
 	Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_LOW: preload("res://assets/sprites/events/sympathy_breakpoint_low.png"),
 	Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_MEDIUM: preload("res://assets/sprites/events/sympathy_breakpoint_medium.png"),
-	Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_HIGH: preload("res://assets/sprites/events/sympathy_breakpoint_high.png")
+	Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_HIGH: preload("res://assets/sprites/events/sympathy_breakpoint_high.png"),
+	Enums.EventOutcomeType.HEAT_ENDGAME: preload("res://assets/sprites/events/event_heat_breakpoint_high.png"),
+	Enums.EventOutcomeType.RESISTANCE_ENDGAME: preload("res://assets/sprites/events/sympathy_breakpoint_high.png")
 }

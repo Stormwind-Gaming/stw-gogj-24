@@ -41,3 +41,10 @@ event_industrial_milestone,Industrial Backbone Secured,"The factories and worksh
 sympathy_breakpoint_low,Support on the Rise,"The whispers of defiance have spread across {town}. Growing sympathy for the resistance has emboldened more individuals to step forward. With this momentum, we gain the capacity to bring another agent into the fold.",The resistance grows stronger
 sympathy_breakpoint_medium,Resistance Swells,"The resistance has become a force to be reckoned with. Across {town}, sympathizers now actively support our cause, providing critical resources and shelter. This growing network empowers us to bring another agent into the fight.",We stand united
 sympathy_breakpoint_high,The Tipping Point,"Our efforts have ignited a citywide movement. The resistance is no longer a shadowy force but a unified front with the people at its back. With this overwhelming support, we gain the strength to bring another agent into the fray.",The city stands with us
+heat_endgame,Heat Endgame Title,"The Secret police have discovered your safehouse and know who you are. The resistance here is over, you must flee the city to have any chance of survival. 
+Prepare to run!
+
+You have 2 options, you can leave via the port or via the train station, which do you choose?
+",We must act quickly
+resistance_endgame,Resistance Endgame Title,"We’ve gathered enough intel to be able to infiltrate the airbase, and destroy the enemy airforce in this sector. Gather our explosives cache and our best agents, its time to strike a decisive blow and eliminate the fighter squadron.
+",We must act quickly
