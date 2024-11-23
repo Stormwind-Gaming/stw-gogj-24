@@ -778,10 +778,12 @@ var profile_images = {
 }
 
 var event_images = {
+	# Character Events
 	Enums.EventOutcomeType.MIA: preload("res://assets/sprites/events/event_mia.png"),
 	Enums.EventOutcomeType.INJURED: preload("res://assets/sprites/events/event_injured.png"),
 	Enums.EventOutcomeType.DECEASED: preload("res://assets/sprites/events/event_deceased.png"),
 	Enums.EventOutcomeType.NEW_SYMPATHISER: preload("res://assets/sprites/events/event_new_sympathiser.png"),
+	# Heat / Sympathy Events
 	Enums.EventOutcomeType.HEAT_BREAKPOINT_MEDIUM: preload("res://assets/sprites/events/event_heat_breakpoint_medium.png"),
 	Enums.EventOutcomeType.HEAT_BREAKPOINT_HIGH: preload("res://assets/sprites/events/event_heat_breakpoint_high.png"),
 	Enums.EventOutcomeType.EVENT_CIVIC_MILESTONE: preload("res://assets/sprites/events/event_civic_milestone.png"),
@@ -792,6 +794,18 @@ var event_images = {
 	Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_LOW: preload("res://assets/sprites/events/sympathy_breakpoint_low.png"),
 	Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_MEDIUM: preload("res://assets/sprites/events/sympathy_breakpoint_medium.png"),
 	Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_HIGH: preload("res://assets/sprites/events/sympathy_breakpoint_high.png"),
-	Enums.EventOutcomeType.HEAT_ENDGAME: preload("res://assets/sprites/events/event_heat_breakpoint_high.png"),
-	Enums.EventOutcomeType.RESISTANCE_ENDGAME: preload("res://assets/sprites/events/sympathy_breakpoint_high.png")
+	# Endgame Events
+	Enums.EventOutcomeType.HEAT_ENDGAME: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add endgame heat image
+	Enums.EventOutcomeType.RESISTANCE_ENDGAME: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add endgame resistance image
+	# World Events
+	Enums.EventOutcomeType.WORLD_EVENT_MINOR_INCREASED_PATROLS: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add increased patrols image
+	Enums.EventOutcomeType.WORLD_EVENT_MINOR_SECRET_POLICE: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add secret police image
+	Enums.EventOutcomeType.WORLD_EVENT_MINOR_AIRBASE: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add airbase image
+	Enums.EventOutcomeType.WORLD_EVENT_MINOR_INFORMER: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add informer image
+	Enums.EventOutcomeType.WORLD_EVENT_SIGNIFICANT_SYMPATHISER_CAPTURED: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add captured sympathiser image
+	Enums.EventOutcomeType.WORLD_EVENT_SIGNIFICANT_WEAPONS_CACHE: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add weapons cache image
+	Enums.EventOutcomeType.WORLD_EVENT_SIGNIFICANT_MILITARY_SHIP: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add military ship image
+	Enums.EventOutcomeType.WORLD_EVENT_MAJOR_SECRET_POLICE: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add major secret police image
+	Enums.EventOutcomeType.WORLD_EVENT_MAJOR_POLICE_COMMANDER: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add police commander image
+	Enums.EventOutcomeType.WORLD_EVENT_MAJOR_SAFEHOUSE_DISCOVERED: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add safehouse discovered image
 }
