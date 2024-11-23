@@ -103,6 +103,10 @@ func set_char_sympathy(sympathy: int) -> void:
 	if sympathy >= Constants.NEW_SYMPATHISER_THRESHOLD and (char_recruitment_state != Enums.CharacterRecruitmentState.SYMPATHISER_RECRUITED or char_recruitment_state != Enums.CharacterRecruitmentState.SYMPATHISER_NOT_RECRUITED):
 		# This character is sympathetic to the resistance
 		char_recruitment_state = Enums.CharacterRecruitmentState.SYMPATHISER_NOT_RECRUITED
+		
+		# If this is the first turn, don't create a new sympathiser event
+		if GameController.turn_number > 0:
+			EventBus.create_new_event_panel.emit(Enums.EventOutcomeType.NEW_SYMPATHISER, [self] as Array[Character], char_associated_poi)
 
 	EventBus.character_sympathy_changed.emit(self)
 	char_sympathy = sympathy
