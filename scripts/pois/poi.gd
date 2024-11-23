@@ -223,8 +223,6 @@ func set_poi_details(parent_district_arg: District, poi_type_arg: Enums.POIType,
 		what_tmp = mission_static_chance
 		where_tmp = location_static_chance
 		when_tmp = timing_static_chance
-		print("Setting static POI details")
-		print("what %s - where %s - when %s" % [what_tmp, where_tmp, when_tmp])
 	else:
 		poi_type = poi_type_arg
 		poi_name = poi_name_arg
@@ -246,8 +244,6 @@ func set_poi_details(parent_district_arg: District, poi_type_arg: Enums.POIType,
 		most_likely_intel_type = "Location"
 	else:
 		most_likely_intel_type = "Timing"
-
-	print("what %s - where %s - when %s - most likely %s" % [what_tmp, where_tmp, when_tmp, most_likely_intel_type])
 
 	poi_popup.set_details(self)
 

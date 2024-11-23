@@ -180,7 +180,9 @@ func _load_world_event_text(path: String) -> void:
 			"event_type": world_event_type_map[record["event_type"].to_upper().strip_edges()],
 			"event_text": record["event_text"].strip_edges(),
 			"effect_text": record["effect_text"].strip_edges(),
-			"event_end_text": record["event_end_text"].strip_edges()
+			"event_end_text": record["event_end_text"].strip_edges(),
+			"event_title": record["event_title"].strip_edges(),
+			"event_button_text": record["event_button_text"].strip_edges()
 		})
 		
 #|==============================|
@@ -271,6 +273,7 @@ func get_world_event_text(severity: Enums.WorldEventSeverity):
 	var world_event_text_copy = world_event_text.duplicate()
 	var filtered_world_event_text = world_event_text_copy.filter(
 		func(record):
+			print(record.event_severity, severity, record.event_severity == severity)
 			return record.event_severity == severity
 	)
 	# If no text is found, return null to prevent error
@@ -417,7 +420,17 @@ var event_outcome_category_map = {
 	"SYMPATHY_BREAKPOINT_MEDIUM": Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_MEDIUM,
 	"SYMPATHY_BREAKPOINT_HIGH": Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_HIGH,
 	"HEAT_ENDGAME": Enums.EventOutcomeType.HEAT_ENDGAME,
-	"RESISTANCE_ENDGAME": Enums.EventOutcomeType.RESISTANCE_ENDGAME
+	"RESISTANCE_ENDGAME": Enums.EventOutcomeType.RESISTANCE_ENDGAME,
+	"WORLD_EVENT_MINOR_INCREASED_PATROLS": Enums.EventOutcomeType.WORLD_EVENT_MINOR_INCREASED_PATROLS,
+	"WORLD_EVENT_MINOR_SECRET_POLICE": Enums.EventOutcomeType.WORLD_EVENT_MINOR_SECRET_POLICE,
+	"WORLD_EVENT_MINOR_AIRBASE": Enums.EventOutcomeType.WORLD_EVENT_MINOR_AIRBASE,
+	"WORLD_EVENT_MINOR_INFORMER": Enums.EventOutcomeType.WORLD_EVENT_MINOR_INFORMER,
+	"WORLD_EVENT_SIGNIFICANT_SYMPATHISER_CAPTURED": Enums.EventOutcomeType.WORLD_EVENT_SIGNIFICANT_SYMPATHISER_CAPTURED,
+	"WORLD_EVENT_SIGNIFICANT_WEAPONS_CACHE": Enums.EventOutcomeType.WORLD_EVENT_SIGNIFICANT_WEAPONS_CACHE,
+	"WORLD_EVENT_SIGNIFICANT_MILITARY_SHIP": Enums.EventOutcomeType.WORLD_EVENT_SIGNIFICANT_MILITARY_SHIP,
+	"WORLD_EVENT_MAJOR_SECRET_POLICE": Enums.EventOutcomeType.WORLD_EVENT_MAJOR_SECRET_POLICE,
+	"WORLD_EVENT_MAJOR_POLICE_COMMANDER": Enums.EventOutcomeType.WORLD_EVENT_MAJOR_POLICE_COMMANDER,
+	"WORLD_EVENT_MAJOR_SAFEHOUSE_DISCOVERED": Enums.EventOutcomeType.WORLD_EVENT_MAJOR_SAFEHOUSE_DISCOVERED
 }
 
 var world_event_category_map = {
@@ -427,10 +440,18 @@ var world_event_category_map = {
 }
 
 var world_event_type_map = {
-	"MINOR_INCREASED_PATROLS": Enums.WorldEventType.MINOR_INCREASED_PATROLS,
-	"MINOR_SECRET_POLICE": Enums.WorldEventType.MINOR_SECRET_POLICE,
-	"MINOR_AIRBASE": Enums.WorldEventType.MINOR_AIRBASE,
+	"WORLD_EVENT_MINOR_INCREASED_PATROLS": Enums.WorldEventType.MINOR_INCREASED_PATROLS,
+	"WORLD_EVENT_MINOR_SECRET_POLICE": Enums.WorldEventType.MINOR_SECRET_POLICE,
+	"WORLD_EVENT_MINOR_AIRBASE": Enums.WorldEventType.MINOR_AIRBASE,
+	"WORLD_EVENT_MINOR_INFORMER": Enums.WorldEventType.MINOR_INFORMER,
+	"WORLD_EVENT_SIGNIFICANT_SYMPATHISER_CAPTURED": Enums.WorldEventType.SIGNIFICANT_SYMPATHISER_CAPTURED,
+	"WORLD_EVENT_SIGNIFICANT_WEAPONS_CACHE": Enums.WorldEventType.SIGNIFICANT_WEAPONS_CACHE,
+	"WORLD_EVENT_SIGNIFICANT_MILITARY_SHIP": Enums.WorldEventType.SIGNIFICANT_MILITARY_SHIP,
+	"WORLD_EVENT_MAJOR_SECRET_POLICE": Enums.WorldEventType.MAJOR_SECRET_POLICE,
+	"WORLD_EVENT_MAJOR_POLICE_COMMANDER": Enums.WorldEventType.MAJOR_POLICE_COMMANDER,
+	"WORLD_EVENT_MAJOR_SAFEHOUSE_DISCOVERED": Enums.WorldEventType.MAJOR_SAFEHOUSE_DISCOVERED
 }
+
 
 #|==============================|
 #|    String Conversions       |
@@ -797,15 +818,18 @@ var event_images = {
 	# Endgame Events
 	Enums.EventOutcomeType.HEAT_ENDGAME: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add endgame heat image
 	Enums.EventOutcomeType.RESISTANCE_ENDGAME: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add endgame resistance image
+}
+
+var world_event_images = {
 	# World Events
-	Enums.EventOutcomeType.WORLD_EVENT_MINOR_INCREASED_PATROLS: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add increased patrols image
-	Enums.EventOutcomeType.WORLD_EVENT_MINOR_SECRET_POLICE: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add secret police image
-	Enums.EventOutcomeType.WORLD_EVENT_MINOR_AIRBASE: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add airbase image
-	Enums.EventOutcomeType.WORLD_EVENT_MINOR_INFORMER: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add informer image
-	Enums.EventOutcomeType.WORLD_EVENT_SIGNIFICANT_SYMPATHISER_CAPTURED: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add captured sympathiser image
-	Enums.EventOutcomeType.WORLD_EVENT_SIGNIFICANT_WEAPONS_CACHE: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add weapons cache image
-	Enums.EventOutcomeType.WORLD_EVENT_SIGNIFICANT_MILITARY_SHIP: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add military ship image
-	Enums.EventOutcomeType.WORLD_EVENT_MAJOR_SECRET_POLICE: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add major secret police image
-	Enums.EventOutcomeType.WORLD_EVENT_MAJOR_POLICE_COMMANDER: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add police commander image
-	Enums.EventOutcomeType.WORLD_EVENT_MAJOR_SAFEHOUSE_DISCOVERED: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add safehouse discovered image
+	Enums.WorldEventType.MINOR_INCREASED_PATROLS: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add increased patrols image
+	Enums.WorldEventType.MINOR_SECRET_POLICE: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add secret police image
+	Enums.WorldEventType.MINOR_AIRBASE: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add airbase image
+	Enums.WorldEventType.MINOR_INFORMER: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add informer image
+	Enums.WorldEventType.SIGNIFICANT_SYMPATHISER_CAPTURED: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add captured sympathiser image
+	Enums.WorldEventType.SIGNIFICANT_WEAPONS_CACHE: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add weapons cache image
+	Enums.WorldEventType.SIGNIFICANT_MILITARY_SHIP: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add military ship image
+	Enums.WorldEventType.MAJOR_SECRET_POLICE: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add major secret police image
+	Enums.WorldEventType.MAJOR_POLICE_COMMANDER: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add police commander image
+	Enums.WorldEventType.MAJOR_SAFEHOUSE_DISCOVERED: preload("res://assets/sprites/events/event_blank.png"), # TODO: Add safehouse discovered image
 }

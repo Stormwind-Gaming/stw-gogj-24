@@ -57,14 +57,41 @@ func set_event_details(event_type: Enums.EventOutcomeType, characters: Array[Cha
 		button.text = button_text_attr
 	
 	# replace the placeholders in the text
-	text_label.text = text_label.text.replace("{town}", GameController.town_name)
-	title_label.text = title_label.text.replace("{town}", GameController.town_name)
+	text_label.text = text_label.text.replace("{town}", GameController.town_details.town_name)
+	title_label.text = title_label.text.replace("{town}", GameController.town_details.town_name)
 	if characters.size() > 0:
 		text_label.text = text_label.text.replace("{character}", characters[0].get_full_name())
 		title_label.text = title_label.text.replace("{character}", characters[0].get_full_name())
 	if poi:
 		text_label.text = text_label.text.replace("{district}", poi.parent_district.district_name).replace("{poi}", poi.poi_name)
 		title_label.text = title_label.text.replace("{district}", poi.parent_district.district_name).replace("{poi}", poi.poi_name)
+
+
+func set_event_details_world_event(world_event: WorldEvent) -> void:
+	if not world_event.event_data:
+		return
+	# get the event type image
+	print(world_event.event_data)
+	event_image.texture = Globals.world_event_images[world_event.event_data.event_type]
+	var event_outcome_text_object = world_event.event_data
+	# set the title, text, and button text
+	
+	title_label.text = event_outcome_text_object.event_title
+	text_label.text = event_outcome_text_object.event_text
+	button.text = event_outcome_text_object.event_button_text
+	
+	# replace the placeholders in the text
+	text_label.text = text_label.text.replace("{town}", GameController.town_details.town_name)
+	title_label.text = title_label.text.replace("{town}", GameController.town_details.town_name)
+	if world_event.event_character:
+		text_label.text = text_label.text.replace("{character}", world_event.event_character.get_full_name())
+		title_label.text = title_label.text.replace("{character}", world_event.event_character.get_full_name())
+	if world_event.event_district:
+		text_label.text = text_label.text.replace("{district}", world_event.event_district.district_name)
+		title_label.text = title_label.text.replace("{district}", world_event.event_district.district_name)
+	if world_event.event_poi:
+		text_label.text = text_label.text.replace("{poi}", world_event.event_poi.poi_name)
+		title_label.text = title_label.text.replace("{poi}", world_event.event_poi.poi_name)
 	
 
 #|==============================|

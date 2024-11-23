@@ -1,18 +1,26 @@
-event_severity,event_type,event_text,event_end_text,effect_text
-MINOR,MINOR_INCREASED_PATROLS,"Increased patrols in {district}. Our actions have been noticed by the authorities, they don’t know who we are yet, but they are on the look out
-
-",The increased patrols have now left.,"+20 heat in {district} for 5 turns
+event_severity,event_type,event_title,event_text,event_button_text,event_end_text,effect_text
+MINOR,WORLD_EVENT_MINOR_INCREASED_PATROLS,Increased Patrols,"Increased patrols in {district}. Our actions have been noticed by the authorities, they don’t know who we are yet, but they are on the lookout.",How unfortunate,The increased patrols have now left.,"+20 heat in {district} for 5 turns
 
 "
-MINOR,"MINOR_SECRET_POLICE
-
-","The secret police are aware there is a resistance movement operating in {town}. They are starting to install checkpoints on the main roads between the districts. We need to find new routes
-
-",The secret police have now left.,"+1 mission duration for 2 turns
+MINOR,WORLD_EVENT_MINOR_SECRET_POLICE,Secret Police Checkpoints,The secret police are aware there is a resistance movement operating in {town}. They are starting to install checkpoints on the main roads between the districts. We need to find new routes.,How unfortunate,The secret police have now left.,"+1 mission duration for 2 turns
 + 5 heat in random {district}
 + 5 heat in random {district}"
-MINOR,MINOR_AIRBASE,"We have learned that the Air Force are using the base as a staging post for an additional fighter squadron for the next few days, it will be much harder to investigate the airbase until the military presence reduces
-
-",The Air Force has now left.,"+20 heat in {district} for 7 turns
+MINOR,WORLD_EVENT_MINOR_AIRBASE,Air Force Presence at Base,"We have learned that the Air Force are using the base as a staging post for an additional fighter squadron for the next few days, it will be much harder to investigate the airbase until the military presence reduces.",How unfortunate,The Air Force has now left.,"+20 heat in {district} for 7 turns
 +1 intel for each espionage mission conducted
 "
+MINOR,WORLD_EVENT_MINOR_INFORMER,Informant Identified,"We’ve learned that {character} is an informer for the secret police. It’ll be hard to bring them to our cause, but if we do they could be valuable.",How unfortunate,,{character} -50 sympathy
+SIGNIFICANT,WORLD_EVENT_SIGNIFICANT_SYMPATHISER_CAPTURED,Sympathiser Captured,"One of our sympathisers has been captured, the secret police are interrogating {character}. We don’t think they knew much of our current operations but we should be careful until we know more.",How unfortunate,{character} has been released and is safely back with us.,"+15 heat in Civic District for 5 turns
+{character} is injured
+{character} -50 sympathy"
+SIGNIFICANT,WORLD_EVENT_SIGNIFICANT_WEAPONS_CACHE,Weapons Cache Discovered,"One of our weapons caches in {district} has been discovered by the secret police. Fortunately there is nothing there linking it to us or any other place we use, but we have lost a lot of good material.",How unfortunate,"The area is now clear of surveillance, but we need to rebuild our cache.","Reduce all known intel turns remaining by 3.
+Increase heat in {district} by 20 for 5 turns"
+SIGNIFICANT,WORLD_EVENT_SIGNIFICANT_MILITARY_SHIP,Military Ship at Port,"There is a military ship docked at the port today, we don’t know its mission but it arrived in the night and is unloading a huge cargo of covered trucks. The military are swarming the port, it will be dangerous for us to go to the port until things calm down.",How unfortunate,"The ship has left, and military presence at the port has returned to normal.","+40 heat in the Port District for 4 turns
++2 Intel for each espionage mission conducted"
+MAJOR,WORLD_EVENT_MAJOR_SECRET_POLICE,Agent Arrested,"{character} has been arrested by the secret police while trying to steal secrets from the garrison. We fear that they are being forced to reveal what they know. We don’t know what they might reveal, we have to be very careful around the patrols at the moment.",How unfortunate,{character} has escaped captivity and is now safely back with us.,"+20 heat in [Civic District] for 5 turns
++20 heat in [Military District] for 5 turns
+{character} is MIA
+{character} –100 sympathy"
+MAJOR,WORLD_EVENT_MAJOR_POLICE_COMMANDER,Secret Police Commander Arrives,We have learned that the regional secret police commander is coming to {town} for a few days. It will be very hard to operate as he is bringing a full battalion of military police with him. There will be armoured cars on every road for days.,How unfortunate,"The commander has left, and the military presence has reduced significantly.","+10 heat globally for 3 turns
++10 heat in [Civic District] for 5 turns."
+MAJOR,WORLD_EVENT_MAJOR_SAFEHOUSE_DISCOVERED,Safehouse Discovered,"Our primary safehouse in {district} has been discovered! We must relocate our agents, and our intel has been compromised. They have our agent list, it’s coded but it might be a matter of days before they break our codes. We need to go to ground.",How unfortunate,"Our new safehouse has been secured, and our agents are safe again.","+40 heat in {district} for 5 turns 
+All sympathisers in {district} are MIA for 5 turns."

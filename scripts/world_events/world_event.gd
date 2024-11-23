@@ -13,9 +13,29 @@ var turn_to_end: int
 var severity: Enums.WorldEventSeverity
 
 """
+@brief The data of this world-event
+"""
+var event_data: Dictionary
+
+"""
 @brief The text of this world-event
 """
 var event_text: String
+
+"""
+@brief The affected character of this world-event
+"""
+var event_character: Character
+
+"""
+@brief The affected district of this world-event
+"""
+var event_district: District
+
+"""
+@brief The affected poi of this world-event
+"""
+var event_poi: PointOfInterest
 
 """
 @brief The text of this world-event when it ends
@@ -34,7 +54,6 @@ func _init(init_severity: Enums.WorldEventSeverity) -> void:
 	_event_start()
 
 	GlobalRegistry.turn_logs.add_item(str(GameController.turn_number), TurnLog.new(event_text, Enums.LogType.WORLD_EVENT))
-	EventBus.world_event_created.emit(self)
 
 	EventBus.turn_processing_initiated.connect(_on_end_turn)
 

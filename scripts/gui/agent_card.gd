@@ -86,13 +86,13 @@ func _on_popup_button_pressed() -> void:
 	# Create a new window with the full agent card
 	var window = Window.new()
 	# Set window to mouse location
-	window.size = Vector2(350, 200)
+	window.size = Vector2(300, 200)
 	window.set_position(get_viewport().get_mouse_position() + Vector2(200, 0))
 	window.exclusive = true
 	window.unresizable = true
 	window.borderless = true
 	window.always_on_top = true
-	window.transparent = false
+	window.transparent = true
 	window.connect("mouse_exited",
 		func():
 			window.queue_free()

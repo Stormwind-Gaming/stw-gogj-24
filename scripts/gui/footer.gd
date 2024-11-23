@@ -120,6 +120,10 @@ func _on_show_town_details_list_button_pressed():
 Processes the turn and shows the end turn log.
 """
 func _on_turn_button_pressed():
+	# if the confirm popup is already open, return
+	if get_node("ConfirmationDialog"):
+		return
+
 	# check if the player has unassigned agents
 	var agents = GlobalRegistry.characters.get_list(GlobalRegistry.LIST_SYMPATHISER_RECRUITED)
 	var sympathisers = GlobalRegistry.characters.get_list(GlobalRegistry.LIST_SYMPATHISER_NOT_RECRUITED).filter(func(x): return x.char_state == Enums.CharacterState.AVAILABLE)

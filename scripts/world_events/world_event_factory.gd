@@ -54,15 +54,15 @@ static func create_world_event(severity: Enums.WorldEventSeverity) -> WorldEvent
 	if severity == Enums.WorldEventSeverity.ENDGAME:
 		pass
 
-	var event_text = Globals.get_world_event_text(severity)
+	var event_data = Globals.get_world_event_text(severity)
 	# check event text as can return null if no event text found
-	if not event_text:
+	if not event_data:
 		push_error("No world event text found for severity: ", severity)
 		return
 	var event: WorldEvent
-	var config: WorldEventConfig = WorldEventConfig.new(event_text)
+	var config: WorldEventConfig = WorldEventConfig.new(event_data)
 
-	match event_text.event_type:
+	match event_data.event_type:
 		Enums.WorldEventType.MINOR_INCREASED_PATROLS:
 			print("Creating minor increased patrols event")
 			event = MinorIncreasedPatrolsEvent.new(config)
@@ -73,10 +73,13 @@ static func create_world_event(severity: Enums.WorldEventSeverity) -> WorldEvent
 			print("Creating minor airbase event")
 			event = MinorAirbaseEvent.new(config)
 		_:
-			push_error("Unknown world event type: ", event_text.event_type)
+			push_error("Unknown world event type: ", event_data.event_type)
 			return null
 
-	event.event_text = event_text.event_text
-	event.effect_text = event_text.effect_text
+	event.event_data = event_data
+	event.event_text = event_data.event_text
+	event.effect_text = event_data.effect_text
+
+	EventBus.world_event_created.emit(event)
 
 	return event
