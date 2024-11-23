@@ -157,6 +157,7 @@ func _ready() -> void:
 	
 	# Create the owner of the POI
 	self.poi_owner = CharacterFactory.create_character()
+	self.poi_owner.char_associated_poi = self
 	self.poi_bonus = _derive_poi_bonus()
 
 	EventBus.action_created.connect(_on_action_created)

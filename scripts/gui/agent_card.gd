@@ -124,6 +124,13 @@ func _on_character_recruitment_state_changed(character: Character) -> void:
 		pass
 	pass
 
+"""
+@brief Handles the jump to button
+"""
+func _on_jump_to_button_pressed() -> void:
+	EventBus.close_all_windows.emit()
+	character.char_associated_poi.parent_district.district_clicked.emit(character.char_associated_poi.parent_district)
+
 #|==============================|
 #|        Helper Functions      |
 #|==============================|

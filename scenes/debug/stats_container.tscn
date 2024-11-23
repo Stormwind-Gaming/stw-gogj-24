@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/debug/stats_container.gd" id="1_ofirr"]
 
-[node name="StatsContainer" type="PanelContainer" node_paths=PackedStringArray("turns", "missions", "subtlety", "smarts", "charm", "espionage", "surveillance", "propaganda", "mia", "dead")]
+[node name="StatsContainer" type="PanelContainer" node_paths=PackedStringArray("turns", "missions", "subtlety", "smarts", "charm", "espionage", "surveillance", "propaganda", "mia", "injured", "dead")]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
@@ -20,6 +20,7 @@ espionage = NodePath("MarginContainer/VBoxContainer/Espionage/Value")
 surveillance = NodePath("MarginContainer/VBoxContainer/Surveillance/Value")
 propaganda = NodePath("MarginContainer/VBoxContainer/Propaganda/Value")
 mia = NodePath("MarginContainer/VBoxContainer/MIAs/Value")
+injured = NodePath("MarginContainer/VBoxContainer/Injureds/Value")
 dead = NodePath("MarginContainer/VBoxContainer/Deaths/Value")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
@@ -163,6 +164,19 @@ size_flags_horizontal = 3
 text = "MIAs:"
 
 [node name="Value" type="Label" parent="MarginContainer/VBoxContainer/MIAs"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+
+[node name="Injureds" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Injureds"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Injuries:"
+
+[node name="Value" type="Label" parent="MarginContainer/VBoxContainer/Injureds"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "0"

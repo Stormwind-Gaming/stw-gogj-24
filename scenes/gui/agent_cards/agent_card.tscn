@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dv6koqcesevck"]
+[gd_scene load_steps=17 format=3 uid="uid://dv6koqcesevck"]
 
 [ext_resource type="Theme" uid="uid://dexax20p2eewp" path="res://assets/themes/base_theme.tres" id="1_6ufjg"]
 [ext_resource type="Script" path="res://scripts/gui/agent_card.gd" id="1_dtlic"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://filfa2qem5i2" path="res://assets/icons/drama-masks.svg" id="7_s1d5g"]
 [ext_resource type="Texture2D" uid="uid://d313p06brjxs0" path="res://assets/icons/charm_2.svg" id="8_wqbjq"]
 [ext_resource type="Texture2D" uid="uid://5a71o8frvad4" path="res://assets/icons/smarts_2.svg" id="9_uvjkd"]
+[ext_resource type="Texture2D" uid="uid://5t6xu00wsvwi" path="res://assets/icons/target.png" id="12_j84nd"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mm4m2"]
 bg_color = Color(0.929412, 0.85098, 0.713726, 1)
@@ -368,5 +369,16 @@ texture = ExtResource("6_6ampm")
 expand_mode = 3
 stretch_mode = 6
 
+[node name="JumpToButton" type="TextureButton" parent="."]
+custom_minimum_size = Vector2(15, 15)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("12_j84nd")
+ignore_texture_size = true
+stretch_mode = 0
+
 [connection signal="toggled" from="AssignmentButton" to="." method="_on_assignment_button_toggled"]
 [connection signal="pressed" from="CharacterPageButton" to="." method="_on_set_unset_agent_button_pressed"]
+[connection signal="pressed" from="JumpToButton" to="." method="_on_jump_to_button_pressed"]
