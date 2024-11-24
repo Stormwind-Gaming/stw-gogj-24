@@ -12,6 +12,7 @@ func _init(config: WorldEventConfig) -> void:
 	subject_district = GlobalRegistry.districts.get_random_item()
 
 	# setup
+	event_text = config.event_text.replace("{district}", subject_district.district_name)
 	event_end_text = config.event_end_text
 	effect_text = config.effect_text
 

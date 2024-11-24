@@ -12,7 +12,6 @@ func _init(config: WorldEventConfig) -> void:
 	subject_district = GlobalRegistry.districts.find_item(GlobalRegistry.LIST_ALL_DISTRICTS, "district_type", Enums.DistrictType.MILITARY)
 
 	# setup
-	event_text = config.event_text.replace("{district}", subject_district.district_name)
 	event_end_text = config.event_end_text
 	effect_text = config.effect_text
 
