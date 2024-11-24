@@ -200,9 +200,7 @@ func _on_character_created(character: Character) -> void:
 """
 func _on_character_changed(character: Character) -> void:
 	if (characters.get_all_items().has(character)):
-		# print('character is in registry')
 		var target_list_name = _get_character_list(character)
-		# print('moving character to list: ', target_list_name)
 		characters.move_item(target_list_name, character)
 
 """
