@@ -36,6 +36,11 @@ func subtlety_check() -> bool:
 		print("Modifier: ", modifier.modifier_name, " ", subtlety_check_value, " + ", modifier.modifier_subtlety_flat)
 		subtlety_check_value += modifier.modifier_subtlety_flat
 
+	# if this is the home PoI of this character, add the home modifier (+25%)
+	if poi == characters[0].char_associated_poi:
+		print("Home modifier: ", subtlety_check_value, " * 1.25")
+		subtlety_check_value *= 1.25
+	
 	var subtlety_roll = MathHelpers.bounded_sigmoid_check(
 		subtlety_check_value,
 		true,
