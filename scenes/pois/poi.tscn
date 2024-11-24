@@ -1,13 +1,31 @@
-[gd_scene load_steps=4 format=3 uid="uid://c0trxtgty6phy"]
+[gd_scene load_steps=8 format=3 uid="uid://c0trxtgty6phy"]
 
 [ext_resource type="Script" path="res://scripts/pois/poi.gd" id="1_cwy0w"]
 [ext_resource type="Texture2D" uid="uid://dniextr4kn1uv" path="res://assets/PoI.png" id="2_y8567"]
 [ext_resource type="PackedScene" uid="uid://vl61or4exnyi" path="res://scenes/gui/popups/poi_popup.tscn" id="3_0f6jn"]
+[ext_resource type="Texture2D" uid="uid://dgpupl2v1f58s" path="res://assets/icons/poi/base_poi_icon.png" id="4_i3ffn"]
+[ext_resource type="Texture2D" uid="uid://unpsmyhxomh8" path="res://assets/icons/poi/selected/aerodrome_3.png" id="4_rtet5"]
 
-[node name="Poi" type="Area2D" node_paths=PackedStringArray("poi_popup")]
+[sub_resource type="Shader" id="Shader_ateqo"]
+code = "shader_type canvas_item;
+
+uniform float transition : hint_range(0.0, 1.0);
+
+void fragment() {
+    vec4 tex_color = texture(TEXTURE, UV);
+    float intensity = mix(0.0, 1.0, transition); // Blend from black to white
+    COLOR = vec4(vec3(intensity), tex_color.a); // Use alpha from the texture
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uusuq"]
+shader = SubResource("Shader_ateqo")
+shader_parameter/transition = 0.0
+
+[node name="Poi" type="Area2D" node_paths=PackedStringArray("poi_popup", "poi_icon")]
 top_level = true
 script = ExtResource("1_cwy0w")
 poi_popup = NodePath("PoIPopup")
+poi_icon = NodePath("IconButton/MarginContainer/Icon")
 poi_static = false
 poi_static_type = 3
 
@@ -17,6 +35,35 @@ scale = Vector2(0.3, 0.3)
 texture = ExtResource("2_y8567")
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
+
+[node name="IconButton" type="TextureButton" parent="."]
+modulate = Color(1, 1, 1, 0.882353)
+custom_minimum_size = Vector2(50, 50)
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("4_i3ffn")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="IconButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 7
+theme_override_constants/margin_top = 7
+theme_override_constants/margin_right = 7
+theme_override_constants/margin_bottom = 7
+
+[node name="Icon" type="TextureRect" parent="IconButton/MarginContainer"]
+material = SubResource("ShaderMaterial_uusuq")
+layout_mode = 2
+texture = ExtResource("4_rtet5")
+expand_mode = 3
 
 [node name="ActionContainer" type="HBoxContainer" parent="."]
 top_level = true
@@ -31,3 +78,6 @@ visible = false
 [connection signal="input_event" from="." to="." method="_on_poi_clicked"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="button_down" from="IconButton" to="." method="_on_icon_button_clicked"]
+[connection signal="mouse_entered" from="IconButton" to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="IconButton" to="." method="_on_mouse_exited"]

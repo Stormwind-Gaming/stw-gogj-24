@@ -15,6 +15,7 @@ scale = Vector2(1.5, 1.5)
 texture = ExtResource("2_fvcfm")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+visible = false
 top_level = true
 polygon = PackedVector2Array(723, 559, 699, 387, 388, 286, 334, 281, 258, 478, 230, 513, 201, 531, 189, 542, 163, 543, 163, 559, 88, 574, 58, 353, 44, 353, 29, 435, 43, 579, -271, 606, -261, 654, -139, 641, 39, 643, 63, 670, 89, 723, 95, 745, 231, 709, 329, 670, 425, 639, 558, 601)
 
@@ -66,6 +67,7 @@ poi_static_description = "Here are some docks"
 polygon = PackedVector2Array(404, 567, 396, 581, 404, 591, 415, 603, 432, 612, 449, 616, 470, 618, 494, 614, 494, 587, 477, 590, 452, 587, 423, 579)
 
 [node name="Poi5" parent="pois" instance=ExtResource("4_wxf62")]
+visible = false
 poi_static_type = 7
 poi_static_name = "Docks"
 poi_static_description = "Here are some docks"
@@ -101,7 +103,6 @@ poi_static_description = "Here are some docks"
 polygon = PackedVector2Array(438, 422, 422, 484, 364, 466, 383, 406)
 
 [node name="Poi9" parent="pois" instance=ExtResource("4_wxf62")]
-visible = false
 poi_static_type = 7
 poi_static_name = "Docks"
 poi_static_description = "Here are some docks"

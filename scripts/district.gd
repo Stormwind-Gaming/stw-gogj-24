@@ -454,7 +454,6 @@ func remove_highlight_color() -> void:
 @brief Sets the focus color for the district
 """
 func set_focus() -> void:
-	print("Setting focus")
 	$Polygon2D.visible = false
 	$CollisionPolygon2D.visible = false
 

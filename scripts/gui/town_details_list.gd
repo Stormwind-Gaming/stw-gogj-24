@@ -47,6 +47,16 @@ var poi_submenu_scene = preload("res://scenes/gui/menus/town_menus/poi_submenu.t
 @export var heat_bar_label: Label
 
 """
+@brief The active bonuses RichTextLabel
+"""
+@export var active_bonuses: RichTextLabel
+
+"""
+@brief The active World Events RichTextLabel
+"""
+@export var active_world_events: RichTextLabel
+
+"""
 @brief The town description
 """
 @export var town_description: RichTextLabel
@@ -74,6 +84,33 @@ func _ready() -> void:
 	town_description.text = GameController.town_details.description
 
 	tab_container.tab_changed.connect(_on_tab_button_pressed)
+
+	# active bonuses
+
+	var bonuses = GlobalRegistry.modifiers.get_list(GlobalRegistry.LIST_GLOBAL_MODIFIERS)#.filter(func(x): x.active == true)
+	active_bonuses.text = ""
+	if bonuses.size() > 0:
+		active_bonuses.text += "[font_size=18]Active Bonuses:[/font_size]\n"
+		for bonus in bonuses:
+			active_bonuses.text += "%s" % bonus.modifier_name
+			active_bonuses.text += "\n"
+	
+	# world events
+	var events = GlobalRegistry.world_events.get_list(GlobalRegistry.LIST_WORLD_EVENTS)
+	active_world_events.text = ""
+	if events.size() > 0:
+		active_world_events.text += "[font_size=18]World Events:[/font_size]\n"
+		for event in events:
+			# check validity as previously free events that are not removed cause errors
+			if is_instance_valid(event):
+				active_world_events.text += "%s: %s Day" % [event.event_data.event_title, str(event.turn_to_end - GameController.turn_number)]
+				if (event.turn_to_end - GameController.turn_number) > 1:
+					active_world_events.text += "s"
+				active_world_events.text +=" left" + "\n"
+	
+	if bonuses.size() == 0 and events.size() == 0:
+		active_bonuses.text = "No active bonuses or world events"
+
 
 #|==============================|
 #|         Event listeners      |

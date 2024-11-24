@@ -250,6 +250,7 @@ func _on_district_created(district: District) -> void:
 @param world_event The world-event to add to the registry
 """
 func _on_world_event_created(world_event: WorldEvent) -> void:
+	print("Adding world event to registry")
 	world_events.add_item(LIST_WORLD_EVENTS, world_event)
 
 #|==============================|

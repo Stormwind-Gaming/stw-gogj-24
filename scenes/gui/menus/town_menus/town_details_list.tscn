@@ -51,7 +51,7 @@ grow_end = 0.0
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_6vlaf"]
 
-[node name="TownDetails" type="Window" node_paths=PackedStringArray("tab_container", "town_tab", "town_name_label", "town_population_label", "resistance_bar", "resistance_bar_label", "heat_bar", "heat_bar_label", "town_description")]
+[node name="TownDetails" type="Window" node_paths=PackedStringArray("tab_container", "town_tab", "town_name_label", "town_population_label", "resistance_bar", "resistance_bar_label", "heat_bar", "heat_bar_label", "active_bonuses", "active_world_events", "town_description")]
 auto_translate_mode = 1
 transparent_bg = true
 initial_position = 2
@@ -64,13 +64,15 @@ theme = ExtResource("1_1hyes")
 script = ExtResource("2_3xmns")
 tab_container = NodePath("NinePatchRect/MarginContainer/VBoxContainer/TabContainer")
 town_tab = NodePath("NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town")
-town_name_label = NodePath("NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/VBoxContainer/HBoxContainer/TownName")
-town_population_label = NodePath("NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/VBoxContainer/HBoxContainer/Population")
-resistance_bar = NodePath("NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/ResistanceProgressBar")
-resistance_bar_label = NodePath("NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/ResistanceProgressBar/Label")
-heat_bar = NodePath("NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/HeatProgressBar")
-heat_bar_label = NodePath("NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/HeatProgressBar/Label")
-town_description = NodePath("NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/VBoxContainer/RichTextLabel")
+town_name_label = NodePath("NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer/TownName")
+town_population_label = NodePath("NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer/Population")
+resistance_bar = NodePath("NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/ScrollContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/ResistanceProgressBar")
+resistance_bar_label = NodePath("NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/ScrollContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/ResistanceProgressBar/Label")
+heat_bar = NodePath("NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/ScrollContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/HeatProgressBar")
+heat_bar_label = NodePath("NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/ScrollContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/HeatProgressBar/Label")
+active_bonuses = NodePath("NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/ScrollContainer/VBoxContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/RichTextLabel")
+active_world_events = NodePath("NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/ScrollContainer/VBoxContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/RichTextLabel2")
+town_description = NodePath("NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/ScrollContainer/VBoxContainer/RichTextLabel")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
 anchors_preset = 15
@@ -113,25 +115,29 @@ theme_override_constants/margin_top = 25
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="VBoxContainer" type="VBoxContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/ScrollContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 
-[node name="TownName" type="Label" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="TownName" type="Label" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 theme_override_font_sizes/font_size = 25
 text = "Town Name"
 
-[node name="VSeparator" type="VSeparator" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="VSeparator" type="VSeparator" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/separator = SubResource("StyleBoxEmpty_etaff")
 
-[node name="Population" type="Label" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="Population" type="Label" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 theme_override_font_sizes/font_size = 14
@@ -139,23 +145,23 @@ text = "pop: 1000"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="PanelContainer" type="PanelContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/VBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_wps1v")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/VBoxContainer/PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/ScrollContainer/VBoxContainer/PanelContainer"]
 layout_mode = 2
 
-[node name="HSeparator2" type="HSeparator" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer"]
+[node name="HSeparator2" type="HSeparator" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/ScrollContainer/VBoxContainer/PanelContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 0
 theme_override_styles/separator = SubResource("StyleBoxEmpty_p2f5v")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/ScrollContainer/VBoxContainer/PanelContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
-[node name="HeatProgressBar" type="ProgressBar" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="HeatProgressBar" type="ProgressBar" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/ScrollContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
@@ -164,7 +170,7 @@ step = 1.0
 value = 50.0
 show_percentage = false
 
-[node name="Label" type="Label" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/HeatProgressBar"]
+[node name="Label" type="Label" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/ScrollContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/HeatProgressBar"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -176,7 +182,7 @@ text = "Heat - 00%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ResistanceProgressBar" type="ProgressBar" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="ResistanceProgressBar" type="ProgressBar" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/ScrollContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
@@ -185,7 +191,7 @@ step = 1.0
 value = 50.0
 show_percentage = false
 
-[node name="Label" type="Label" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/ResistanceProgressBar"]
+[node name="Label" type="Label" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/ScrollContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/ResistanceProgressBar"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -197,64 +203,74 @@ text = "Resistance - 00%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/ScrollContainer/VBoxContainer/PanelContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 0
 theme_override_styles/separator = SubResource("StyleBoxLine_qjs28")
 
-[node name="MarginContainer" type="MarginContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/ScrollContainer/VBoxContainer/PanelContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/ScrollContainer/VBoxContainer/PanelContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
-text = "Active bonuses:"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/ScrollContainer/VBoxContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "Active Bonuses:"
 fit_content = true
 
-[node name="Label" type="Label" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/VBoxContainer"]
+[node name="RichTextLabel2" type="RichTextLabel" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/ScrollContainer/VBoxContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "World Events:"
+fit_content = true
+
+[node name="Label" type="Label" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 text = "Districts"
 
-[node name="GridContainer" type="GridContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/VBoxContainer"]
+[node name="GridContainer" type="GridContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 columns = 5
 
-[node name="CivicButton" type="Button" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/VBoxContainer/GridContainer"]
+[node name="CivicButton" type="Button" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/ScrollContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Civic"
 
-[node name="ResidentialButton" type="Button" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/VBoxContainer/GridContainer"]
+[node name="ResidentialButton" type="Button" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/ScrollContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Residential"
 
-[node name="MilitaryButton" type="Button" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/VBoxContainer/GridContainer"]
+[node name="MilitaryButton" type="Button" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/ScrollContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Military"
 
-[node name="PortButton" type="Button" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/VBoxContainer/GridContainer"]
+[node name="PortButton" type="Button" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/ScrollContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Port"
 
-[node name="IndustrialButton" type="Button" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/VBoxContainer/GridContainer"]
+[node name="IndustrialButton" type="Button" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/ScrollContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Industrial"
 
-[node name="HSeparator" type="HSeparator" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 10
 theme_override_styles/separator = SubResource("StyleBoxLine_6vlaf")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/VBoxContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/normal_font_size = 14
+theme_override_font_sizes/normal_font_size = 16
 fit_content = true
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
@@ -278,9 +294,9 @@ texture_hover = ExtResource("5_c8dr7")
 offset_right = 40.0
 offset_bottom = 21.0
 
-[connection signal="pressed" from="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/VBoxContainer/GridContainer/CivicButton" to="." method="_on_district_button_pressed" binds= [3]]
-[connection signal="pressed" from="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/VBoxContainer/GridContainer/ResidentialButton" to="." method="_on_district_button_pressed" binds= [2]]
-[connection signal="pressed" from="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/VBoxContainer/GridContainer/MilitaryButton" to="." method="_on_district_button_pressed" binds= [4]]
-[connection signal="pressed" from="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/VBoxContainer/GridContainer/PortButton" to="." method="_on_district_button_pressed" binds= [0]]
-[connection signal="pressed" from="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/VBoxContainer/GridContainer/IndustrialButton" to="." method="_on_district_button_pressed" binds= [1]]
+[connection signal="pressed" from="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/ScrollContainer/VBoxContainer/GridContainer/CivicButton" to="." method="_on_district_button_pressed" binds= [3]]
+[connection signal="pressed" from="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/ScrollContainer/VBoxContainer/GridContainer/ResidentialButton" to="." method="_on_district_button_pressed" binds= [2]]
+[connection signal="pressed" from="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/ScrollContainer/VBoxContainer/GridContainer/MilitaryButton" to="." method="_on_district_button_pressed" binds= [4]]
+[connection signal="pressed" from="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/ScrollContainer/VBoxContainer/GridContainer/PortButton" to="." method="_on_district_button_pressed" binds= [0]]
+[connection signal="pressed" from="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/ScrollContainer/VBoxContainer/GridContainer/IndustrialButton" to="." method="_on_district_button_pressed" binds= [1]]
 [connection signal="pressed" from="MarginContainer/TextureButton" to="." method="_on_close_button_pressed"]

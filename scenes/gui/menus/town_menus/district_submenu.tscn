@@ -61,7 +61,6 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="DistrictName" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 theme_override_font_sizes/font_size = 25
 text = "District Name"
@@ -72,11 +71,14 @@ size_flags_horizontal = 3
 theme_override_styles/separator = SubResource("StyleBoxEmpty_gvkim")
 
 [node name="TextureButton" type="TextureButton" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
 focus_mode = 0
 texture_normal = ExtResource("3_b4s0u")
 texture_pressed = ExtResource("3_b4s0u")
 texture_hover = ExtResource("4_14ws7")
+ignore_texture_size = true
+stretch_mode = 0
 
 [node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2

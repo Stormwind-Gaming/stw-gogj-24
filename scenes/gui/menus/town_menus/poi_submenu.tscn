@@ -42,7 +42,6 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="PoIName" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 theme_override_font_sizes/font_size = 25
 text = "PoI Name"
@@ -53,11 +52,14 @@ size_flags_horizontal = 3
 theme_override_styles/separator = SubResource("StyleBoxEmpty_yi6e4")
 
 [node name="TextureButton" type="TextureButton" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
 focus_mode = 0
 texture_normal = ExtResource("2_ekirq")
 texture_pressed = ExtResource("2_ekirq")
 texture_hover = ExtResource("3_hl2hv")
+ignore_texture_size = true
+stretch_mode = 0
 
 [node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2

@@ -1,0 +1,18 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://c54ww8tfg8wh7"]
+
+[ext_resource type="Shader" path="res://assets/shaders/image_weathering.gdshader" id="1_3434h"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_herky"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ckckm"]
+noise = SubResource("FastNoiseLite_herky")
+
+[resource]
+shader = ExtResource("1_3434h")
+shader_parameter/scratch_intensity = 0.117
+shader_parameter/discoloration = 0.636
+shader_parameter/angle = 0.0
+shader_parameter/vignette_intensity = 0.355
+shader_parameter/vignette_radius = 0.69
+shader_parameter/fade_intensity = 0.0
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_ckckm")

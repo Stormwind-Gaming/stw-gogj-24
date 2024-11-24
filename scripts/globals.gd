@@ -1,6 +1,15 @@
 extends Node
 
 #|==============================|
+#|      Shader References       |
+#|==============================|
+
+"""
+@brief Preloaded shader references
+"""
+var black_to_white_shader = preload("res://assets/shaders/black_to_white.gdshader")
+
+#|==============================|
 #|      Scene References       |
 #|==============================|
 """
@@ -832,4 +841,37 @@ var world_event_images = {
 	Enums.WorldEventType.MAJOR_SECRET_POLICE: preload("res://assets/sprites/events/event_major_secret_police.png"),
 	Enums.WorldEventType.MAJOR_POLICE_COMMANDER: preload("res://assets/sprites/events/event_major_police_commander.png"),
 	Enums.WorldEventType.MAJOR_SAFEHOUSE_DISCOVERED: preload("res://assets/sprites/events/event_major_safehouse_discovered.png"),
+}
+
+
+var poi_icons = {
+	# Enums.POIType.NONE: preload("res://assets/icons/poi/selected/none.png"),
+	Enums.POIType.GESTAPO_HQ: preload("res://assets/icons/poi/selected/gestapo_hq.png"),
+	Enums.POIType.TOWN_HALL: preload("res://assets/icons/poi/selected/town_hall_2.png"),
+	# Enums.POIType.PARK: preload("res://assets/icons/poi/selected/park.png"),
+	Enums.POIType.POST_OFFICE: preload("res://assets/icons/poi/selected/post_office_2.png"),
+	Enums.POIType.POLICE_STATION: preload("res://assets/icons/poi/selected/police_station_1.png"),
+	Enums.POIType.TRAIN_STATION: preload("res://assets/icons/poi/selected/train_station_1.png"),
+	Enums.POIType.DOCKS: preload("res://assets/icons/poi/selected/docks_1.png"),
+	Enums.POIType.BROTHEL: preload("res://assets/icons/poi/selected/brothel_2.png"),
+	# Enums.POIType.SUBMARINE_PEN: preload("res://assets/icons/poi/selected/submarine_pen_1.png"),
+	Enums.POIType.CATHEDRAL: preload("res://assets/icons/poi/selected/cathedral_1.png"),
+	Enums.POIType.CINEMA: preload("res://assets/icons/poi/selected/cinema_1.png"),
+	Enums.POIType.GROCER: preload("res://assets/icons/poi/selected/grocer_1.png"),
+	Enums.POIType.SHOP: preload("res://assets/icons/poi/selected/shop_2.png"),
+	Enums.POIType.OFFICE: preload("res://assets/icons/poi/selected/office_2.png"),
+	Enums.POIType.CHURCH: preload("res://assets/icons/poi/selected/church_1.png"),
+	Enums.POIType.PUB: preload("res://assets/icons/poi/selected/pub_1.png"),
+	Enums.POIType.CAFE: preload("res://assets/icons/poi/selected/cafe_1.png"),
+	Enums.POIType.FACTORY: preload("res://assets/icons/poi/selected/factory_2.png"),
+	Enums.POIType.WAREHOUSE: preload("res://assets/icons/poi/selected/warehouse_1.png"),
+	Enums.POIType.RESIDENCE: preload("res://assets/icons/poi/selected/residence_2.png"),
+	Enums.POIType.RESTAURANT: preload("res://assets/icons/poi/selected/restaurant_2.png"),
+	Enums.POIType.WORKSHOP: preload("res://assets/icons/poi/selected/workshop_1.png"),	
+	Enums.POIType.ANTI_AIR_EMPLACEMENT: preload("res://assets/icons/poi/selected/anti_air_emplacement_1.png"),
+	Enums.POIType.GESTAPO_POST: preload("res://assets/icons/poi/selected/gestapo_post_2.png"),
+	Enums.POIType.AIR_BASE: preload("res://assets/icons/poi/selected/aerodrome_3.png"),
+	Enums.POIType.GARRISON: preload("res://assets/icons/poi/selected/garrison_3.png"),
+	Enums.POIType.AMMO_FACTORY: preload("res://assets/icons/poi/selected/ammo_factory_2.png"),
+	Enums.POIType.FOUNDRY: preload("res://assets/icons/poi/selected/foundry_1.png"),
 }

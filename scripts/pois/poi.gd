@@ -10,6 +10,11 @@ class_name PointOfInterest
 @export var poi_popup: Window
 
 """
+@brief Icon for this POI
+"""
+@export var poi_icon: TextureRect
+
+"""
 @brief Whether this POI has static (predefined) properties
 """
 @export var poi_static := true
@@ -118,7 +123,7 @@ var most_likely_intel_type: String
 @brief Visual state colors
 """
 var no_color = Color(0, 0, 0, 0)
-var selectable_color = Color(0, 1, 0, 0.5)
+var selectable_color = Color(0.133333, 0.545098, 0.133333, 0.5)
 var highlight_color = Color(1, 1, 1, 0.5)
 
 """
@@ -154,6 +159,7 @@ func _ready() -> void:
 	EventBus.poi_created.emit(self)
 	EventBus.character_state_changed.connect(_character_state_changed)
 	EventBus.district_just_focused.connect(_on_district_just_focused)
+	EventBus.selected_radial_option.connect(test)
 	
 	# Create the owner of the POI
 	self.poi_owner = CharacterFactory.create_character()
@@ -163,6 +169,10 @@ func _ready() -> void:
 	EventBus.action_created.connect(_on_action_created)
 	EventBus.action_destroyed.connect(_on_action_destroyed)
 
+func test(_option: Enums.ActionType):
+	if GameController.poi_for_radial == self:
+		$IconButton.visible = true
+		enabled = true
 
 """
 @brief Called every frame to update POI state.
@@ -187,6 +197,10 @@ func _process(delta: float) -> void:
 @brief Sets up the visual elements of the POI
 """
 func setup_poi_visuals():
+	# add a new material to the icon to allow for colour changes
+	poi_icon.material = ShaderMaterial.new()
+	poi_icon.material.shader = Globals.black_to_white_shader
+
 	$Polygon2D.position = self.get_global_position()
 	$Polygon2D.polygon = $CollisionPolygon2D.polygon
 	$Polygon2D.color = no_color
@@ -202,6 +216,10 @@ func setup_poi_visuals():
 	$ActionContainer.position = center
 
 	$Polygon2D.visible = false
+
+	# center button to the center of the polygon
+	$IconButton.position = center - $IconButton.size / 2
+	$IconButton.visible = false
 
 """
 @brief Sets the POI's details based on static or dynamic configuration.
@@ -247,6 +265,9 @@ func set_poi_details(parent_district_arg: District, poi_type_arg: Enums.POIType,
 		most_likely_intel_type = "Timing"
 
 	poi_popup.set_details(self)
+	
+	# Set the icon
+	poi_icon.texture = Globals.poi_icons[poi_type]
 
 #|==============================|
 #|      Event Handlers         |
@@ -267,6 +288,10 @@ func _on_mouse_entered():
 	
 	hovered = true
 	$Polygon2D.color = highlight_color
+
+	# set the icon colour to white
+	poi_icon.material.set_shader_parameter("transition", 1.0)
+
 	emit_signal("poi_hovered", self)
 
 """
@@ -282,6 +307,9 @@ func _on_mouse_exited():
 		return
 	else:
 		$Polygon2D.color = selectable_color
+
+	# set the icon colour to black
+	poi_icon.material.set_shader_parameter("transition", 0.0)
 
 	hovered = false
 	emit_signal("poi_unhovered")
@@ -299,40 +327,62 @@ func _on_poi_clicked(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 		return
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-			poi_popup.visible = false
+			_poi_clicked()
+			# got to hide the icon button because its a gui element so interactions are drawn on top of the radial menu 
+			$IconButton.visible = false
 			
-			if GameController.radial_menu_open != null:
-				return
+
+"""
+@brief Handles button click events.
+Opens the POI radial menu when the button is clicked.
+"""
+func _on_icon_button_clicked() -> void:
+	if not enabled:
+		return
+	_poi_clicked()
+	# got to hide the icon button because its a gui element so interactions are drawn on top of the radial menu 
+	$IconButton.visible = false
+
+"""
+@brief Handles POI click events.
+Opens the POI radial menu when the POI is clicked.
+"""
+func _poi_clicked() -> void:
+	print("POI clicked")
+	poi_popup.visible = false
 			
-			if GameController.district_focused != parent_district:
-				return
+	if GameController.radial_menu_open != null:
+		return
+	
+	if GameController.district_focused != parent_district:
+		return
 
-			var radial_menu_instance = Globals.radial_menu_scene.instantiate()
-			radial_menu_instance.position = get_local_mouse_position()
+	var radial_menu_instance = Globals.radial_menu_scene.instantiate()
+	radial_menu_instance.position = get_local_mouse_position()
 
-			var actions: Array[Enums.ActionType] = []
+	var actions: Array[Enums.ActionType] = []
 
-			# If the endgame isnt active then add the normal actions
-			if not GameController.endgame_triggered:
-				actions.append(Enums.ActionType.ESPIONAGE)
+	# If the endgame isnt active then add the normal actions
+	if not GameController.endgame_triggered:
+		actions.append(Enums.ActionType.ESPIONAGE)
 
-				# Only non-sympathisers can use propaganda
-				if poi_owner.char_recruitment_state < Enums.CharacterRecruitmentState.SYMPATHISER_NOT_RECRUITED:
-					actions.append(Enums.ActionType.PROPAGANDA)
+		# Only non-sympathisers can use propaganda
+		if poi_owner.char_recruitment_state < Enums.CharacterRecruitmentState.SYMPATHISER_NOT_RECRUITED:
+			actions.append(Enums.ActionType.PROPAGANDA)
 
-				# Only unknown non-sympathisers can use surveillance
-				if poi_owner.char_recruitment_state == Enums.CharacterRecruitmentState.NON_SYMPATHISER_UNKNOWN:
-					actions.append(Enums.ActionType.SURVEILLANCE)
+		# Only unknown non-sympathisers can use surveillance
+		if poi_owner.char_recruitment_state == Enums.CharacterRecruitmentState.NON_SYMPATHISER_UNKNOWN:
+			actions.append(Enums.ActionType.SURVEILLANCE)
 
-			# If the POI has a plan then add the plan action
-			if (_has_plan()):
-				actions.append(Enums.ActionType.PLAN)
+	# If the POI has a plan then add the plan action
+	if (_has_plan()):
+		actions.append(Enums.ActionType.PLAN)
 
-			radial_menu_instance.set_optional_actions(actions)
-			EventBus.open_new_radial_menu.emit(radial_menu_instance)
-			add_child(radial_menu_instance)
+	radial_menu_instance.set_optional_actions(actions)
+	EventBus.open_new_radial_menu.emit(radial_menu_instance)
+	add_child(radial_menu_instance)
 
-			GameController.open_radial_menu(radial_menu_instance, self)
+	GameController.open_radial_menu(radial_menu_instance, self)
 
 """
 @brief Handles district focus changes.
@@ -343,13 +393,15 @@ Updates POI state based on whether its district is focused.
 func _on_district_just_focused(district: District) -> void:
 	if district == parent_district:
 		$Polygon2D.color = selectable_color
-		await get_tree().create_timer(0.1).timeout
+		await get_tree().create_timer(0.01).timeout
 		enabled = true
 		$Polygon2D.visible = true
+		$IconButton.visible = true
 	else:
 		$Polygon2D.color = no_color
 		enabled = false
 		$Polygon2D.visible = false
+		$IconButton.visible = false
 
 """
 @brief Handles character state changes.
@@ -360,9 +412,11 @@ Updates POI popup details based on owner changes.
 func _character_state_changed(character: Character) -> void:
 	if character == poi_owner:
 		poi_popup.set_details(self)
-		if character.char_state == Enums.CharacterState.DECEASED:
-			$Polygon2D.color = no_color
-			enabled = false
+
+		# TODO: this doesnt work
+		# if character.char_state == Enums.CharacterState.DECEASED:
+		# 	$Polygon2D.color = no_color
+		# 	enabled = false
 
 """
 @brief Handles action creation events.
@@ -417,3 +471,7 @@ func _has_plan() -> bool:
 				has_plan = true
 				break
 	return has_plan
+
+
+func _on_icon_button_pressed() -> void:
+	pass # Replace with function body.

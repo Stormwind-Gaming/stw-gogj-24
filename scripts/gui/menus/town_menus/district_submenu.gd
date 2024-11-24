@@ -91,5 +91,5 @@ func _on_poi_button_pressed(poi: PointOfInterest) -> void:
 @brief Event handler for the focus button
 """
 func _on_focus_button_pressed() -> void:
-	WindowHandler._close_all_windows()
+	EventBus.close_all_windows.emit()
 	district.district_clicked.emit(district)

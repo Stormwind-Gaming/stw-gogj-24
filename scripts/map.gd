@@ -143,6 +143,10 @@ func _on_district_unhovered(district: District) -> void:
 @param district The district being clicked
 """
 func _on_district_clicked(district: District) -> void:
+	# if the district is already focused, return
+	if GameController.district_focused == district:
+		return
+
 	for d in GlobalRegistry.districts.get_all_items():
 		d.remove_highlight_color()
 		d.unset_focus()
@@ -189,6 +193,7 @@ func _disable_interaction(_i = 0) -> void:
 @brief Enables interaction with the map
 """
 func _enable_interaction() -> void:
+	print("Enabling interaction")
 	for district in GlobalRegistry.districts.get_all_items():
 		district.set_enabled()
 

@@ -30,10 +30,13 @@ func create_list(name: String) -> void:
 @param item The item to add to the list.
 """
 func add_item(list_name: String, item) -> void:
+	print("Adding item to list: ", list_name)
 	if not _registry.has(list_name):
 		push_error("List '%s' does not exist" % list_name)
 		return
 	_registry[list_name].append(item)
+	print("Item added to list: ", list_name, _registry[list_name])
+	print("List size: ", _registry[list_name].size())
 
 """
 @brief Moves a specific item to the target list from the source list.

@@ -1,10 +1,12 @@
-[gd_scene load_steps=18 format=3 uid="uid://dv6koqcesevck"]
+[gd_scene load_steps=23 format=3 uid="uid://dv6koqcesevck"]
 
 [ext_resource type="Theme" uid="uid://dexax20p2eewp" path="res://assets/themes/base_theme.tres" id="1_6ufjg"]
+[ext_resource type="Material" uid="uid://c54ww8tfg8wh7" path="res://assets/materials/agent_card_shader_material.tres" id="1_30sdo"]
 [ext_resource type="Script" path="res://scripts/gui/agent_card.gd" id="1_dtlic"]
 [ext_resource type="Theme" uid="uid://dlrdh5kyv25hr" path="res://assets/themes/handwriting_label_theme.tres" id="2_wiqf1"]
 [ext_resource type="Texture2D" uid="uid://hy5wv55fu1rx" path="res://assets/sprites/emblem.png" id="3_uiwnq"]
 [ext_resource type="Theme" uid="uid://c78hoq7n7ae54" path="res://assets/themes/typewriter_label_theme.tres" id="4_j67y3"]
+[ext_resource type="Shader" path="res://assets/shaders/image_weathering.gdshader" id="5_5klty"]
 [ext_resource type="Texture2D" uid="uid://c0xlm4ebrvmg4" path="res://assets/profile_pictures/blank.png" id="5_gbp2g"]
 [ext_resource type="Texture2D" uid="uid://blme3dsuykhey" path="res://assets/character_status/assigned.png" id="6_6ampm"]
 [ext_resource type="Texture2D" uid="uid://dym5qqj722706" path="res://assets/select_cover.png" id="7_pqda2"]
@@ -26,6 +28,25 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_d75w3"]
+frequency = 0.0001
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_e2gki"]
+width = 300
+height = 400
+seamless = true
+noise = SubResource("FastNoiseLite_d75w3")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rbp78"]
+shader = ExtResource("5_5klty")
+shader_parameter/scratch_intensity = 0.14
+shader_parameter/discoloration = 0.329
+shader_parameter/angle = 0.917
+shader_parameter/vignette_intensity = 0.449
+shader_parameter/vignette_radius = 0.628
+shader_parameter/fade_intensity = 0.0
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_e2gki")
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vppwv"]
 bg_color = Color(0, 0.727352, 0.11733, 1)
 
@@ -34,6 +55,7 @@ bg_color = Color(0, 0.727352, 0.11733, 1)
 [sub_resource type="ImageTexture" id="ImageTexture_ln0gf"]
 
 [node name="AgentCard" type="PanelContainer" node_paths=PackedStringArray("character_texture", "status_overlay", "gender_label", "dob_label", "nationality_label", "profession_label", "national_id_label", "sympathy_progress", "charm_label", "subtlety_label", "smarts_label", "assignment_button", "set_unset_agent_button", "popup_button")]
+material = ExtResource("1_30sdo")
 clip_contents = true
 anchors_preset = 8
 anchor_left = 0.5
@@ -87,6 +109,15 @@ scale = Vector2(1.5, 1.5)
 texture = ExtResource("3_uiwnq")
 stretch_mode = 2
 
+[node name="Label2" type="Label" parent="."]
+modulate = Color(1, 1, 1, 0.478431)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_font_sizes/font_size = 7
+text = "Militärverwaltung in Belgien und Nordfrankreich"
+horizontal_alignment = 1
+
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
 size_flags_vertical = 4
@@ -99,14 +130,6 @@ layout_mode = 2
 size_flags_vertical = 4
 theme_override_constants/separation = 0
 
-[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer"]
-visible = false
-modulate = Color(1, 1, 1, 0.478431)
-layout_mode = 2
-theme_override_font_sizes/font_size = 7
-text = "Militärverwaltung in Belgien und Nordfrankreich"
-horizontal_alignment = 1
-
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
@@ -116,7 +139,6 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 18
 text = "<Name>"
 horizontal_alignment = 1
-autowrap_mode = 2
 
 [node name="HSeparator2" type="HSeparator" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -126,6 +148,7 @@ theme_override_constants/separation = 4
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+material = SubResource("ShaderMaterial_rbp78")
 layout_mode = 2
 texture = ExtResource("5_gbp2g")
 expand_mode = 3

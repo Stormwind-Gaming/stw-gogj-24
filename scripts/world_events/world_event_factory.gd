@@ -16,7 +16,7 @@ static func randomise_world_event_from_heat(heat: int) -> WorldEvent:
 		15.0 # maximum allowed chance
 	)
 
-	# event_chance = 100
+	event_chance = 100
 
 	if randf() * 100 < event_chance:
 		print("World event triggered")

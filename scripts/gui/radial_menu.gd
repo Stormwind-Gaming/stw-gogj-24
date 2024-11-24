@@ -189,6 +189,12 @@ func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) 
 			EventBus.close_radial_menu.emit()
 			EventBus.selected_radial_option.emit(options[selected_cell].action_type)
 
+func _on_close_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+	if event is InputEventMouseButton:
+		var mouse_event = event as InputEventMouseButton
+		if mouse_event.button_index == MOUSE_BUTTON_LEFT and mouse_event.pressed:
+			EventBus.close_radial_menu.emit()
+
 #|==============================|
 #|      Helper Functions       |
 #|==============================|
@@ -200,10 +206,3 @@ func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) 
 func set_optional_actions(options_attr: Array[Enums.ActionType] = []) -> void:
 	for option in options_attr:
 		options.append(RadialOption.new(option))
-
-
-func _on_close_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
-	if event is InputEventMouseButton:
-		var mouse_event = event as InputEventMouseButton
-		if mouse_event.button_index == MOUSE_BUTTON_LEFT and mouse_event.pressed:
-			EventBus.close_radial_menu.emit()
