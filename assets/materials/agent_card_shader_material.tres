@@ -1,4 +1,4 @@
-[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://c54ww8tfg8wh7"]
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://c5bfyf7esomqq"]
 
 [ext_resource type="Shader" path="res://assets/shaders/image_weathering.gdshader" id="1_3434h"]
 

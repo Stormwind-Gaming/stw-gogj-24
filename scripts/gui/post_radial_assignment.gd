@@ -3,6 +3,9 @@ extends Window
 #|==============================|
 #|      Exported Variables      |
 #|==============================|
+@onready var detection_label = find_child("DetectionLabel")
+@onready var success_label = find_child("SuccessLabel")
+
 """
 @brief Label displaying the task title
 """
@@ -203,3 +206,31 @@ func _calculate_stats():
 	assigned_agents_label.text = ''
 	for agent in selected_agents:
 		assigned_agents_label.text += agent.get_full_name() + '\n'
+
+	if selected_agents.size() > 0:
+
+		var statistic_check: StatisticCheck = StatisticCheck.new(selected_agents, GameController.poi_for_radial.parent_district, GameController.poi_for_radial)
+		detection_label.text = "Chance of Detection: %s" % str(floor((1 - statistic_check.get_subtlety_chance()) * 100)) + "%"
+
+		print(option)
+
+		match option:
+			Enums.ActionType.PROPAGANDA:
+				success_label.text = "Chance of Success: %s" % str(floor((statistic_check.get_charm_chance()) * 100)) + "%"
+			Enums.ActionType.SURVEILLANCE:
+				success_label.text = "Chance of Success: %s" % str(floor((statistic_check.get_smarts_chance()) * 100)) + "%"
+			Enums.ActionType.ESPIONAGE:
+				# Get the stat for this poi espoionage
+				match GameController.poi_for_radial.stat_check_type:
+					Enums.StatCheckType.CHARM:
+						success_label.text = "Chance of Success: %s" % str(floor((statistic_check.get_charm_chance()) * 100)) + "%"
+					Enums.StatCheckType.SMARTS:
+						success_label.text = "Chance of Success: %s" % str(floor((statistic_check.get_smarts_chance()) * 100)) + "%"
+			_:
+				# TODO: Calculate which stat is going to be checked for the plan action
+			# Enums.ActionType.PLAN:
+				success_label.text = ""
+
+	else:
+		detection_label.text = "Chance of Detection: 0%"
+		success_label.text = "Chance of Success: 0%"
