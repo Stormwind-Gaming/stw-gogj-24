@@ -190,8 +190,11 @@ func _set_state_overlay(status: Enums.CharacterState) -> void:
 		self.modulate = Color(0.5, 0.5, 0.5)
 
 	if status == Enums.CharacterState.INJURED:
-		var label = Label.new()
-		label.text = '1' # Turns is currently always 1
+		var label = Label.new()		
+		if character.injured_return_on_turn:
+			label.text = str(character.injured_return_on_turn - GameController.turn_number)
+		else:
+			label.text = '1'
 		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		label.add_theme_color_override("font_color", Color(1, 1, 1))
 		label.add_theme_font_size_override("font_size", 24)

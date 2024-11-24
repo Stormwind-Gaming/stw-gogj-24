@@ -26,7 +26,8 @@ func _event_start() -> void:
 	print("Subject character: ", subject_character.get_full_name(), "Sympathy: ", subject_character.char_sympathy, " + ", Constants.WORLD_EVENT_SIGNIFICANT_SYMPATHISER_CAPTURED_SYMPATHY_CHANGE)
 	subject_character.char_sympathy += Constants.WORLD_EVENT_SIGNIFICANT_SYMPATHISER_CAPTURED_SYMPATHY_CHANGE
 
-	# TODO: Add 5 turns of injury to character
+	subject_character.set_char_state(Enums.CharacterState.INJURED)
+	subject_character.injured_return_on_turn = GameController.turn_number + Constants.WORLD_EVENT_SIGNIFICANT_SYMPATHISER_CAPTURED_DURATION
 
 	print("Subject district: ", subject_district.district_name, "Heat: ", subject_district.heat, " + ", Constants.WORLD_EVENT_SIGNIFICANT_SYMPATHISER_CAPTURED_HEAT_CHANGE)
 	subject_district.heat += Constants.WORLD_EVENT_SIGNIFICANT_SYMPATHISER_CAPTURED_HEAT_CHANGE
