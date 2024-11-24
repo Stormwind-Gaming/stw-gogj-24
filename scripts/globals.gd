@@ -483,6 +483,18 @@ func get_action_type_string(action_type: Enums.ActionType) -> String:
 		_:
 			return "Unknown"
 
+
+func get_stat_string(stat: Enums.StatCheckType) -> String:
+	match stat:
+		Enums.StatCheckType.SMARTS:
+			return "Smarts"
+		Enums.StatCheckType.CHARM:
+			return "Charm"
+		Enums.StatCheckType.SUBTLETY:
+			return "Subtlety"
+		_:
+			return "Unknown"
+
 func get_intel_type_string(intel_type: Enums.RumourType) -> String:
 	match intel_type:
 		Enums.RumourType.MISSION:

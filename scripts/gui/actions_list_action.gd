@@ -14,9 +14,14 @@ extends MarginContainer
 @export var title: Label
 
 """
-@brief Label displaying the action title
+@brief Label displaying the location of the action
 """
 @export var location_label: RichTextLabel
+
+"""
+@brief Label displaying the skill required for the action
+"""
+@export var skill_label: RichTextLabel
 
 """
 @brief Label showing the remaining time for this action
@@ -83,6 +88,9 @@ func set_action(action_attr: BaseAction) -> void:
 	if poi:
 		location_text += "POI: %s" % poi.poi_name
 	location_label.text = location_text
+
+	# Set the skill required text
+	skill_label.text = "Skill required: %s" % Globals.get_stat_string(action.poi.stat_check_type)
 
 	# Create and add agent cards for each character in the action
 	for agent in action.characters:
