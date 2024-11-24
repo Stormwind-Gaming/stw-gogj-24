@@ -169,7 +169,7 @@ func _ready() -> void:
 	EventBus.poi_created.emit(self)
 	EventBus.character_state_changed.connect(_character_state_changed)
 	EventBus.district_just_focused.connect(_on_district_just_focused)
-	EventBus.selected_radial_option.connect(test)
+	EventBus.close_radial_menu.connect(_reset_poi_state)
 	
 	# Create the owner of the POI
 	self.poi_owner = CharacterFactory.create_character()
@@ -178,11 +178,6 @@ func _ready() -> void:
 
 	EventBus.action_created.connect(_on_action_created)
 	EventBus.action_destroyed.connect(_on_action_destroyed)
-
-func test(_option: Enums.ActionType):
-	if GameController.poi_for_radial == self:
-		$IconButton.visible = true
-		enabled = true
 
 """
 @brief Called every frame to update POI state.
@@ -342,8 +337,11 @@ func _on_poi_clicked(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 			_poi_clicked()
 			# got to hide the icon button because its a gui element so interactions are drawn on top of the radial menu 
 			$IconButton.visible = false
-			
 
+func _reset_poi_state():
+	print("Resetting POI state")
+	_on_district_just_focused(GameController.district_focused)
+			
 """
 @brief Handles button click events.
 Opens the POI radial menu when the button is clicked.
@@ -375,7 +373,7 @@ func _poi_clicked() -> void:
 	var actions: Array[Enums.ActionType] = []
 
 	# If the endgame isnt active then add the normal actions
-	if not GameController.endgame_triggered:
+	if not GameController.endgame_triggered and not poi_owner.char_state == Enums.CharacterState.DECEASED:
 		actions.append(Enums.ActionType.ESPIONAGE)
 
 		# Only non-sympathisers can use propaganda

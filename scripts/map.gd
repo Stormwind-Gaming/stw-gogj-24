@@ -59,6 +59,7 @@ Checks for middle/right click to clear district focus.
 func _process(delta: float) -> void:
 	if GameController.district_focused != null:
 		if Input.is_mouse_button_pressed(MOUSE_BUTTON_MIDDLE) or Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
+			EventBus.close_all_windows.emit()
 			_clear_focus()
 	if Input.is_action_just_pressed("ui_cancel"):
 		if pause_menu.visible:
