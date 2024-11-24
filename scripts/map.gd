@@ -193,7 +193,6 @@ func _disable_interaction(_i = 0) -> void:
 @brief Enables interaction with the map
 """
 func _enable_interaction() -> void:
-	print("Enabling interaction")
 	for district in GlobalRegistry.districts.get_all_items():
 		district.set_enabled()
 

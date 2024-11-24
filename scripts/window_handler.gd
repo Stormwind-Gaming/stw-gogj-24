@@ -48,7 +48,7 @@ func any_windows_open() -> bool:
 @brief Closes all open windows and event panels
 """
 func _close_all_windows_and_event_panels() -> void:
-	_close_all_windows()
+	EventBus.close_all_windows.emit()
 	for panel in open_event_panels:
 		panel.queue_free()
 	open_event_panels.clear()
@@ -89,10 +89,12 @@ func _close_radial_menu() -> void:
 """
 func _open_new_window(window: Window, close_all_windows: bool = true) -> void:
 	if open_window and open_window.name == window.name:
-		_close_all_windows()
+		# wait next tick
+		await get_tree().process_frame
+		EventBus.close_all_windows.emit()
 		return
 	if close_all_windows:
-		_close_all_windows()
+		EventBus.close_all_windows.emit()
 
 	open_window = window
 	add_child(window)
