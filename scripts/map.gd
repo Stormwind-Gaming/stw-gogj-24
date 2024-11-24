@@ -28,6 +28,7 @@ class_name Map
 Initializes the map, districts, and starting agents.
 """
 func _ready() -> void:
+
 	randomize()
 	$AnimationPlayer.play("fade_in")
 	#TODO: # randomise cloud noise (currently disabled due to jumping when scene loads)
@@ -204,6 +205,9 @@ func _game_over() -> void:
 	_disable_interaction(0)
 	$AnimationPlayer.play("fade_out")
 	$AnimationPlayer.animation_finished.connect(_show_game_over)
+
+	# Reset the game
+	GlobalRegistry.reset()
 
 """
 @brief Shows the game over screen

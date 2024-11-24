@@ -137,6 +137,48 @@ func _ready():
 	# Modifier events
 	EventBus.modifier_created.connect(_on_modifier_created)
 
+"""
+@brief Resets all registry lists
+"""
+func reset() -> void:
+	# Free all objects before clearing lists
+	for district in districts.get_all_items():
+		if is_instance_valid(district):
+			district.queue_free()
+	
+	for character in characters.get_all_items():
+		if is_instance_valid(character):
+			character.queue_free()
+	
+	for poi in pois.get_all_items():
+		if is_instance_valid(poi):
+			poi.queue_free()
+	
+	for intel_item in intel.get_all_items():
+		if is_instance_valid(intel_item):
+			intel_item.queue_free()
+	
+	for action in actions.get_all_items():
+		if is_instance_valid(action):
+			action.queue_free()
+	
+	for world_event in world_events.get_all_items():
+		if is_instance_valid(world_event):
+			world_event.queue_free()
+	
+	for modifier in modifiers.get_all_items():
+		if is_instance_valid(modifier):
+			modifier.queue_free()
+
+	# Now clear the lists
+	characters.clear_all()
+	pois.clear_all()
+	districts.clear_all()
+	intel.clear_all()
+	actions.clear_all()
+	world_events.clear_all()
+	modifiers.clear_all()
+
 #|==============================|
 #|     Character Management    |
 #|==============================|

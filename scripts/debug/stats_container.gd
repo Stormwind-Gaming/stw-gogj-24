@@ -50,7 +50,7 @@ extends PanelContainer
 @export var mia: Label
 
 """
-@brief Label Injured 
+@brief Label Injured
 """
 @export var injured: Label
 
@@ -111,6 +111,18 @@ func _ready():
 	EventBus.end_turn_complete.connect(_update_gui)
 	EventBus.stat_created.connect(_update_stat)
 	_update_gui(0)
+
+"""
+@brief Resets the stats container
+"""
+func reset() -> void:
+	stats = stats.duplicate(true)
+	for key in stats:
+		if typeof(stats[key]) == TYPE_DICTIONARY:
+			stats[key].success = 0
+			stats[key].total = 0
+		else:
+			stats[key] = 0
 
 #|==============================|
 #|      Event Handlers         |

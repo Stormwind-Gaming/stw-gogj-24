@@ -50,10 +50,12 @@ var endgame_triggered: bool = false
 
 var heat_endgame_port_step: int = 0
 var heat_endgame_train_step: int = 0
+var resistance_endgame_step: int = 0
 
 #|==============================|
 #|      Lifecycle Methods      |
 #|==============================|
+
 """
 @brief Called when the node enters the scene tree
 """
@@ -61,6 +63,18 @@ func _ready() -> void:
 	calendar = Calendar.new()
 	town_details = TownDetails.new()
 	EventBus.selected_radial_option.connect(_on_radial_option_selected)
+
+"""
+@brief Resets the GameController
+"""
+func reset() -> void:
+	turn_number = 0
+	endgame_triggered = false
+	heat_endgame_port_step = 0
+	heat_endgame_train_step = 0
+	resistance_endgame_step = 0
+	max_agents = Constants.INIT_MAX_AGENTS
+
 
 #|==============================|
 #|      Getters & Setters      |
