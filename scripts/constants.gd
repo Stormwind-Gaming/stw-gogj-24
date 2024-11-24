@@ -567,6 +567,16 @@ var WORLD_EVENT_MAJOR_POLICE_COMMANDER_HEAT_CHANGE_CIVIC: int = 30
 """
 var WORLD_EVENT_MAJOR_POLICE_COMMANDER_HEAT_CHANGE_ALL: int = 10
 
+"""
+@brief Duration of major safehouse discovered world events (turns)
+"""
+var WORLD_EVENT_MAJOR_SAFEHOUSE_DISCOVERED_DURATION: int = 5
+
+"""
+@brief Heat change from major safehouse discovered world events
+"""
+var WORLD_EVENT_MAJOR_SAFEHOUSE_DISCOVERED_HEAT_CHANGE: int = 40
+
 
 func _ready():
 	config = ConfigLoader.new()

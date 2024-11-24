@@ -90,7 +90,7 @@ static func create_world_event(severity: Enums.WorldEventSeverity) -> WorldEvent
 			event = MajorPoliceCommanderEvent.new(config)
 		Enums.WorldEventType.MAJOR_SAFEHOUSE_DISCOVERED:
 			print("Creating major safehouse discovered event")
-			# event = MajorSafehouseDiscoveredEvent.new(config)
+			event = MajorSafehouseDiscoveredEvent.new(config)
 		_:
 			push_error("Unknown world event type: ", event_data.event_type)
 			return null
