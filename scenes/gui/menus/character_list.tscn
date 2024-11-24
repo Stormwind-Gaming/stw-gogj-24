@@ -1,14 +1,20 @@
-[gd_scene load_steps=7 format=3 uid="uid://5oqcliii8tmx"]
+[gd_scene load_steps=12 format=3 uid="uid://5oqcliii8tmx"]
 
 [ext_resource type="Script" path="res://scripts/gui/character_list.gd" id="1_dabvh"]
 [ext_resource type="Texture2D" uid="uid://cymum3g0jnd7l" path="res://assets/sprites/popup_panel_background_75.png" id="2_a4sd7"]
 [ext_resource type="Theme" uid="uid://dexax20p2eewp" path="res://assets/themes/base_theme.tres" id="3_7dsct"]
 [ext_resource type="Texture2D" uid="uid://ctiq8sa8m5iv" path="res://assets/sprites/close_ribbon_black.png" id="3_mderh"]
 [ext_resource type="Texture2D" uid="uid://5vk04yychida" path="res://assets/sprites/close_ribbon_white.png" id="4_gafdp"]
+[ext_resource type="Texture2D" uid="uid://bv0qoe7jwj2mo" path="res://assets/icons/sympathy_white.png" id="4_o6urm"]
+[ext_resource type="Texture2D" uid="uid://c5o1smfxukatm" path="res://assets/icons/drama-masks_white.png" id="5_7o0qo"]
+[ext_resource type="Texture2D" uid="uid://dj85jilyyb0vp" path="res://assets/icons/charm_2_white.png" id="6_diuk7"]
+[ext_resource type="Texture2D" uid="uid://dmd57b6o75nca" path="res://assets/icons/smarts_2_white.png" id="7_bj81q"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vt46n"]
 
-[node name="CharacterList" type="Window" node_paths=PackedStringArray("deceased_list_container", "mia_list_container", "known_character_list_container", "unknown_character_list_container", "sympathiser_list_container", "agent_list_container", "agents_label")]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_80ktr"]
+
+[node name="CharacterList" type="Window" node_paths=PackedStringArray("deceased_list_container", "mia_list_container", "known_character_list_container", "unknown_character_list_container", "sympathiser_list_container", "agent_list_container", "agents_label", "sort_option_button")]
 transparent_bg = true
 initial_position = 2
 size = Vector2i(800, 700)
@@ -24,6 +30,7 @@ unknown_character_list_container = NodePath("NinePatchRect/MarginContainer/TabCo
 sympathiser_list_container = NodePath("NinePatchRect/MarginContainer/TabContainer/Sympathisers/MarginContainer/HBoxContainer/VBoxContainer2/ScrollContainer/SympathiserContainer")
 agent_list_container = NodePath("NinePatchRect/MarginContainer/TabContainer/Sympathisers/MarginContainer/HBoxContainer/VBoxContainer/ScrollContainer2/AgentVBoxContainer")
 agents_label = NodePath("NinePatchRect/MarginContainer/TabContainer/Sympathisers/MarginContainer/HBoxContainer/VBoxContainer/Label")
+sort_option_button = NodePath("NinePatchRect/MarginContainer/TabContainer/Known Characters/MarginContainer/VBoxContainer/HBoxContainer/OptionButton")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
 anchors_preset = 15
@@ -49,9 +56,10 @@ theme_override_constants/margin_bottom = -84
 [node name="TabContainer" type="TabContainer" parent="NinePatchRect/MarginContainer"]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_vt46n")
-current_tab = 0
+current_tab = 1
 
 [node name="Sympathisers" type="PanelContainer" parent="NinePatchRect/MarginContainer/TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -105,7 +113,6 @@ size_flags_horizontal = 3
 columns = 2
 
 [node name="Known Characters" type="PanelContainer" parent="NinePatchRect/MarginContainer/TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
@@ -119,9 +126,33 @@ theme_override_constants/margin_bottom = 20
 [node name="VBoxContainer" type="VBoxContainer" parent="NinePatchRect/MarginContainer/TabContainer/Known Characters/MarginContainer"]
 layout_mode = 2
 
-[node name="Known" type="Label" parent="NinePatchRect/MarginContainer/TabContainer/Known Characters/MarginContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="NinePatchRect/MarginContainer/TabContainer/Known Characters/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Known" type="Label" parent="NinePatchRect/MarginContainer/TabContainer/Known Characters/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Known characters"
+
+[node name="VSeparator" type="VSeparator" parent="NinePatchRect/MarginContainer/TabContainer/Known Characters/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/separator = SubResource("StyleBoxEmpty_80ktr")
+
+[node name="OptionButton" type="OptionButton" parent="NinePatchRect/MarginContainer/TabContainer/Known Characters/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+selected = 0
+item_count = 4
+popup/item_0/text = "Sympathy"
+popup/item_0/icon = ExtResource("4_o6urm")
+popup/item_1/text = "Subtlety"
+popup/item_1/icon = ExtResource("5_7o0qo")
+popup/item_1/id = 1
+popup/item_2/text = "Charm"
+popup/item_2/icon = ExtResource("6_diuk7")
+popup/item_2/id = 2
+popup/item_3/text = "Smarts"
+popup/item_3/icon = ExtResource("7_bj81q")
+popup/item_3/id = 3
 
 [node name="ScrollContainer" type="ScrollContainer" parent="NinePatchRect/MarginContainer/TabContainer/Known Characters/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -214,4 +245,5 @@ texture_normal = ExtResource("3_mderh")
 texture_pressed = ExtResource("3_mderh")
 texture_hover = ExtResource("4_gafdp")
 
+[connection signal="item_selected" from="NinePatchRect/MarginContainer/TabContainer/Known Characters/MarginContainer/VBoxContainer/HBoxContainer/OptionButton" to="." method="_on_option_button_item_selected"]
 [connection signal="pressed" from="MarginContainer/TextureButton" to="." method="_on_close_button_pressed"]

@@ -38,6 +38,12 @@ extends Window
 """
 @export var agents_label: Label
 
+"""
+@brief OptionButton for sorting characters
+"""
+@export var sort_option_button: OptionButton
+
+
 #|==============================|
 #|      Lifecycle Methods      |
 #|==============================|
@@ -91,6 +97,18 @@ func populate_character_lists():
 		deceased_list_container.add_child(mini_agent_card_scene)
 
 	var characters_known = GlobalRegistry.characters.get_list(GlobalRegistry.LIST_NON_SYMPATHISER_KNOWN)
+	# sort characters based on sort_option_button
+	match sort_option_button.selected:
+		0:
+			characters_known.sort_custom(func(x, y): x.char_sympathy > y.char_sympathy)
+		1:
+			characters_known.sort_custom(func(x, y): x.char_subtlety > y.char_subtlety)
+		2:
+			characters_known.sort_custom(func(x, y): x.char_charm > y.char_charm)
+		3:
+			characters_known.sort_custom(func(x, y): x.char_smarts > y.char_smarts)
+		_:
+			pass
 	for character in characters_known:
 		var mini_agent_card_scene = Globals.mini_agent_card_scene.instantiate()
 		mini_agent_card_scene.enable_popup_interaction()
@@ -206,6 +224,57 @@ func _on_character_button_pressed(character: Character) -> void:
 """
 func _on_close_button_pressed() -> void:
 	EventBus.close_window.emit()
+
+"""
+@brief Handles the sort option button item selected event.
+
+@param index The index of the selected item
+"""
+func _on_option_button_item_selected(index: int) -> void:
+	for child in known_character_list_container.get_children():
+		child.queue_free()
+
+	var characters_known = GlobalRegistry.characters.get_list(GlobalRegistry.LIST_NON_SYMPATHISER_KNOWN)
+	# sort characters based on sort_option_button
+	match index:
+		0:
+			characters_known.sort_custom(func(x, y):
+				if x.char_sympathy > y.char_sympathy:
+					return true
+				return false
+			)
+		1:
+			characters_known.sort_custom(func(x, y):
+				if x.char_subtlety > y.char_subtlety:
+					return true
+				return false
+			)
+		2:
+			characters_known.sort_custom(func(x, y):
+				if x.char_charm > y.char_charm:
+					return true
+				return false
+			)
+		3:
+			characters_known.sort_custom(func(x, y):
+				if x.char_smarts > y.char_smarts:
+					return true
+				return false
+			)
+		_:
+			pass
+	
+	for character in characters_known:
+		var mini_agent_card_scene = Globals.mini_agent_card_scene.instantiate()
+		mini_agent_card_scene.enable_popup_interaction()
+		mini_agent_card_scene.set_character(character)
+		known_character_list_container.add_child(mini_agent_card_scene)
+
+func sort_ascending(a, b):
+	if a[1] < b[1]:
+		return true
+	return false
+
 
 #|==============================|
 #|      Helper Functions       |

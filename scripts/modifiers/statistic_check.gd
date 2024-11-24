@@ -27,6 +27,7 @@ func _init(_characters: Array[Character], _district: District, _poi: PointOfInte
 	for modifier in modifiers:
 		print("Modifier active: ", modifier.active)
 	print("--- END STATISTIC CHECK SETUP ---")
+
 func subtlety_check() -> bool:
 	var subtlety_check_value = stats.subtlety
 	print("--- SUBTLETY CHECK ---")
@@ -36,6 +37,11 @@ func subtlety_check() -> bool:
 		print("Modifier: ", modifier.modifier_name, " ", subtlety_check_value, " + ", modifier.modifier_subtlety_flat)
 		subtlety_check_value += modifier.modifier_subtlety_flat
 
+	# if this is the home PoI of this character, add the home modifier (+25%)
+	if poi == characters[0].char_associated_poi:
+		print("Home modifier: ", subtlety_check_value, " * 1.25")
+		subtlety_check_value *= 1.25
+	
 	var subtlety_roll = MathHelpers.bounded_sigmoid_check(
 		subtlety_check_value,
 		true,

@@ -48,7 +48,7 @@ func any_windows_open() -> bool:
 @brief Closes all open windows and event panels
 """
 func _close_all_windows_and_event_panels() -> void:
-	_close_all_windows()
+	EventBus.close_all_windows.emit()
 	for panel in open_event_panels:
 		panel.queue_free()
 	open_event_panels.clear()
@@ -89,10 +89,12 @@ func _close_radial_menu() -> void:
 """
 func _open_new_window(window: Window, close_all_windows: bool = true) -> void:
 	if open_window and open_window.name == window.name:
-		_close_all_windows()
+		# wait next tick
+		await get_tree().process_frame
+		EventBus.close_all_windows.emit()
 		return
 	if close_all_windows:
-		_close_all_windows()
+		EventBus.close_all_windows.emit()
 
 	open_window = window
 	add_child(window)
@@ -116,9 +118,9 @@ func _open_radial_menu(menu: RadialMenu) -> void:
 
 @param event The world event to create a panel for
 """
-func _create_new_world_event_panel(world_event: WorldEvent) -> void:
+func _create_new_world_event_panel(world_event: WorldEvent, config: WorldEventConfig) -> void:
 	var popup = Globals.event_panel_scene.instantiate()
-	popup.set_event_details_world_event(world_event)
+	popup.set_event_details_world_event(world_event, config)
 	add_child(popup)
 	open_event_panels.append(popup)
 	popup.on_close.connect(_on_event_panel_closed)

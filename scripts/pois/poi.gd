@@ -35,6 +35,11 @@ class_name PointOfInterest
 @export var poi_static_name: String = ""
 
 """
+@brief Predefined profession for static POIs
+"""
+@export var poi_static_profession_arg: String = ""
+
+"""
 @brief Predefined short description for static POIs
 """
 @export var poi_static_short_description: String = ""
@@ -93,6 +98,11 @@ var poi_type: Enums.POIType
 @brief Name of this POI
 """
 var poi_name: String = ""
+
+"""
+@brief Profession of this POI
+"""
+var poi_profession: String = ""
 
 """
 @brief Short description of this POI
@@ -229,7 +239,7 @@ func setup_poi_visuals():
 @param poi_name_arg The name of the POI
 @param poi_description_arg The description of the POI
 """
-func set_poi_details(parent_district_arg: District, poi_type_arg: Enums.POIType, poi_name_arg: String, poi_short_description_arg: String, poi_description_arg: String, what_chance_arg: int, where_chance_arg: int, when_chance_arg: int) -> void:
+func set_poi_details(parent_district_arg: District, poi_type_arg: Enums.POIType, poi_name_arg: String, poi_profession_arg: String, poi_short_description_arg: String, poi_description_arg: String, what_chance_arg: int, where_chance_arg: int, when_chance_arg: int) -> void:
 	var what_tmp
 	var where_tmp
 	var when_tmp
@@ -237,6 +247,7 @@ func set_poi_details(parent_district_arg: District, poi_type_arg: Enums.POIType,
 	if poi_static:
 		poi_type = poi_static_type
 		poi_name = poi_static_name
+		poi_profession = poi_static_profession_arg
 		poi_description = poi_static_description
 		poi_short_description = poi_static_short_description
 		what_tmp = mission_static_chance
@@ -245,6 +256,7 @@ func set_poi_details(parent_district_arg: District, poi_type_arg: Enums.POIType,
 	else:
 		poi_type = poi_type_arg
 		poi_name = poi_name_arg
+		poi_profession = poi_profession_arg
 		poi_description = poi_description_arg
 		poi_short_description = poi_short_description_arg
 		what_tmp = what_chance_arg

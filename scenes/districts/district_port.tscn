@@ -33,6 +33,7 @@ visible = false
 poi_static = true
 poi_static_type = 7
 poi_static_name = "Docks"
+poi_static_profession_arg = "Stuwadoor"
 poi_static_short_description = "A bustling harbor teeming with activity."
 poi_static_description = "The docks are a lifeline of the district, with ships constantly loading and unloading cargo. Workers and sailors move hurriedly, transporting goods vital to the enemy’s war effort. Amid the noise and chaos, the resistance sees opportunities for sabotage and smuggling critical supplies. The shadowy corners of the docks provide cover for secret meetings and covert exchanges. It’s a place of both risk and reward, where careful planning can yield significant gains for the cause."
 mission_static_chance = 20

@@ -171,7 +171,7 @@ func _assign_character_ui(character: Character) -> void:
 	gender_label.text = gender
 	dob_label.text = character.char_dob
 	nationality_label.text = Globals.get_nationality_string(character.char_nationality)
-	profession_label.text = Globals.get_profession_string(character.char_profession)
+	profession_label.text = character.char_associated_poi.poi_profession
 	national_id_label.text = str(character.char_national_id_number)
 	sympathy_progress.value = character.char_sympathy
 

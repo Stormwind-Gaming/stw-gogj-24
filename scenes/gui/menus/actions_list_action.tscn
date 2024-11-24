@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://tn5lchs8nxtt"]
+[gd_scene load_steps=7 format=3 uid="uid://tn5lchs8nxtt"]
 
 [ext_resource type="Script" path="res://scripts/gui/actions_list_action.gd" id="1_7wvl1"]
 [ext_resource type="Texture2D" uid="uid://dhphdwvi1cam6" path="res://assets/icons/cancel_stamp.png" id="1_knmjg"]
@@ -17,7 +17,9 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[node name="Action" type="MarginContainer" node_paths=PackedStringArray("remove_button", "title", "location_label", "time_remaining", "agents")]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4mgdo"]
+
+[node name="Action" type="MarginContainer" node_paths=PackedStringArray("remove_button", "title", "location_label", "skill_label", "time_remaining", "agents")]
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 10
@@ -26,6 +28,7 @@ script = ExtResource("1_7wvl1")
 remove_button = NodePath("PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/ActionsCenterContainer/TextureButton")
 title = NodePath("PanelContainer/MarginContainer/VBoxContainer/HeadHBoxContainer/Title")
 location_label = NodePath("PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/DistrictPoIVBoxContainer/LocationLabel")
+skill_label = NodePath("PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/DistrictPoIVBoxContainer/SkillTextLabel")
 time_remaining = NodePath("PanelContainer/MarginContainer/VBoxContainer/HeadHBoxContainer/RichTextLabel")
 agents = NodePath("PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/AgentsVBoxContainer/GridContainer")
 
@@ -74,6 +77,17 @@ size_flags_stretch_ratio = 3.0
 layout_mode = 2
 bbcode_enabled = true
 text = "District/PoI details"
+fit_content = true
+
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/DistrictPoIVBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/separator = SubResource("StyleBoxEmpty_4mgdo")
+
+[node name="SkillTextLabel" type="RichTextLabel" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/DistrictPoIVBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "Skill required:"
 fit_content = true
 
 [node name="VSeparator" type="VSeparator" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]

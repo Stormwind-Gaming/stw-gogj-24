@@ -1,9 +1,8 @@
 poi_name,poi_type
-Luchtafweer van Noordhoek,ANTI_AIR_EMPLACEMENT
-De Stalen Ring,ANTI_AIR_EMPLACEMENT
-Bergkade Verdediging,ANTI_AIR_EMPLACEMENT
-Luchtscherm van Zuid,ANTI_AIR_EMPLACEMENT
-Hoogtoren Batterij,ANTI_AIR_EMPLACEMENT
+De Stalen Ring,ANTI AIR EMPLACEMENT
+Bergkade Verdediging,ANTI AIR EMPLACEMENT
+Luchtscherm van Zuid,ANTI AIR EMPLACEMENT
+Hoogtoren Batterij,ANTI AIR EMPLACEMENT
 De Rode Roos,BROTHEL
 Het Fluwelen Huis,BROTHEL
 De Nachtbloem,BROTHEL
@@ -39,11 +38,11 @@ Het Grote Raderwerk,FACTORY
 Staal & Stoom,FACTORY
 Veldwerk Fabriek,FACTORY
 Machinefabriek Noord,FACTORY
-Post van de Zwarte Helm,GESTAPO_POST
-Bureau van de Donkere Hand,GESTAPO_POST
-Gestapo Hoofdpost West,GESTAPO_POST
-Het IJzeren Oog,GESTAPO_POST
-Kantoor van de Grijze Mantel,GESTAPO_POST
+Post van de Zwarte Helm,GESTAPO POST
+Bureau van de Donkere Hand,GESTAPO POST
+Gestapo Hoofdpost West,GESTAPO POST
+Het IJzeren Oog,GESTAPO POST
+Kantoor van de Grijze Mantel,GESTAPO POST
 De Verse Mand,GROCER
 Het Groene Blad,GROCER
 Kruid & Koorn,GROCER
@@ -59,16 +58,16 @@ De Bomenhof,PARK
 Het Stille Weide,PARK
 Kasteeltuin van Rust,PARK
 Rivierenpark,PARK
-Politiehuis van Vrede,POLICE_STATION
-Wijkpost De Zilveren Helm,POLICE_STATION
-Het Wachtstation,POLICE_STATION
-Politiecentrale Noordpoort,POLICE_STATION
-De Blauwe Wacht,POLICE_STATION
-Postkantoor Het Oude Briefje,POST_OFFICE
-Stadsbrieven Bureau,POST_OFFICE
-Post van de Drie Bruggen,POST_OFFICE
-De Rode Posttoren,POST_OFFICE
-Marktplein Post,POST_OFFICE
+Politiehuis van Vrede,POLICE STATION
+Wijkpost De Zilveren Helm,POLICE STATION
+Het Wachtstation,POLICE STATION
+Politiecentrale Noordpoort,POLICE STATION
+De Blauwe Wacht,POLICE STATION
+Postkantoor Het Oude Briefje,POST OFFICE
+Stadsbrieven Bureau,POST OFFICE
+Post van de Drie Bruggen,POST OFFICE
+De Rode Posttoren,POST OFFICE
+Marktplein Post,POST OFFICE
 De Gouden Beker,PUB
 Het Brouwhuis,PUB
 Brasserie ’t Oude Vaatje,PUB
@@ -104,16 +103,16 @@ De Zilveren Spiegel,SHOP
 Boekhandel ’t Oude Verhaal,SHOP
 Wafelhuis de Lekkerbek,SHOP
 Veldbloemen en Vaassen,SHOP
-Basis Diepzee,SUBMARINE_PEN
-Onderzeehaven Noord,SUBMARINE_PEN
-Pen van de Zwarte Golf,SUBMARINE_PEN
-Marinebunker Zuid,SUBMARINE_PEN
-Rivierdijk Diepte,SUBMARINE_PEN
-Station van Dendeloft,TRAIN_STATION
-Spoorhaven Zoldergem,TRAIN_STATION
-Rijshagen Centraal,TRAIN_STATION
-Hoogspoor Brusselbroek,TRAIN_STATION
-Grootelinde Spoorplein,TRAIN_STATION
+Basis Diepzee,SUBMARINE PEN
+Onderzeehaven Noord,SUBMARINE PEN
+Pen van de Zwarte Golf,SUBMARINE PEN
+Marinebunker Zuid,SUBMARINE PEN
+Rivierdijk Diepte,SUBMARINE PEN
+Station van Dendeloft,TRAIN STATION
+Spoorhaven Zoldergem,TRAIN STATION
+Rijshagen Centraal,TRAIN STATION
+Hoogspoor Brusselbroek,TRAIN STATION
+Grootelinde Spoorplein,TRAIN STATION
 Magazijn Zuidpoort,WAREHOUSE
 Opslag Het Volle Vat,WAREHOUSE
 De Grote Opslag,WAREHOUSE

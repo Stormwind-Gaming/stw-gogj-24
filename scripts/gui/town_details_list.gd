@@ -87,7 +87,7 @@ func _ready() -> void:
 
 	# active bonuses
 
-	var bonuses = GlobalRegistry.modifiers.get_list(GlobalRegistry.LIST_GLOBAL_MODIFIERS)#.filter(func(x): x.active == true)
+	var bonuses = GlobalRegistry.modifiers.get_list(GlobalRegistry.LIST_GLOBAL_MODIFIERS).filter(func(x): x.active == true)
 	active_bonuses.text = ""
 	if bonuses.size() > 0:
 		active_bonuses.text += "[font_size=18]Active Bonuses:[/font_size]\n"

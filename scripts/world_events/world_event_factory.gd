@@ -16,7 +16,7 @@ static func randomise_world_event_from_heat(heat: int) -> WorldEvent:
 		15.0 # maximum allowed chance
 	)
 
-	# event_chance = 100
+	event_chance = 100
 
 	if randf() * 100 < event_chance:
 		print("World event triggered")
@@ -72,6 +72,27 @@ static func create_world_event(severity: Enums.WorldEventSeverity) -> WorldEvent
 		Enums.WorldEventType.MINOR_AIRBASE:
 			print("Creating minor airbase event")
 			event = MinorAirbaseEvent.new(config)
+		Enums.WorldEventType.MINOR_INFORMER:
+			print("Creating minor informer event")
+			event = MinorInformerEvent.new(config)
+		Enums.WorldEventType.SIGNIFICANT_SYMPATHISER_CAPTURED:
+			print("Creating significant sympathiser captured event")
+			event = SignificantSympathiserCapturedEvent.new(config)
+		Enums.WorldEventType.SIGNIFICANT_WEAPONS_CACHE:
+			print("Creating significant weapons cache event")
+			event = SignificantWeaponsCacheEvent.new(config)
+		Enums.WorldEventType.SIGNIFICANT_MILITARY_SHIP:
+			print("Creating significant military ship event")
+			event = SignificantMilitaryShipEvent.new(config)
+		Enums.WorldEventType.MAJOR_SECRET_POLICE:
+			print("Creating major secret police event")
+			# event = MajorSecretPoliceEvent.new(config)
+		Enums.WorldEventType.MAJOR_POLICE_COMMANDER:
+			print("Creating major police commander event")
+			# event = MajorPoliceCommanderEvent.new(config)
+		Enums.WorldEventType.MAJOR_SAFEHOUSE_DISCOVERED:
+			print("Creating major safehouse discovered event")
+			# event = MajorSafehouseDiscoveredEvent.new(config)
 		_:
 			push_error("Unknown world event type: ", event_data.event_type)
 			return null
@@ -80,6 +101,6 @@ static func create_world_event(severity: Enums.WorldEventSeverity) -> WorldEvent
 	event.event_text = event_data.event_text
 	event.effect_text = event_data.effect_text
 
-	EventBus.world_event_created.emit(event)
+	EventBus.world_event_created.emit(event, config)
 
 	return event

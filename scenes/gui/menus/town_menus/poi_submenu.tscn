@@ -18,15 +18,18 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[node name="PoISubmenu" type="PanelContainer" node_paths=PackedStringArray("poi_name", "description")]
+[node name="PoISubmenu" type="PanelContainer" node_paths=PackedStringArray("poi_name", "poi_icon", "description", "intel_types", "owner_panel")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_db8ic")
-poi_name = NodePath("MarginContainer/VBoxContainer/HBoxContainer/PoIName")
+poi_name = NodePath("MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer/PoIName")
+poi_icon = NodePath("MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer/IconRect")
 description = NodePath("MarginContainer/VBoxContainer/RichTextLabel")
+intel_types = NodePath("MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/MarginContainer/RichTextLabel")
+owner_panel = NodePath("MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/OwnerCardContainer")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -41,9 +44,16 @@ layout_mode = 2
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="PoIName" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 25
+
+[node name="IconRect" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+expand_mode = 3
+
+[node name="PoIName" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
 text = "PoI Name"
 
 [node name="VSeparator" type="VSeparator" parent="MarginContainer/VBoxContainer/HBoxContainer"]
@@ -65,16 +75,53 @@ stretch_mode = 0
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_fvm0u")
 
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "khjasdasdasd
+asd
+asd
+asd
+asd
+sa
+das
+dasddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+dsa
+das
+dsa
+d"
+fit_content = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/PanelContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="OwnerCardContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 text = "PoIs"
 
 [node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/normal_font_size = 14
+theme_override_font_sizes/normal_font_size = 18
 fit_content = true
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/TextureButton" to="." method="_on_focus_button_pressed"]
