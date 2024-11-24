@@ -130,6 +130,7 @@ func _load_poi_types(path: String) -> void:
 		poi_types.append({
 			"poi_type": poi_type,
 			"poi_name": record["poi_name"],
+			"poi_profession": record["poi_profession"],
 			"poi_short_description": record["poi_short_description"],
 			"poi_description": record["poi_description"],
 			"district_type": district_type,
@@ -320,6 +321,7 @@ var poi_type_map = {
 	"WAREHOUSE": Enums.POIType.WAREHOUSE,
 	"OFFICE": Enums.POIType.OFFICE,
 	"ANTI_AIR_EMPLACEMENT": Enums.POIType.ANTI_AIR_EMPLACEMENT,
+	"ANTI-AIR_EMPLACEMENT": Enums.POIType.ANTI_AIR_EMPLACEMENT,
 	"ANTI AIR EMPLACEMENT": Enums.POIType.ANTI_AIR_EMPLACEMENT,
 	"CHURCH": Enums.POIType.CHURCH,
 	"GESTAPO_POST": Enums.POIType.GESTAPO_POST,
