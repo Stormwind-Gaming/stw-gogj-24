@@ -97,9 +97,6 @@ Updates the character's role based on the sympathy value.
 @param sympathy An integer representing the sympathy level (1-99).
 """
 func set_char_sympathy(sympathy: int) -> void:
-	if sympathy > 100:
-		sympathy = 100
-
 	if sympathy >= Constants.NEW_SYMPATHISER_THRESHOLD and (char_recruitment_state != Enums.CharacterRecruitmentState.SYMPATHISER_RECRUITED or char_recruitment_state != Enums.CharacterRecruitmentState.SYMPATHISER_NOT_RECRUITED):
 		# This character is sympathetic to the resistance
 		char_recruitment_state = Enums.CharacterRecruitmentState.SYMPATHISER_NOT_RECRUITED
@@ -109,7 +106,7 @@ func set_char_sympathy(sympathy: int) -> void:
 			EventBus.create_new_event_panel.emit(Enums.EventOutcomeType.NEW_SYMPATHISER, [self] as Array[Character], char_associated_poi)
 
 	EventBus.character_sympathy_changed.emit(self)
-	char_sympathy = sympathy
+	char_sympathy = clamp(sympathy, 1, 100)
 
 """
 @brief Retrieves the character's knowledge status.

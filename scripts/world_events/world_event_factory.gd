@@ -16,7 +16,7 @@ static func randomise_world_event_from_heat(heat: int) -> WorldEvent:
 		15.0 # maximum allowed chance
 	)
 
-	# event_chance = 100
+	event_chance = 100
 
 	if randf() * 100 < event_chance:
 		print("World event triggered")
@@ -72,6 +72,9 @@ static func create_world_event(severity: Enums.WorldEventSeverity) -> WorldEvent
 		Enums.WorldEventType.MINOR_AIRBASE:
 			print("Creating minor airbase event")
 			event = MinorAirbaseEvent.new(config)
+		Enums.WorldEventType.MINOR_INFORMER:
+			print("Creating minor informer event")
+			event = MinorInformerEvent.new(config)
 		_:
 			push_error("Unknown world event type: ", event_data.event_type)
 			return null
@@ -80,6 +83,6 @@ static func create_world_event(severity: Enums.WorldEventSeverity) -> WorldEvent
 	event.event_text = event_data.event_text
 	event.effect_text = event_data.effect_text
 
-	EventBus.world_event_created.emit(event)
+	EventBus.world_event_created.emit(event, config)
 
 	return event

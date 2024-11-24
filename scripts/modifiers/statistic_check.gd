@@ -27,6 +27,7 @@ func _init(_characters: Array[Character], _district: District, _poi: PointOfInte
 	for modifier in modifiers:
 		print("Modifier active: ", modifier.active)
 	print("--- END STATISTIC CHECK SETUP ---")
+
 func subtlety_check() -> bool:
 	var subtlety_check_value = stats.subtlety
 	print("--- SUBTLETY CHECK ---")

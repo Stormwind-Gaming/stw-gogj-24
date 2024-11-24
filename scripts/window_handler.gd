@@ -118,9 +118,9 @@ func _open_radial_menu(menu: RadialMenu) -> void:
 
 @param event The world event to create a panel for
 """
-func _create_new_world_event_panel(world_event: WorldEvent) -> void:
+func _create_new_world_event_panel(world_event: WorldEvent, config: WorldEventConfig) -> void:
 	var popup = Globals.event_panel_scene.instantiate()
-	popup.set_event_details_world_event(world_event)
+	popup.set_event_details_world_event(world_event, config)
 	add_child(popup)
 	open_event_panels.append(popup)
 	popup.on_close.connect(_on_event_panel_closed)

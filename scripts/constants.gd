@@ -468,6 +468,11 @@ var WORLD_EVENT_MINOR_AIRBASE_DURATION: int = 7
 var WORLD_EVENT_MINOR_AIRBASE_HEAT_CHANGE: int = 20
 
 """
+@brief Sympathy change from minor informer world events	
+"""
+var WORLD_EVENT_MINOR_INFORMER_SYMPATHY_CHANGE: int = -50
+
+"""
 @brief Intel spawn increase from minor airbase world events
 """
 var WORLD_EVENT_MINOR_AIRBASE_INTEL_SPAWN_INCREASE: int = 1

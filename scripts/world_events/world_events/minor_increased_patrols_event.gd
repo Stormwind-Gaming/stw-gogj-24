@@ -10,7 +10,7 @@ func _init(config: WorldEventConfig) -> void:
 	turn_to_end = GameController.turn_number + 5
 	subject_district = GlobalRegistry.districts.get_random_item()
 
-	event_text = config.event_text.replace("{district}", subject_district.district_name)
+	config.event_text = config.event_text.replace("{district}", subject_district.district_name)
 	event_end_text = config.event_end_text
 	effect_text = config.effect_text
 
