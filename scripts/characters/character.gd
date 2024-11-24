@@ -33,6 +33,8 @@ var char_sympathy: set = set_char_sympathy # 1-99 how likely is this character t
 var char_recruitment_state: set = set_char_recruitment_state, get = get_char_recruitment_state
 var char_state: set = set_char_state, get = get_char_state
 
+var injured_return_on_turn: int
+
 #|==============================|
 #|        Lifecycle Methods      |
 #|==============================|

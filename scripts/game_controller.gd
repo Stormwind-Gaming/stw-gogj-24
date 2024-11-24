@@ -172,9 +172,11 @@ func process_turn() -> void:
 	# Return injured characters to the pool
 	var injured_characters = GlobalRegistry.characters.find_items_across_lists("char_state", Enums.CharacterState.INJURED)
 	for character in injured_characters:
-		character.char_state = Enums.CharacterState.AVAILABLE
-		var turn_log = TurnLog.new(character.get_full_name() + " has returned from injury", Enums.LogType.WORLD_INFO)
-		GlobalRegistry.turn_logs.add_item(str(GameController.turn_number), turn_log)
+		if not character.injured_return_on_turn or character.injured_return_on_turn <= turn_number:
+			character.char_state = Enums.CharacterState.AVAILABLE
+			var turn_log = TurnLog.new(character.get_full_name() + " has returned from injury", Enums.LogType.WORLD_INFO)
+			GlobalRegistry.turn_logs.add_item(str(GameController.turn_number), turn_log)
+			character.injured_return_on_turn = null
 
 	# Districts with actions
 	var districts_with_actions = []
