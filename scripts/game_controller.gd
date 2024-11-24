@@ -274,6 +274,21 @@ func _trigger_resistance_endgame() -> void:
 
 	EventBus.create_new_event_panel.emit(Enums.EventOutcomeType.RESISTANCE_ENDGAME, [] as Array[Character], null)
 
+	# Clear current intel and actions
+	GlobalRegistry.intel.clear_list(GlobalRegistry.LIST_PLANS)
+	GlobalRegistry.intel.clear_list(GlobalRegistry.LIST_RUMOURS)
+	GlobalRegistry.actions.clear_list(GlobalRegistry.LIST_ALL_ACTIONS)
+
+	var airbase_plan_properties = Plan.PlanProperties.new()
+	var airbase_poi = GlobalRegistry.pois.find_item(GlobalRegistry.LIST_ALL_POIS, "poi_type", Enums.POIType.AIR_BASE)
+	airbase_plan_properties.plan_name = "Assemble the team."
+	airbase_plan_properties.plan_text = "Assemble the team,  collect the explosives and move to the military district. We acquired some uniforms previously, so we can go in disguise as an infantry patrol. We even have an old truck that can pass for a squad vehicle."
+	airbase_plan_properties.plan_expiry = -1
+	airbase_plan_properties.plan_subject_poi = airbase_poi
+	airbase_plan_properties.is_endgame_plan = true
+	Plan.new(airbase_plan_properties)
+
+
 #|==============================|
 #|      District Management    |
 #|==============================|

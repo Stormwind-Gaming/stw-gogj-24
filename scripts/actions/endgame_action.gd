@@ -278,3 +278,104 @@ func _heat_endgame_train_4() -> Array[TurnLog]:
 		EventBus.game_over.emit()
 
 	return logs
+
+func _resistance_endgame_1() -> Array[TurnLog]:
+	var logs: Array[TurnLog] = []
+	var log_message: String = ""
+
+	var statistic_check: StatisticCheck = StatisticCheck.new(characters, poi.parent_district, poi)
+
+	var smarts_roll = statistic_check.smarts_check()
+
+	if smarts_roll:
+
+		var airbase_plan_properties = Plan.PlanProperties.new()
+		var airbase_poi = GlobalRegistry.pois.find_item(GlobalRegistry.LIST_ALL_POIS, "poi_type", Enums.POIType.AIR_BASE)
+		airbase_plan_properties.plan_name = "Infiltrate the airbase "
+		airbase_plan_properties.plan_text = "We made it through the checkpoint, but we are outside the fence, the best option we have is to get the truck through the west gate, its less busy and the guards will be tired from a night of duty "
+		airbase_plan_properties.plan_expiry = -1
+		airbase_plan_properties.plan_subject_poi = airbase_poi
+		airbase_plan_properties.is_endgame_plan = true
+		Plan.new(airbase_plan_properties)
+
+	return logs
+
+func _resistance_endgame_2() -> Array[TurnLog]:
+	var logs: Array[TurnLog] = []
+	var log_message: String = ""
+
+	var statistic_check: StatisticCheck = StatisticCheck.new(characters, poi.parent_district, poi)
+
+	var charm_roll = statistic_check.charm_check()
+
+	if charm_roll:
+
+		var airbase_plan_properties = Plan.PlanProperties.new()
+		var airbase_poi = GlobalRegistry.pois.find_item(GlobalRegistry.LIST_ALL_POIS, "poi_type", Enums.POIType.AIR_BASE)
+		airbase_plan_properties.plan_name = "Lets plant some explosives"
+		airbase_plan_properties.plan_text = "We’re in! and quietly, no one knows we are here, so we have some time to plant the explosives. Get close to the aircraft and try to get near the fuel tank through the landing gear."
+		airbase_plan_properties.plan_expiry = -1
+		airbase_plan_properties.plan_subject_poi = airbase_poi
+		airbase_plan_properties.is_endgame_plan = true
+		Plan.new(airbase_plan_properties)
+
+	return logs
+
+func _resistance_endgame_3() -> Array[TurnLog]:
+	var logs: Array[TurnLog] = []
+	var log_message: String = ""
+
+	var statistic_check: StatisticCheck = StatisticCheck.new(characters, poi.parent_district, poi)
+
+	var smarts_roll = statistic_check.smarts_check()
+
+	if smarts_roll:
+
+		var airbase_plan_properties = Plan.PlanProperties.new()
+		var airbase_poi = GlobalRegistry.pois.find_item(GlobalRegistry.LIST_ALL_POIS, "poi_type", Enums.POIType.AIR_BASE)
+		airbase_plan_properties.plan_name = "Hurry, we have to move fast"
+		airbase_plan_properties.plan_text = "We made it in, but they know we’re here, and the alarm has sounded. Quickly head for the aircraft, plant explosives whereever we can, short fuses and lets hope we can make it work in the confusion."
+		airbase_plan_properties.plan_expiry = -1
+		airbase_plan_properties.plan_subject_poi = airbase_poi
+		airbase_plan_properties.is_endgame_plan = true
+		Plan.new(airbase_plan_properties)
+
+	return logs
+
+func _resistance_endgame_4() -> Array[TurnLog]:
+	var logs: Array[TurnLog] = []
+	var log_message: String = ""
+
+	var statistic_check: StatisticCheck = StatisticCheck.new(characters, poi.parent_district, poi)
+
+	var smarts_roll = statistic_check.smarts_check()
+
+	if smarts_roll:
+
+		var airbase_plan_properties = Plan.PlanProperties.new()
+		var airbase_poi = GlobalRegistry.pois.find_item(GlobalRegistry.LIST_ALL_POIS, "poi_type", Enums.POIType.AIR_BASE)
+		airbase_plan_properties.plan_name = "Lets get out"
+		airbase_plan_properties.plan_text = "Its time to get out, we’ve planted the explosives and the fuses are set, we will go via the east gate, away from the city and wait until the bombs go off. In the confusion and chaos we can get through the gate guards, or kill them."
+		airbase_plan_properties.plan_expiry = -1
+		airbase_plan_properties.plan_subject_poi = airbase_poi
+		airbase_plan_properties.is_endgame_plan = true
+		Plan.new(airbase_plan_properties)
+
+
+	return logs
+
+func _resistance_endgame_5() -> Array[TurnLog]:
+	var logs: Array[TurnLog] = []
+	var log_message: String = ""
+
+	var statistic_check: StatisticCheck = StatisticCheck.new(characters, poi.parent_district, poi)
+
+	var charm_roll = statistic_check.charm_check()
+
+	if charm_roll:
+		# TODO: Add endgame victory screen
+		logs.append(TurnLog.new("YOU WIN! Resistance endgame complete!", Enums.LogType.ACTION_INFO))
+	else:
+		EventBus.game_over.emit()
+
+	return logs
