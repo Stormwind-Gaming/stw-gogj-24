@@ -44,7 +44,8 @@ func _event_end() -> void:
 
 	# set all characters to available
 	for character in subject_characters:
-		character.set_char_state(Enums.CharacterState.AVAILABLE)
+		if character.char_state == Enums.CharacterState.MIA:
+			character.set_char_state(Enums.CharacterState.AVAILABLE)
 	
 	queue_free()
 	pass
