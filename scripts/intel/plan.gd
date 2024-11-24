@@ -16,6 +16,7 @@ class PlanProperties:
 	var plan_subject_character: Character
 	var plan_subject_poi: PointOfInterest
 	var plan_effect: Enums.IntelEffect
+	var is_endgame_plan: bool = false
 
 
 #|==============================|
@@ -62,6 +63,11 @@ var plan_effect: Enums.IntelEffect
 """
 var plan_timing: String
 
+"""
+@brief Whether the plan is an endgame plan
+"""
+var is_endgame_plan: bool = false
+
 #|==============================|
 #|      Lifecycle Methods      |
 #|==============================|
@@ -81,10 +87,12 @@ func _init(properties: PlanProperties):
 	plan_subject_character = properties.plan_subject_character
 	plan_subject_poi = properties.plan_subject_poi
 	plan_effect = properties.plan_effect
+	is_endgame_plan = properties.is_endgame_plan
 
 	plan_timing = GameController.calendar.get_date_string(plan_duration)
 
-	expires_on_turn = GameController.turn_number + plan_expiry
+	if plan_expiry != -1:
+		expires_on_turn = GameController.turn_number + plan_expiry
 
 	# Register the object after setting properties
 	EventBus.plan_created.emit(self)

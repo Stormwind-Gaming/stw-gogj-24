@@ -48,6 +48,9 @@ var turn_number: int = 0
 """
 var endgame_triggered: bool = false
 
+var heat_endgame_port_step: int = 0
+var heat_endgame_train_step: int = 0
+
 #|==============================|
 #|      Lifecycle Methods      |
 #|==============================|
@@ -226,6 +229,33 @@ func _trigger_heat_endgame() -> void:
 	GlobalRegistry.turn_logs.add_item(str(GameController.turn_number), turn_log)
 
 	EventBus.create_new_event_panel.emit(Enums.EventOutcomeType.HEAT_ENDGAME, [] as Array[Character], null)
+
+	# Clear current intel and actions
+	GlobalRegistry.intel.clear_list(GlobalRegistry.LIST_PLANS)
+	GlobalRegistry.intel.clear_list(GlobalRegistry.LIST_RUMOURS)
+	GlobalRegistry.actions.clear_list(GlobalRegistry.LIST_ALL_ACTIONS)
+
+	var docks_plan_properties = Plan.PlanProperties.new()
+	var docks_poi = GlobalRegistry.pois.find_item(GlobalRegistry.LIST_ALL_POIS, "poi_type", Enums.POIType.DOCKS)
+	docks_plan_properties.plan_name = "Head for the port."
+	docks_plan_properties.plan_text = "Gather what you can and head for the port immediately, you’ll need to cross into the port district first. Avoid detection at the checkpoint."
+	docks_plan_properties.plan_expiry = -1
+	docks_plan_properties.plan_subject_poi = docks_poi
+	docks_plan_properties.is_endgame_plan = true
+	Plan.new(docks_plan_properties)
+
+
+	var train_plan_properties = Plan.PlanProperties.new()
+	var train_poi = GlobalRegistry.pois.find_item(GlobalRegistry.LIST_ALL_POIS, "poi_type", Enums.POIType.TRAIN_STATION)
+	train_plan_properties.plan_name = "Head for the station."
+	train_plan_properties.plan_text = "Gather what you can and head for the train station immediately, you’ll need to cross into the industry district first. Avoid detection at the checkpoint, there is a spare military uniform available, you can use that as a disguise!"
+	train_plan_properties.plan_expiry = -1
+	train_plan_properties.plan_subject_poi = train_poi
+	train_plan_properties.is_endgame_plan = true
+	Plan.new(train_plan_properties)
+
+
+	print("Heat endgame plan created")
 
 """
 @brief Triggers the resistance endgame

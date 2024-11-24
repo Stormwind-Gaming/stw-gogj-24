@@ -71,6 +71,7 @@ func _init(config: ActionFactory.ActionConfig):
 		self.associated_plan = config.additional_info["associated_plan"]
 
 		# turn_to_end = GameController.turn_number + StatisticModification.mission_duration_modification(self.associated_plan.plan_duration, poi.parent_district.district_type)
+		# TODO: should this be the plan duration?
 		turn_to_end = GameController.turn_number
 
 	EventBus.turn_processing_initiated.connect(_on_turn_processing_initiated)
@@ -93,7 +94,7 @@ func _on_turn_processing_initiated(num: int) -> void:
 		action_logs = _process_action()
 
 		# Make sure the plan is removed at this point
-		if associated_plan:
+		if associated_plan and not associated_plan.is_endgame_plan:
 			associated_plan.call_deferred("free")
 
 	else:
@@ -107,6 +108,8 @@ func _on_turn_processing_initiated(num: int) -> void:
 @brief Called when the turn ends
 """
 func _on_end_turn_completed(num: int) -> void:
+	print("Turn to end action: ", turn_to_end)
+
 	if num >= turn_to_end:
 		_release_characters()
 

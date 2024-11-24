@@ -9,6 +9,10 @@ class ActionConfig:
 	var additional_info: Dictionary
 
 static func create_action(config: ActionConfig) -> BaseAction:
+
+	if config.additional_info.has("associated_plan") and config.additional_info.associated_plan.is_endgame_plan:
+		return EndgameAction.new(config)
+
 	match config.action_type:
 		Enums.ActionType.ESPIONAGE:
 			return EspionageAction.new(config)

@@ -12,7 +12,7 @@ var id: String
 """
 @brief Turn number when this intel will expire
 """
-var expires_on_turn: int
+var expires_on_turn: int = -1
 
 #|==============================|
 #|      Lifecycle Methods      |
@@ -55,5 +55,5 @@ func _expire_intel(turn_number: int) -> void:
 	if action and action.in_flight:
 		return
 
-	if expires_on_turn <= turn_number:
+	if expires_on_turn <= turn_number and not expires_on_turn == -1:
 		self.call_deferred("free")
