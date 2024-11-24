@@ -193,3 +193,43 @@ func _get_stats() -> Dictionary:
 		_stats["charm"] += character.char_charm
 
 	return _stats
+
+func get_subtlety_chance() -> float:
+	var subtlety_check_value = stats.subtlety
+	
+	for modifier in modifiers:
+		subtlety_check_value += modifier.modifier_subtlety_flat
+	
+	# if this is the home PoI of this character, add the home modifier (+25%)
+	if poi == characters[0].char_associated_poi:
+		subtlety_check_value *= 1.25
+	
+	return MathHelpers.bounded_sigmoid_probability(
+		subtlety_check_value,
+		Constants.SUBTLETY_CHECK_MIN_CHANCE,
+		Constants.SUBTLETY_CHECK_MAX_CHANCE
+	)
+
+func get_smarts_chance() -> float:
+	var smarts_check_value = stats.smarts
+	
+	for modifier in modifiers:
+		smarts_check_value += modifier.modifier_smarts_flat
+	
+	return MathHelpers.bounded_sigmoid_probability(
+		smarts_check_value,
+		Constants.SMARTS_CHECK_MIN_CHANCE,
+		Constants.SMARTS_CHECK_MAX_CHANCE
+	)
+
+func get_charm_chance() -> float:
+	var charm_check_value = stats.charm
+	
+	for modifier in modifiers:
+		charm_check_value += modifier.modifier_charm_flat
+	
+	return MathHelpers.bounded_sigmoid_probability(
+		charm_check_value,
+		Constants.CHARM_CHECK_MIN_CHANCE,
+		Constants.CHARM_CHECK_MAX_CHANCE
+	)

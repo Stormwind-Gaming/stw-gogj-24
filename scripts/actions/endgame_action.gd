@@ -42,6 +42,20 @@ func _process_action() -> Array[TurnLog]:
 			_:
 				printerr("Invalid heat endgame train step: ", GameController.heat_endgame_train_step)
 
+	if poi.poi_type == Enums.POIType.AIR_BASE:
+
+		match GameController.resistance_endgame_step:
+			0:
+				logs += _resistance_endgame_1()
+			1:
+				logs += _resistance_endgame_2()
+			2:
+				logs += _resistance_endgame_3()
+			3:
+				logs += _resistance_endgame_4()
+			_:
+				printerr("Invalid resistance endgame step: ", GameController.resistance_endgame_step)
+
 	return logs
 
 
@@ -288,6 +302,7 @@ func _resistance_endgame_1() -> Array[TurnLog]:
 	var smarts_roll = statistic_check.smarts_check()
 
 	if smarts_roll:
+		GameController.resistance_endgame_step = 1
 
 		var airbase_plan_properties = Plan.PlanProperties.new()
 		var airbase_poi = GlobalRegistry.pois.find_item(GlobalRegistry.LIST_ALL_POIS, "poi_type", Enums.POIType.AIR_BASE)
@@ -309,6 +324,7 @@ func _resistance_endgame_2() -> Array[TurnLog]:
 	var charm_roll = statistic_check.charm_check()
 
 	if charm_roll:
+		GameController.resistance_endgame_step = 2
 
 		var airbase_plan_properties = Plan.PlanProperties.new()
 		var airbase_poi = GlobalRegistry.pois.find_item(GlobalRegistry.LIST_ALL_POIS, "poi_type", Enums.POIType.AIR_BASE)
@@ -330,6 +346,7 @@ func _resistance_endgame_3() -> Array[TurnLog]:
 	var smarts_roll = statistic_check.smarts_check()
 
 	if smarts_roll:
+		GameController.resistance_endgame_step = 3
 
 		var airbase_plan_properties = Plan.PlanProperties.new()
 		var airbase_poi = GlobalRegistry.pois.find_item(GlobalRegistry.LIST_ALL_POIS, "poi_type", Enums.POIType.AIR_BASE)
@@ -351,6 +368,7 @@ func _resistance_endgame_4() -> Array[TurnLog]:
 	var smarts_roll = statistic_check.smarts_check()
 
 	if smarts_roll:
+		GameController.resistance_endgame_step = 4
 
 		var airbase_plan_properties = Plan.PlanProperties.new()
 		var airbase_poi = GlobalRegistry.pois.find_item(GlobalRegistry.LIST_ALL_POIS, "poi_type", Enums.POIType.AIR_BASE)
@@ -373,6 +391,7 @@ func _resistance_endgame_5() -> Array[TurnLog]:
 	var charm_roll = statistic_check.charm_check()
 
 	if charm_roll:
+		GameController.resistance_endgame_step = 5
 		# TODO: Add endgame victory screen
 		logs.append(TurnLog.new("YOU WIN! Resistance endgame complete!", Enums.LogType.ACTION_INFO))
 	else:

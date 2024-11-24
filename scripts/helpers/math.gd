@@ -43,6 +43,26 @@ static func bounded_sigmoid_check(stat: int, detailed: bool = false, bottom_boun
 	else:
 		return is_success
 
+"""
+@brief Calculates success chance using a bounded sigmoid function without performing a roll.
+
+@param stat The input stat value to check against
+@param bottom_bound Minimum possible success chance (default: 20.0)
+@param upper_bound Maximum possible success chance (default: 80.0)
+@returns Float between 0 and 1 representing the probability of success
+"""
+static func bounded_sigmoid_probability(stat: int, bottom_bound: float = 20.0, upper_bound: float = 80.0) -> float:
+	# Calculate the sigmoid-based success chance
+	var k = 1.0 # Steepness of the curve
+	var m = 5.0 # Midpoint of the curve
+	var raw_chance = 100 / (1 + exp(-k * (stat - m)))
+	
+	# Scale the raw chance to fit within the bottom and upper bounds
+	var success_chance = bottom_bound + (upper_bound - bottom_bound) * (raw_chance / 100)
+	
+	# Return probability as a value between 0 and 1
+	return success_chance / 100.0
+
 #|==============================|
 #|      Random Generation      |
 #|==============================|
