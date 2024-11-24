@@ -532,6 +532,41 @@ var WORLD_EVENT_SIGNIFICANT_MILITARY_SHIP_HEAT_CHANGE: int = 40
 """
 var WORLD_EVENT_SIGNIFICANT_MILITARY_SHIP_INTEL_SPAWN_INCREASE: int = 2
 
+"""
+@brief Duration of major secret police world events (turns)
+"""
+var WORLD_EVENT_MAJOR_SECRET_POLICE_DURATION: int = 5
+
+"""
+@brief Sympathy change from major secret police world events
+"""
+var WORLD_EVENT_MAJOR_SECRET_POLICE_SYMPATHY_CHANGE: int = -100
+
+"""
+@brief Heat change from major secret police world events (CIVIC DISTRICT)
+"""
+var WORLD_EVENT_MAJOR_SECRET_POLICE_HEAT_CHANGE_CIVIC: int = 20
+
+"""
+@brief Heat change from major secret police world events (MILITARY DISTRICT)
+"""
+var WORLD_EVENT_MAJOR_SECRET_POLICE_HEAT_CHANGE_MILITARY: int = 20
+
+"""
+@brief Duration of major police commander world events (turns)
+"""
+var WORLD_EVENT_MAJOR_POLICE_COMMANDER_DURATION: int = 5
+
+"""
+@brief Heat change from major secret police world events (CIVIC DISTRICT)
+"""
+var WORLD_EVENT_MAJOR_POLICE_COMMANDER_HEAT_CHANGE_CIVIC: int = 30
+
+"""
+@brief Heat change from major secret police world events (ALL DISTRICTS)
+"""
+var WORLD_EVENT_MAJOR_POLICE_COMMANDER_HEAT_CHANGE_ALL: int = 10
+
 
 func _ready():
 	config = ConfigLoader.new()

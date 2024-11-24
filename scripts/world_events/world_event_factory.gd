@@ -86,10 +86,10 @@ static func create_world_event(severity: Enums.WorldEventSeverity) -> WorldEvent
 			event = SignificantMilitaryShipEvent.new(config)
 		Enums.WorldEventType.MAJOR_SECRET_POLICE:
 			print("Creating major secret police event")
-			# event = MajorSecretPoliceEvent.new(config)
+			event = MajorSecretPoliceEvent.new(config)
 		Enums.WorldEventType.MAJOR_POLICE_COMMANDER:
 			print("Creating major police commander event")
-			# event = MajorPoliceCommanderEvent.new(config)
+			event = MajorPoliceCommanderEvent.new(config)
 		Enums.WorldEventType.MAJOR_SAFEHOUSE_DISCOVERED:
 			print("Creating major safehouse discovered event")
 			# event = MajorSafehouseDiscoveredEvent.new(config)
