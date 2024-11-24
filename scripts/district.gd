@@ -572,3 +572,5 @@ func set_heat(new_heat: int) -> void:
 	# clamp heat between 0 and 100
 	heat = clamp(new_heat, 0, 100)
 	district_popup.set_heat(heat)
+	heat_color.a = float(heat) / 200.0
+	$Polygon2D.color = heat_color

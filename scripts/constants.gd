@@ -520,7 +520,7 @@ var WORLD_EVENT_SIGNIFICANT_WEAPONS_CACHE_INTEL_TIME_CHANGE: int = 3
 """
 @brief Duration of significant military ship world events (turns)
 """
-var WORLD_EVENT_SIGNIFICANT_MILITARY_SHIP_DURATION: int = 4
+var WORLD_EVENT_SIGNIFICANT_MILITARY_SHIP_DURATION: int = 7
 
 """
 @brief Heat change from significant military ship world events

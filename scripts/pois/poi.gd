@@ -335,11 +335,8 @@ func _on_poi_clicked(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			_poi_clicked()
-			# got to hide the icon button because its a gui element so interactions are drawn on top of the radial menu 
-			$IconButton.visible = false
 
 func _reset_poi_state():
-	print("Resetting POI state")
 	_on_district_just_focused(GameController.district_focused)
 			
 """
@@ -350,22 +347,22 @@ func _on_icon_button_clicked() -> void:
 	if not enabled:
 		return
 	_poi_clicked()
-	# got to hide the icon button because its a gui element so interactions are drawn on top of the radial menu 
-	$IconButton.visible = false
 
 """
 @brief Handles POI click events.
 Opens the POI radial menu when the POI is clicked.
 """
 func _poi_clicked() -> void:
-	print("POI clicked")
 	poi_popup.visible = false
-			
+
 	if GameController.radial_menu_open != null:
 		return
 	
 	if GameController.district_focused != parent_district:
 		return
+
+	# got to hide the icon button because its a gui element so interactions are drawn on top of the radial menu 
+	$IconButton.visible = false
 
 	var radial_menu_instance = Globals.radial_menu_scene.instantiate()
 	radial_menu_instance.position = get_local_mouse_position()
