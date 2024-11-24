@@ -14,7 +14,6 @@ func _init(config: WorldEventConfig) -> void:
 	event_end_text = config.event_end_text
 	effect_text = config.effect_text
 
-
 	super(config.event_severity)
 
 
@@ -27,3 +26,4 @@ func _event_end() -> void:
 	print("--- Ending minor increased patrols event ---")
 	print("Subject district: ", subject_district.district_name, "Heat: ", subject_district.heat, " - ", Constants.WORLD_EVENT_MINOR_INCREASED_PATROLS_HEAT_CHANGE)
 	subject_district.heat -= Constants.WORLD_EVENT_MINOR_INCREASED_PATROLS_HEAT_CHANGE
+	queue_free()

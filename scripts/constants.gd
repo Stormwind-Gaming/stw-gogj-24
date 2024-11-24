@@ -487,6 +487,51 @@ var WORLD_EVENT_MINOR_INCREASED_PATROLS_DURATION: int = 5
 """
 var WORLD_EVENT_MINOR_INCREASED_PATROLS_HEAT_CHANGE: int = 20
 
+"""
+@brief Duration of significant sympathiser captured world events (turns)
+"""
+var WORLD_EVENT_SIGNIFICANT_SYMPATHISER_CAPTURED_DURATION: int = 5
+
+"""
+@brief Heat change from significant sympathiser captured world events
+"""
+var WORLD_EVENT_SIGNIFICANT_SYMPATHISER_CAPTURED_HEAT_CHANGE: int = 15
+
+"""
+@brief Sympathy change from significant sympathiser captured world events
+"""
+var WORLD_EVENT_SIGNIFICANT_SYMPATHISER_CAPTURED_SYMPATHY_CHANGE: int = -50
+
+"""
+@brief Duration of significant weapons cache world events (turns)
+"""
+var WORLD_EVENT_SIGNIFICANT_WEAPONS_CACHE_DURATION: int = 5
+
+"""
+@brief Heat change from significant weapon cache world events
+"""
+var WORLD_EVENT_SIGNIFICANT_WEAPONS_CACHE_HEAT_CHANGE: int = 20
+
+"""
+@brief Intel time left change from significant weapon cache world events
+"""
+var WORLD_EVENT_SIGNIFICANT_WEAPONS_CACHE_INTEL_TIME_CHANGE: int = 3
+
+"""
+@brief Duration of significant military ship world events (turns)
+"""
+var WORLD_EVENT_SIGNIFICANT_MILITARY_SHIP_DURATION: int = 4
+
+"""
+@brief Heat change from significant military ship world events
+"""
+var WORLD_EVENT_SIGNIFICANT_MILITARY_SHIP_HEAT_CHANGE: int = 40
+
+"""
+@brief Extra intel gained from significant military ship world events
+"""
+var WORLD_EVENT_SIGNIFICANT_MILITARY_SHIP_INTEL_SPAWN_INCREASE: int = 2
+
 
 func _ready():
 	config = ConfigLoader.new()
