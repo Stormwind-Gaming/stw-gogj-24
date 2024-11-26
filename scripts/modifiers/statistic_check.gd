@@ -15,31 +15,41 @@ var stats: Dictionary = {
 var modifiers: Array = []
 
 func _init(_characters: Array[Character], _district: District, _poi: PointOfInterest) -> void:
+	LogDuck.d("Initializing statistic check", {
+		"characters": _characters.map(func(c): return c.get_full_name()),
+		"district": _district.district_name,
+		"poi": _poi.poi_name
+	})
+	
 	characters = _characters
 	district = _district
 	poi = _poi
 
 	stats = _get_stats()
-
 	modifiers = _get_all_modifiers()
 
-	print("--- STATISTIC CHECK SETUP ---")
-	for modifier in modifiers:
-		print("Modifier active: ", modifier.active)
-	print("--- END STATISTIC CHECK SETUP ---")
+	LogDuck.d("Statistic check setup complete", {
+		"active_modifiers": modifiers.map(func(m): return m.modifier_name),
+		"stats": stats
+	})
 
 func subtlety_check() -> bool:
 	var subtlety_check_value = stats.subtlety
-	print("--- SUBTLETY CHECK ---")
-	print("Base value: ", subtlety_check_value)
+	LogDuck.d("Starting subtlety check", {"base_value": subtlety_check_value})
 
 	for modifier in modifiers:
-		print("Modifier: ", modifier.modifier_name, " ", subtlety_check_value, " + ", modifier.modifier_subtlety_flat)
 		subtlety_check_value += modifier.modifier_subtlety_flat
+		LogDuck.d("Applied subtlety modifier", {
+			"modifier": modifier.modifier_name,
+			"flat_bonus": modifier.modifier_subtlety_flat,
+			"new_value": subtlety_check_value
+		})
 
-	# if this is the home PoI of this character, add the home modifier (+25%)
 	if poi == characters[0].char_associated_poi:
-		print("Home modifier: ", subtlety_check_value, " * 1.25")
+		LogDuck.d("Applying home POI bonus", {
+			"before": subtlety_check_value,
+			"after": subtlety_check_value * 1.25
+		})
 		subtlety_check_value *= 1.25
 	
 	var subtlety_roll = MathHelpers.bounded_sigmoid_check(
@@ -49,11 +59,15 @@ func subtlety_check() -> bool:
 		Constants.SUBTLETY_CHECK_MAX_CHANCE
 	)
 
-	# emit stats change
+	LogDuck.d("Subtlety check complete", {
+		"success": subtlety_roll.success,
+		"stat": subtlety_check_value,
+		"raw_chance": subtlety_roll.raw_chance,
+		"success_chance": subtlety_roll.success_chance,
+		"roll": subtlety_roll.roll
+	})
+
 	EventBus.stat_created.emit("subtlety", subtlety_roll.success)
-
-	print("--- END SUBTLETY CHECK ---")
-
 	return subtlety_roll.success
 
 func smarts_check() -> bool:
@@ -103,35 +117,50 @@ func charm_check() -> bool:
 	return charm_roll.success
 
 func sympathy_added(min_value: int, max_value: int) -> int:
-	print("--- SYMPATHY ADDED ---")
-	print("Base range: ", min_value, " ", max_value)
+	LogDuck.d("Calculating sympathy addition", {
+		"min": min_value,
+		"max": max_value
+	})
 
-	var base_sympathy_added: int = MathHelpers.generate_bell_curve_stat(min_value, max_value)
-	print("Base value: ", base_sympathy_added)
+	var base_sympathy_added = MathHelpers.generate_bell_curve_stat(min_value, max_value)
+	var final_sympathy = base_sympathy_added
 
 	for modifier in modifiers:
-		print("Modifier: ", modifier.modifier_name, " ", base_sympathy_added, " * ", modifier.modifier_sympathy_multiplier)
-		base_sympathy_added *= modifier.modifier_sympathy_multiplier
+		final_sympathy *= modifier.modifier_sympathy_multiplier
+		LogDuck.d("Applied sympathy modifier", {
+			"modifier": modifier.modifier_name,
+			"multiplier": modifier.modifier_sympathy_multiplier,
+			"new_value": final_sympathy
+		})
 
-	print("--- END SYMPATHY ADDED ---")
-
-	return base_sympathy_added
+	LogDuck.d("Sympathy calculation complete", {
+		"base": base_sympathy_added,
+		"final": final_sympathy
+	})
+	return final_sympathy
 
 func heat_added(min_value: int, max_value: int) -> int:
-	print("--- HEAT ADDED ---")
-	print("Base range: ", min_value, " ", max_value)
+	LogDuck.d("Calculating heat addition", {
+		"min": min_value,
+		"max": max_value
+	})
 
-	var base_heat_added: int = MathHelpers.generate_bell_curve_stat(min_value, max_value)
-	print("Base value: ", base_heat_added)
+	var base_heat_added = MathHelpers.generate_bell_curve_stat(min_value, max_value)
+	var final_heat = base_heat_added
 
 	for modifier in modifiers:
-		print("Modifier: ", modifier.modifier_name, " ", base_heat_added, " * ", modifier.modifier_heat_multiplier)
-		base_heat_added *= modifier.modifier_heat_multiplier
+		final_heat *= modifier.modifier_heat_multiplier
+		LogDuck.d("Applied heat modifier", {
+			"modifier": modifier.modifier_name,
+			"multiplier": modifier.modifier_heat_multiplier,
+			"new_value": final_heat
+		})
 
-	print("--- END HEAT ADDED ---")
-
-	return base_heat_added
-
+	LogDuck.d("Heat calculation complete", {
+		"base": base_heat_added,
+		"final": final_heat
+	})
+	return final_heat
 
 func action_duration(base_duration: int) -> int:
 	print("--- ACTION DURATION ---")
@@ -215,21 +244,19 @@ func _get_stats() -> Dictionary:
 @return A dictionary containing the average stats for "subtlety", "smarts", and "charm".
 """
 func _calculate_team_averages() -> Dictionary:
-	var total_subtlety: float = 0
-	var total_smarts: float = 0
-	var total_charm: float = 0
-	var num_characters: int = characters.size()
+	LogDuck.d("Calculating team averages", {
+		"team_size": characters.size(),
+		"characters": characters.map(func(c): return c.get_full_name())
+	})
 	
-	for character in characters:
-		total_subtlety += character.char_subtlety
-		total_smarts += character.char_smarts
-		total_charm += character.char_charm
-	
-	return {
-		"subtlety": total_subtlety / num_characters,
-		"smarts": total_smarts / num_characters,
-		"charm": total_charm / num_characters
+	var averages = {
+		"subtlety": characters.reduce(func(acc, c): return acc + c.char_subtlety, 0.0) / characters.size(),
+		"smarts": characters.reduce(func(acc, c): return acc + c.char_smarts, 0.0) / characters.size(),
+		"charm": characters.reduce(func(acc, c): return acc + c.char_charm, 0.0) / characters.size()
 	}
+	
+	LogDuck.d("Team averages calculated", averages)
+	return averages
 
 """
 @brief Rewards complementary stats by reducing the difference between the highest and lowest team averages.
@@ -237,21 +264,20 @@ func _calculate_team_averages() -> Dictionary:
 @return A float multiplier for complementarity (e.g., 1.0 for no bonus, up to 1.2 for maximum bonus in small teams).
 """
 func _calculate_complementarity_multiplier(team_averages: Dictionary) -> float:
-	var stat_values: Array = [
-		team_averages["subtlety"],
-		team_averages["smarts"],
-		team_averages["charm"]
-	]
-	var stat_range: float = stat_values.max() - stat_values.min()
+	var stat_values = [team_averages["subtlety"], team_averages["smarts"], team_averages["charm"]]
+	var stat_range = stat_values.max() - stat_values.min()
+	var max_bonus = 20.0 - (characters.size() - 2) * 2.5
+	max_bonus = max(10.0, max_bonus)
+	var bonus_percentage = max(0, max_bonus - stat_range)
+	var multiplier = 1 + (bonus_percentage / 100)
 	
-	# Scale maximum bonus based on team size (e.g., 20% for 2 characters, 10% for 5 characters)
-	var max_bonus: float = 20.0 - (characters.size() - 2) * 2.5
-	max_bonus = max(10.0, max_bonus) # Ensure max bonus doesn't go below 10%
-	
-	# Bonus decreases as range increases; capped at scaled maximum
-	var bonus_percentage: float = max(0, max_bonus - stat_range)
-	return 1 + (bonus_percentage / 100)
-
+	LogDuck.d("Calculated complementarity multiplier", {
+		"stat_range": stat_range,
+		"max_bonus": max_bonus,
+		"bonus_percentage": bonus_percentage,
+		"final_multiplier": multiplier
+	})
+	return multiplier
 
 """
 @brief Penalizes overspecialization by applying penalties for redundant high stats in the team.
@@ -274,7 +300,6 @@ func _calculate_overspecialization_multiplier() -> float:
 			penalty_percentage += (high_stat_count - allowed_high_stats) * 5 # 5% penalty per excess stat
 	
 	return max(0.5, 1 - (penalty_percentage / 100)) # Minimum multiplier of 0.5
-
 
 func get_subtlety_chance() -> float:
 	var subtlety_check_value = stats.subtlety
@@ -356,6 +381,11 @@ func get_team_modifiers() -> Dictionary:
 @return Dictionary containing the modified probabilities for each consequence type
 """
 func get_consequence_probabilities(district_heat: int) -> Dictionary:
+	LogDuck.d("Calculating consequence probabilities", {
+		"district_heat": district_heat,
+		"active_modifiers": modifiers.map(func(m): return m.modifier_name)
+	})
+	
 	var heat_factor = district_heat / 100.0
 	
 	# Calculate raw probabilities
@@ -390,6 +420,10 @@ func get_consequence_probabilities(district_heat: int) -> Dictionary:
 	for state in modified_chances:
 		probabilities[state] = modified_chances[state] / total
 	
+	LogDuck.d("Final consequence probabilities", {
+		"district_heat": district_heat,
+		"probabilities": probabilities
+	})
 	return probabilities
 
 """
@@ -399,6 +433,13 @@ func get_consequence_probabilities(district_heat: int) -> Dictionary:
 """
 func determine_consequence(district_heat: int) -> Dictionary:
 	var probabilities = get_consequence_probabilities(district_heat)
+	var roll = randf()
+	
+	LogDuck.d("Determining action consequence", {
+		"district_heat": district_heat,
+		"roll": roll,
+		"probabilities": probabilities
+	})
 	
 	# Define consequence order (most severe first)
 	var consequence_order = [
@@ -409,17 +450,24 @@ func determine_consequence(district_heat: int) -> Dictionary:
 	]
 	
 	# Roll and check against cumulative probability
-	var roll = randf()
 	var cumulative_probability = 0.0
 	
 	for consequence in consequence_order:
 		cumulative_probability += probabilities[consequence]
 		if roll < cumulative_probability:
+			LogDuck.d("Consequence determined", {
+				"result": consequence,
+				"roll": roll
+			})
 			return {
 				"result": consequence,
 				"roll": roll
 			}
 	
+	LogDuck.d("Consequence determined", {
+		"result": Enums.CharacterState.ASSIGNED,
+		"roll": roll
+	})
 	return {
 		"result": Enums.CharacterState.ASSIGNED,
 		"roll": roll

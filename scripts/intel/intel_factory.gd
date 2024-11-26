@@ -12,7 +12,11 @@ class_name IntelFactory
 @returns A new Rumour object populated with data based on the configuration
 """
 static func create_rumour(config: RumourConfig) -> Rumour:
-	print('IntelFactory create_rumour')
+	LogDuck.d("Creating new rumour", {
+		"mission_chance": config.mission_chance,
+		"location_chance": config.location_chance,
+		"time_chance": config.time_chance
+	})
 
 	# Create a new instance of RumourProperties
 	var rumour_properties = Rumour.RumourProperties.new()
@@ -23,14 +27,29 @@ static func create_rumour(config: RumourConfig) -> Rumour:
 	# Retrieve the rumour data based on the generated type
 	var rumour_data = Globals.get_rumour_data(rumour_type)
 
+	LogDuck.d("Generated rumour type and data", {
+		"type": rumour_type,
+		"subject": rumour_data.subject,
+		"effect": rumour_data.effect
+	})
+
 	# Assign the subject of the rumour based on the rumour data
 	match rumour_data.subject:
 		Enums.RumourSubject.ANY_CHARACTER:
 			rumour_properties.rumour_subject_character = _get_random_character()
+			LogDuck.d("Assigned random character subject", {
+				"character": rumour_properties.rumour_subject_character.get_full_name()
+			})
 		Enums.RumourSubject.ANY_POI:
 			rumour_properties.rumour_subject_poi = _get_random_poi()
+			LogDuck.d("Assigned random POI subject", {
+				"poi": rumour_properties.rumour_subject_poi.poi_name
+			})
 		Enums.RumourSubject.NON_SYMPATHISER_CHARACTER:
 			rumour_properties.rumour_subject_character = _get_random_non_sympathiser_character()
+			LogDuck.d("Assigned random non-sympathiser subject", {
+				"character": rumour_properties.rumour_subject_character.get_full_name()
+			})
 		Enums.RumourSubject.SYMPATHISER_CHARACTER:
 			rumour_properties.rumour_subject_character = _get_random_sympathiser_character()
 		Enums.RumourSubject.MIA_CHARACTER:
@@ -46,11 +65,21 @@ static func create_rumour(config: RumourConfig) -> Rumour:
 		var duration_expiry = _get_rumour_duration_and_expiry(rumour_data.effect)
 		rumour_properties.rumour_subject_duration = duration_expiry[0]
 		rumour_properties.rumour_subject_expiry = duration_expiry[1]
+		LogDuck.d("Set rumour duration and expiry", {
+			"duration": duration_expiry[0],
+			"expiry": duration_expiry[1]
+		})
 
 	# Set the properties of the rumour
 	rumour_properties.rumour_text = rumour_data.text
 	rumour_properties.rumour_type = rumour_type
 	rumour_properties.rumour_effect = rumour_data.effect
+
+	LogDuck.d("Rumour creation complete", {
+		"type": rumour_type,
+		"effect": rumour_data.effect,
+		"text_length": rumour_data.text.length()
+	})
 
 	# Initialize and return the rumour with the properties
 	return Rumour.new(rumour_properties)
@@ -65,7 +94,12 @@ static func create_rumour(config: RumourConfig) -> Rumour:
 """
 static func _get_random_character() -> Character:
 	var characters = GlobalRegistry.get_all_objects(Enums.Registry_Category.CHARACTER)
-	return characters[randi() % characters.size()]
+	var selected = characters[randi() % characters.size()]
+	LogDuck.d("Selected random character", {
+		"character": selected.get_full_name(),
+		"total_choices": characters.size()
+	})
+	return selected
 
 """
 @brief Retrieves a random point of interest from the global registry.
@@ -169,17 +203,30 @@ static func _generate_rumour_type(config: RumourConfig) -> Enums.RumourType:
 @returns A new Plan object
 """
 static func formulate_plan(mission_rumour: Rumour, location_rumour: Rumour, time_rumour: Rumour) -> Plan:
-	print('IntelFactory formulate_plan')
+	LogDuck.d("Formulating plan from rumours", {
+		"mission_type": mission_rumour.rumour_type,
+		"location_type": location_rumour.rumour_type,
+		"time_type": time_rumour.rumour_type
+	})
 
 	var plan_properties = Plan.PlanProperties.new()
 
-	plan_properties.plan_name = "Operation " + str(randi() % 1000)
+	var plan_name = "Operation " + str(randi() % 1000)
+	plan_properties.plan_name = plan_name
 	plan_properties.plan_text = mission_rumour.rumour_text + "\n\n" + location_rumour.rumour_text + "\n\n" + time_rumour.rumour_text
 	plan_properties.plan_duration = time_rumour.rumour_subject_duration
 	plan_properties.plan_expiry = time_rumour.rumour_subject_expiry
 	plan_properties.plan_subject_character = mission_rumour.rumour_subject_character
 	plan_properties.plan_subject_poi = location_rumour.rumour_subject_poi
 	plan_properties.plan_effect = mission_rumour.rumour_effect
+
+	LogDuck.d("Plan formulated", {
+		"name": plan_name,
+		"duration": plan_properties.plan_duration,
+		"expiry": plan_properties.plan_expiry,
+		"character": plan_properties.plan_subject_character.get_full_name() if plan_properties.plan_subject_character else "None",
+		"poi": plan_properties.plan_subject_poi.poi_name if plan_properties.plan_subject_poi else "None"
+	})
 
 	# Create a new plan
 	var plan = Plan.new(plan_properties)
@@ -192,29 +239,27 @@ static func formulate_plan(mission_rumour: Rumour, location_rumour: Rumour, time
 	return plan
 
 static func create_heat_endgame_plan() -> Plan:
-	var plan_properties = Plan.PlanProperties.new()
-
-	var poi = _get_random_poi()
-
-	plan_properties.plan_name = "Heat Endgame Plan"
-	plan_properties.plan_text = "The heat has become unbearable. The authorities have mobilized overwhelming force and our safe houses are compromised. We must evacuate our operatives from the city before it's too late."
-	plan_properties.plan_duration = 1
-	plan_properties.plan_expiry = 1
-	plan_properties.plan_subject_poi = poi
-
-	var plan = Plan.new(plan_properties)
+	LogDuck.d("Creating heat endgame plan")
+	var plan = _create_endgame_plan("Heat Endgame Plan",
+		"The heat has become unbearable. The authorities have mobilized overwhelming force and our safe houses are compromised. We must evacuate our operatives from the city before it's too late.")
+	LogDuck.d("Heat endgame plan created", {"poi": plan.plan_subject_poi.poi_name})
 	return plan
 
 static func create_resistance_endgame_plan() -> Plan:
-	var plan_properties = Plan.PlanProperties.new()
+	LogDuck.d("Creating resistance endgame plan")
+	var plan = _create_endgame_plan("Resistance Endgame Plan",
+		"The resistance has grown strong enough to enact our final plan. Our operatives are in position and the people are ready to rise up. The time has come to seize control of the city.")
+	LogDuck.d("Resistance endgame plan created", {"poi": plan.plan_subject_poi.poi_name})
+	return plan
 
+static func _create_endgame_plan(name: String, text: String) -> Plan:
+	var plan_properties = Plan.PlanProperties.new()
 	var poi = _get_random_poi()
 
-	plan_properties.plan_name = "Resistance Endgame Plan"
-	plan_properties.plan_text = "The resistance has grown strong enough to enact our final plan. Our operatives are in position and the people are ready to rise up. The time has come to seize control of the city."
+	plan_properties.plan_name = name
+	plan_properties.plan_text = text
 	plan_properties.plan_duration = 1
 	plan_properties.plan_expiry = 1
 	plan_properties.plan_subject_poi = poi
 
-	var plan = Plan.new(plan_properties)
-	return plan
+	return Plan.new(plan_properties)

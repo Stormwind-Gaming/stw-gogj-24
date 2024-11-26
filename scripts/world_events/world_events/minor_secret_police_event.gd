@@ -6,25 +6,40 @@ var subject_district: District
 var modifier: Modifier = null
 
 func _init(config: WorldEventConfig) -> void:
-	print("Initialising minor secret police event")
+	LogDuck.d("Initializing minor secret police event")
 
 	turn_to_end = GameController.turn_number + 2
 	subject_district = GlobalRegistry.districts.get_random_item()
 
+	LogDuck.d("Minor secret police event setup", {
+		"turn_to_end": turn_to_end,
+		"district": subject_district.district_name
+	})
+
 	event_end_text = config.event_end_text
 	effect_text = config.effect_text
 
-
-	print("Subject district: ", subject_district.district_name)
+	LogDuck.d("Event text configured", {
+		"end_text": event_end_text,
+		"effect_text": effect_text
+	})
 
 	super(config.event_severity)
 
-
 func _event_start() -> void:
-	print("--- Starting minor secret police event ---")
-	print("Subject district: ", subject_district.district_name, "Heat: ", subject_district.heat, " + ", Constants.WORLD_EVENT_MINOR_SECRET_POLICE_HEAT_CHANGE)
+	LogDuck.d("Starting minor secret police event")
+	
+	LogDuck.d("Applying district heat change", {
+		"district": subject_district.district_name,
+		"current_heat": subject_district.heat,
+		"change": Constants.WORLD_EVENT_MINOR_SECRET_POLICE_HEAT_CHANGE
+	})
 	subject_district.heat += Constants.WORLD_EVENT_MINOR_SECRET_POLICE_HEAT_CHANGE
 
+	LogDuck.d("Creating secret police modifier", {
+		"district": subject_district.district_name,
+		"action_duration": Constants.WORLD_EVENT_MINOR_SECRET_POLICE_ACTION_DURATION
+	})
 	modifier = Modifier.new({
 		"scope": Enums.ModifierScope.DISTRICT,
 		"district": subject_district,
@@ -34,8 +49,17 @@ func _event_start() -> void:
 	})
 
 func _event_end() -> void:
-	print("--- Ending minor secret police event ---")
-	print("Subject district: ", subject_district.district_name, "Heat: ", subject_district.heat, " - ", Constants.WORLD_EVENT_MINOR_SECRET_POLICE_HEAT_CHANGE)
+	LogDuck.d("Ending minor secret police event")
+	
+	LogDuck.d("Removing district heat change", {
+		"district": subject_district.district_name,
+		"current_heat": subject_district.heat,
+		"change": - Constants.WORLD_EVENT_MINOR_SECRET_POLICE_HEAT_CHANGE
+	})
 	subject_district.heat -= Constants.WORLD_EVENT_MINOR_SECRET_POLICE_HEAT_CHANGE
+	
+	LogDuck.d("Removing secret police modifier", {
+		"district": subject_district.district_name
+	})
 	modifier.queue_free()
 	queue_free()

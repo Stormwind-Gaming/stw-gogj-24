@@ -19,9 +19,11 @@ var _registry: Dictionary = {}
 """
 func create_list(name: String) -> void:
 	if _registry.has(name):
+		LogDuck.error("Failed to create list - already exists", {"list": name})
 		push_error("List '%s' already exists" % name)
 		return
 	_registry[name] = []
+	LogDuck.d("Created new registry list", {"list": name})
 
 """
 @brief Adds an item to the specified list.
@@ -30,13 +32,16 @@ func create_list(name: String) -> void:
 @param item The item to add to the list.
 """
 func add_item(list_name: String, item) -> void:
-	print("Adding item to list: ", list_name)
 	if not _registry.has(list_name):
+		LogDuck.error("Failed to add item - list doesn't exist", {"list": list_name})
 		push_error("List '%s' does not exist" % list_name)
 		return
 	_registry[list_name].append(item)
-	print("Item added to list: ", list_name, _registry[list_name])
-	print("List size: ", _registry[list_name].size())
+	LogDuck.d("Added item to registry list", {
+		"list": list_name,
+		"item_type": item.get_class(),
+		"list_size": _registry[list_name].size()
+	})
 
 """
 @brief Moves a specific item to the target list from the source list.
@@ -52,15 +57,25 @@ func move_item(target_list_name: String, item: Object) -> void:
 			break
 	
 	if source_list_name == "":
+		LogDuck.error("Failed to move item - not found in any list", {
+			"target_list": target_list_name,
+			"item_type": item.get_class()
+		})
 		push_error("Item does not exist in any source list")
 		return
 	
 	if not _registry.has(target_list_name):
+		LogDuck.error("Failed to move item - target list doesn't exist", {"target_list": target_list_name})
 		push_error("Target list '%s' does not exist" % target_list_name)
 		return
 
 	_registry[source_list_name].erase(item)
 	_registry[target_list_name].append(item)
+	LogDuck.d("Moved item between registry lists", {
+		"from_list": source_list_name,
+		"to_list": target_list_name,
+		"item_type": item.get_class()
+	})
 
 """
 @brief Retrieves an item from the specified list by index.
@@ -71,8 +86,10 @@ func move_item(target_list_name: String, item: Object) -> void:
 """
 func get_item(list_name: String, index: int):
 	if not _registry.has(list_name):
+		LogDuck.error("Failed to get item - list doesn't exist", {"list": list_name, "index": index})
 		push_error("List '%s' does not exist" % list_name)
 		return null
+	LogDuck.d("Retrieved item from registry list", {"list": list_name, "index": index})
 	return _registry[list_name][index]
 
 """
@@ -94,6 +111,7 @@ func get_list(list_name: String) -> Array:
 """
 func get_random_item():
 	if _registry.is_empty():
+		LogDuck.d("Cannot get random item - registry is empty")
 		return null
 	
 	# Get non-empty lists
@@ -103,10 +121,13 @@ func get_random_item():
 			non_empty_lists.append(list)
 	
 	if non_empty_lists.is_empty():
+		LogDuck.d("Cannot get random item - all lists are empty")
 		return null
 	
 	var selected_list = non_empty_lists[randi() % non_empty_lists.size()]
-	return selected_list[randi() % selected_list.size()]
+	var selected_item = selected_list[randi() % selected_list.size()]
+	LogDuck.d("Retrieved random item from registry", {"item_type": selected_item.get_class()})
+	return selected_item
 
 """
 @brief Retrieves a random item from the specified list.
@@ -116,14 +137,21 @@ func get_random_item():
 """
 func get_random_item_from_list(list_name: String):
 	if not _registry.has(list_name):
+		LogDuck.error("Failed to get random item - list doesn't exist", {"list": list_name})
 		push_error("List '%s' does not exist" % list_name)
 		return null
 		
 	var list = _registry[list_name]
 	if list.is_empty():
+		LogDuck.d("Cannot get random item - list is empty", {"list": list_name})
 		return null
 		
-	return list[randi() % list.size()]
+	var selected_item = list[randi() % list.size()]
+	LogDuck.d("Retrieved random item from list", {
+		"list": list_name,
+		"item_type": selected_item.get_class()
+	})
+	return selected_item
 
 """
 @brief Retrieves all items from all lists.
@@ -158,12 +186,29 @@ func list_names() -> Array:
 """
 func find_item(list_name: String, property: String, value) -> Variant:
 	if not _registry.has(list_name):
+		LogDuck.error("Failed to find item - list doesn't exist", {
+			"list": list_name,
+			"property": property,
+			"value": value
+		})
 		push_error("List '%s' does not exist" % list_name)
 		return null
 	
 	for item in _registry[list_name]:
 		if item.get(property) == value:
+			LogDuck.d("Found matching item in registry", {
+				"list": list_name,
+				"property": property,
+				"value": value,
+				"item_type": item.get_class()
+			})
 			return item
+	
+	LogDuck.d("No matching item found", {
+		"list": list_name,
+		"property": property,
+		"value": value
+	})
 	return null
 
 """
@@ -228,10 +273,16 @@ func find_items_by_condition(list_name: String, condition: Callable) -> Array:
 @param item The item to remove from the registry.
 """
 func remove_item(item) -> void:
-	for list in _registry.values():
+	for list_name in _registry.keys():
+		var list = _registry[list_name]
 		var index = list.find(item)
 		if index != -1:
 			list.remove_at(index)
+			LogDuck.d("Removed item from registry", {
+				"list": list_name,
+				"item_type": item.get_class(),
+				"new_size": list.size()
+			})
 			return
 
 """
@@ -241,9 +292,11 @@ func remove_item(item) -> void:
 """
 func remove_list(list_name: String) -> void:
 	if not _registry.has(list_name):
+		LogDuck.error("Failed to remove list - doesn't exist", {"list": list_name})
 		push_error("List '%s' does not exist" % list_name)
 		return
 	_registry.erase(list_name)
+	LogDuck.d("Removed registry list", {"list": list_name})
 
 """
 @brief Clears all items from a specific list.
@@ -252,16 +305,28 @@ func remove_list(list_name: String) -> void:
 """
 func clear_list(list_name: String) -> void:
 	if not _registry.has(list_name):
+		LogDuck.error("Failed to clear list - doesn't exist", {"list": list_name})
 		push_error("List '%s' does not exist" % list_name)
 		return
+	var previous_size = _registry[list_name].size()
 	_registry[list_name].clear()
+	LogDuck.d("Cleared registry list", {
+		"list": list_name,
+		"items_cleared": previous_size
+	})
 
 """
 @brief Clears all items from all lists but keeps the list structure.
 """
 func clear_all() -> void:
-	for list in _registry.values():
-		list.clear()
+	var total_cleared = 0
+	for list_name in _registry.keys():
+		total_cleared += _registry[list_name].size()
+		_registry[list_name].clear()
+	LogDuck.d("Cleared all registry lists", {
+		"lists_cleared": _registry.size(),
+		"total_items_cleared": total_cleared
+	})
 
 #|==============================|
 #|         List Information      |

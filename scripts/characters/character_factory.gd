@@ -71,7 +71,7 @@ static func _nationality() -> Enums.CharacterNationality:
 	var rand = randi() % 100 # Generate a random number between 0 and 99
 	
 	if rand < 50:
-			return Enums.CharacterNationality.BELGIAN # 50% chance
+		return Enums.CharacterNationality.BELGIAN # 50% chance
 	elif rand < 80:
 		return Enums.CharacterNationality.GERMAN # 30% chance (50-79)
 	elif rand < 95:

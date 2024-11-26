@@ -27,6 +27,13 @@ var modifier_intel_spawn_multiplier: float = 1.0
 var modifier_consequence_multiplier: float = 1.0
 
 func _init(config: Dictionary, mods: Dictionary) -> void:
+	LogDuck.d("Creating new modifier", {
+		"name": config.get("modifier_name", "Unnamed Modifier"),
+		"scope": config.get("scope", Enums.ModifierScope.DISTRICT),
+		"district": config.get("district", null).district_name if config.get("district", null) else "None",
+		"turn_to_end": config.get("turn_to_end", -1)
+	})
+
 	modifier_name = config.get("modifier_name", "Unnamed Modifier")
 	district = config.get("district", null)
 	scope = config.get("scope", Enums.ModifierScope.DISTRICT)
@@ -37,12 +44,37 @@ func _init(config: Dictionary, mods: Dictionary) -> void:
 	modifier_end_closure = config.get("modifier_end_closure", func(): return false)
 	modifier_active_closure = config.get("modifier_active_closure", func(): return true)
 
+	# Log flat modifiers
+	LogDuck.d("Setting flat stat modifiers", {
+		"name": modifier_name,
+		"smarts": mods.get("modifier_smarts_flat", 0),
+		"subtlety": mods.get("modifier_subtlety_flat", 0),
+		"charm": mods.get("modifier_charm_flat", 0)
+	})
+
 	modifier_smarts_flat = mods.get("modifier_smarts_flat", 0)
 	modifier_subtlety_flat = mods.get("modifier_subtlety_flat", 0)
 	modifier_charm_flat = mods.get("modifier_charm_flat", 0)
 
+	# Log other flat modifiers
+	LogDuck.d("Setting other flat modifiers", {
+		"name": modifier_name,
+		"action_duration": mods.get("modifier_action_duration_flat", 0),
+		"intel_spawn": mods.get("modifier_intel_spawn_flat", 0)
+	})
+
 	modifier_action_duration_flat = mods.get("modifier_action_duration_flat", 0)
 	modifier_intel_spawn_flat = mods.get("modifier_intel_spawn_flat", 0)
+
+	# Log multiplier modifiers
+	LogDuck.d("Setting multiplier modifiers", {
+		"name": modifier_name,
+		"heat": mods.get("modifier_heat_multiplier", 1.0),
+		"sympathy": mods.get("modifier_sympathy_multiplier", 1.0),
+		"action_duration": mods.get("modifier_action_duration_multiplier", 1.0),
+		"intel_spawn": mods.get("modifier_intel_spawn_multiplier", 1.0),
+		"consequence": mods.get("modifier_consequence_multiplier", 1.0)
+	})
 
 	modifier_heat_multiplier = mods.get("modifier_heat_multiplier", 1.0)
 	modifier_sympathy_multiplier = mods.get("modifier_sympathy_multiplier", 1.0)
@@ -54,10 +86,29 @@ func _init(config: Dictionary, mods: Dictionary) -> void:
 	EventBus.end_turn_complete.connect(_on_end_turn_complete)
 
 func _on_end_turn_complete(_num: int) -> void:
+	LogDuck.d("Checking modifier end conditions", {
+		"name": modifier_name,
+		"current_turn": GameController.turn_number,
+		"end_turn": turn_to_end,
+		"active": active
+	})
+
 	# Check for end of modifier
 	if modifier_end_closure.call() or (GameController.turn_number >= turn_to_end and turn_to_end != -1):
+		LogDuck.d("Modifier ending", {
+			"name": modifier_name,
+			"reason": "end_closure" if modifier_end_closure.call() else "turn_limit_reached"
+		})
 		EventBus.end_turn_complete.disconnect(_on_end_turn_complete)
 		queue_free()
 
 	# Run the check to see if the modifier should be active
+	var was_active = active
 	active = modifier_active_closure.call()
+	
+	if was_active != active:
+		LogDuck.d("Modifier active state changed", {
+			"name": modifier_name,
+			"previous": was_active,
+			"current": active
+		})
