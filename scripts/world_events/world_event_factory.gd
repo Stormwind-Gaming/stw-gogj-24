@@ -57,7 +57,7 @@ static func create_world_event(severity: Enums.WorldEventSeverity) -> WorldEvent
 	var event_data = Globals.get_world_event_text(severity)
 	# check event text as can return null if no event text found
 	if not event_data:
-		LogDuck.error("No world event text found", {"severity": severity})
+		LogDuck.e("No world event text found", {"severity": severity})
 		push_error("No world event text found for severity: ", severity)
 		return
 	
@@ -97,7 +97,7 @@ static func create_world_event(severity: Enums.WorldEventSeverity) -> WorldEvent
 			LogDuck.d("Creating major safehouse discovered event")
 			event = MajorSafehouseDiscoveredEvent.new(config)
 		_:
-			LogDuck.error("Unknown world event type", {"event_type": event_data.event_type})
+			LogDuck.e("Unknown world event type", {"event_type": event_data.event_type})
 			push_error("Unknown world event type: ", event_data.event_type)
 			return null
 

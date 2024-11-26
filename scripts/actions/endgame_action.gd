@@ -53,6 +53,8 @@ func _process_action() -> Array[TurnLog]:
 				logs += _resistance_endgame_3()
 			3:
 				logs += _resistance_endgame_4()
+			4:
+				logs += _resistance_endgame_5()
 			_:
 				printerr("Invalid resistance endgame step: ", GameController.resistance_endgame_step)
 

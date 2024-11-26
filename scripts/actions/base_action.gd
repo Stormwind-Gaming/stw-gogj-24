@@ -245,7 +245,7 @@ func _get_stats() -> Dictionary:
 func _release_characters() -> void:
 	for character in characters:
 		# check if the character object is still valid (not deleted)
-		if character.is_valid():
+		if is_instance_valid(character):
 			# If the character is assigned to this action (e.g. not missing or deceased), set them to available
 			if character.char_state == Enums.CharacterState.ASSIGNED:
 				character.char_state = Enums.CharacterState.AVAILABLE

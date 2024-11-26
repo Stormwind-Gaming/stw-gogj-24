@@ -79,7 +79,7 @@ func _ready():
 @brief Updates the GUI to reflect new game state.
 """
 func _update_gui(_i: int):
-	turns.text = str(GameStats.GameStats.stats.turns)
+	turns.text = str(GameStats.stats.turns)
 	missions.text = "%s/%s" % [str(GameStats.stats.missions.success), str(GameStats.stats.missions.total)]
 	subtlety.text = "%s/%s" % [str(GameStats.stats.subtlety.success), str(GameStats.stats.subtlety.total)]
 	smarts.text = "%s/%s" % [str(GameStats.stats.smarts.success), str(GameStats.stats.smarts.total)]

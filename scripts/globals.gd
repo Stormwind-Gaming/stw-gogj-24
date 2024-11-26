@@ -74,7 +74,7 @@ var poi_names = []
 var rumour_text = []
 var event_outcome_text = {}
 var world_event_text = []
-var end_screen_text = []
+var endgame_text = []
 #|==============================|
 #|      Data Loading           |
 #|==============================|
@@ -233,11 +233,11 @@ func _load_end_screen_text(path: String) -> void:
 		var category = event_outcome_category_map[record["endgame_event"].to_upper()]
 		var text = record["endgame_text"]
 
-		end_screen_text.append({
+		endgame_text.append({
 			"category": category,
 			"text": text,
 		})
-	LogDuck.d("Globals: Loaded %d end screen texts" % end_screen_text.size())
+	LogDuck.d("Globals: Loaded %d end screen texts" % endgame_text.size())
 
 #|==============================|
 #|      Data Retrieval         |
@@ -340,9 +340,9 @@ func get_world_event_text(severity: Enums.WorldEventSeverity):
 @param category The category of the endgame event to get the text for
 @returns The text for the endgame event
 """
-func get_end_screen_text(category: Enums.EventOutcomeType):
+func get_endgame_text(category: Enums.EventOutcomeType):
 	# there is only one text per category
-	return end_screen_text.filter(func(record): return record.category == category)[0].text
+	return endgame_text.filter(func(record): return record.category == category)[0].text
 
 #|==============================|
 #|      Enum Mappings          |

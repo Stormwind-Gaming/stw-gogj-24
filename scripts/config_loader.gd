@@ -31,14 +31,14 @@ func load_constants():
 func _on_constants_loaded(result, response_code, headers, body):
     # First check if the request itself was successful
     if result != HTTPRequest.RESULT_SUCCESS:
-        LogDuck.error("HTTP Request failed", {"result": result})
+        LogDuck.e("HTTP Request failed", {"result": result})
         print("HTTP Request failed with result: " + str(result))
         push_error("HTTP Request failed with result: " + str(result))
         return
         
     # Then check the response code
     if response_code != 200:
-        LogDuck.error("Failed to load constants", {"response_code": response_code})
+        LogDuck.e("Failed to load constants", {"response_code": response_code})
         print('failed to load constants from Google Sheets. Response code: ' + str(response_code))
         push_error("Failed to load constants from Google Sheets. Response code: " + str(response_code))
         return
