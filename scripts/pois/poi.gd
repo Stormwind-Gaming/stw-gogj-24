@@ -161,9 +161,14 @@ Initializes POI properties and connects signals.
 """
 func _ready() -> void:
 	if not self.visible:
-		# If the POI is not visible, then it is not part of the game
+		LogDuck.d("Skipping POI initialization - not visible")
 		return
 	parent_district = get_parent().get_parent()
+	LogDuck.d("Initializing POI", {
+		"district": parent_district.district_name,
+		"static": poi_static
+	})
+	
 	EventBus.poi_created.emit(self)
 	EventBus.character_state_changed.connect(_character_state_changed)
 	EventBus.district_just_focused.connect(_on_district_just_focused)
@@ -173,6 +178,11 @@ func _ready() -> void:
 	self.poi_owner = CharacterFactory.create_character()
 	self.poi_owner.char_associated_poi = self
 	self.poi_bonus = _derive_poi_bonus()
+	
+	LogDuck.d("POI owner created", {
+		"owner": poi_owner.get_full_name(),
+		"bonus_type": poi_bonus
+	})
 
 	EventBus.action_created.connect(_on_action_created)
 	EventBus.action_destroyed.connect(_on_action_destroyed)
@@ -200,7 +210,7 @@ func _process(delta: float) -> void:
 @brief Sets up the visual elements of the POI
 """
 func setup_poi_visuals():
-	# add a new material to the icon to allow for colour changes
+	LogDuck.d("Setting up POI visuals")
 	poi_icon.material = ShaderMaterial.new()
 	poi_icon.material.shader = Globals.black_to_white_shader
 
@@ -215,12 +225,13 @@ func setup_poi_visuals():
 		center += vertex
 	center /= vertices.size()
 	
-	# Position ActionContainer at the center
+	LogDuck.d("POI visual setup complete", {
+		"center": center,
+		"vertices": vertices.size()
+	})
+	
 	$ActionContainer.position = center
-
 	$Polygon2D.visible = false
-
-	# center button to the center of the polygon
 	$IconButton.position = center - $IconButton.size / 2
 	$IconButton.visible = false
 
@@ -233,15 +244,23 @@ func setup_poi_visuals():
 @param poi_description_arg The description of the POI
 """
 func set_poi_details(parent_district_arg: District, poi_type_arg: Enums.POIType, poi_name_arg: String, poi_profession_arg: String, poi_short_description_arg: String, poi_description_arg: String, what_chance_arg: int, where_chance_arg: int, when_chance_arg: int) -> void:
+	LogDuck.d("Setting POI details", {
+		"district": parent_district_arg.district_name,
+		"type": poi_type_arg,
+		"name": poi_name_arg
+	})
+
 	var what_tmp
 	var where_tmp
 	var when_tmp
 	parent_district = parent_district_arg
 	if poi_static:
 		poi_type = poi_static_type
+		
 		poi_name = poi_static_name
 		poi_profession = poi_static_profession_arg
 		poi_description = poi_static_description
+		
 		poi_short_description = poi_static_short_description
 		what_tmp = mission_static_chance
 		where_tmp = location_static_chance
@@ -274,6 +293,17 @@ func set_poi_details(parent_district_arg: District, poi_type_arg: Enums.POIType,
 	# Set the icon
 	poi_icon.texture = Globals.poi_icons[poi_type]
 
+	LogDuck.d("POI details configured", {
+		"name": poi_name,
+		"type": poi_type,
+		"most_likely_intel": most_likely_intel_type,
+		"rumour_config": {
+			"mission": rumour_config.mission_chance,
+			"location": rumour_config.location_chance,
+			"time": rumour_config.time_chance
+		}
+	})
+
 #|==============================|
 #|      Event Handlers         |
 #|==============================|
@@ -283,20 +313,25 @@ Updates visual state and emits hover signal.
 """
 func _on_mouse_entered():
 	if not enabled or WindowHandler.any_windows_open():
+		LogDuck.d("POI hover ignored - disabled or window open")
 		return
 
 	if GameController.radial_menu_open != null:
+		LogDuck.d("POI hover ignored - radial menu open")
 		return
 
 	if GameController.district_focused != parent_district:
+		LogDuck.d("POI hover ignored - district not focused")
 		return
+	
+	LogDuck.d("POI hovered", {
+		"name": poi_name,
+		"district": parent_district.district_name
+	})
 	
 	hovered = true
 	$Polygon2D.color = highlight_color
-
-	# set the icon colour to white
 	poi_icon.material.set_shader_parameter("transition", 1.0)
-
 	emit_signal("poi_hovered", self)
 
 """
@@ -351,44 +386,47 @@ func _on_icon_button_clicked() -> void:
 Opens the POI radial menu when the POI is clicked.
 """
 func _poi_clicked() -> void:
+	LogDuck.d("POI clicked", {
+		"name": poi_name,
+		"district": parent_district.district_name
+	})
+	
 	poi_popup.visible = false
 
 	if GameController.radial_menu_open != null:
+		LogDuck.d("POI click ignored - radial menu already open")
 		return
 	
 	if GameController.district_focused != parent_district:
+		LogDuck.d("POI click ignored - district not focused")
 		return
 
-	# got to hide the icon button because its a gui element so interactions are drawn on top of the radial menu 
 	$IconButton.visible = false
-
-	var radial_menu_instance = Globals.radial_menu_scene.instantiate()
-	radial_menu_instance.position = get_local_mouse_position()
-
+	
 	var actions: Array[Enums.ActionType] = []
-
-	# If the endgame isnt active then add the normal actions
 	if not GameController.endgame_triggered:
 		actions.append(Enums.ActionType.ESPIONAGE)
-
-		# Cant do propaganda or surveillance if the POI owner is dead or missing in action
+		
 		if not poi_owner.char_state in [Enums.CharacterState.DECEASED, Enums.CharacterState.MIA]:
-			# Only non-sympathisers can use propaganda
 			if poi_owner.char_recruitment_state < Enums.CharacterRecruitmentState.SYMPATHISER_NOT_RECRUITED:
 				actions.append(Enums.ActionType.PROPAGANDA)
-
-			# Only unknown non-sympathisers can use surveillance
 			if poi_owner.char_recruitment_state == Enums.CharacterRecruitmentState.NON_SYMPATHISER_UNKNOWN:
 				actions.append(Enums.ActionType.SURVEILLANCE)
 
-	# If the POI has a plan then add the plan action
 	if (_has_plan()):
 		actions.append(Enums.ActionType.PLAN)
 
+	LogDuck.d("Opening POI radial menu", {
+		"available_actions": actions,
+		"owner_state": poi_owner.char_state,
+		"owner_recruitment": poi_owner.char_recruitment_state
+	})
+
+	var radial_menu_instance = Globals.radial_menu_scene.instantiate()
+	radial_menu_instance.position = get_local_mouse_position()
 	radial_menu_instance.set_optional_actions(actions)
 	EventBus.open_new_radial_menu.emit(radial_menu_instance)
 	add_child(radial_menu_instance)
-
 	GameController.open_radial_menu(radial_menu_instance, self)
 
 """
@@ -398,6 +436,11 @@ Updates POI state based on whether its district is focused.
 @param district The newly focused district
 """
 func _on_district_just_focused(district: District) -> void:
+	LogDuck.d("District focus changed", {
+		"district": district.district_name,
+		"is_parent": district == parent_district
+	})
+	
 	if district == parent_district:
 		$Polygon2D.color = selectable_color
 		await get_tree().create_timer(0.01).timeout
@@ -433,6 +476,11 @@ Updates POI state based on action creation.
 """
 func _on_action_created(action: BaseAction) -> void:
 	if action.poi == self:
+		LogDuck.d("Action created for POI", {
+			"poi_name": poi_name,
+			"action_type": action.action_type,
+			"character": action.characters[0].get_full_name()
+		})
 		var action_instance = Globals.action_scene.instantiate()
 		action_instance.set_meta("action_reference", action)
 		action_instance.get_node("Mask/TextureRect").texture = action.characters[0].char_picture
@@ -446,6 +494,10 @@ Updates POI state based on action destruction.
 """
 func _on_action_destroyed(action: BaseAction) -> void:
 	if action.poi == self:
+		LogDuck.d("Action destroyed for POI", {
+			"poi_name": poi_name,
+			"action_type": action.action_type
+		})
 		for child in $ActionContainer.get_children():
 			if child.get_meta("action_reference") == action:
 				child.queue_free()
