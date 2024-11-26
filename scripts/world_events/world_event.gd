@@ -48,12 +48,17 @@ var event_end_text: String
 var effect_text: String
 
 func _init(init_severity: Enums.WorldEventSeverity) -> void:
-
+	LogDuck.d("Initializing world event", {"severity": init_severity})
 	severity = init_severity
 
 	_event_start()
 
 	GlobalRegistry.turn_logs.add_item(str(GameController.turn_number), TurnLog.new(event_text, Enums.LogType.WORLD_EVENT))
+	LogDuck.d("World event initialized", {
+		"text": event_text,
+		"turn": GameController.turn_number,
+		"severity": severity
+	})
 
 	EventBus.turn_processing_initiated.connect(_on_end_turn)
 
@@ -61,18 +66,28 @@ func _init(init_severity: Enums.WorldEventSeverity) -> void:
 @brief The function that is called when the world-event starts
 """
 func _event_start() -> void:
+	LogDuck.d("Starting world event base implementation")
 	pass
 
 """
 @brief The function that is called when the world-event ends
 """
 func _event_end() -> void:
+	LogDuck.d("Ending world event base implementation")
 	pass
 
 func _on_end_turn(turn_number: int) -> void:
-	print("Checking if world-event should end", turn_number, "==", turn_to_end)
+	LogDuck.d("Checking world event end condition", {
+		"current_turn": turn_number,
+		"end_turn": turn_to_end
+	})
+	
 	if turn_number == turn_to_end:
-		print("World-event ended", event_end_text)
+		LogDuck.d("World event ending", {
+			"event_end_text": event_end_text,
+			"turn": GameController.turn_number
+		})
 		GlobalRegistry.turn_logs.add_item(str(GameController.turn_number), TurnLog.new(event_end_text, Enums.LogType.WORLD_EVENT))
+		
 		EventBus.world_event_ended.emit(self)
 		_event_end()

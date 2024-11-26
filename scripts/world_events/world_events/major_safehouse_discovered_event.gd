@@ -6,23 +6,37 @@ var subject_district: District
 var subject_characters: Array[Character]
 
 func _init(config: WorldEventConfig) -> void:
-	print("initialising major safehouse discovered event")
+	LogDuck.d("Initializing major safehouse discovered event")
 
 	turn_to_end = GameController.turn_number + Constants.WORLD_EVENT_MAJOR_SAFEHOUSE_DISCOVERED_DURATION
 	subject_district = GlobalRegistry.districts.get_random_item()
+
+	LogDuck.d("Major safehouse event setup", {
+		"turn_to_end": turn_to_end,
+		"district": subject_district.district_name
+	})
 
 	# setup
 	event_text = config.event_text.replace("{district}", subject_district.district_name)
 	event_end_text = config.event_end_text
 	effect_text = config.effect_text
 
+	LogDuck.d("Event text configured", {
+		"event_text": event_text,
+		"end_text": event_end_text,
+		"effect_text": effect_text
+	})
+
 	super(config.event_severity)
 
-
 func _event_start() -> void:
-	print("--- Starting major safehouse discovered event ---")
+	LogDuck.d("Starting major safehouse discovered event")
 
-	print("Subject district: ", subject_district.district_name, "Heat: ", subject_district.heat, " + ", Constants.WORLD_EVENT_MAJOR_SAFEHOUSE_DISCOVERED_HEAT_CHANGE)
+	LogDuck.d("Applying district heat change", {
+		"district": subject_district.district_name,
+		"current_heat": subject_district.heat,
+		"change": Constants.WORLD_EVENT_MAJOR_SAFEHOUSE_DISCOVERED_HEAT_CHANGE
+	})
 	subject_district.heat += Constants.WORLD_EVENT_MAJOR_SAFEHOUSE_DISCOVERED_HEAT_CHANGE
 
 	# Find all characters in the district
@@ -31,21 +45,36 @@ func _event_start() -> void:
 		func(character): character.char_associated_poi.parent_district == subject_district
 	)
 
+	LogDuck.d("Found affected characters", {
+		"character_count": subject_characters.size(),
+		"district": subject_district.district_name
+	})
+
 	# set all characters to MIA 
 	for character in subject_characters:
+		LogDuck.d("Setting character to MIA", {
+			"character": character.char_name,
+			"previous_state": character.char_state
+		})
 		character.set_char_state(Enums.CharacterState.MIA)
 
-	pass
-
 func _event_end() -> void:
-	print("--- Ending major safehouse discovered event ---")
-	print("Subject district: ", subject_district.district_name, "Heat: ", subject_district.heat, " - ", Constants.WORLD_EVENT_MAJOR_SAFEHOUSE_DISCOVERED_HEAT_CHANGE)
+	LogDuck.d("Ending major safehouse discovered event")
+	
+	LogDuck.d("Removing district heat change", {
+		"district": subject_district.district_name,
+		"current_heat": subject_district.heat,
+		"change": - Constants.WORLD_EVENT_MAJOR_SAFEHOUSE_DISCOVERED_HEAT_CHANGE
+	})
 	subject_district.heat -= Constants.WORLD_EVENT_MAJOR_SAFEHOUSE_DISCOVERED_HEAT_CHANGE
 
 	# set all characters to available
 	for character in subject_characters:
 		if character.char_state == Enums.CharacterState.MIA:
+			LogDuck.d("Restoring character from MIA", {
+				"character": character.char_name,
+				"current_state": character.char_state
+			})
 			character.set_char_state(Enums.CharacterState.AVAILABLE)
 	
 	queue_free()
-	pass
