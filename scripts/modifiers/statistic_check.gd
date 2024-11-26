@@ -144,6 +144,9 @@ func action_duration(base_duration: int) -> int:
 		print("Modifier: ", modifier.modifier_name, " ", base_duration, " * ", modifier.modifier_action_duration_multiplier)
 		base_duration *= modifier.modifier_action_duration_multiplier
 
+	# Reduce the duration by 1 for each additional character to a minimum of 1
+	base_duration = max(1, base_duration - (characters.size() - 1))
+
 	print("--- END ACTION DURATION ---")
 
 	return base_duration
@@ -178,7 +181,8 @@ func _get_all_modifiers() -> Array:
 	)
 
 """
-@brief Gets the combined stats of all characters involved in the action
+@brief Gets the combined stats of all characters involved in the action.
+Calculates the overall performance of the team by combining averages, complementary multipliers, and overspecialization penalties.
 """
 func _get_stats() -> Dictionary:
 	var _stats: Dictionary = {
@@ -186,13 +190,90 @@ func _get_stats() -> Dictionary:
 		"smarts": 0,
 		"charm": 0
 	}
+	
+	# Calculate team averages
+	var team_averages: Dictionary = _calculate_team_averages()
 
-	for character in characters:
-		_stats["subtlety"] += character.char_subtlety
-		_stats["smarts"] += character.char_smarts
-		_stats["charm"] += character.char_charm
+	if characters.size() == 1:
+		return team_averages
+	
+	# Calculate multipliers
+	var complementarity_multiplier: float = _calculate_complementarity_multiplier(team_averages)
+	var overspecialization_multiplier: float = _calculate_overspecialization_multiplier()
+	
+	# Apply multipliers and clamp final stats
+	for stat in _stats.keys():
+		var base_stat: float = team_averages[stat]
+		var final_stat: float = base_stat * complementarity_multiplier * overspecialization_multiplier
+		_stats[stat] = clamp(int(round(final_stat)), 1, 10)
 
 	return _stats
+
+"""
+@brief Calculates the average values of each stat across the team.
+@return A dictionary containing the average stats for "subtlety", "smarts", and "charm".
+"""
+func _calculate_team_averages() -> Dictionary:
+	var total_subtlety: float = 0
+	var total_smarts: float = 0
+	var total_charm: float = 0
+	var num_characters: int = characters.size()
+	
+	for character in characters:
+		total_subtlety += character.char_subtlety
+		total_smarts += character.char_smarts
+		total_charm += character.char_charm
+	
+	return {
+		"subtlety": total_subtlety / num_characters,
+		"smarts": total_smarts / num_characters,
+		"charm": total_charm / num_characters
+	}
+
+"""
+@brief Rewards complementary stats by reducing the difference between the highest and lowest team averages.
+@param team_averages A dictionary containing the average stats for "subtlety", "smarts", and "charm".
+@return A float multiplier for complementarity (e.g., 1.0 for no bonus, up to 1.2 for maximum bonus in small teams).
+"""
+func _calculate_complementarity_multiplier(team_averages: Dictionary) -> float:
+	var stat_values: Array = [
+		team_averages["subtlety"],
+		team_averages["smarts"],
+		team_averages["charm"]
+	]
+	var stat_range: float = stat_values.max() - stat_values.min()
+	
+	# Scale maximum bonus based on team size (e.g., 20% for 2 characters, 10% for 5 characters)
+	var max_bonus: float = 20.0 - (characters.size() - 2) * 2.5
+	max_bonus = max(10.0, max_bonus) # Ensure max bonus doesn't go below 10%
+	
+	# Bonus decreases as range increases; capped at scaled maximum
+	var bonus_percentage: float = max(0, max_bonus - stat_range)
+	return 1 + (bonus_percentage / 100)
+
+
+"""
+@brief Penalizes overspecialization by applying penalties for redundant high stats in the team.
+@return A float multiplier for overspecialization (e.g., 1.0 for no penalty, 0.9 for 10% penalty).
+"""
+func _calculate_overspecialization_multiplier() -> float:
+	var penalty_percentage: float = 0
+	var threshold: int = 8 # Stats above this value are considered "high"
+	
+	for stat in ["char_subtlety", "char_smarts", "char_charm"]:
+		# Count how many characters exceed the threshold in this stat
+		var high_stat_count: int = 0
+		for character in characters:
+			if character.get(stat) > threshold:
+				high_stat_count += 1
+		
+		# Penalize any high stat counts that exceed half the team size
+		var allowed_high_stats: int = characters.size() / 2
+		if high_stat_count > allowed_high_stats:
+			penalty_percentage += (high_stat_count - allowed_high_stats) * 5 # 5% penalty per excess stat
+	
+	return max(0.5, 1 - (penalty_percentage / 100)) # Minimum multiplier of 0.5
+
 
 func get_subtlety_chance() -> float:
 	var subtlety_check_value = stats.subtlety
@@ -233,3 +314,37 @@ func get_charm_chance() -> float:
 		Constants.CHARM_CHECK_MIN_CHANCE,
 		Constants.CHARM_CHECK_MAX_CHANCE
 	)
+
+func get_team_modifiers() -> Dictionary:
+	# Calculate team averages first since we need them for complementarity
+	var team_averages: Dictionary = _calculate_team_averages()
+	
+	# Get the multipliers
+	var complementarity: float = _calculate_complementarity_multiplier(team_averages)
+	var overspecialization: float = _calculate_overspecialization_multiplier()
+	
+	# Calculate the actual stat changes
+	var comp_changes := {
+		"subtlety": int(round(team_averages.subtlety * complementarity)) - int(round(team_averages.subtlety)),
+		"smarts": int(round(team_averages.smarts * complementarity)) - int(round(team_averages.smarts)),
+		"charm": int(round(team_averages.charm * complementarity)) - int(round(team_averages.charm))
+	}
+	
+	var overspec_changes := {
+		"subtlety": int(round(team_averages.subtlety * overspecialization)) - int(round(team_averages.subtlety)),
+		"smarts": int(round(team_averages.smarts * overspecialization)) - int(round(team_averages.smarts)),
+		"charm": int(round(team_averages.charm * overspecialization)) - int(round(team_averages.charm))
+	}
+	
+	return {
+		"complementarity": {
+			"multiplier": complementarity,
+			"effect": str(round((complementarity - 1.0) * 100)) + "%",
+			"stat_changes": comp_changes
+		},
+		"overspecialization": {
+			"multiplier": overspecialization,
+			"effect": str(round((overspecialization - 1.0) * 100)) + "%",
+			"stat_changes": overspec_changes
+		}
+	}

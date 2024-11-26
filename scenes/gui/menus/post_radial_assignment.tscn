@@ -134,8 +134,40 @@ size_flags_vertical = 3
 theme_override_constants/separation = 0
 theme_override_styles/separator = SubResource("StyleBoxEmpty_7d8bq")
 
+[node name="Mods" type="VBoxContainer" parent="NinePatchRect/MarginContainer/LeftPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ModifiersHBoxContainer" type="HBoxContainer" parent="NinePatchRect/MarginContainer/LeftPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Mods"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 5
+
+[node name="ModifiersLabel" type="Label" parent="NinePatchRect/MarginContainer/LeftPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Mods/ModifiersHBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+
+[node name="Separator2" type="HSeparator" parent="NinePatchRect/MarginContainer/LeftPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Mods"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
 [node name="Stats" type="VBoxContainer" parent="NinePatchRect/MarginContainer/LeftPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
+
+[node name="DurationHBoxContainer" type="HBoxContainer" parent="NinePatchRect/MarginContainer/LeftPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Stats"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 5
+
+[node name="DurationLabel" type="Label" parent="NinePatchRect/MarginContainer/LeftPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Stats/DurationHBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "Duration: 0 Turns"
+
+[node name="Separator3" type="HSeparator" parent="NinePatchRect/MarginContainer/LeftPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Stats"]
+layout_mode = 2
+theme_override_constants/separation = 0
 
 [node name="DetectionHBoxContainer" type="HBoxContainer" parent="NinePatchRect/MarginContainer/LeftPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Stats"]
 custom_minimum_size = Vector2(0, 50)
@@ -145,6 +177,7 @@ theme_override_constants/separation = 5
 
 [node name="DetectionLabel" type="Label" parent="NinePatchRect/MarginContainer/LeftPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Stats/DetectionHBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 15
 text = "Chance of Detection: 0"
 
 [node name="Separator" type="HSeparator" parent="NinePatchRect/MarginContainer/LeftPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Stats"]
@@ -159,6 +192,7 @@ theme_override_constants/separation = 5
 
 [node name="SuccessLabel" type="Label" parent="NinePatchRect/MarginContainer/LeftPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Stats/SuccessHBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 15
 text = "Chance of Success: 0"
 
 [node name="Separator2" type="HSeparator" parent="NinePatchRect/MarginContainer/LeftPanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Stats"]

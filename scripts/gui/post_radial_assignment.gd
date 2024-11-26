@@ -5,6 +5,8 @@ extends Window
 #|==============================|
 @onready var detection_label = find_child("DetectionLabel")
 @onready var success_label = find_child("SuccessLabel")
+@onready var modifiers_label = find_child("ModifiersLabel")
+@onready var duration_label = find_child("DurationLabel")
 
 """
 @brief Label displaying the task title
@@ -121,8 +123,19 @@ func _ready():
 		agent_card_grid.add_child(agent_instance)
 		agent_instance.check_assignment_selection(GameController.poi_for_radial, option)
 	
-	# set max agents to 1 or 2
-	max_agents = 1 # randi() % 2 + 1
+	# set max agents based on the action type
+	match option:
+		Enums.ActionType.PLAN:
+			max_agents = Constants.ACTION_PLAN_MAX_AGENTS
+		Enums.ActionType.SURVEILLANCE:
+			max_agents = Constants.ACTION_SURVEILLANCE_MAX_AGENTS
+		Enums.ActionType.PROPAGANDA:
+			max_agents = Constants.ACTION_PROPAGANDA_MAX_AGENTS
+		Enums.ActionType.ESPIONAGE:
+			max_agents = Constants.ACTION_ESPIONAGE_MAX_AGENTS
+		_:
+			max_agents = 1
+
 	asigned_label.text = 'Assigned Agents (0/%s):' % max_agents
 
 	continue_button.disabled = true
@@ -191,16 +204,7 @@ func _calculate_stats():
 	var charm = 0
 	var subtlety = 0
 	var smarts = 0
-	for agent in selected_agents:
-		charm += agent.char_charm
-		subtlety += agent.char_subtlety
-		smarts += agent.char_smarts
 	
-	charm_label.text = "Charm: %s" % str(charm)
-	
-	subtlety_label.text = "Subtlety: %s" % str(subtlety)
-	smarts_label.text = "Smarts: %s" % str(smarts)
-
 	asigned_label.text = 'Assigned Agents (%s/%s):' % [selected_agents.size(), max_agents]
 	
 	assigned_agents_label.text = ''
@@ -212,7 +216,25 @@ func _calculate_stats():
 		var statistic_check: StatisticCheck = StatisticCheck.new(selected_agents, GameController.poi_for_radial.parent_district, GameController.poi_for_radial)
 		detection_label.text = "Chance of Detection: %s" % str(floor((1 - statistic_check.get_subtlety_chance()) * 100)) + "%"
 
-		print(option)
+		#TODO: Get the duration from the action
+		duration_label.text = "Duration: %s Turns" % str(statistic_check.action_duration(1))
+
+		var stats = statistic_check.stats
+		charm = stats.charm
+		subtlety = stats.subtlety
+		smarts = stats.smarts
+
+		if selected_agents.size() > 1:
+			var modifiers = statistic_check.get_team_modifiers()
+			modifiers_label.text = "Team Modifiers:"
+			modifiers_label.text += "\nComplementarity: %s" % modifiers.complementarity.effect
+			for stat in modifiers.complementarity.stat_changes:
+				modifiers_label.text += "\n%s: %s" % [stat, modifiers.complementarity.stat_changes[stat]]
+			modifiers_label.text += "\nOverspecialization: %s" % modifiers.overspecialization.effect
+			for stat in modifiers.overspecialization.stat_changes:
+				modifiers_label.text += "\n%s: %s" % [stat, modifiers.overspecialization.stat_changes[stat]]
+		else:
+			modifiers_label.text = ""
 
 		match option:
 			Enums.ActionType.PROPAGANDA:
@@ -234,3 +256,9 @@ func _calculate_stats():
 	else:
 		detection_label.text = "Chance of Detection: 0%"
 		success_label.text = "Chance of Success: 0%"
+		modifiers_label.text = ""
+	
+	charm_label.text = "Charm: %s" % str(charm)
+	
+	subtlety_label.text = "Subtlety: %s" % str(subtlety)
+	smarts_label.text = "Smarts: %s" % str(smarts)

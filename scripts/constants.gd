@@ -98,6 +98,27 @@ var DISTRICT_HEAT_DECREASE_PER_TURN_MAX: int = 0
 #|==============================|
 #|    Action Effects   |
 #|==============================|
+
+"""
+@brief Maximum number of agents that can be assigned to a surveillance action
+"""
+var ACTION_SURVEILLANCE_MAX_AGENTS: int = 1
+
+"""
+@brief Maximum number of agents that can be assigned to a propaganda action
+"""
+var ACTION_PROPAGANDA_MAX_AGENTS: int = 2
+
+"""
+@brief Maximum number of agents that can be assigned to an espionage action
+"""
+var ACTION_ESPIONAGE_MAX_AGENTS: int = 3
+
+"""
+@brief Maximum number of agents that can be assigned to a plan action (also includes endgame plans)
+"""
+var ACTION_PLAN_MAX_AGENTS: int = 5
+
 """
 @brief Minimum amount of heat added to a district when an action fails
 """
@@ -240,7 +261,6 @@ var FAILURE_HEAT_MOD_NONE: float = 0.5
 var FAILURE_HEAT_MOD_INJURED: float = 0.1
 var FAILURE_HEAT_MOD_MIA: float = 0.1
 var FAILURE_HEAT_MOD_DECEASED: float = 0.1
-
 
 
 #|==============================|
@@ -468,7 +488,7 @@ var WORLD_EVENT_MINOR_AIRBASE_DURATION: int = 7
 var WORLD_EVENT_MINOR_AIRBASE_HEAT_CHANGE: int = 20
 
 """
-@brief Sympathy change from minor informer world events	
+@brief Sympathy change from minor informer world events
 """
 var WORLD_EVENT_MINOR_INFORMER_SYMPATHY_CHANGE: int = -50
 
@@ -609,6 +629,11 @@ func _on_constants_loaded():
 	DISTRICT_HEAT_DECREASE_PER_TURN_MAX = config.get_value("DISTRICT_HEAT_DECREASE_PER_TURN_MAX", DISTRICT_HEAT_DECREASE_PER_TURN_MAX)
 	
 	# Action Effects
+	ACTION_PLAN_MAX_AGENTS = config.get_value("ACTION_PLAN_MAX_AGENTS", ACTION_PLAN_MAX_AGENTS)
+	ACTION_SURVEILLANCE_MAX_AGENTS = config.get_value("ACTION_SURVEILLANCE_MAX_AGENTS", ACTION_SURVEILLANCE_MAX_AGENTS)
+	ACTION_ESPIONAGE_MAX_AGENTS = config.get_value("ACTION_ESPIONAGE_MAX_AGENTS", ACTION_ESPIONAGE_MAX_AGENTS)
+	ACTION_PROPAGANDA_MAX_AGENTS = config.get_value("ACTION_PROPAGANDA_MAX_AGENTS", ACTION_PROPAGANDA_MAX_AGENTS)
+	
 	ACTION_EFFECT_FAILED_SUBTLETY_MIN = config.get_value("ACTION_EFFECT_FAILED_SUBTLETY_MIN", ACTION_EFFECT_FAILED_SUBTLETY_MIN)
 	ACTION_EFFECT_FAILED_SUBTLETY_MAX = config.get_value("ACTION_EFFECT_FAILED_SUBTLETY_MAX", ACTION_EFFECT_FAILED_SUBTLETY_MAX)
 	ACTION_EFFECT_SUCCESS_SUBTLETY_MIN = config.get_value("ACTION_EFFECT_SUCCESS_SUBTLETY_MIN", ACTION_EFFECT_SUCCESS_SUBTLETY_MIN)
