@@ -28,6 +28,11 @@ extends Camera2D
 """
 @export var max_offset_y: float = 1300.0
 
+"""
+@brief Movement speed for keyboard controls (WASD)
+"""
+@export var keyboard_speed: float = 1500.0
+
 #|==============================|
 #|         Properties          |
 #|==============================|
@@ -98,6 +103,27 @@ Handles mouse-based camera movement and district focusing.
 func _process(delta):
 	queue_redraw() # Ensure continuous redrawing
 	
+	# Handle keyboard movement (WASD)
+	if camera_enabled:
+		var movement = Vector2.ZERO
+		if Input.is_action_pressed("ui_up") or Input.is_key_pressed(KEY_W):
+			movement.y -= 1
+		if Input.is_action_pressed("ui_down") or Input.is_key_pressed(KEY_S):
+			movement.y += 1
+		if Input.is_action_pressed("ui_left") or Input.is_key_pressed(KEY_A):
+			movement.x -= 1
+		if Input.is_action_pressed("ui_right") or Input.is_key_pressed(KEY_D):
+			movement.x += 1
+			
+		# Apply movement if any keys are pressed
+		if movement != Vector2.ZERO:
+			movement = movement.normalized() * keyboard_speed * delta
+			position += movement
+			
+			# Clamp the position within the maximum offsets
+			position.x = clamp(position.x, initial_position.x - max_offset_x, initial_position.x + max_offset_x)
+			position.y = clamp(position.y, initial_position.y - max_offset_y, initial_position.y + max_offset_y)
+	
 	# Check if the right mouse button is held down
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_MIDDLE) or Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
 		if WindowHandler.any_windows_open():
@@ -161,34 +187,3 @@ func _process(delta):
 	if current_zoom != initial_zoom:
 		current_zoom = current_zoom.lerp(initial_zoom, 0.05)
 		self.zoom = current_zoom
-
-# func _draw():
-# 	if debug_draw and !camera_enabled and GameController.district_focused != null:
-# 		# Draw point to focus on
-# 		var point = GameController.district_focused.get_district_centerpoint()
-# 		draw_circle(point - position, 15, Color.RED)
-		
-# 		# Draw district bounds
-# 		var district_size = GameController.district_focused.get_district_size()
-# 		var district_center = GameController.district_focused.get_district_centerpoint()
-# 		var rect_pos = district_center - district_size / 2 - position
-# 		draw_rect(Rect2(rect_pos, district_size), Color.RED, false, 3.0)
-		
-# 		# Draw the actual polygon points in a different color
-# 		var polygon = GameController.district_focused.get_node("CollisionPolygon2D").polygon
-# 		var color = Color.BLUE
-# 		color.a = 0.5 # Make it semi-transparent
-		
-# 		# Draw lines between polygon points
-# 		for i in range(polygon.size()):
-# 			var start = polygon[i] - position
-# 			var end = polygon[(i + 1) % polygon.size()] - position
-# 			draw_line(start, end, color, 3.0)
-			
-# 			# Draw points at each vertex
-# 			draw_circle(start, 5, Color.GREEN)
-# 	else:
-# 		print("Not drawing debug because:")
-# 		print("debug_draw: ", debug_draw)
-# 		print("camera_enabled: ", camera_enabled)
-# 		print("district_focused: ", GameController.district_focused)
