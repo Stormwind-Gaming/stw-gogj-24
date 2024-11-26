@@ -17,7 +17,13 @@ class_name MathHelpers
 @returns Boolean success result, or Dictionary with detailed calculation info if detailed=true
 """
 static func bounded_sigmoid_check(stat: int, detailed: bool = false, bottom_bound: float = 20.0, upper_bound: float = 80.0) -> Variant:
-	# Calculate the sigmoid-based success chance
+	LogDuck.d("Starting bounded sigmoid check", {
+		"stat": stat,
+		"detailed": detailed,
+		"bottom_bound": bottom_bound,
+		"upper_bound": upper_bound
+	})
+	
 	var k = 1.0 # Steepness of the curve
 	var m = 5.0 # Midpoint of the curve
 	var raw_chance = 100 / (1 + exp(-k * (stat - m)))
@@ -30,6 +36,13 @@ static func bounded_sigmoid_check(stat: int, detailed: bool = false, bottom_boun
 	
 	# Determine success
 	var is_success = roll < success_chance
+	
+	LogDuck.d("Sigmoid check calculation complete", {
+		"raw_chance": raw_chance,
+		"scaled_chance": success_chance,
+		"roll": roll,
+		"success": is_success
+	})
 	
 	# Return based on the 'detailed' flag
 	if detailed:
@@ -52,7 +65,12 @@ static func bounded_sigmoid_check(stat: int, detailed: bool = false, bottom_boun
 @returns Float between 0 and 1 representing the probability of success
 """
 static func bounded_sigmoid_probability(stat: int, bottom_bound: float = 20.0, upper_bound: float = 80.0) -> float:
-	# Calculate the sigmoid-based success chance
+	LogDuck.d("Calculating sigmoid probability", {
+		"stat": stat,
+		"bottom_bound": bottom_bound,
+		"upper_bound": upper_bound
+	})
+	
 	var k = 1.0 # Steepness of the curve
 	var m = 5.0 # Midpoint of the curve
 	var raw_chance = 100 / (1 + exp(-k * (stat - m)))
@@ -60,8 +78,15 @@ static func bounded_sigmoid_probability(stat: int, bottom_bound: float = 20.0, u
 	# Scale the raw chance to fit within the bottom and upper bounds
 	var success_chance = bottom_bound + (upper_bound - bottom_bound) * (raw_chance / 100)
 	
-	# Return probability as a value between 0 and 1
-	return success_chance / 100.0
+	var probability = success_chance / 100.0
+	
+	LogDuck.d("Probability calculation complete", {
+		"raw_chance": raw_chance,
+		"success_chance": success_chance,
+		"final_probability": probability
+	})
+	
+	return probability
 
 #|==============================|
 #|      Random Generation      |
@@ -74,7 +99,13 @@ static func bounded_sigmoid_probability(stat: int, bottom_bound: float = 20.0, u
 @returns Random integer between min and max
 """
 static func generate_linear_stat(min: int, max: int) -> int:
-	return randi() % max + min
+	var result = randi() % max + min
+	LogDuck.d("Generated linear stat", {
+		"min": min,
+		"max": max,
+		"result": result
+	})
+	return result
 
 """
 @brief Generates a random integer using a bell curve distribution within a specified range.
@@ -84,14 +115,32 @@ static func generate_linear_stat(min: int, max: int) -> int:
 @returns Random integer between min and max
 """
 static func generate_bell_curve_stat(min: int = 1, max: int = 10) -> int:
+	LogDuck.d("Generating bell curve stat", {
+		"min": min,
+		"max": max
+	})
+	
 	var total = 0
 	for i in range(3):
-		total += randi() % 4 + 1 # Rolls a 4-sided die and adds the result to total
-	total -= 2 # Adjusts the range to produce values between 1 and 10
-
-	# Scale and shift the value to fit within the min and max range
-	var scaled_value = float(total - 1) / (10 - 1) # Normalize to range [0, 1]
-	return int(round(min + scaled_value * (max - min))) # Scale to [min, max] and round
+		var roll = randi() % 4 + 1
+		total += roll
+		LogDuck.d("Bell curve die roll", {
+			"roll_number": i + 1,
+			"roll_value": roll,
+			"running_total": total
+		})
+	
+	total -= 2
+	var scaled_value = float(total - 1) / (10 - 1)
+	var result = int(round(min + scaled_value * (max - min)))
+	
+	LogDuck.d("Bell curve stat generated", {
+		"raw_total": total,
+		"scaled_value": scaled_value,
+		"final_result": result
+	})
+	
+	return result
 
 """
 @brief Scales a base value based on a progress value within a given range.
@@ -117,13 +166,23 @@ static func scale_by_progress(
 	clamp_min: float = -INF,
 	clamp_max: float = INF
 ) -> float:
-	# Normalize progress to 0-1 range
+	LogDuck.d("Scaling value by progress", {
+		"base_value": base_value,
+		"progress": progress,
+		"progress_range": [progress_min, progress_max],
+		"scale_range": [scale_min, scale_max],
+		"clamp_range": [clamp_min, clamp_max]
+	})
+	
 	var normalized_progress = (progress - progress_min) / (progress_max - progress_min)
 	normalized_progress = clamp(normalized_progress, 0.0, 1.0)
-	
-	# Calculate scaling multiplier
 	var scale_multiplier = scale_min + (normalized_progress * (scale_max - scale_min))
+	var result = clamp(base_value * scale_multiplier, clamp_min, clamp_max)
 	
-	# Apply scaling and clamp if needed
-	var result = base_value * scale_multiplier
-	return clamp(result, clamp_min, clamp_max)
+	LogDuck.d("Progress scaling complete", {
+		"normalized_progress": normalized_progress,
+		"scale_multiplier": scale_multiplier,
+		"final_result": result
+	})
+	
+	return result
