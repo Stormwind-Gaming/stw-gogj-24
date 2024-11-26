@@ -242,11 +242,19 @@ func _determine_action_failure_consequence(district_heat: int) -> Dictionary:
 	for state in modified_chances:
 		probabilities[state] = modified_chances[state] / total
 	
+	# Define a specific order for checking consequences
+	var consequence_order = [
+		Enums.CharacterState.DECEASED, # Check most severe first
+		Enums.CharacterState.MIA,
+		Enums.CharacterState.INJURED,
+		Enums.CharacterState.ASSIGNED # Check least severe last
+	]
+	
 	# Roll the dice
 	var roll = randf()
 	var cumulative_probability = 0.0
 	
-	for consequence in probabilities:
+	for consequence in consequence_order:
 		cumulative_probability += probabilities[consequence]
 		if roll < cumulative_probability:
 			return {
