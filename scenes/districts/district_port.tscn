@@ -39,6 +39,7 @@ poi_static_description = "The docks are a lifeline of the district, with ships c
 mission_static_chance = 20
 location_static_chance = 60
 timing_static_chance = 20
+stat_check_type = 2
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi_Docks"]
 polygon = PackedVector2Array(111, 735, 223, 708, 265, 691, 262, 679, 255, 680, 231, 585, 187, 542, 163, 544, 164, 563, 127, 568, 87, 575, 55, 353, 44, 354, 31, 441, 48, 576, -80, 597, -243, 611, -266, 606, -272, 623, -266, 643, -252, 651, -197, 647, -123, 636, -46, 627, -1, 626, 32, 629, 47, 641, 68, 665, 82, 690, 92, 721, 97, 736)

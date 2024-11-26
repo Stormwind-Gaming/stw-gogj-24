@@ -53,6 +53,7 @@ poi_static_description = "The post office manages mail and messages for both civ
 mission_static_chance = 30
 location_static_chance = 10
 timing_static_chance = 60
+stat_check_type = 2
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi_Post_Office"]
 polygon = PackedVector2Array(325, -99, 392, -91, 405, -208, 344, -216)

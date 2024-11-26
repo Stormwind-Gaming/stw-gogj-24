@@ -79,15 +79,13 @@ var parent_district: District
 
 """
 @brief Configuration for rumour generation chances
-#TODO Dynamically change rumour_config for each POI
 """
 var rumour_config: RumourConfig = RumourConfig.new(25, 25, 25)
 
 """
 @brief Type of stat check for this POI
-#TODO Dynamically change stat_check_type for each POI
 """
-var stat_check_type: Enums.StatCheckType = Enums.StatCheckType.SMARTS
+@export var stat_check_type: Enums.StatCheckType = Enums.StatCheckType.SMARTS
 
 """
 @brief The type of this POI

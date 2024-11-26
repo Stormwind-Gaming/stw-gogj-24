@@ -14,6 +14,8 @@ func _process_action() -> Array[TurnLog]:
 	var stat_check: String = ""
 	var success: bool = false
 
+	print("Action requires: ", poi.stat_check_type)
+
 	match poi.stat_check_type:
 		Enums.StatCheckType.SMARTS:
 			stat_check = "smarts"

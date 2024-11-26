@@ -53,6 +53,7 @@ poi_static_description = "The foundry churns out steel and machinery, essential 
 mission_static_chance = 33
 location_static_chance = 34
 timing_static_chance = 33
+stat_check_type = 2
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pois/Poi_Foundry"]
 polygon = PackedVector2Array(527, 724, 537, 749, 560, 782, 539, 809, 505, 807, 427, 836, 400, 774)
