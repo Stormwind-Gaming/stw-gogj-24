@@ -230,7 +230,7 @@ new_heat The new heat value
 @param character The character to update
 """
 func _update_sympathy_value(character: Character) -> void:
-	LogDuck.d("District: Updating sympathy value for character %s" % character.char_name)
+	LogDuck.d("District: Updating sympathy value for character %s" % character.char_full_name)
 	var total_sympathy = 0
 	for p in pois:
 		total_sympathy += p.poi_owner.char_sympathy
