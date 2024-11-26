@@ -84,7 +84,10 @@ var modifiers: Registry = Registry.new()
 Creates the necessary lists in each Registry instance
 """
 func _init():
+	LogDuck.d("Initializing GlobalRegistry")
+	
 	# Initialize character-related lists
+	LogDuck.d("Creating character lists")
 	characters.create_list(LIST_SYMPATHISER_RECRUITED)
 	characters.create_list(LIST_SYMPATHISER_NOT_RECRUITED)
 	characters.create_list(LIST_NON_SYMPATHISER_UNKNOWN)
@@ -92,25 +95,26 @@ func _init():
 	characters.create_list(LIST_DECEASED)
 	characters.create_list(LIST_MIA)
 
-	# Initialize POI-related lists
+	# Initialize other lists with logging
+	LogDuck.d("Creating POI lists")
 	pois.create_list(LIST_ALL_POIS)
 
-	# Initialize district-related lists
+	LogDuck.d("Creating district lists")
 	districts.create_list(LIST_ALL_DISTRICTS)
 
-	# Initialize intel-related lists
+	LogDuck.d("Creating intel lists")
 	intel.create_list(LIST_RUMOURS)
 	intel.create_list(LIST_PLANS)
 
-	# Initialize action-related lists
+	LogDuck.d("Creating action lists")
 	actions.create_list(LIST_ALL_ACTIONS)
 
-	# Initialize world-event-related lists
+	LogDuck.d("Creating world event lists")
 	world_events.create_list(LIST_WORLD_EVENTS)
 
+	LogDuck.d("Creating modifier lists")
 	modifiers.create_list(LIST_DISTRICT_MODIFIERS)
 	modifiers.create_list(LIST_GLOBAL_MODIFIERS)
-
 
 func _ready():
 	# Character events
@@ -141,36 +145,46 @@ func _ready():
 @brief Resets all registry lists
 """
 func reset() -> void:
+	LogDuck.d("Resetting GlobalRegistry")
+	
 	# Free all objects before clearing lists
+	LogDuck.d("Freeing district objects", {"count": districts.get_all_items().size()})
 	for district in districts.get_all_items():
 		if is_instance_valid(district):
 			district.queue_free()
 	
+	LogDuck.d("Freeing character objects", {"count": characters.get_all_items().size()})
 	for character in characters.get_all_items():
 		if is_instance_valid(character):
 			character.queue_free()
 	
+	LogDuck.d("Freeing POI objects", {"count": pois.get_all_items().size()})
 	for poi in pois.get_all_items():
 		if is_instance_valid(poi):
 			poi.queue_free()
 	
+	LogDuck.d("Freeing intel objects", {"count": intel.get_all_items().size()})
 	for intel_item in intel.get_all_items():
 		if is_instance_valid(intel_item):
 			intel_item.queue_free()
 	
+	LogDuck.d("Freeing action objects", {"count": actions.get_all_items().size()})
 	for action in actions.get_all_items():
 		if is_instance_valid(action):
 			action.queue_free()
 	
+	LogDuck.d("Freeing world event objects", {"count": world_events.get_all_items().size()})
 	for world_event in world_events.get_all_items():
 		if is_instance_valid(world_event):
 			world_event.queue_free()
 	
+	LogDuck.d("Freeing modifier objects", {"count": modifiers.get_all_items().size()})
 	for modifier in modifiers.get_all_items():
 		if is_instance_valid(modifier):
 			modifier.queue_free()
 
-	# Now clear the lists
+	# Clear the lists
+	LogDuck.d("Clearing all registry lists")
 	characters.clear_all()
 	pois.clear_all()
 	districts.clear_all()
@@ -190,6 +204,10 @@ func reset() -> void:
 """
 func _on_character_created(character: Character) -> void:
 	var target_list_name = _get_character_list(character)
+	LogDuck.d("Adding character to registry", {
+		"character": character.get_full_name(),
+		"list": target_list_name
+	})
 	characters.add_item(target_list_name, character)
 
 
@@ -201,6 +219,12 @@ func _on_character_created(character: Character) -> void:
 func _on_character_changed(character: Character) -> void:
 	if (characters.get_all_items().has(character)):
 		var target_list_name = _get_character_list(character)
+		LogDuck.d("Moving character to new list", {
+			"character": character.get_full_name(),
+			"new_list": target_list_name,
+			"state": character.char_state,
+			"recruitment_state": character.char_recruitment_state
+		})
 		characters.move_item(target_list_name, character)
 
 """
@@ -238,6 +262,7 @@ func _get_character_list(character: Character) -> String:
 @param poi The POI to add to the registry
 """
 func _on_poi_created(poi: PointOfInterest) -> void:
+	LogDuck.d("Adding POI to registry", {"poi": poi.poi_name})
 	pois.add_item(LIST_ALL_POIS, poi)
 
 #|==============================|
@@ -249,6 +274,7 @@ func _on_poi_created(poi: PointOfInterest) -> void:
 @param rumour The rumour to add to the registry
 """
 func _on_rumour_created(rumour: Rumour) -> void:
+	LogDuck.d("Adding rumour to registry", {"text": rumour.rumour_text})
 	intel.add_item(LIST_RUMOURS, rumour)
 
 """
@@ -257,6 +283,7 @@ func _on_rumour_created(rumour: Rumour) -> void:
 @param plan The plan to add to the registry
 """
 func _on_plan_created(plan: Plan) -> void:
+	LogDuck.d("Adding plan to registry", {"text": plan.plan_text})
 	intel.add_item(LIST_PLANS, plan)
 
 #|==============================|
@@ -268,6 +295,7 @@ func _on_plan_created(plan: Plan) -> void:
 @param action The action to add to the registry
 """
 func _on_action_created(action: BaseAction) -> void:
+	LogDuck.d("Adding action to registry", {"action": action.action_name})
 	actions.add_item(LIST_ALL_ACTIONS, action)
 
 #|==============================|
@@ -279,6 +307,7 @@ func _on_action_created(action: BaseAction) -> void:
 @param district The district to add to the registry
 """
 func _on_district_created(district: District) -> void:
+	LogDuck.d("Adding district to registry", {"district": district.district_name})
 	districts.add_item(LIST_ALL_DISTRICTS, district)
 
 #|==============================|
@@ -290,7 +319,7 @@ func _on_district_created(district: District) -> void:
 @param world_event The world-event to add to the registry
 """
 func _on_world_event_created(world_event: WorldEvent) -> void:
-	print("Adding world event to registry")
+	LogDuck.d("Adding world event to registry", {"event_text": world_event.event_text})
 	world_events.add_item(LIST_WORLD_EVENTS, world_event)
 
 #|==============================|
@@ -302,7 +331,10 @@ func _on_world_event_created(world_event: WorldEvent) -> void:
 @param modifier The modifier to add to the registry
 """
 func _on_modifier_created(modifier: Modifier) -> void:
-	if modifier.scope == Enums.ModifierScope.DISTRICT:
-		modifiers.add_item(LIST_DISTRICT_MODIFIERS, modifier)
-	else:
-		modifiers.add_item(LIST_GLOBAL_MODIFIERS, modifier)
+	var list_name = LIST_DISTRICT_MODIFIERS if modifier.scope == Enums.ModifierScope.DISTRICT else LIST_GLOBAL_MODIFIERS
+	LogDuck.d("Adding modifier to registry", {
+		"name": modifier.modifier_name,
+		"scope": modifier.scope,
+		"list": list_name
+	})
+	modifiers.add_item(list_name, modifier)
