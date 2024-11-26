@@ -35,6 +35,9 @@ func _process_action() -> Array[TurnLog]:
 			log_message = "No effect for plan"
 			logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
 
+	# emit stats change
+	EventBus.stat_created.emit("missions", true)
+
 	return logs
 
 """
@@ -44,27 +47,13 @@ func _build_sympathy() -> Array[TurnLog]:
 	var logs: Array[TurnLog] = []
 	var log_message: String = ""
 
-	# Get cumulative stats for all characters involved
-	var stats: Dictionary = _get_stats()
+	var base_sympathy_added: int = MathHelpers.generateBellCurveStat(Constants.ACTION_EFFECT_PLAN_BUILD_SYMPATHY_MIN, Constants.ACTION_EFFECT_PLAN_BUILD_SYMPATHY_MAX)
+	var sympathy_added: int = base_sympathy_added
 
-	var charm_roll = MathHelpers.bounded_sigmoid_check(stats["charm"], true, Constants.CHARM_CHECK_MIN_CHANCE, Constants.CHARM_CHECK_MAX_CHANCE)
-		
-	if (charm_roll.success):
-		var base_sympathy_added: int = MathHelpers.generateBellCurveStat(Constants.ACTION_EFFECT_PLAN_BUILD_SYMPATHY_MIN, Constants.ACTION_EFFECT_PLAN_BUILD_SYMPATHY_MAX)
-		# var sympathy_added: int = StatisticModification.sympathy_modification(base_sympathy_added, poi.parent_district.district_type)
-		var sympathy_added: int = base_sympathy_added
+	associated_plan.plan_subject_character.char_sympathy += sympathy_added
 
-		log_message = "Succeeded charm check..."
-		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
-
-		associated_plan.plan_subject_character.char_sympathy += sympathy_added
-
-		log_message = associated_plan.plan_subject_character.char_full_name + " sympathy increased by " + str(sympathy_added)
-		logs.append(TurnLog.new(log_message, Enums.LogType.SUCCESS))
-
-	else:
-		log_message = "Failed charm check..."
-		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
+	log_message = associated_plan.plan_subject_character.char_full_name + " sympathy increased by " + str(sympathy_added)
+	logs.append(TurnLog.new(log_message, Enums.LogType.SUCCESS))
 
 	return logs
 
@@ -75,28 +64,14 @@ func _build_sympathy_all() -> Array[TurnLog]:
 	var logs: Array[TurnLog] = []
 	var log_message: String = ""
 
-	# Get cumulative stats for all characters involved
-	var stats: Dictionary = _get_stats()
+	for my_poi in GlobalRegistry.poi.find_all_items(GlobalRegistry.LIST_ALL_POIS, "parent_district", poi.parent_district):
+		var base_sympathy_added: int = MathHelpers.generateBellCurveStat(Constants.ACTION_EFFECT_PLAN_BUILD_SYMPATHY_ALL_MIN, Constants.ACTION_EFFECT_PLAN_BUILD_SYMPATHY_ALL_MAX)
+		var sympathy_added: int = base_sympathy_added
 
-	var charm_roll = MathHelpers.bounded_sigmoid_check(stats["charm"], true, Constants.CHARM_CHECK_MIN_CHANCE, Constants.CHARM_CHECK_MAX_CHANCE)
-		
-	if (charm_roll.success):
-		log_message = "Succeeded charm check..."
-		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
+		my_poi.poi_owner.char_sympathy += sympathy_added
 
-		for my_poi in GlobalRegistry.poi.find_all_items(GlobalRegistry.LIST_ALL_POIS, "parent_district", poi.parent_district):
-			var base_sympathy_added: int = MathHelpers.generateBellCurveStat(Constants.ACTION_EFFECT_PLAN_BUILD_SYMPATHY_ALL_MIN, Constants.ACTION_EFFECT_PLAN_BUILD_SYMPATHY_ALL_MAX)
-			# var sympathy_added: int = StatisticModification.sympathy_modification(base_sympathy_added, poi.parent_district.district_type)
-			var sympathy_added: int = base_sympathy_added
-
-			my_poi.poi_owner.char_sympathy += sympathy_added
-
-			log_message = my_poi.poi_owner.char_full_name + " sympathy increased by " + str(sympathy_added)
-			logs.append(TurnLog.new(log_message, Enums.LogType.SUCCESS))
-
-	else:
-		log_message = "Failed charm check..."
-		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
+		log_message = my_poi.poi_owner.char_full_name + " sympathy increased by " + str(sympathy_added)
+		logs.append(TurnLog.new(log_message, Enums.LogType.SUCCESS))
 
 	return logs
 
@@ -107,24 +82,11 @@ func _discover_all() -> Array[TurnLog]:
 	var logs: Array[TurnLog] = []
 	var log_message: String = ""
 
-	# Get cumulative stats for all characters involved
-	var stats: Dictionary = _get_stats()
+	for my_poi in GlobalRegistry.pois.find_all_items(GlobalRegistry.LIST_ALL_POIS, "parent_district", poi.parent_district):
+		my_poi.poi_owner.char_recruitment_state = Enums.CharacterRecruitmentState.NON_SYMPATHISER_KNOWN
 
-	var smarts_roll = MathHelpers.bounded_sigmoid_check(stats["smarts"], true, Constants.SMARTS_CHECK_MIN_CHANCE, Constants.SMARTS_CHECK_MAX_CHANCE)
-		
-	if (smarts_roll.success):
-		log_message = "Succeeded smarts check..."
-		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
-
-		for my_poi in GlobalRegistry.poi.find_all_items(GlobalRegistry.LIST_ALL_POIS, "parent_district", poi.parent_district):
-			my_poi.poi_owner.char_recruitment_state = Enums.CharacterRecruitmentState.NON_SYMPATHISER_KNOWN
-
-			log_message = my_poi.poi_owner.char_full_name + " is now known to us"
-			logs.append(TurnLog.new(log_message, Enums.LogType.SUCCESS))
-
-	else:
-		log_message = "Failed smarts check..."
-		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
+		log_message = my_poi.poi_owner.char_full_name + " is now known to us"
+		logs.append(TurnLog.new(log_message, Enums.LogType.SUCCESS))
 
 	return logs
 
@@ -135,32 +97,10 @@ func _add_agent_slot() -> Array[TurnLog]:
 	var logs: Array[TurnLog] = []
 	var log_message: String = ""
 
-	# Get cumulative stats for all characters involved
-	var stats: Dictionary = _get_stats()
+	GameController.max_agents += 1
 
-	var smarts_roll = MathHelpers.bounded_sigmoid_check(stats["smarts"], true, Constants.SMARTS_CHECK_MIN_CHANCE, Constants.SMARTS_CHECK_MAX_CHANCE)
-
-	# emit stats change
-	EventBus.stat_created.emit("smarts", smarts_roll.success)
-		
-	if (smarts_roll.success):
-		log_message = "Succeeded smarts check..."
-		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
-
-		GameController.max_agents += 1
-
-		log_message = "Max agents increased by 1"
-		logs.append(TurnLog.new(log_message, Enums.LogType.SUCCESS))
-
-	else:
-		log_message = "Failed smarts check..."
-		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
-
-
-	# emit stats change
-	EventBus.stat_created.emit("surveillance", smarts_roll.success)
-	# emit stats change
-	EventBus.stat_created.emit("missions", smarts_roll.success)
+	log_message = "Max agents increased by 1"
+	logs.append(TurnLog.new(log_message, Enums.LogType.SUCCESS))
 
 	return logs
 
@@ -171,24 +111,11 @@ func _rescue_agent() -> Array[TurnLog]:
 	var logs: Array[TurnLog] = []
 	var log_message: String = ""
 
-	# Get cumulative stats for all characters involved
-	var stats: Dictionary = _get_stats()
+	associated_plan.plan_subject_character.char_state = Enums.CharacterState.AVAILABLE
+	associated_plan.plan_subject_character.char_recruitment_state = Enums.CharacterRecruitmentState.NON_SYMPATHISER_KNOWN
 
-	var smarts_roll = MathHelpers.bounded_sigmoid_check(stats["smarts"], true, Constants.SMARTS_CHECK_MIN_CHANCE, Constants.SMARTS_CHECK_MAX_CHANCE)
-		
-	if (smarts_roll.success):
-		log_message = "Succeeded smarts check..."
-		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
-
-		associated_plan.plan_subject_character.char_state = Enums.CharacterState.AVAILABLE
-		associated_plan.plan_subject_character.char_recruitment_state = Enums.CharacterRecruitmentState.NON_SYMPATHISER_KNOWN
-
-		log_message = associated_plan.plan_subject_character.char_full_name + " has been rescued"
-		logs.append(TurnLog.new(log_message, Enums.LogType.SUCCESS))
-
-	else:
-		log_message = "Failed smarts check..."
-		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
+	log_message = associated_plan.plan_subject_character.char_full_name + " has been rescued"
+	logs.append(TurnLog.new(log_message, Enums.LogType.SUCCESS))
 
 	return logs
 
@@ -199,24 +126,11 @@ func _wildcard_intel() -> Array[TurnLog]:
 	var logs: Array[TurnLog] = []
 	var log_message: String = ""
 
-	# Get cumulative stats for all characters involved
-	var stats: Dictionary = _get_stats()
+	for i in range(0, 4):
+		IntelFactory.create_rumour(RumourConfig.new(33, 33, 33))
 
-	var smarts_roll = MathHelpers.bounded_sigmoid_check(stats["smarts"], true, Constants.SMARTS_CHECK_MIN_CHANCE, Constants.SMARTS_CHECK_MAX_CHANCE)
-		
-	if (smarts_roll.success):
-		log_message = "Succeeded smarts check..."
-		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
-
-		for i in range(0, 4):
-			IntelFactory.create_rumour(RumourConfig.new(33, 33, 33))
-
-		log_message = "Added 4 rumours"
-		logs.append(TurnLog.new(log_message, Enums.LogType.SUCCESS))
-
-	else:
-		log_message = "Failed smarts check..."
-		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
+	log_message = "Added 4 rumours"
+	logs.append(TurnLog.new(log_message, Enums.LogType.SUCCESS))
 
 	return logs
 
@@ -228,25 +142,12 @@ func _reduce_heat() -> Array[TurnLog]:
 	var logs: Array[TurnLog] = []
 	var log_message: String = ""
 
-	# Get cumulative stats for all characters involved
-	var stats: Dictionary = _get_stats()
+	var base_heat_reduced: int = MathHelpers.generateBellCurveStat(Constants.ACTION_EFFECT_PLAN_REDUCE_HEAT_MIN, Constants.ACTION_EFFECT_PLAN_REDUCE_HEAT_MAX)
 
-	var smarts_roll = MathHelpers.bounded_sigmoid_check(stats["smarts"], true, Constants.SMARTS_CHECK_MIN_CHANCE, Constants.SMARTS_CHECK_MAX_CHANCE)
-		
-	if (smarts_roll.success):
-		log_message = "Succeeded smarts check..."
-		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
+	poi.parent_district.heat -= base_heat_reduced
 
-		var base_heat_reduced: int = MathHelpers.generateBellCurveStat(Constants.ACTION_EFFECT_PLAN_REDUCE_HEAT_MIN, Constants.ACTION_EFFECT_PLAN_REDUCE_HEAT_MAX)
-
-		poi.parent_district.heat -= base_heat_reduced
-
-		log_message = poi.parent_district.district_name + " heat reduced by " + str(base_heat_reduced)
-		logs.append(TurnLog.new(log_message, Enums.LogType.SUCCESS))
-
-	else:
-		log_message = "Failed smarts check..."
-		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
+	log_message = poi.parent_district.district_name + " heat reduced by " + str(base_heat_reduced)
+	logs.append(TurnLog.new(log_message, Enums.LogType.SUCCESS))
 
 	return logs
 
@@ -257,25 +158,12 @@ func _reduce_heat_all() -> Array[TurnLog]:
 	var logs: Array[TurnLog] = []
 	var log_message: String = ""
 
-	# Get cumulative stats for all characters involved
-	var stats: Dictionary = _get_stats()
+	for district in GlobalRegistry.districts.get_all_items():
+		var base_heat_reduced: int = MathHelpers.generateBellCurveStat(Constants.ACTION_EFFECT_PLAN_REDUCE_HEAT_ALL_MIN, Constants.ACTION_EFFECT_PLAN_REDUCE_HEAT_ALL_MAX)
 
-	var smarts_roll = MathHelpers.bounded_sigmoid_check(stats["smarts"], true, Constants.SMARTS_CHECK_MIN_CHANCE, Constants.SMARTS_CHECK_MAX_CHANCE)
-		
-	if (smarts_roll.success):
-		log_message = "Succeeded smarts check..."
-		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
+		district.heat -= base_heat_reduced
 
-		for district in GlobalRegistry.districts.get_all_items():
-			var base_heat_reduced: int = MathHelpers.generateBellCurveStat(Constants.ACTION_EFFECT_PLAN_REDUCE_HEAT_ALL_MIN, Constants.ACTION_EFFECT_PLAN_REDUCE_HEAT_ALL_MAX)
-
-			district.heat -= base_heat_reduced
-
-			log_message = district.district_name + " heat reduced by " + str(base_heat_reduced)
-			logs.append(TurnLog.new(log_message, Enums.LogType.SUCCESS))
-
-	else:
-		log_message = "Failed smarts check..."
-		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
+		log_message = district.district_name + " heat reduced by " + str(base_heat_reduced)
+		logs.append(TurnLog.new(log_message, Enums.LogType.SUCCESS))
 
 	return logs

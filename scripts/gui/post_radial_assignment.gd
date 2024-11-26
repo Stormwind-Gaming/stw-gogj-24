@@ -216,8 +216,14 @@ func _calculate_stats():
 		var statistic_check: StatisticCheck = StatisticCheck.new(selected_agents, GameController.poi_for_radial.parent_district, GameController.poi_for_radial)
 		detection_label.text = "Chance of Detection: %s" % str(floor((1 - statistic_check.get_subtlety_chance()) * 100)) + "%"
 
-		#TODO: Get the duration from the action
-		duration_label.text = "Duration: %s Turns" % str(statistic_check.action_duration(1))
+		if option == Enums.ActionType.PLAN:
+			# get the plan
+			var plan: Plan = GlobalRegistry.intel.find_item(GlobalRegistry.LIST_PLANS, "plan_subject_poi", GameController.poi_for_radial)
+
+			duration_label.text = "Duration: %s Turns" % str(statistic_check.action_duration(plan.plan_duration))
+		else:
+			duration_label.text = "Duration: %s Turns" % str(statistic_check.action_duration(1))
+
 
 		var stats = statistic_check.stats
 		charm = stats.charm
@@ -251,7 +257,7 @@ func _calculate_stats():
 			_:
 				# TODO: Calculate which stat is going to be checked for the plan action
 			# Enums.ActionType.PLAN:
-				success_label.text = ""
+				success_label.text = "Chance of Success: 100%"
 
 	else:
 		detection_label.text = "Chance of Detection: 0%"

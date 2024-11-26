@@ -70,9 +70,8 @@ func _init(config: ActionFactory.ActionConfig):
 	if additional_info.has("associated_plan"):
 		self.associated_plan = config.additional_info["associated_plan"]
 
-		# turn_to_end = GameController.turn_number + StatisticModification.mission_duration_modification(self.associated_plan.plan_duration, poi.parent_district.district_type)
 		# TODO: should this be the plan duration?
-		turn_to_end = GameController.turn_number
+		turn_to_end = GameController.turn_number + statistic_check.action_duration(self.associated_plan.plan_duration)
 
 	EventBus.turn_processing_initiated.connect(_on_turn_processing_initiated)
 	EventBus.end_turn_complete.connect(_on_end_turn_completed)
