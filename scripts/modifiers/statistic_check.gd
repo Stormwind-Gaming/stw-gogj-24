@@ -106,7 +106,7 @@ func sympathy_added(min_value: int, max_value: int) -> int:
 	print("--- SYMPATHY ADDED ---")
 	print("Base range: ", min_value, " ", max_value)
 
-	var base_sympathy_added: int = MathHelpers.generateBellCurveStat(min_value, max_value)
+	var base_sympathy_added: int = MathHelpers.generate_bell_curve_stat(min_value, max_value)
 	print("Base value: ", base_sympathy_added)
 
 	for modifier in modifiers:
@@ -121,7 +121,7 @@ func heat_added(min_value: int, max_value: int) -> int:
 	print("--- HEAT ADDED ---")
 	print("Base range: ", min_value, " ", max_value)
 
-	var base_heat_added: int = MathHelpers.generateBellCurveStat(min_value, max_value)
+	var base_heat_added: int = MathHelpers.generate_bell_curve_stat(min_value, max_value)
 	print("Base value: ", base_heat_added)
 
 	for modifier in modifiers:

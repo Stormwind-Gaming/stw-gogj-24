@@ -47,7 +47,7 @@ func _build_sympathy() -> Array[TurnLog]:
 	var logs: Array[TurnLog] = []
 	var log_message: String = ""
 
-	var base_sympathy_added: int = MathHelpers.generateBellCurveStat(Constants.ACTION_EFFECT_PLAN_BUILD_SYMPATHY_MIN, Constants.ACTION_EFFECT_PLAN_BUILD_SYMPATHY_MAX)
+	var base_sympathy_added: int = MathHelpers.generate_bell_curve_stat(Constants.ACTION_EFFECT_PLAN_BUILD_SYMPATHY_MIN, Constants.ACTION_EFFECT_PLAN_BUILD_SYMPATHY_MAX)
 	var sympathy_added: int = base_sympathy_added
 
 	associated_plan.plan_subject_character.char_sympathy += sympathy_added
@@ -65,7 +65,7 @@ func _build_sympathy_all() -> Array[TurnLog]:
 	var log_message: String = ""
 
 	for my_poi in GlobalRegistry.poi.find_all_items(GlobalRegistry.LIST_ALL_POIS, "parent_district", poi.parent_district):
-		var base_sympathy_added: int = MathHelpers.generateBellCurveStat(Constants.ACTION_EFFECT_PLAN_BUILD_SYMPATHY_ALL_MIN, Constants.ACTION_EFFECT_PLAN_BUILD_SYMPATHY_ALL_MAX)
+		var base_sympathy_added: int = MathHelpers.generate_bell_curve_stat(Constants.ACTION_EFFECT_PLAN_BUILD_SYMPATHY_ALL_MIN, Constants.ACTION_EFFECT_PLAN_BUILD_SYMPATHY_ALL_MAX)
 		var sympathy_added: int = base_sympathy_added
 
 		my_poi.poi_owner.char_sympathy += sympathy_added
@@ -142,7 +142,7 @@ func _reduce_heat() -> Array[TurnLog]:
 	var logs: Array[TurnLog] = []
 	var log_message: String = ""
 
-	var base_heat_reduced: int = MathHelpers.generateBellCurveStat(Constants.ACTION_EFFECT_PLAN_REDUCE_HEAT_MIN, Constants.ACTION_EFFECT_PLAN_REDUCE_HEAT_MAX)
+	var base_heat_reduced: int = MathHelpers.generate_bell_curve_stat(Constants.ACTION_EFFECT_PLAN_REDUCE_HEAT_MIN, Constants.ACTION_EFFECT_PLAN_REDUCE_HEAT_MAX)
 
 	poi.parent_district.heat -= base_heat_reduced
 
@@ -159,7 +159,7 @@ func _reduce_heat_all() -> Array[TurnLog]:
 	var log_message: String = ""
 
 	for district in GlobalRegistry.districts.get_all_items():
-		var base_heat_reduced: int = MathHelpers.generateBellCurveStat(Constants.ACTION_EFFECT_PLAN_REDUCE_HEAT_ALL_MIN, Constants.ACTION_EFFECT_PLAN_REDUCE_HEAT_ALL_MAX)
+		var base_heat_reduced: int = MathHelpers.generate_bell_curve_stat(Constants.ACTION_EFFECT_PLAN_REDUCE_HEAT_ALL_MIN, Constants.ACTION_EFFECT_PLAN_REDUCE_HEAT_ALL_MAX)
 
 		district.heat -= base_heat_reduced
 

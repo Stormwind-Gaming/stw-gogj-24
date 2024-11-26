@@ -207,7 +207,7 @@ func process_turn() -> void:
 	# Decrease the heat for each district where there are no actions
 	for district in GlobalRegistry.districts.get_all_items():
 		if not districts_with_actions.has(district):
-			var reduction: int = MathHelpers.generateBellCurveStat(Constants.DISTRICT_HEAT_DECREASE_PER_TURN_MIN, Constants.DISTRICT_HEAT_DECREASE_PER_TURN_MAX)
+			var reduction: int = MathHelpers.generate_bell_curve_stat(Constants.DISTRICT_HEAT_DECREASE_PER_TURN_MIN, Constants.DISTRICT_HEAT_DECREASE_PER_TURN_MAX)
 			district.heat -= reduction
 
 			if (reduction > 0):

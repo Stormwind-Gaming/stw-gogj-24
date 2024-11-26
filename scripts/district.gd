@@ -104,7 +104,7 @@ func _ready() -> void:
 	_setup_modifiers()
 
 	# set heat random between min and max
-	heat = MathHelpers.generateBellCurveStat(Constants.DISTRICT_INIT_HEAT_MIN, Constants.DISTRICT_INIT_HEAT_MAX)
+	heat = MathHelpers.generate_bell_curve_stat(Constants.DISTRICT_INIT_HEAT_MIN, Constants.DISTRICT_INIT_HEAT_MAX)
 
 	# set heat color alpha based on heat between 0 and 0.5
 	heat_color.a = float(heat) / 200.0

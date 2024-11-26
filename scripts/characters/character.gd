@@ -60,12 +60,12 @@ func _init(profile: Dictionary):
 	char_state = Enums.CharacterState.AVAILABLE
 
 	# Generate stats
-	char_charm = MathHelpers.generateBellCurveStat(Constants.CHARACTER_INIT_CHARM_MIN, Constants.CHARACTER_INIT_CHARM_MAX)
-	char_subtlety = MathHelpers.generateBellCurveStat(Constants.CHARACTER_INIT_SUBTLETY_MIN, Constants.CHARACTER_INIT_SUBTLETY_MAX)
-	char_smarts = MathHelpers.generateBellCurveStat(Constants.CHARACTER_INIT_SMARTS_MIN, Constants.CHARACTER_INIT_SMARTS_MAX)
+	char_charm = MathHelpers.generate_bell_curve_stat(Constants.CHARACTER_INIT_CHARM_MIN, Constants.CHARACTER_INIT_CHARM_MAX)
+	char_subtlety = MathHelpers.generate_bell_curve_stat(Constants.CHARACTER_INIT_SUBTLETY_MIN, Constants.CHARACTER_INIT_SUBTLETY_MAX)
+	char_smarts = MathHelpers.generate_bell_curve_stat(Constants.CHARACTER_INIT_SMARTS_MIN, Constants.CHARACTER_INIT_SMARTS_MAX)
 
 	# Generate sympathy
-	char_sympathy = MathHelpers.generateBellCurveStat(Constants.CHARACTER_INIT_SYMPATHY_MIN, Constants.CHARACTER_INIT_SYMPATHY_MAX)
+	char_sympathy = MathHelpers.generate_bell_curve_stat(Constants.CHARACTER_INIT_SYMPATHY_MIN, Constants.CHARACTER_INIT_SYMPATHY_MAX)
 
 	# Register the character
 	EventBus.character_created.emit(self)

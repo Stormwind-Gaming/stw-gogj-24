@@ -73,7 +73,7 @@ static func bounded_sigmoid_probability(stat: int, bottom_bound: float = 20.0, u
 @param max Maximum possible value
 @returns Random integer between min and max
 """
-static func generateLinearStat(min: int, max: int) -> int:
+static func generate_linear_stat(min: int, max: int) -> int:
 	return randi() % max + min
 
 """
@@ -83,7 +83,7 @@ static func generateLinearStat(min: int, max: int) -> int:
 @param max Maximum possible value (default: 10)
 @returns Random integer between min and max
 """
-static func generateBellCurveStat(min: int = 1, max: int = 10) -> int:
+static func generate_bell_curve_stat(min: int = 1, max: int = 10) -> int:
 	var total = 0
 	for i in range(3):
 		total += randi() % 4 + 1 # Rolls a 4-sided die and adds the result to total
