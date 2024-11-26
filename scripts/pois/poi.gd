@@ -437,7 +437,7 @@ Updates POI state based on whether its district is focused.
 """
 func _on_district_just_focused(district: District) -> void:
 	LogDuck.d("District focus changed", {
-		"district": district.district_name,
+		# "district": district.district_name, #TODO: There's a bug here, why is district null?
 		"is_parent": district == parent_district
 	})
 	
