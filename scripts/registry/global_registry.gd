@@ -295,7 +295,7 @@ func _on_plan_created(plan: Plan) -> void:
 @param action The action to add to the registry
 """
 func _on_action_created(action: BaseAction) -> void:
-	LogDuck.d("Adding action to registry", {"action": action.action_name})
+	LogDuck.d("Adding action to registry", {"action": action}) # TODO: Add a human identifier to the action, maybe the ActionType?
 	actions.add_item(LIST_ALL_ACTIONS, action)
 
 #|==============================|

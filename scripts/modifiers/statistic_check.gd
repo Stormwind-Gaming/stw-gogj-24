@@ -60,10 +60,11 @@ func subtlety_check() -> bool:
 	)
 
 	LogDuck.d("Subtlety check complete", {
-		"final_value": subtlety_check_value,
 		"success": subtlety_roll.success,
-		"roll": subtlety_roll.roll,
-		"probability": subtlety_roll.probability
+		"stat": subtlety_check_value,
+		"raw_chance": subtlety_roll.raw_chance,
+		"success_chance": subtlety_roll.success_chance,
+		"roll": subtlety_roll.roll
 	})
 
 	EventBus.stat_created.emit("subtlety", subtlety_roll.success)
