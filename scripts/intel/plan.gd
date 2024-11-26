@@ -77,7 +77,15 @@ Sets up initial values and registers with the global registry.
 """
 func _init(properties: PlanProperties):
 	super()
-	print('Plan init')
+	LogDuck.d("Initializing new plan", {
+		"name": properties.plan_name,
+		"duration": properties.plan_duration,
+		"expiry": properties.plan_expiry,
+		"character": properties.plan_subject_character.get_full_name() if properties.plan_subject_character else "None",
+		"poi": properties.plan_subject_poi.poi_name if properties.plan_subject_poi else "None",
+		"effect": properties.plan_effect,
+		"is_endgame": properties.is_endgame_plan
+	})
 
 	# Set properties
 	plan_name = properties.plan_name
@@ -90,9 +98,24 @@ func _init(properties: PlanProperties):
 	is_endgame_plan = properties.is_endgame_plan
 
 	plan_timing = GameController.calendar.get_date_string(plan_duration)
+	LogDuck.d("Plan timing set", {
+		"name": plan_name,
+		"timing": plan_timing,
+		"duration": plan_duration
+	})
 
 	if plan_expiry != -1:
 		expires_on_turn = GameController.turn_number + plan_expiry
+		LogDuck.d("Plan expiry set", {
+			"name": plan_name,
+			"current_turn": GameController.turn_number,
+			"expires_on": expires_on_turn,
+			"expiry_duration": plan_expiry
+		})
 
 	# Register the object after setting properties
 	EventBus.plan_created.emit(self)
+	LogDuck.d("Plan creation complete and emitted", {
+		"name": plan_name,
+		"text_length": plan_text.length()
+	})
