@@ -139,6 +139,11 @@ var highlight_color = Color(1, 1, 1, 0.5)
 """
 var hovered: bool = false
 
+"""
+@brief Controls whether GUI debug logs are enabled
+"""
+var gui_debug: bool = false
+
 #|==============================|
 #|          Signals            |
 #|==============================|
@@ -313,21 +318,25 @@ Updates visual state and emits hover signal.
 """
 func _on_mouse_entered():
 	if not enabled or WindowHandler.any_windows_open():
-		LogDuck.d("POI hover ignored - disabled or window open")
+		if gui_debug:
+			LogDuck.d("POI hover ignored - disabled or window open")
 		return
 
 	if GameController.radial_menu_open != null:
-		LogDuck.d("POI hover ignored - radial menu open")
+		if gui_debug:
+			LogDuck.d("POI hover ignored - radial menu open")
 		return
 
 	if GameController.district_focused != parent_district:
-		LogDuck.d("POI hover ignored - district not focused")
+		if gui_debug:
+			LogDuck.d("POI hover ignored - district not focused")
 		return
 	
-	LogDuck.d("POI hovered", {
-		"name": poi_name,
-		"district": parent_district.district_name
-	})
+	if gui_debug:
+		LogDuck.d("POI hovered", {
+			"name": poi_name,
+			"district": parent_district.district_name
+		})
 	
 	hovered = true
 	$Polygon2D.color = highlight_color
@@ -386,19 +395,22 @@ func _on_icon_button_clicked() -> void:
 Opens the POI radial menu when the POI is clicked.
 """
 func _poi_clicked() -> void:
-	LogDuck.d("POI clicked", {
-		"name": poi_name,
-		"district": parent_district.district_name
-	})
+	if gui_debug:
+		LogDuck.d("POI clicked", {
+			"name": poi_name,
+			"district": parent_district.district_name
+		})
 	
 	poi_popup.visible = false
 
 	if GameController.radial_menu_open != null:
-		LogDuck.d("POI click ignored - radial menu already open")
+		if gui_debug:
+			LogDuck.d("POI click ignored - radial menu already open")
 		return
 	
 	if GameController.district_focused != parent_district:
-		LogDuck.d("POI click ignored - district not focused")
+		if gui_debug:
+			LogDuck.d("POI click ignored - district not focused")
 		return
 
 	$IconButton.visible = false
