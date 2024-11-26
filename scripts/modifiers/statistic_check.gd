@@ -132,6 +132,7 @@ func heat_added(min_value: int, max_value: int) -> int:
 
 	return base_heat_added
 
+
 func action_duration(base_duration: int) -> int:
 	print("--- ACTION DURATION ---")
 	print("Base duration: ", base_duration)
@@ -347,4 +348,79 @@ func get_team_modifiers() -> Dictionary:
 			"effect": str(round((overspecialization - 1.0) * 100)) + "%",
 			"stat_changes": overspec_changes
 		}
+	}
+
+"""
+@brief Calculates the consequence probabilities taking into account all active modifiers
+@param district_heat The current heat level of the district
+@return Dictionary containing the modified probabilities for each consequence type
+"""
+func get_consequence_probabilities(district_heat: int) -> Dictionary:
+	var heat_factor = district_heat / 100.0
+	
+	# Calculate raw probabilities
+	var raw_chances = {
+		Enums.CharacterState.ASSIGNED: Constants.FAILURE_CONSEQUENCE_NONE,
+		Enums.CharacterState.INJURED: Constants.FAILURE_CONSEQUENCE_INJURED,
+		Enums.CharacterState.MIA: Constants.FAILURE_CONSEQUENCE_MIA,
+		Enums.CharacterState.DECEASED: Constants.FAILURE_CONSEQUENCE_DECEASED
+	}
+	
+	# Calculate heat-modified probabilities
+	var modified_chances = {
+		Enums.CharacterState.ASSIGNED: raw_chances[Enums.CharacterState.ASSIGNED] * (1.0 - heat_factor * Constants.FAILURE_HEAT_MOD_NONE),
+		Enums.CharacterState.INJURED: raw_chances[Enums.CharacterState.INJURED] + (heat_factor * Constants.FAILURE_HEAT_MOD_INJURED),
+		Enums.CharacterState.MIA: raw_chances[Enums.CharacterState.MIA] + (heat_factor * Constants.FAILURE_HEAT_MOD_MIA),
+		Enums.CharacterState.DECEASED: raw_chances[Enums.CharacterState.DECEASED] + (heat_factor * Constants.FAILURE_HEAT_MOD_DECEASED)
+	}
+	
+	# Apply modifier effects to all negative consequences
+	for modifier in modifiers:
+		if modifier.modifier_consequence_multiplier != 1.0:
+			modified_chances[Enums.CharacterState.INJURED] *= modifier.modifier_consequence_multiplier
+			modified_chances[Enums.CharacterState.MIA] *= modifier.modifier_consequence_multiplier
+			modified_chances[Enums.CharacterState.DECEASED] *= modifier.modifier_consequence_multiplier
+	
+	# Normalize probabilities
+	var total = 0.0
+	for chance in modified_chances.values():
+		total += chance
+	
+	var probabilities = {}
+	for state in modified_chances:
+		probabilities[state] = modified_chances[state] / total
+	
+	return probabilities
+
+"""
+@brief Determines the consequence of a failed action
+@param district_heat The current heat level of the district
+@return Dictionary containing the result and roll value
+"""
+func determine_consequence(district_heat: int) -> Dictionary:
+	var probabilities = get_consequence_probabilities(district_heat)
+	
+	# Define consequence order (most severe first)
+	var consequence_order = [
+		Enums.CharacterState.DECEASED,
+		Enums.CharacterState.MIA,
+		Enums.CharacterState.INJURED,
+		Enums.CharacterState.ASSIGNED
+	]
+	
+	# Roll and check against cumulative probability
+	var roll = randf()
+	var cumulative_probability = 0.0
+	
+	for consequence in consequence_order:
+		cumulative_probability += probabilities[consequence]
+		if roll < cumulative_probability:
+			return {
+				"result": consequence,
+				"roll": roll
+			}
+	
+	return {
+		"result": Enums.CharacterState.ASSIGNED,
+		"roll": roll
 	}

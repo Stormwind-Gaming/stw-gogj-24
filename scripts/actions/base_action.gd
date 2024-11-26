@@ -70,7 +70,6 @@ func _init(config: ActionFactory.ActionConfig):
 	if additional_info.has("associated_plan"):
 		self.associated_plan = config.additional_info["associated_plan"]
 
-		# TODO: should this be the plan duration?
 		turn_to_end = GameController.turn_number + statistic_check.action_duration(self.associated_plan.plan_duration)
 
 	EventBus.turn_processing_initiated.connect(_on_turn_processing_initiated)
@@ -170,7 +169,6 @@ func _process_danger() -> Array[TurnLog]:
 
 		var district: District = poi.parent_district
 		var base_district_heat = district.heat
-		# var district_heat: int = StatisticModification.heat_modification(district.heat, district.district_type)
 		var district_heat: int = district.heat
 
 		var consequence_result = _determine_action_failure_consequence(district_heat)
@@ -214,58 +212,8 @@ func _process_danger() -> Array[TurnLog]:
 
 
 func _determine_action_failure_consequence(district_heat: int) -> Dictionary:
-	var heat_factor = district_heat / 100.0
-	
-	# Calculate raw probabilities
-	var raw_chances = {
-		Enums.CharacterState.ASSIGNED: Constants.FAILURE_CONSEQUENCE_NONE,
-		Enums.CharacterState.INJURED: Constants.FAILURE_CONSEQUENCE_INJURED,
-		Enums.CharacterState.MIA: Constants.FAILURE_CONSEQUENCE_MIA,
-		Enums.CharacterState.DECEASED: Constants.FAILURE_CONSEQUENCE_DECEASED
-	}
-	
-	# Calculate heat-modified probabilities
-	var modified_chances = {
-		Enums.CharacterState.ASSIGNED: raw_chances[Enums.CharacterState.ASSIGNED] * (1.0 - heat_factor * Constants.FAILURE_HEAT_MOD_NONE),
-		Enums.CharacterState.INJURED: raw_chances[Enums.CharacterState.INJURED] + (heat_factor * Constants.FAILURE_HEAT_MOD_INJURED),
-		Enums.CharacterState.MIA: raw_chances[Enums.CharacterState.MIA] + (heat_factor * Constants.FAILURE_HEAT_MOD_MIA),
-		Enums.CharacterState.DECEASED: raw_chances[Enums.CharacterState.DECEASED] + (heat_factor * Constants.FAILURE_HEAT_MOD_DECEASED)
-	}
-	
-	# Calculate sum for normalization
-	var total = 0.0
-	for chance in modified_chances.values():
-		total += chance
-	
-	# Normalize probabilities
-	var probabilities = {}
-	for state in modified_chances:
-		probabilities[state] = modified_chances[state] / total
-	
-	# Define a specific order for checking consequences
-	var consequence_order = [
-		Enums.CharacterState.DECEASED, # Check most severe first
-		Enums.CharacterState.MIA,
-		Enums.CharacterState.INJURED,
-		Enums.CharacterState.ASSIGNED # Check least severe last
-	]
-	
-	# Roll the dice
-	var roll = randf()
-	var cumulative_probability = 0.0
-	
-	for consequence in consequence_order:
-		cumulative_probability += probabilities[consequence]
-		if roll < cumulative_probability:
-			return {
-				"result": consequence,
-				"roll": roll
-			}
-	
-	return {
-		"result": Enums.CharacterState.ASSIGNED,
-		"roll": roll
-	}
+	var statistic_check: StatisticCheck = StatisticCheck.new(characters, poi.parent_district, poi)
+	return statistic_check.determine_consequence(district_heat)
 
 #|==============================|
 #|      Helper Methods          |
@@ -313,32 +261,5 @@ func _get_character_names() -> String:
 	return names
 
 func _get_consequence_probabilities(district_heat: int) -> Dictionary:
-	var heat_factor = district_heat / 100.0
-	
-	# Calculate raw probabilities
-	var raw_chances = {
-		Enums.CharacterState.ASSIGNED: Constants.FAILURE_CONSEQUENCE_NONE,
-		Enums.CharacterState.INJURED: Constants.FAILURE_CONSEQUENCE_INJURED,
-		Enums.CharacterState.MIA: Constants.FAILURE_CONSEQUENCE_MIA,
-		Enums.CharacterState.DECEASED: Constants.FAILURE_CONSEQUENCE_DECEASED
-	}
-	
-	# Calculate heat-modified probabilities
-	var modified_chances = {
-		Enums.CharacterState.ASSIGNED: raw_chances[Enums.CharacterState.ASSIGNED] * (1.0 - heat_factor * Constants.FAILURE_HEAT_MOD_NONE),
-		Enums.CharacterState.INJURED: raw_chances[Enums.CharacterState.INJURED] + (heat_factor * Constants.FAILURE_HEAT_MOD_INJURED),
-		Enums.CharacterState.MIA: raw_chances[Enums.CharacterState.MIA] + (heat_factor * Constants.FAILURE_HEAT_MOD_MIA),
-		Enums.CharacterState.DECEASED: raw_chances[Enums.CharacterState.DECEASED] + (heat_factor * Constants.FAILURE_HEAT_MOD_DECEASED)
-	}
-	
-	# Calculate sum for normalization
-	var total = 0.0
-	for chance in modified_chances.values():
-		total += chance
-	
-	# Normalize probabilities
-	var probabilities = {}
-	for state in modified_chances:
-		probabilities[state] = modified_chances[state] / total
-	
-	return probabilities
+	var statistic_check: StatisticCheck = StatisticCheck.new(characters, poi.parent_district, poi)
+	return statistic_check.get_consequence_probabilities(district_heat)
