@@ -370,16 +370,18 @@ func _poi_clicked() -> void:
 	var actions: Array[Enums.ActionType] = []
 
 	# If the endgame isnt active then add the normal actions
-	if not GameController.endgame_triggered and not poi_owner.char_state == Enums.CharacterState.DECEASED:
+	if not GameController.endgame_triggered:
 		actions.append(Enums.ActionType.ESPIONAGE)
 
-		# Only non-sympathisers can use propaganda
-		if poi_owner.char_recruitment_state < Enums.CharacterRecruitmentState.SYMPATHISER_NOT_RECRUITED:
-			actions.append(Enums.ActionType.PROPAGANDA)
+		# Cant do propaganda or surveillance if the POI owner is dead or missing in action
+		if not poi_owner.char_state in [Enums.CharacterState.DECEASED, Enums.CharacterState.MIA]:
+			# Only non-sympathisers can use propaganda
+			if poi_owner.char_recruitment_state < Enums.CharacterRecruitmentState.SYMPATHISER_NOT_RECRUITED:
+				actions.append(Enums.ActionType.PROPAGANDA)
 
-		# Only unknown non-sympathisers can use surveillance
-		if poi_owner.char_recruitment_state == Enums.CharacterRecruitmentState.NON_SYMPATHISER_UNKNOWN:
-			actions.append(Enums.ActionType.SURVEILLANCE)
+			# Only unknown non-sympathisers can use surveillance
+			if poi_owner.char_recruitment_state == Enums.CharacterRecruitmentState.NON_SYMPATHISER_UNKNOWN:
+				actions.append(Enums.ActionType.SURVEILLANCE)
 
 	# If the POI has a plan then add the plan action
 	if (_has_plan()):
