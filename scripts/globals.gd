@@ -74,6 +74,7 @@ var world_event_text = []
 Loads all CSV data into memory.
 """
 func _ready() -> void:
+	LogDuck.d("Globals: Starting data loading")
 	_load_town_names(load_csvs["town_names"])
 	_load_district_names(load_csvs["district_names"])
 	_load_first_names(load_csvs["first_names"])
@@ -83,22 +84,28 @@ func _ready() -> void:
 	_load_rumour_text(load_csvs["rumour_text"])
 	_load_event_outcome_text(load_csvs["event_outcome_text"])
 	_load_world_event_text(load_csvs["world_event_text"])
+	LogDuck.d("Globals: Completed data loading")
 
 """
 @brief Loads town names from CSV
 @param path Path to the CSV file
 """
 func _load_town_names(path: String) -> void:
+	LogDuck.d("Globals: Loading town names from %s" % path)
 	var csv_data = load(path)
 	for record in csv_data.records:
 		town_names.append(record["town_name"])
+	LogDuck.d("Globals: Loaded %d town names" % town_names.size())
 	
 func _load_district_names(path: String) -> void:
+	LogDuck.d("Globals: Loading district names from %s" % path)
 	var csv_data = load(path)
 	for record in csv_data.records:
 		district_names.append(record["district_name"])
+	LogDuck.d("Globals: Loaded %d district names" % district_names.size())
 
 func _load_first_names(path: String) -> void:
+	LogDuck.d("Globals: Loading first names from %s" % path)
 	var csv_data = load(path)
 	for record in csv_data.records:
 		var gender = gender_map[record["gender"].to_upper()]
@@ -108,8 +115,10 @@ func _load_first_names(path: String) -> void:
 			"gender": gender,
 			"nationality": nationality
 		})
+	LogDuck.d("Globals: Loaded %d first names" % first_names.size())
 
 func _load_last_names(path: String) -> void:
+	LogDuck.d("Globals: Loading last names from %s" % path)
 	var csv_data = load(path)
 	for record in csv_data.records:
 		var nationality = nationality_map[record["nationality"].to_upper()]
@@ -117,8 +126,10 @@ func _load_last_names(path: String) -> void:
 			"last_name": record["last_name"],
 			"nationality": nationality
 		})
+	LogDuck.d("Globals: Loaded %d last names" % last_names.size())
 
 func _load_poi_types(path: String) -> void:
+	LogDuck.d("Globals: Loading POI types from %s" % path)
 	var csv_data = load(path)
 	for record in csv_data.records:
 		var poi_type = poi_type_map[record["poi_name"].replace(" ", "_").to_upper()]
@@ -142,8 +153,10 @@ func _load_poi_types(path: String) -> void:
 			"where_chance": record["where_chance"],
 			"when_chance": record["when_chance"]
 		})
+	LogDuck.d("Globals: Loaded %d POI types" % poi_types.size())
 	
 func _load_poi_names(path: String) -> void:
+	LogDuck.d("Globals: Loading POI names from %s" % path)
 	var csv_data = load(path)
 	for record in csv_data.records:
 		var poi_type = poi_type_map[record["poi_type"].to_upper()]
@@ -151,20 +164,26 @@ func _load_poi_names(path: String) -> void:
 			"poi_type": poi_type,
 			"poi_name": record["poi_name"],
 		})
+	LogDuck.d("Globals: Loaded %d POI names" % poi_names.size())
 
 func _load_rumour_text(path: String) -> void:
+	LogDuck.d("Globals: Loading rumour text from %s" % path)
 	var csv_data = load(path)
 	for record in csv_data.records:
 		var type = rumour_map[record["type"].to_upper()]
+		
 		rumour_text.append({
 			"text": record["text"],
 			"type": type,
 			"effect": intel_effect_map[record['effect'].to_upper()],
 			"subject": rumour_subject_map[record['subject'].to_upper()]
 		})
+	LogDuck.d("Globals: Loaded %d rumour texts" % rumour_text.size())
 
 func _load_event_outcome_text(path: String) -> void:
+	LogDuck.d("Globals: Loading event outcome text from %s" % path)
 	var csv_data = load(path)
+	var count = 0
 	for record in csv_data.records:
 		var category = event_outcome_category_map[record["event_category"].to_upper()]
 		var title = record["event_title"]
@@ -180,11 +199,13 @@ func _load_event_outcome_text(path: String) -> void:
 			"text": text,
 			"button_text": button_text
 		})
+		count += 1
+	LogDuck.d("Globals: Loaded %d event outcome texts" % count)
 
 func _load_world_event_text(path: String) -> void:
+	LogDuck.d("Globals: Loading world event text from %s" % path)
 	var csv_data = load(path)
 	for record in csv_data.records:
-
 		world_event_text.append({
 			"event_severity": world_event_category_map[record["event_severity"].to_upper().strip_edges()],
 			"event_type": world_event_type_map[record["event_type"].to_upper().strip_edges()],
@@ -194,7 +215,8 @@ func _load_world_event_text(path: String) -> void:
 			"event_title": record["event_title"].strip_edges(),
 			"event_button_text": record["event_button_text"].strip_edges()
 		})
-		
+	LogDuck.d("Globals: Loaded %d world event texts" % world_event_text.size())
+
 #|==============================|
 #|      Data Retrieval         |
 #|==============================|
@@ -881,7 +903,7 @@ var poi_icons = {
 	Enums.POIType.WAREHOUSE: preload("res://assets/icons/poi/selected/warehouse_1.png"),
 	Enums.POIType.RESIDENCE: preload("res://assets/icons/poi/selected/residence_2.png"),
 	Enums.POIType.RESTAURANT: preload("res://assets/icons/poi/selected/restaurant_2.png"),
-	Enums.POIType.WORKSHOP: preload("res://assets/icons/poi/selected/workshop_1.png"),	
+	Enums.POIType.WORKSHOP: preload("res://assets/icons/poi/selected/workshop_1.png"),
 	Enums.POIType.ANTI_AIR_EMPLACEMENT: preload("res://assets/icons/poi/selected/anti_air_emplacement_1.png"),
 	Enums.POIType.GESTAPO_POST: preload("res://assets/icons/poi/selected/gestapo_post_2.png"),
 	Enums.POIType.AIR_BASE: preload("res://assets/icons/poi/selected/aerodrome_3.png"),

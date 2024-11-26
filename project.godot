@@ -17,6 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+LogDuck="*res://addons/LogDuck/LogDuck.gd"
 Globals="*res://scripts/globals.gd"
 Enums="*res://scripts/enums.gd"
 GlobalRegistry="*res://scripts/registry/global_registry.gd"

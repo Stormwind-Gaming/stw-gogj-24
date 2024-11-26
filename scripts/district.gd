@@ -95,12 +95,15 @@ signal poi_unhovered
 Initializes district properties and sets up POIs.
 """
 func _ready() -> void:
+	LogDuck.d("District: Initializing district")
+
 	# emit district created signal
 	EventBus.district_created.emit(self)
 	EventBus.character_sympathy_changed.connect(_update_sympathy_value)
 	EventBus.district_unfocused.connect(_reset_highlight_color)
 
 	# Setup the district modifiers
+	LogDuck.d("District: Setting up modifiers")
 	_setup_modifiers()
 
 	# set heat random between min and max
@@ -114,6 +117,7 @@ func _ready() -> void:
 	$Polygon2D.color = heat_color
 	$Sprite2D.visible = false
 
+	LogDuck.d("District: Setting up POIs")
 	for poi in $pois.get_children():
 		if poi.visible:
 			# get the pois that are visible (enabled)
@@ -127,6 +131,7 @@ func _ready() -> void:
 		poi.setup_poi_visuals()
 
 		if poi.poi_static:
+			LogDuck.d("District: Setting up static POI")
 			poi.set_poi_details(self, Enums.POIType.NONE, "", "", "", "", 1, 1, 1)
 			continue
 
@@ -225,23 +230,21 @@ new_heat The new heat value
 @param character The character to update
 """
 func _update_sympathy_value(character: Character) -> void:
-	# TODO: for some reason this efficiency enhancement isnt working
-	# if this character is not in this district, return
-	# for poi in pois:
-	# 	if poi.poi_owner == character:
-	# 		print("Character found")
+	LogDuck.d("District: Updating sympathy value for character %s" % character.char_name)
 	var total_sympathy = 0
 	for p in pois:
 		total_sympathy += p.poi_owner.char_sympathy
 	sympathy = total_sympathy / pois.size()
+	LogDuck.d("District: New sympathy value: %f" % sympathy)
 	district_popup.set_sympathy(sympathy)
-			# return
 
 func _setup_modifiers() -> void:
+	LogDuck.d("District: Setting up modifiers for district type: %s" % Globals.get_district_type_string(district_type))
 	match district_type:
 
 		# Military district modifiers
 		Enums.DistrictType.MILITARY:
+			LogDuck.d("District: Setting up military district modifiers")
 			var _base_military_district_modifier: Modifier = Modifier.new({
 				"scope": Enums.ModifierScope.DISTRICT,
 				"district": self,
@@ -275,6 +278,7 @@ func _setup_modifiers() -> void:
 
 		# Civic district modifiers
 		Enums.DistrictType.CIVIC:
+			LogDuck.d("District: Setting up civic district modifiers")
 			var _base_civic_district_modifier: Modifier = Modifier.new({
 				"scope": Enums.ModifierScope.DISTRICT,
 				"district": self,
@@ -411,6 +415,7 @@ func _setup_modifiers() -> void:
 @param rumour_text_arg Any rumours associated with the district
 """
 func set_district_details(district_name_arg: String, district_description_arg: String, rumour_text_arg: String) -> void:
+	LogDuck.d("District: Setting district details - Name: %s" % district_name_arg)
 	district_name = district_name_arg
 	district_description = district_description_arg
 	rumour_text = rumour_text_arg
@@ -441,18 +446,21 @@ func get_district_centerpoint() -> Vector2:
 @brief Sets the highlight color for the district
 """
 func set_highlight_color() -> void:
+	LogDuck.d("District: Setting highlight color")
 	$Polygon2D.color = highlight_color
 
 """
 @brief Removes the highlight color and shows heat color
 """
 func remove_highlight_color() -> void:
+	LogDuck.d("District: Removing highlight color")
 	$Polygon2D.color = heat_color
 
 """
 @brief Sets the focus color for the district
 """
 func set_focus() -> void:
+	LogDuck.d("District: Setting focus")
 	$Polygon2D.visible = false
 	$CollisionPolygon2D.visible = false
 
@@ -460,6 +468,7 @@ func set_focus() -> void:
 @brief Unsets the focus color for the district
 """
 func unset_focus() -> void:
+	LogDuck.d("District: Unsetting focus")
 	$Polygon2D.visible = true
 	$CollisionPolygon2D.visible = true
 
@@ -508,14 +517,14 @@ func get_district_size() -> Vector2:
 Updates visual state and emits hover signal.
 """
 func _on_mouse_entered() -> void:
-	# check if we have a radial menu instance, if so, don't expand
 	if GameController.radial_menu_open != null or WindowHandler.open_window:
+		LogDuck.d("District: Mouse entered ignored due to open menu/window")
 		return
 	
+	LogDuck.d("District: Mouse entered")
 	hovered = true
-		
 	emit_signal("district_hovered", self)
-	
+
 """
 @brief Handles mouse exit events.
 Updates visual state and emits unhover signal.
@@ -569,8 +578,9 @@ func _reset_highlight_color(district: District) -> void:
 #|==============================|
 
 func set_heat(new_heat: int) -> void:
-	# clamp heat between 0 and 100
+	LogDuck.d("District: Setting heat to %d" % new_heat)
 	heat = clamp(new_heat, 0, 100)
 	district_popup.set_heat(heat)
 	heat_color.a = float(heat) / 200.0
 	$Polygon2D.color = heat_color
+	LogDuck.d("District: Heat color alpha set to %f" % heat_color.a)

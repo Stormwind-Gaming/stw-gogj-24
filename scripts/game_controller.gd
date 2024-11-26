@@ -60,6 +60,7 @@ var resistance_endgame_step: int = 0
 @brief Called when the node enters the scene tree
 """
 func _ready() -> void:
+	LogDuck.d("GameController initialized")
 	calendar = Calendar.new()
 	town_details = TownDetails.new()
 	EventBus.selected_radial_option.connect(_on_radial_option_selected)
@@ -68,6 +69,7 @@ func _ready() -> void:
 @brief Resets the GameController
 """
 func reset() -> void:
+	LogDuck.d("Resetting GameController")
 	turn_number = 0
 	endgame_triggered = false
 	heat_endgame_port_step = 0
@@ -131,6 +133,7 @@ func get_heat_level() -> int:
 @param additional_info Optional additional data for the action
 """
 func add_action(poi: PointOfInterest, characters: Array[Character], action_type: Enums.ActionType, additional_info: Dictionary = {}) -> void:
+	LogDuck.d("Adding new action", action_type, "at POI", poi.poi_name, "with", characters.size(), "characters")
 	var actions = GlobalRegistry.actions.get_all_items()
 
 	# check if this character is already assigned to an action
@@ -161,6 +164,7 @@ func add_action(poi: PointOfInterest, characters: Array[Character], action_type:
 
 
 func remove_all_actions_for_character(character: Character) -> void:
+	LogDuck.d("Removing all actions for character", character.get_full_name())
 	var actions = GlobalRegistry.actions.get_all_items()
 	for action in actions:
 		if character in action.characters:
@@ -175,6 +179,7 @@ func remove_all_actions_for_character(character: Character) -> void:
 @brief Processes the current turn and advances game state
 """
 func process_turn() -> void:
+	LogDuck.d("Processing turn", turn_number)
 	EventBus.end_turn_initiated.emit(turn_number) # Emit the end turn signal
 
 	turn_number += 1 # Increment the turn number
@@ -234,7 +239,7 @@ func process_turn() -> void:
 @brief Triggers the heat endgame
 """
 func _trigger_heat_endgame() -> void:
-	print("Triggering heat endgame")
+	LogDuck.d("Triggering heat endgame")
 	endgame_triggered = true
 	EventBus.endgame_triggered.emit()
 
@@ -271,13 +276,13 @@ func _trigger_heat_endgame() -> void:
 	Plan.new(train_plan_properties)
 
 
-	print("Heat endgame plan created")
+	LogDuck.d("Heat endgame plan created")
 
 """
 @brief Triggers the resistance endgame
 """
 func _trigger_resistance_endgame() -> void:
-	print("Triggering resistance endgame")
+	LogDuck.d("Triggering resistance endgame")
 	endgame_triggered = true
 	EventBus.endgame_triggered.emit()
 
@@ -315,6 +320,7 @@ func _trigger_resistance_endgame() -> void:
 @param district The district to set as focused
 """
 func set_district_focused(district: District) -> void:
+	LogDuck.d("Setting focused district to", district.district_name if district else "null")
 	district_focused = district
 	EventBus.district_just_focused.emit(district)
 	if district == null:
@@ -332,7 +338,7 @@ func set_district_focused(district: District) -> void:
 """
 func open_radial_menu(radial_menu: RadialMenu, poi: PointOfInterest) -> void:
 	if radial_menu_open:
-		print("Radial menu already open, closing")
+		LogDuck.d("Radial menu already open, closing")
 		return
 	radial_menu_open = radial_menu
 	poi_for_radial = poi
@@ -343,6 +349,7 @@ func open_radial_menu(radial_menu: RadialMenu, poi: PointOfInterest) -> void:
 @param option The option selected
 """
 func _on_radial_option_selected(option: Enums.ActionType) -> void:
+	LogDuck.d("Radial option selected:", option)
 	if not radial_menu_open:
 		return
 
@@ -374,6 +381,7 @@ func _on_radial_option_selected(option: Enums.ActionType) -> void:
 	EventBus.open_new_window.emit(post_radial_assignment)
 
 func _on_post_radial_assignment_option_selected(option: Enums.ActionType, selected_agents: Array[Character], _additions: Array) -> void:
+	LogDuck.d("Post-radial assignment selected:", option, "with", selected_agents.size(), "agents")
 	if option != Enums.ActionType.NONE and option != Enums.ActionType.INFO:
 		GameController.add_action(poi_for_radial, selected_agents, option)
 

@@ -28,7 +28,7 @@ class_name Map
 Initializes the map, districts, and starting agents.
 """
 func _ready() -> void:
-
+	LogDuck.d("Map: Initializing map scene")
 	randomize()
 	$AnimationPlayer.play("fade_in")
 	#TODO: # randomise cloud noise (currently disabled due to jumping when scene loads)
@@ -39,13 +39,18 @@ func _ready() -> void:
 	EventBus.close_window.connect(_enable_interaction)
 	EventBus.game_over.connect(_game_over)
 
+	LogDuck.d("Map: Setting up event bus connections")
+
+	LogDuck.d("Map: Initializing districts")
 	for district in GlobalRegistry.districts.get_all_items():
 		_set_district_details(district)
 
+	LogDuck.d("Map: Generating initial population and agents")
 	_generate_population()
 	_setup_agents()
 
 	# Create initial rumours
+	LogDuck.d("Map: Creating initial rumors")
 	IntelFactory.create_rumour(RumourConfig.new(100, 0, 0))
 	IntelFactory.create_rumour(RumourConfig.new(0, 100, 0))
 	IntelFactory.create_rumour(RumourConfig.new(0, 0, 100))
@@ -79,6 +84,7 @@ func _process(delta: float) -> void:
 @brief Clears the currently focused district
 """
 func _clear_focus(_i = null) -> void:
+	LogDuck.d("Map: Clearing district focus")
 	EventBus.district_unfocused.emit(GameController.district_focused)
 	GameController.set_district_focused(null)
 	$Camera2D.camera_enabled = true
@@ -104,6 +110,7 @@ func _clear_focus(_i = null) -> void:
 func _set_district_details(district: District) -> void:
 	var district_name = Globals.district_names[randi() % Globals.district_names.size()]
 	Globals.district_names.erase(Globals.district_names.find(district_name))
+	LogDuck.d("Map: Setting up district with name: %s" % district_name)
 	var district_description = "This is the district of " + district_name + "."
 	
 	district.set_district_details(district_name, district_description, "")
@@ -145,8 +152,9 @@ func _on_district_unhovered(district: District) -> void:
 @param district The district being clicked
 """
 func _on_district_clicked(district: District) -> void:
-	# if the district is already focused, return
+	LogDuck.d("Map: District clicked: %s" % district.name)
 	if GameController.district_focused == district:
+		LogDuck.d("Map: District already focused, ignoring click")
 		return
 
 	for d in GlobalRegistry.districts.get_all_items():
@@ -188,6 +196,7 @@ func _on_poi_unhovered() -> void:
 @brief Disables interaction with the map
 """
 func _disable_interaction(_i = 0) -> void:
+	LogDuck.d("Map: Disabling district interactions")
 	for district in GlobalRegistry.districts.get_all_items():
 		district.set_disabled()
 
@@ -195,6 +204,7 @@ func _disable_interaction(_i = 0) -> void:
 @brief Enables interaction with the map
 """
 func _enable_interaction() -> void:
+	LogDuck.d("Map: Enabling district interactions")
 	for district in GlobalRegistry.districts.get_all_items():
 		district.set_enabled()
 
@@ -202,6 +212,7 @@ func _enable_interaction() -> void:
 @brief Handles game over event
 """
 func _game_over() -> void:
+	LogDuck.d("Map: Game over triggered")
 	_disable_interaction(0)
 	$AnimationPlayer.play("fade_out")
 	$AnimationPlayer.animation_finished.connect(_show_game_over)
@@ -223,19 +234,23 @@ func _show_game_over(_name: String) -> void:
 @brief Generates initial population including some special cases
 """
 func _generate_population() -> void:
+	LogDuck.d("Map: Generating initial population")
 	var population = GlobalRegistry.characters.get_all_items()
 	# set one character to deceased and one to MIA
 	var deceased = population[randi() % population.size()]
 	deceased.char_state = Enums.CharacterState.DECEASED
+	LogDuck.d("Map: Set character %s as deceased" % deceased.name)
 	population.erase(deceased)
 	var mia = population[randi() % population.size()]
 	mia.char_state = Enums.CharacterState.MIA
 	mia.char_sympathy = randi_range(80, 100)
+	LogDuck.d("Map: Set character %s as MIA with sympathy %d" % [mia.name, mia.char_sympathy])
 
 """
 @brief Sets up initial agent characters with high sympathy
 """
 func _setup_agents() -> void:
+	LogDuck.d("Map: Setting up initial agents")
 	var population = GlobalRegistry.characters.get_all_items().filter(func(x): return x.char_state == Enums.CharacterState.AVAILABLE)
 	
 	# Pick three random characters to be initial agents
@@ -245,6 +260,7 @@ func _setup_agents() -> void:
 	population.erase(agent2)
 	var agent3 = population[randi() % population.size()]
 	
+	LogDuck.d("Map: Initializing agents: %s, %s, %s" % [agent1.name, agent2.name, agent3.name])
 	agent1.char_sympathy = randi_range(80, 100)
 	agent1.char_recruitment_state = Enums.CharacterRecruitmentState.SYMPATHISER_RECRUITED
 	agent2.char_sympathy = randi_range(80, 100)
