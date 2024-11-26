@@ -5,24 +5,24 @@
 [ext_resource type="Texture2D" uid="uid://calpqv36rwrsn" path="res://assets/sprites/events/endgame/win_port.jpg" id="2_tkdhd"]
 [ext_resource type="PackedScene" uid="uid://csjj4gfy5g6nw" path="res://scenes/debug/stats_container.tscn" id="4_nu43q"]
 
-[sub_resource type="Gradient" id="Gradient_xmte1"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6fhol"]
+
+[sub_resource type="Gradient" id="Gradient_xnevh"]
 colors = PackedColorArray(0.929412, 0.85098, 0.713726, 1, 0.929412, 0.85098, 0.713726, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_r7bt3"]
-gradient = SubResource("Gradient_xmte1")
+gradient = SubResource("Gradient_xnevh")
 
-[sub_resource type="Gradient" id="Gradient_uvq4k"]
+[sub_resource type="Gradient" id="Gradient_oj1gv"]
 offsets = PackedFloat32Array(0, 0.738523)
 colors = PackedColorArray(0.929412, 0.85098, 0.713726, 1, 0, 0, 0, 0)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_e5qr1"]
-gradient = SubResource("Gradient_uvq4k")
+gradient = SubResource("Gradient_oj1gv")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6sfqw"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n4iw2"]
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_6fhol"]
 
 [node name="GameOver" type="Control"]
 layout_mode = 3
@@ -34,88 +34,6 @@ grow_vertical = 2
 theme = ExtResource("1_jfq4b")
 script = ExtResource("2_26un7")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 0
-
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-texture = SubResource("GradientTexture1D_r7bt3")
-expand_mode = 5
-
-[node name="EndgameImage" type="TextureRect" parent="HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
-texture = ExtResource("2_tkdhd")
-expand_mode = 3
-stretch_mode = 6
-
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer/EndgameImage"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-texture = SubResource("GradientTexture1D_e5qr1")
-expand_mode = 5
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 0
-
-[node name="CenterContainer2" type="CenterContainer" parent="HBoxContainer2"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer2/CenterContainer2"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="HBoxContainer2/CenterContainer2/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 25
-text = "Winner!"
-horizontal_alignment = 1
-
-[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer2/CenterContainer2/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_styles/panel = SubResource("StyleBoxEmpty_6sfqw")
-
-[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer2/CenterContainer2/VBoxContainer/PanelContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
-
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer2/CenterContainer2/VBoxContainer/PanelContainer/MarginContainer"]
-layout_mode = 2
-
-[node name="QuitToMenuButton" type="Button" parent="HBoxContainer2/CenterContainer2/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-text = "Main Menu"
-
-[node name="VSeparator" type="VSeparator" parent="HBoxContainer2"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
-theme_override_styles/separator = SubResource("StyleBoxEmpty_n4iw2")
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_6fhol")
@@ -126,4 +44,95 @@ libraries = {
 [node name="PanelContainer" parent="CanvasLayer2" instance=ExtResource("4_nu43q")]
 visible = false
 
-[connection signal="pressed" from="HBoxContainer2/CenterContainer2/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/QuitToMenuButton" to="." method="_on_quit_to_menu_button_pressed"]
+[node name="Endgame" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Endgame"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 860.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="TextureRect" type="TextureRect" parent="Endgame/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = SubResource("GradientTexture1D_r7bt3")
+expand_mode = 5
+
+[node name="EndgameImage" type="TextureRect" parent="Endgame/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+texture = ExtResource("2_tkdhd")
+expand_mode = 3
+stretch_mode = 6
+
+[node name="TextureRect" type="TextureRect" parent="Endgame/HBoxContainer/EndgameImage"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+texture = SubResource("GradientTexture1D_e5qr1")
+expand_mode = 5
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Endgame"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 204.0
+offset_bottom = 82.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="CenterContainer2" type="CenterContainer" parent="Endgame/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Endgame/HBoxContainer2/CenterContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "Winner!"
+horizontal_alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBoxEmpty_6sfqw")
+
+[node name="MarginContainer" type="MarginContainer" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="QuitToMenuButton" type="Button" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Main Menu"
+
+[node name="VSeparator" type="VSeparator" parent="Endgame/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+theme_override_styles/separator = SubResource("StyleBoxEmpty_n4iw2")
+
+[connection signal="pressed" from="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/QuitToMenuButton" to="." method="_on_quit_to_menu_button_pressed"]

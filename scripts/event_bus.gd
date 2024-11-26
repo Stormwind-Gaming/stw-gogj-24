@@ -174,6 +174,14 @@ signal world_event_created(world_event: WorldEvent)
 """
 signal world_event_ended(world_event: WorldEvent)
 
+#|==============================|
+#|   Endgame Event Management   |
+#|==============================|
+"""
+@brief Emitted when a new endgame step is passed
+"""
+signal new_endgame_step(endgame_step: Enums.EventOutcomeType)
+
 
 #|==============================|
 #|      Stat Counter		       |

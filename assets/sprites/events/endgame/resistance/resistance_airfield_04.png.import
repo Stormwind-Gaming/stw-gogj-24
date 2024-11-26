@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bx6ox5qa3p4wi"
-path="res://.godot/imported/resistance_04.png-29c977890e4cd86bb8af111881852f12.ctex"
+uid="uid://y6tqn0ud3yvu"
+path="res://.godot/imported/resistance_airfield_04.png-c3362469724d6cd4c1d9a8d98d05e1ae.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/events/endgame/resistance/resistance_04.png"
-dest_files=["res://.godot/imported/resistance_04.png-29c977890e4cd86bb8af111881852f12.ctex"]
+source_file="res://assets/sprites/events/endgame/resistance/resistance_airfield_04.png"
+dest_files=["res://.godot/imported/resistance_airfield_04.png-c3362469724d6cd4c1d9a8d98d05e1ae.ctex"]
 
 [params]
 

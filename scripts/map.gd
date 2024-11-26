@@ -206,9 +206,6 @@ func _game_over() -> void:
 	$AnimationPlayer.play("fade_out")
 	$AnimationPlayer.animation_finished.connect(_show_game_over)
 
-	# Reset the game
-	GlobalRegistry.reset()
-
 """
 @brief Shows the game over screen
 """

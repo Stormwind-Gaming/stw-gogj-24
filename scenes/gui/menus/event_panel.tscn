@@ -3,7 +3,7 @@
 [ext_resource type="Theme" uid="uid://dexax20p2eewp" path="res://assets/themes/base_theme.tres" id="1_q7e31"]
 [ext_resource type="Script" path="res://scripts/gui/event_panel.gd" id="2_qjty7"]
 [ext_resource type="Texture2D" uid="uid://bl48i75s7giwq" path="res://assets/sprites/events/event_popup_base.png" id="2_vgsex"]
-[ext_resource type="Texture2D" path="res://assets/sprites/events/event_kia.png" id="3_qaba4"]
+[ext_resource type="Texture2D" uid="uid://bauijpxwb11e3" path="res://assets/sprites/events/event_blank.png" id="3_veh2s"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sfl1o"]
 texture = ExtResource("2_vgsex")
@@ -39,7 +39,7 @@ anchor_right = 1.0
 offset_right = 600.0
 offset_bottom = 650.0
 grow_horizontal = 2
-texture = ExtResource("3_qaba4")
+texture = ExtResource("3_veh2s")
 stretch_mode = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
@@ -73,7 +73,7 @@ layout_mode = 2
 [node name="Title" type="Label" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer/VBoxContainer"]
 custom_minimum_size = Vector2(10, 30)
 layout_mode = 2
-text = "Operation Compromised!"
+text = "<Title>"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
@@ -93,7 +93,7 @@ theme_override_constants/margin_bottom = 10
 [node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 15
-text = "Your agent’s luck has run out. In the shadows of [district name], they were cornered by an enemy patrol. [agent] fought valiantly, but overwhelming numbers led to their capture. The enemy now holds them in custody, and it is only a matter of time before they begin interrogations."
+text = "<text>"
 fit_content = true
 
 [node name="MarginContainer2" type="MarginContainer" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer/VBoxContainer"]
@@ -104,6 +104,6 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-text = "How unfortunate."
+text = "<button text>"
 
 [connection signal="button_up" from="PanelContainer/VBoxContainer/MarginContainer/PanelContainer/VBoxContainer/MarginContainer2/Button" to="." method="_on_button_pressed"]

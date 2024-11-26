@@ -56,10 +56,9 @@ theme_override_constants/margin_bottom = -84
 [node name="TabContainer" type="TabContainer" parent="NinePatchRect/MarginContainer"]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_vt46n")
-current_tab = 1
+current_tab = 0
 
 [node name="Sympathisers" type="PanelContainer" parent="NinePatchRect/MarginContainer/TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -113,6 +112,7 @@ size_flags_horizontal = 3
 columns = 2
 
 [node name="Known Characters" type="PanelContainer" parent="NinePatchRect/MarginContainer/TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 

@@ -59,44 +59,6 @@ extends PanelContainer
 """
 @export var dead: Label
 
-#|==============================|
-#|      Local Variables		      |
-#|==============================|
-
-var stats: Dictionary = {
-	"turns": 0,
-	"missions": {
-		"total": 0,
-		"success": 0
-	},
-	"subtlety": {
-		"total": 0,
-		"success": 0
-	},
-	"smarts": {
-		"total": 0,
-		"success": 0
-	},
-	"charm": {
-		"total": 0,
-		"success": 0
-	},
-	"espionage": {
-		"total": 0,
-		"success": 0
-	},
-	"surveillance": {
-		"total": 0,
-		"success": 0
-	},
-	"propaganda": {
-		"total": 0,
-		"success": 0
-	},
-	"mia": 0,
-	"injured": 0,
-	"dead": 0
-}
 
 
 #|==============================|
@@ -109,20 +71,6 @@ Connects signals and initializes UI elements.
 """
 func _ready():
 	EventBus.end_turn_complete.connect(_update_gui)
-	EventBus.stat_created.connect(_update_stat)
-	_update_gui(0)
-
-"""
-@brief Resets the stats container
-"""
-func reset() -> void:
-	stats = stats.duplicate(true)
-	for key in stats:
-		if typeof(stats[key]) == TYPE_DICTIONARY:
-			stats[key].success = 0
-			stats[key].total = 0
-		else:
-			stats[key] = 0
 
 #|==============================|
 #|      Event Handlers         |
@@ -130,59 +78,15 @@ func reset() -> void:
 """
 @brief Updates the GUI to reflect new game state.
 """
-
-func _update_gui(i: int):
-	stats.turns = i + 1
-	turns.text = str(stats.turns)
-	missions.text = "%s/%s" % [str(stats.missions.success), str(stats.missions.total)]
-	subtlety.text = "%s/%s" % [str(stats.subtlety.success), str(stats.subtlety.total)]
-	smarts.text = "%s/%s" % [str(stats.smarts.success), str(stats.smarts.total)]
-	charm.text = "%s/%s" % [str(stats.charm.success), str(stats.charm.total)]
-	espionage.text = "%s/%s" % [str(stats.espionage.success), str(stats.espionage.total)]
-	surveillance.text = "%s/%s" % [str(stats.surveillance.success), str(stats.surveillance.total)]
-	propaganda.text = "%s/%s" % [str(stats.propaganda.success), str(stats.propaganda.total)]
-	mia.text = str(stats.mia)
-	injured.text = str(stats.injured)
-	dead.text = str(stats.dead)
-
-"""
-@brief Update stats
-"""
-func _update_stat(stat: String, success: bool = false) -> void:
-	match stat:
-		"missions":
-			stats.missions.total += 1
-			if success:
-				stats.missions.success += 1
-		"subtlety":
-			stats.subtlety.total += 1
-			if success:
-				stats.subtlety.success += 1
-		"smarts":
-			stats.smarts.total += 1
-			if success:
-				stats.smarts.success += 1
-		"charm":
-			stats.charm.total += 1
-			if success:
-				stats.charm.success += 1
-		"espionage":
-			stats.espionage.total += 1
-			if success:
-				stats.espionage.success += 1
-		"surveillance":
-			stats.surveillance.total += 1
-			if success:
-				stats.surveillance.success += 1
-		"propaganda":
-			stats.propaganda.total += 1
-			if success:
-				stats.propaganda.success += 1
-		"mia":
-			stats.mia += 1
-		"injured":
-			stats.injured += 1
-		"dead":
-			stats.dead += 1
-		_:
-			pass
+func _update_gui(_i: int):
+	turns.text = str(GameStats.GameStats.stats.turns)
+	missions.text = "%s/%s" % [str(GameStats.stats.missions.success), str(GameStats.stats.missions.total)]
+	subtlety.text = "%s/%s" % [str(GameStats.stats.subtlety.success), str(GameStats.stats.subtlety.total)]
+	smarts.text = "%s/%s" % [str(GameStats.stats.smarts.success), str(GameStats.stats.smarts.total)]
+	charm.text = "%s/%s" % [str(GameStats.stats.charm.success), str(GameStats.stats.charm.total)]
+	espionage.text = "%s/%s" % [str(GameStats.stats.espionage.success), str(GameStats.stats.espionage.total)]
+	surveillance.text = "%s/%s" % [str(GameStats.stats.surveillance.success), str(GameStats.stats.surveillance.total)]
+	propaganda.text = "%s/%s" % [str(GameStats.stats.propaganda.success), str(GameStats.stats.propaganda.total)]
+	mia.text = str(GameStats.stats.mia)
+	injured.text = str(GameStats.stats.injured)
+	dead.text = str(GameStats.stats.dead)

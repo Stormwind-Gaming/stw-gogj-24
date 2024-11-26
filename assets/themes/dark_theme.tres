@@ -1,0 +1,70 @@
+[gd_resource type="Theme" load_steps=16 format=3 uid="uid://phap6y47fk5n"]
+
+[ext_resource type="FontFile" uid="uid://djwj10bhtdik" path="res://assets/fonts/veteran typewriter.ttf" id="1_47xbe"]
+[ext_resource type="StyleBox" uid="uid://6241urkjslaf" path="res://assets/textures/tw_button_style_box_texture.tres" id="2_r76bf"]
+[ext_resource type="StyleBox" uid="uid://deqxdkxwpparc" path="res://assets/textures/tw_button_style_box_texture_hover.tres" id="3_jcxlr"]
+[ext_resource type="Texture2D" uid="uid://455da6nc8v33" path="res://assets/icons/ticked.png" id="4_jnkeh"]
+[ext_resource type="Texture2D" uid="uid://dqp5w62mpq7pt" path="res://assets/icons/unticked.png" id="5_dgr1w"]
+[ext_resource type="Texture2D" uid="uid://ci1j5kbaiq0u5" path="res://assets/icons/arrow-left-bold-box.png" id="6_3sv54"]
+[ext_resource type="Texture2D" uid="uid://bbur8c3oj6230" path="res://assets/icons/arrow-right-bold-box.png" id="7_8b6t8"]
+[ext_resource type="StyleBox" uid="uid://co18tu22sbler" path="res://assets/textures/folder_tab_box_texture_hover.tres" id="8_s17e2"]
+[ext_resource type="StyleBox" uid="uid://b4hyjh8fafst3" path="res://assets/textures/folder_tab_box_texture_selected.tres" id="9_6cm8p"]
+[ext_resource type="StyleBox" uid="uid://d1vg5m2df7td2" path="res://assets/textures/folder_tab_box_texture.tres" id="10_fla3f"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cfsho"]
+content_margin_left = 10.0
+content_margin_top = 15.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.929412, 0.85098, 0.713726, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hwnya"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kedib"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_31g3q"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_stxgi"]
+
+[resource]
+AcceptDialog/fonts/title_font = ExtResource("1_47xbe")
+AcceptDialog/styles/panel = SubResource("StyleBoxFlat_cfsho")
+Button/fonts/font = ExtResource("1_47xbe")
+Button/styles/focus = ExtResource("2_r76bf")
+Button/styles/hover = ExtResource("3_jcxlr")
+Button/styles/normal = ExtResource("2_r76bf")
+Button/styles/pressed = ExtResource("2_r76bf")
+CheckButton/colors/font_color = Color(0, 0, 0, 1)
+CheckButton/colors/font_pressed_color = Color(1, 1, 1, 1)
+CheckButton/font_sizes/font_size = 14
+CheckButton/icons/checked = ExtResource("4_jnkeh")
+CheckButton/icons/unchecked = ExtResource("5_dgr1w")
+CheckButton/styles/hover = ExtResource("3_jcxlr")
+Label/font_sizes/font_size = 18
+Label/fonts/font = ExtResource("1_47xbe")
+OptionButton/styles/hover = ExtResource("2_r76bf")
+PanelContainer/styles/panel = SubResource("StyleBoxEmpty_hwnya")
+RichTextLabel/fonts/bold_font = ExtResource("1_47xbe")
+RichTextLabel/fonts/normal_font = ExtResource("1_47xbe")
+TabContainer/colors/font_selected_color = Color(1, 1, 1, 1)
+TabContainer/colors/font_unselected_color = Color(0, 0, 0, 1)
+TabContainer/fonts/font = ExtResource("1_47xbe")
+TabContainer/icons/decrement = ExtResource("6_3sv54")
+TabContainer/icons/decrement_highlight = ExtResource("6_3sv54")
+TabContainer/icons/increment = ExtResource("7_8b6t8")
+TabContainer/icons/increment_highlight = ExtResource("7_8b6t8")
+TabContainer/styles/panel = SubResource("StyleBoxEmpty_kedib")
+TabContainer/styles/tab_focus = SubResource("StyleBoxEmpty_31g3q")
+TabContainer/styles/tab_hovered = ExtResource("8_s17e2")
+TabContainer/styles/tab_selected = ExtResource("9_6cm8p")
+TabContainer/styles/tab_unselected = ExtResource("10_fla3f")
+TabContainer/styles/tabbar_background = SubResource("StyleBoxEmpty_stxgi")

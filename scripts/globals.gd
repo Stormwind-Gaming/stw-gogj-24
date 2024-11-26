@@ -1,6 +1,13 @@
 extends Node
 
 #|==============================|
+#|      Theme References       |
+#|==============================|
+
+var base_theme = preload("res://assets/themes/base_theme.tres")
+var dark_theme = preload("res://assets/themes/dark_theme.tres")
+
+#|==============================|
 #|      Shader References       |
 #|==============================|
 
@@ -49,6 +56,7 @@ var load_csvs = {
 	"items": "res://data/items.csv",
 	"event_outcome_text": "res://data/event_outcome_text.csv",
 	"world_event_text": "res://data/world_event_text.csv",
+	"end_screen_text": "res://data/end_screen_text.csv"
 }
 
 #|==============================|
@@ -66,6 +74,7 @@ var poi_names = []
 var rumour_text = []
 var event_outcome_text = {}
 var world_event_text = []
+var end_screen_text = []
 #|==============================|
 #|      Data Loading           |
 #|==============================|
@@ -83,6 +92,7 @@ func _ready() -> void:
 	_load_rumour_text(load_csvs["rumour_text"])
 	_load_event_outcome_text(load_csvs["event_outcome_text"])
 	_load_world_event_text(load_csvs["world_event_text"])
+	_load_end_screen_text(load_csvs["end_screen_text"])
 
 """
 @brief Loads town names from CSV
@@ -194,6 +204,17 @@ func _load_world_event_text(path: String) -> void:
 			"event_title": record["event_title"].strip_edges(),
 			"event_button_text": record["event_button_text"].strip_edges()
 		})
+
+func _load_end_screen_text(path: String) -> void:
+	var csv_data = load(path)
+	for record in csv_data.records:
+		var category = event_outcome_category_map[record["endgame_event"].to_upper()]
+		var text = record["endgame_text"]
+
+		end_screen_text.append({
+			"category": category,
+			"text": text,
+		})
 		
 #|==============================|
 #|      Data Retrieval         |
@@ -290,6 +311,15 @@ func get_world_event_text(severity: Enums.WorldEventSeverity):
 	if filtered_world_event_text.size() == 0:
 		return null
 	return filtered_world_event_text[randi() % filtered_world_event_text.size()]
+
+"""
+@brief Gets the text for an endgame event of a given category
+@param category The category of the endgame event to get the text for
+@returns The text for the endgame event
+"""
+func get_end_screen_text(category: Enums.EventOutcomeType):
+	# there is only one text per category
+	return end_screen_text.filter(func(record): return record.category == category)[0].text
 
 #|==============================|
 #|      Enum Mappings          |
@@ -430,8 +460,6 @@ var event_outcome_category_map = {
 	"SYMPATHY_BREAKPOINT_LOW": Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_LOW,
 	"SYMPATHY_BREAKPOINT_MEDIUM": Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_MEDIUM,
 	"SYMPATHY_BREAKPOINT_HIGH": Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_HIGH,
-	"HEAT_ENDGAME": Enums.EventOutcomeType.HEAT_ENDGAME,
-	"RESISTANCE_ENDGAME": Enums.EventOutcomeType.RESISTANCE_ENDGAME,
 	"WORLD_EVENT_MINOR_INCREASED_PATROLS": Enums.EventOutcomeType.WORLD_EVENT_MINOR_INCREASED_PATROLS,
 	"WORLD_EVENT_MINOR_SECRET_POLICE": Enums.EventOutcomeType.WORLD_EVENT_MINOR_SECRET_POLICE,
 	"WORLD_EVENT_MINOR_AIRBASE": Enums.EventOutcomeType.WORLD_EVENT_MINOR_AIRBASE,
@@ -441,7 +469,33 @@ var event_outcome_category_map = {
 	"WORLD_EVENT_SIGNIFICANT_MILITARY_SHIP": Enums.EventOutcomeType.WORLD_EVENT_SIGNIFICANT_MILITARY_SHIP,
 	"WORLD_EVENT_MAJOR_SECRET_POLICE": Enums.EventOutcomeType.WORLD_EVENT_MAJOR_SECRET_POLICE,
 	"WORLD_EVENT_MAJOR_POLICE_COMMANDER": Enums.EventOutcomeType.WORLD_EVENT_MAJOR_POLICE_COMMANDER,
-	"WORLD_EVENT_MAJOR_SAFEHOUSE_DISCOVERED": Enums.EventOutcomeType.WORLD_EVENT_MAJOR_SAFEHOUSE_DISCOVERED
+	"WORLD_EVENT_MAJOR_SAFEHOUSE_DISCOVERED": Enums.EventOutcomeType.WORLD_EVENT_MAJOR_SAFEHOUSE_DISCOVERED,
+	# endgame
+	"RESISTANCE_AIRFIELD_01": Enums.EventOutcomeType.RESISTANCE_AIRFIELD_01,
+	"RESISTANCE_AIRFIELD_02": Enums.EventOutcomeType.RESISTANCE_AIRFIELD_02,
+	"RESISTANCE_AIRFIELD_03": Enums.EventOutcomeType.RESISTANCE_AIRFIELD_03,
+	"RESISTANCE_AIRFIELD_04": Enums.EventOutcomeType.RESISTANCE_AIRFIELD_04,
+	"RESISTANCE_AIRFIELD_05": Enums.EventOutcomeType.RESISTANCE_AIRFIELD_05,
+	"RESISTANCE_GENERAL_01": Enums.EventOutcomeType.RESISTANCE_GENERAL_01,
+	"RESISTANCE_GENERAL_02": Enums.EventOutcomeType.RESISTANCE_GENERAL_02,
+	"RESISTANCE_GENERAL_03": Enums.EventOutcomeType.RESISTANCE_GENERAL_03,
+	"RESISTANCE_GENERAL_04": Enums.EventOutcomeType.RESISTANCE_GENERAL_04,
+	"RESISTANCE_GENERAL_05": Enums.EventOutcomeType.RESISTANCE_GENERAL_05,
+	"HEAT_01": Enums.EventOutcomeType.HEAT_01,
+	"HEAT_PORT_02": Enums.EventOutcomeType.HEAT_PORT_02,
+	"HEAT_PORT_03": Enums.EventOutcomeType.HEAT_PORT_03,
+	"HEAT_PORT_04": Enums.EventOutcomeType.HEAT_PORT_04,
+	"HEAT_TRAIN_02": Enums.EventOutcomeType.HEAT_TRAIN_02,
+	"HEAT_TRAIN_03": Enums.EventOutcomeType.HEAT_TRAIN_03,
+	"HEAT_TRAIN_04": Enums.EventOutcomeType.HEAT_TRAIN_04,
+	"HEAT_TRAIN_SUCCESS": Enums.EventOutcomeType.HEAT_TRAIN_SUCCESS,
+	"HEAT_PORT_SUCCESS": Enums.EventOutcomeType.HEAT_PORT_SUCCESS,
+	"RESISTANCE_AIRFIELD_SUCCESS": Enums.EventOutcomeType.RESISTANCE_AIRFIELD_SUCCESS,
+	"RESISTANCE_GENERAL_SUCCESS": Enums.EventOutcomeType.RESISTANCE_GENERAL_SUCCESS,
+	"HEAT_TRAIN_FAILURE": Enums.EventOutcomeType.HEAT_TRAIN_FAILURE,
+	"HEAT_PORT_FAILURE": Enums.EventOutcomeType.HEAT_PORT_FAILURE,
+	"RESISTANCE_AIRFIELD_FAILURE": Enums.EventOutcomeType.RESISTANCE_AIRFIELD_FAILURE,
+	"RESISTANCE_GENERAL_FAILURE": Enums.EventOutcomeType.RESISTANCE_GENERAL_FAILURE
 }
 
 var world_event_category_map = {
@@ -838,9 +892,6 @@ var event_images = {
 	Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_LOW: preload("res://assets/sprites/events/sympathy_breakpoint_low.png"),
 	Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_MEDIUM: preload("res://assets/sprites/events/sympathy_breakpoint_medium.png"),
 	Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_HIGH: preload("res://assets/sprites/events/sympathy_breakpoint_high.png"),
-	# Endgame Events
-	Enums.EventOutcomeType.HEAT_ENDGAME: preload("res://assets/sprites/events/event_heat_endgame.png"),
-	Enums.EventOutcomeType.RESISTANCE_ENDGAME: preload("res://assets/sprites/events/event_heat_resistance.png"),
 }
 
 var world_event_images = {
@@ -855,6 +906,42 @@ var world_event_images = {
 	Enums.WorldEventType.MAJOR_SECRET_POLICE: preload("res://assets/sprites/events/event_major_secret_police.png"),
 	Enums.WorldEventType.MAJOR_POLICE_COMMANDER: preload("res://assets/sprites/events/event_major_police_commander.png"),
 	Enums.WorldEventType.MAJOR_SAFEHOUSE_DISCOVERED: preload("res://assets/sprites/events/event_major_safehouse_discovered.png"),
+}
+
+var endgame_event_images = {
+	# heat
+	Enums.EventOutcomeType.HEAT_01: preload("res://assets/sprites/events/endgame/heat/heat_01.png"),
+	Enums.EventOutcomeType.HEAT_PORT_02: preload("res://assets/sprites/events/endgame/heat/heat_port_02.png"),
+	Enums.EventOutcomeType.HEAT_PORT_03: preload("res://assets/sprites/events/endgame/heat/heat_port_03.png"),
+	Enums.EventOutcomeType.HEAT_PORT_04: preload("res://assets/sprites/events/endgame/heat/heat_port_04.png"),
+	Enums.EventOutcomeType.HEAT_TRAIN_02: preload("res://assets/sprites/events/endgame/heat/heat_train_02.png"),
+	Enums.EventOutcomeType.HEAT_TRAIN_03: preload("res://assets/sprites/events/endgame/heat/heat_train_03.png"),
+	Enums.EventOutcomeType.HEAT_TRAIN_04: preload("res://assets/sprites/events/endgame/heat/heat_train_04.png"),
+	# resistance
+	Enums.EventOutcomeType.RESISTANCE_AIRFIELD_01: preload("res://assets/sprites/events/event_heat_resistance.png"),
+	Enums.EventOutcomeType.RESISTANCE_AIRFIELD_02: preload("res://assets/sprites/events/endgame/resistance/resistance_airfield_02.png"),
+	Enums.EventOutcomeType.RESISTANCE_AIRFIELD_03: preload("res://assets/sprites/events/endgame/resistance/resistance_airfield_03.png"),
+	Enums.EventOutcomeType.RESISTANCE_AIRFIELD_04: preload("res://assets/sprites/events/endgame/resistance/resistance_airfield_04.png"),
+	Enums.EventOutcomeType.RESISTANCE_AIRFIELD_05: preload("res://assets/sprites/events/endgame/resistance/resistance_airfield_05.png"),
+	Enums.EventOutcomeType.RESISTANCE_GENERAL_01: preload("res://assets/sprites/events/event_heat_resistance.png"),
+	# Enums.EventOutcomeType.RESISTANCE_GENERAL_02: preload("res://assets/sprites/events/endgame/resistance/resistance_general_02.png"),
+	# Enums.EventOutcomeType.RESISTANCE_GENERAL_03: preload("res://assets/sprites/events/endgame/resistance/resistance_general_03.png"),
+	# Enums.EventOutcomeType.RESISTANCE_GENERAL_04: preload("res://assets/sprites/events/endgame/resistance/resistance_general_04.png"),
+	# Enums.EventOutcomeType.RESISTANCE_GENERAL_05: preload("res://assets/sprites/events/endgame/resistance/resistance_general_05.png"),
+	
+}
+
+var endgame_page_images = {
+	# win
+	Enums.EventOutcomeType.HEAT_PORT_SUCCESS: preload("res://assets/sprites/events/endgame/win_port.jpg"),
+	Enums.EventOutcomeType.HEAT_TRAIN_SUCCESS: preload("res://assets/sprites/events/endgame/win_train.webp"),
+	Enums.EventOutcomeType.RESISTANCE_AIRFIELD_SUCCESS: preload("res://assets/sprites/events/endgame/win_airfield.jpg"),
+	Enums.EventOutcomeType.RESISTANCE_AIRFIELD_FAILURE: preload("res://assets/sprites/events/endgame/win_airfield.jpg"),
+	# Enums.EventOutcomeType.RESISTANCE_GENERAL_SUCCESS: preload("res://assets/sprites/events/endgame/win_general.jpg"),
+	# Enums.EventOutcomeType.RESISTANCE_GENERAL_FAILURE: preload("res://assets/sprites/events/endgame/win_general.jpg"),
+	# lose
+	Enums.EventOutcomeType.HEAT_PORT_FAILURE: preload("res://assets/sprites/events/endgame/lose_port.webp"),
+	Enums.EventOutcomeType.HEAT_TRAIN_FAILURE: preload("res://assets/sprites/events/endgame/lose_train.webp"),
 }
 
 
