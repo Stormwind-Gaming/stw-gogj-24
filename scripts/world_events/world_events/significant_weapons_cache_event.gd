@@ -16,8 +16,13 @@ func _init(config: WorldEventConfig) -> void:
 	})
 
 	# setup
-	event_text = config.event_text.replace("{district}", subject_district.district_name)
+	config.event_text = config.event_text.replace("{district}", subject_district.district_name)
+	event_text = config.event_text
+
+	config.event_end_text = config.event_end_text.replace("{district}", subject_district.district_name)
 	event_end_text = config.event_end_text
+
+	config.effect_text = config.effect_text.replace("{district}", subject_district.district_name)
 	effect_text = config.effect_text
 
 	LogDuck.d("Event text configured", {
@@ -46,14 +51,14 @@ func _event_start() -> void:
 	var rumour_count = 0
 	var expired_count = 0
 	for rumour in GlobalRegistry.intel.get_list(GlobalRegistry.LIST_RUMOURS):
-		rumour.turns_remaining -= Constants.WORLD_EVENT_SIGNIFICANT_WEAPONS_CACHE_RUMOUR_DURATION_REDUCTION
+		rumour.rumour_subject_expiry -= Constants.WORLD_EVENT_SIGNIFICANT_WEAPONS_CACHE_RUMOUR_DURATION_REDUCTION
 		rumour_count += 1
 		
 		# if the rumour has expired, remove it
-		if rumour.turns_remaining <= 0:
+		if rumour.rumour_subject_expiry <= 0:
 			LogDuck.d("Removing expired rumour", {
 				"rumour_text": rumour.rumour_text,
-				"previous_turns": rumour.turns_remaining + Constants.WORLD_EVENT_SIGNIFICANT_WEAPONS_CACHE_RUMOUR_DURATION_REDUCTION
+				"previous_turns": rumour.rumour_subject_expiry + Constants.WORLD_EVENT_SIGNIFICANT_WEAPONS_CACHE_RUMOUR_DURATION_REDUCTION
 			})
 			GlobalRegistry.intel.remove_item(rumour)
 			rumour.queue_free()

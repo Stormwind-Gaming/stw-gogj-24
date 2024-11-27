@@ -213,6 +213,7 @@ func _enable_interaction() -> void:
 """
 func _game_over() -> void:
 	LogDuck.d("Map: Game over triggered")
+	EventBus.close_all_windows.emit()
 	_disable_interaction(0)
 	$AnimationPlayer.play("fade_out")
 	$AnimationPlayer.animation_finished.connect(_show_game_over)

@@ -16,13 +16,18 @@ func _init(config: WorldEventConfig) -> void:
 	})
 
 	config.event_text = config.event_text.replace("{district}", subject_district.district_name)
+	event_text = config.event_text
+
+	config.event_end_text = config.event_end_text.replace("{district}", subject_district.district_name)
 	event_end_text = config.event_end_text
+
+	config.effect_text = config.effect_text.replace("{district}", subject_district.district_name)
 	effect_text = config.effect_text
 
 	LogDuck.d("Event text configured", {
 		"event_text": config.event_text,
-		"end_text": event_end_text,
-		"effect_text": effect_text
+		"end_text": config.event_end_text,
+		"effect_text": config.effect_text
 	})
 
 	super(config.event_severity)

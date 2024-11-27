@@ -16,7 +16,14 @@ func _init(config: WorldEventConfig) -> void:
 		"district": subject_district.district_name
 	})
 
+	# setup
+	config.event_text = config.event_text.replace("{district}", subject_district.district_name)
+	event_text = config.event_text
+
+	config.event_end_text = config.event_end_text.replace("{district}", subject_district.district_name)
 	event_end_text = config.event_end_text
+	
+	config.effect_text = config.effect_text.replace("{district}", subject_district.district_name)
 	effect_text = config.effect_text
 
 	LogDuck.d("Event text configured", {

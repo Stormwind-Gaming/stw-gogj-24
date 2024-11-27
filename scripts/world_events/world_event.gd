@@ -15,7 +15,7 @@ var severity: Enums.WorldEventSeverity
 """
 @brief The data of this world-event
 """
-var event_data: Dictionary
+var event_data: WorldEventConfig
 
 """
 @brief The text of this world-event
@@ -47,13 +47,18 @@ var event_end_text: String
 """
 var effect_text: String
 
+"""
+@brief Stopper for if this world event failed to initialize 
+"""
+var failed_to_init: bool = false
+
+
 func _init(init_severity: Enums.WorldEventSeverity) -> void:
 	LogDuck.d("Initializing world event", {"severity": init_severity})
 	severity = init_severity
 
 	_event_start()
 
-	GlobalRegistry.turn_logs.add_item(str(GameController.turn_number), TurnLog.new(event_text, Enums.LogType.WORLD_EVENT))
 	LogDuck.d("World event initialized", {
 		"text": event_text,
 		"turn": GameController.turn_number,
@@ -87,7 +92,9 @@ func _on_end_turn(turn_number: int) -> void:
 			"event_end_text": event_end_text,
 			"turn": GameController.turn_number
 		})
-		GlobalRegistry.turn_logs.add_item(str(GameController.turn_number), TurnLog.new(event_end_text, Enums.LogType.WORLD_EVENT))
+
+		if event_data.event_end_text != "":
+			GlobalRegistry.turn_logs.add_item(str(GameController.turn_number), TurnLog.new(event_data.event_end_text, Enums.LogType.WORLD_EVENT))
 		
 		EventBus.world_event_ended.emit(self)
 		_event_end()

@@ -67,7 +67,7 @@ func set_event_details(event_type: Enums.EventOutcomeType, characters: Array[Cha
 		title_label.text = title_label.text.replace("{district}", poi.parent_district.district_name).replace("{poi}", poi.poi_name)
 
 
-func set_event_details_world_event(world_event: WorldEvent, config: WorldEventConfig) -> void:
+func set_event_details_world_event(world_event: WorldEvent) -> void:
 	if not world_event.event_data:
 		return
 	# get the event type image
@@ -77,7 +77,7 @@ func set_event_details_world_event(world_event: WorldEvent, config: WorldEventCo
 	# set the title, text, and button text
 	
 	title_label.text = event_outcome_text_object.event_title
-	text_label.text = config.event_text
+	text_label.text = world_event.event_data.event_text
 	button.text = event_outcome_text_object.event_button_text
 	
 	# replace the placeholders in the text

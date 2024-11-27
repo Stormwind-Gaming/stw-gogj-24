@@ -23,8 +23,13 @@ func _init(config: WorldEventConfig) -> void:
 	})
 
 	# setup
-	config.event_text = config.event_text.replace("{character}", subject_character.get_full_name())
+	config.event_text = config.event_text.replace("{character}", subject_character.get_full_name()).replace("{civic_district}", subject_district_civic.district_name).replace("{military_district}", subject_district_military.district_name)
+	event_text = config.event_text
+
+	config.event_end_text = config.event_end_text.replace("{character}", subject_character.get_full_name()).replace("{civic_district}", subject_district_civic.district_name).replace("{military_district}", subject_district_military.district_name)
 	event_end_text = config.event_end_text
+
+	config.effect_text = config.effect_text.replace("{character}", subject_character.get_full_name()).replace("{civic_district}", subject_district_civic.district_name).replace("{military_district}", subject_district_military.district_name)
 	effect_text = config.effect_text
 
 	LogDuck.d("Event text configured", {

@@ -10,6 +10,13 @@ func _init(config: WorldEventConfig) -> void:
 
 	turn_to_end = GameController.turn_number + Constants.WORLD_EVENT_SIGNIFICANT_SYMPATHISER_CAPTURED_DURATION
 	var subject_characters = GlobalRegistry.characters.get_list(GlobalRegistry.LIST_SYMPATHISER_NOT_RECRUITED) + GlobalRegistry.characters.get_list(GlobalRegistry.LIST_SYMPATHISER_RECRUITED)
+	#	filter out any characters that are injured
+	subject_characters = subject_characters.filter(func(c): return c.char_state != Enums.CharacterState.INJURED)
+	if subject_characters.size() == 0:
+		LogDuck.e("No available characters for significant sympathiser captured event")
+		failed_to_init = true
+		return
+
 	subject_character = subject_characters[randi() % subject_characters.size()]
 	subject_district = GlobalRegistry.districts.find_item(GlobalRegistry.LIST_ALL_DISTRICTS, "district_type", Enums.DistrictType.CIVIC)
 
@@ -20,8 +27,13 @@ func _init(config: WorldEventConfig) -> void:
 	})
 
 	# setup
-	config.event_text = config.event_text.replace("{character}", subject_character.get_full_name())
+	config.event_text = config.event_text.replace("{character}", subject_character.get_full_name()).replace("{district}", subject_district.district_name)
+	event_text = config.event_text
+
+	config.event_end_text = config.event_end_text.replace("{character}", subject_character.get_full_name()).replace("{district}", subject_district.district_name)
 	event_end_text = config.event_end_text
+
+	config.effect_text = config.effect_text.replace("{character}", subject_character.get_full_name()).replace("{district}", subject_district.district_name)
 	effect_text = config.effect_text
 
 	LogDuck.d("Event text configured", {
@@ -35,13 +47,6 @@ func _init(config: WorldEventConfig) -> void:
 func _event_start() -> void:
 	LogDuck.d("Starting significant sympathiser captured event")
 	
-	LogDuck.d("Modifying character sympathy", {
-		"character": subject_character.get_full_name(),
-		"current_sympathy": subject_character.char_sympathy,
-		"change": Constants.WORLD_EVENT_SIGNIFICANT_SYMPATHISER_CAPTURED_SYMPATHY_CHANGE
-	})
-	subject_character.char_sympathy += Constants.WORLD_EVENT_SIGNIFICANT_SYMPATHISER_CAPTURED_SYMPATHY_CHANGE
-
 	LogDuck.d("Setting character to injured state", {
 		"character": subject_character.get_full_name(),
 		"previous_state": subject_character.char_state,
@@ -49,6 +54,13 @@ func _event_start() -> void:
 	})
 	subject_character.set_char_state(Enums.CharacterState.INJURED)
 	subject_character.injured_return_on_turn = GameController.turn_number + Constants.WORLD_EVENT_SIGNIFICANT_SYMPATHISER_CAPTURED_DURATION
+
+	LogDuck.d("Modifying character sympathy", {
+		"character": subject_character.get_full_name(),
+		"current_sympathy": subject_character.char_sympathy,
+		"change": Constants.WORLD_EVENT_SIGNIFICANT_SYMPATHISER_CAPTURED_SYMPATHY_CHANGE
+	})
+	subject_character.char_sympathy += Constants.WORLD_EVENT_SIGNIFICANT_SYMPATHISER_CAPTURED_SYMPATHY_CHANGE
 
 	LogDuck.d("Applying district heat change", {
 		"district": subject_district.district_name,

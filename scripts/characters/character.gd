@@ -126,7 +126,7 @@ func get_char_recruitment_state() -> Enums.CharacterRecruitmentState:
 """
 func set_char_recruitment_state(value: Enums.CharacterRecruitmentState) -> void:
 	# Make sure that if we're setting this character to a sympathiser that they have appropriate sympathy
-	if ((value == Enums.CharacterRecruitmentState.SYMPATHISER_NOT_RECRUITED or value == Enums.CharacterRecruitmentState.SYMPATHISER_RECRUITED) and char_sympathy < Constants.NEW_SYMPATHISER_THRESHOLD):
+	if ((value == Enums.CharacterRecruitmentState.SYMPATHISER_NOT_RECRUITED or value == Enums.CharacterRecruitmentState.SYMPATHISER_RECRUITED) and char_sympathy and char_sympathy < Constants.NEW_SYMPATHISER_THRESHOLD):
 		push_warning('Character sympathy level is too low to be recruited as a sympathiser.')
 		return
 	
@@ -150,8 +150,9 @@ func set_char_state(value: Enums.CharacterState) -> void:
 	char_state = value
 
 	# If the character is injured, they are no longer in the team
-	if char_state == Enums.CharacterState.INJURED:
+	if value == Enums.CharacterState.INJURED:
 		char_recruitment_state = Enums.CharacterRecruitmentState.SYMPATHISER_NOT_RECRUITED
+		return
 
 	EventBus.character_state_changed.emit(self)
 

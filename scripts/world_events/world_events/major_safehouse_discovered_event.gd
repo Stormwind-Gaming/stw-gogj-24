@@ -3,7 +3,7 @@ extends WorldEvent
 class_name MajorSafehouseDiscoveredEvent
 
 var subject_district: District
-var subject_characters: Array[Character]
+var subject_characters: Array
 
 func _init(config: WorldEventConfig) -> void:
 	LogDuck.d("Initializing major safehouse discovered event")
@@ -17,9 +17,14 @@ func _init(config: WorldEventConfig) -> void:
 	})
 
 	# setup
-	event_text = config.event_text.replace("{district}", subject_district.district_name)
-	event_end_text = config.event_end_text
+	config.event_text = config.event_text.replace("{district}", subject_district.district_name)
+	event_text = config.event_button_text
+
+	config.effect_text = config.effect_text.replace("{district}", subject_district.district_name)
 	effect_text = config.effect_text
+
+	config.event_end_text = config.event_end_text.replace("{district}", subject_district.district_name)
+	event_end_text = config.event_end_text
 
 	LogDuck.d("Event text configured", {
 		"event_text": event_text,

@@ -161,6 +161,7 @@ signal close_radial_menu()
 """
 signal open_poi_information(poi: PointOfInterest)
 
+
 #|==============================|
 #|      World-event Management |
 #|==============================|

@@ -19,7 +19,12 @@ func _init(config: WorldEventConfig) -> void:
 
 	# setup
 	config.event_text = config.event_text.replace("{character}", subject_character.get_full_name())
+	event_text = config.event_text
+
+	config.event_end_text = config.event_end_text.replace("{character}", subject_character.get_full_name())
 	event_end_text = config.event_end_text
+
+	config.effect_text = config.effect_text.replace("{character}", subject_character.get_full_name())
 	effect_text = config.effect_text
 
 	LogDuck.d("Event text configured", {

@@ -535,7 +535,7 @@ var WORLD_EVENT_SIGNIFICANT_WEAPONS_CACHE_HEAT_CHANGE: int = 20
 """
 @brief Intel time left change from significant weapon cache world events
 """
-var WORLD_EVENT_SIGNIFICANT_WEAPONS_CACHE_INTEL_TIME_CHANGE: int = 3
+var WORLD_EVENT_SIGNIFICANT_WEAPONS_CACHE_RUMOUR_DURATION_REDUCTION: int = 3
 
 """
 @brief Duration of significant military ship world events (turns)

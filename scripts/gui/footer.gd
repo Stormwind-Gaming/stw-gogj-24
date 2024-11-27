@@ -53,6 +53,8 @@ func _ready():
 	show_town_details_list_button.connect("pressed", Callable(self, "_on_show_town_details_list_button_pressed"))
 	turn_button.connect("pressed", Callable(self, "_on_turn_button_pressed"))
 
+	EventBus.end_turn_complete.connect(_on_show_log_list_button_pressed)
+
 #|==============================|
 #|      Event Handlers         |
 #|==============================|
@@ -95,7 +97,7 @@ Creates and displays the log list if not already visible.
 
 @param end_turn_button Whether this log list is being shown after ending a turn
 """
-func _on_show_log_list_button_pressed(end_turn_button: bool = false):
+func _on_show_log_list_button_pressed(_i: int):
 	# Instance the log list scene
 	var log_list_instance = Globals.log_list_scene.instantiate()
 	# if end_turn_button:
@@ -149,6 +151,5 @@ func _on_turn_button_pressed():
 Processes the turn and shows the end turn log.
 """
 func _on_turn_confirmed():
+	EventBus.close_all_windows.emit()
 	GameController.process_turn()
-	_on_show_log_list_button_pressed(true)
-	# log_list_new_items_container.visible = true

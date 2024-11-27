@@ -18,6 +18,7 @@ static func randomise_world_event_from_heat(heat: int) -> WorldEvent:
 
 	LogDuck.d("Calculated event chance", {"chance": event_chance, "heat": heat})
 
+	event_chance = 100
 	if randf() * 100 < event_chance:
 		LogDuck.d("World event triggered")
 		# Determine event severity based on heat levels
@@ -49,10 +50,7 @@ static func randomise_world_event_from_heat(heat: int) -> WorldEvent:
 static func create_world_event(severity: Enums.WorldEventSeverity) -> WorldEvent:
 	LogDuck.d("Creating world event", {"severity": severity})
 
-	# TODO: Implement the endgame events
-	if severity == Enums.WorldEventSeverity.ENDGAME:
-		LogDuck.d("Endgame event requested (not implemented)")
-		pass
+	severity = Enums.WorldEventSeverity.MAJOR
 
 	var event_data = Globals.get_world_event_text(severity)
 	# check event text as can return null if no event text found
@@ -100,17 +98,26 @@ static func create_world_event(severity: Enums.WorldEventSeverity) -> WorldEvent
 			LogDuck.e("Unknown world event type", {"event_type": event_data.event_type})
 			push_error("Unknown world event type: ", event_data.event_type)
 			return null
+	
+	if event.failed_to_init:
+		LogDuck.e("Failed to create world event", {"event_type": event_data.event_type})
+		return null
 
-	event.event_data = event_data
-	event.event_text = event_data.event_text
-	event.effect_text = event_data.effect_text
+	event.event_data = config
+	event.effect_text = event.event_data.effect_text
+	event.event_end_text = event.event_data.event_end_text
 
+	event.event_data.event_text = event.event_data.event_text.replace("{town}", GameController.town_details.town_name)
+	event.event_text = event.event_data.event_text
+
+
+	GlobalRegistry.turn_logs.add_item(str(GameController.turn_number), TurnLog.new(event.event_data.event_text, Enums.LogType.WORLD_EVENT))
 	LogDuck.d("World event created", {
-		"type": event_data.event_type,
-		"text": event.event_text,
-		"effect": event.effect_text
+		"type": event.event_data.event_type,
+		"text": event.event_data.event_text,
+		"effect": event.event_data.effect_text
 	})
 
-	EventBus.world_event_created.emit(event, config)
+	EventBus.world_event_created.emit(event)
 
 	return event

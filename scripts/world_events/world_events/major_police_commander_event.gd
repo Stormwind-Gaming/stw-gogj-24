@@ -2,14 +2,14 @@ extends WorldEvent
 
 class_name MajorPoliceCommanderEvent
 
-var subject_districts: Array[District]
+var subject_districts: Array
 var subject_district_civic: District
 
 func _init(config: WorldEventConfig) -> void:
 	LogDuck.d("Initializing major police commander event")
 
 	turn_to_end = GameController.turn_number + Constants.WORLD_EVENT_MAJOR_POLICE_COMMANDER_DURATION
-	subject_districts = GlobalRegistry.get_list(GlobalRegistry.LIST_ALL_DISTRICTS)
+	subject_districts = GlobalRegistry.districts.get_list(GlobalRegistry.LIST_ALL_DISTRICTS)
 	subject_district_civic = GlobalRegistry.districts.find_item(GlobalRegistry.LIST_ALL_DISTRICTS, "district_type", Enums.DistrictType.CIVIC)
 
 	LogDuck.d("Major police commander event setup", {
@@ -19,8 +19,14 @@ func _init(config: WorldEventConfig) -> void:
 	})
 
 	# setup
+	config.event_end_text = config.event_end_text.replace("{district}", subject_district_civic.district_name)
 	event_end_text = config.event_end_text
+
+	config.effect_text = config.effect_text.replace("{district}", subject_district_civic.district_name)
 	effect_text = config.effect_text
+
+	config.event_text = config.event_text.replace("{district}", subject_district_civic.district_name)
+	event_text = config.event_text
 
 	super(config.event_severity)
 
