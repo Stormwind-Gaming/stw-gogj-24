@@ -71,6 +71,7 @@ func _ready() -> void:
 	calendar = Calendar.new()
 	town_details = TownDetails.new()
 	EventBus.selected_radial_option.connect(_on_radial_option_selected)
+	EventBus.close_all_windows.connect(_on_close_all_windows)
 
 """
 @brief Resets the GameController
@@ -84,6 +85,19 @@ func reset() -> void:
 	resistance_endgame_step = 0
 	max_agents = Constants.INIT_MAX_AGENTS
 	endgame_end_type = Enums.EventOutcomeType.NONE
+
+
+
+#|==============================|
+#|      Event Handlers         |
+#|==============================|
+
+"""
+@brief Clears local data when all windows are closed
+"""
+func _on_close_all_windows() -> void:
+	radial_menu_open = null
+	poi_for_radial = null
 
 
 #|==============================|
