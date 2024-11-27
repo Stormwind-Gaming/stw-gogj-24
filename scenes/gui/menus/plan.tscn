@@ -120,6 +120,7 @@ size_flags_vertical = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/CraftingContainer/WhoMarginContainer"]
 layout_mode = 2
+theme_override_constants/separation = 10
 
 [node name="Label" type="Label" parent="MarginContainer/CraftingContainer/WhoMarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(10, 10)

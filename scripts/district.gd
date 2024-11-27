@@ -333,7 +333,7 @@ func _setup_modifiers() -> void:
 				"district": self,
 				"modifier_name": "Industrial District Effect"
 			}, {
-				"modifier_consequence_multiplier": Constants.INDUSTRY_DISTRICT_MODIFIER_BASE
+				"modifier_consequence_multiplier": Constants.INDUSTRIAL_DISTRICT_MODIFIER_BASE
 			})
 
 			# First create the variable
@@ -341,7 +341,7 @@ func _setup_modifiers() -> void:
 			
 			# Define the closure separately
 			var industrial_closure = func(mod: Modifier):
-				var is_active = sympathy > Constants.INDUSTRY_DISTRICT_BONUS_BREAKPOINT
+				var is_active = sympathy > Constants.INDUSTRIAL_DISTRICT_BONUS_BREAKPOINT
 				if is_active and not mod.active:
 					EventBus.create_new_event_panel.emit(Enums.EventOutcomeType.EVENT_INDUSTRIAL_MILESTONE, [] as Array[Character], self.pois[0])
 				return is_active
@@ -353,7 +353,7 @@ func _setup_modifiers() -> void:
 				"modifier_name": "Industrial District Modifier",
 				"active": false,
 			}, {
-				"modifier_smarts_flat": Constants.INDUSTRY_DISTRICT_MODIFIER_HIGH_SYMPATHY_VALUE
+				"modifier_smarts_flat": Constants.INDUSTRIAL_DISTRICT_MODIFIER_HIGH_SYMPATHY_VALUE
 			})
 
 			# Set the closure to the modifier

@@ -31,7 +31,7 @@ bg_color = Color(0.290196, 0.709804, 0, 0.505882)
 grow_begin = 0.0
 grow_end = 0.0
 
-[node name="DistrictSubmenu" type="PanelContainer" node_paths=PackedStringArray("district_name", "heat_bar", "heat_bar_label", "resistance_bar", "resistance_bar_label", "description", "poi_buttons")]
+[node name="DistrictSubmenu" type="PanelContainer" node_paths=PackedStringArray("district_name", "heat_bar", "heat_bar_label", "resistance_bar", "resistance_bar_label", "modifier_text", "description", "poi_buttons")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -44,6 +44,7 @@ heat_bar = NodePath("MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/
 heat_bar_label = NodePath("MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/HeatProgressBar/Label")
 resistance_bar = NodePath("MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/ResistanceProgressBar")
 resistance_bar_label = NodePath("MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/ResistanceProgressBar/Label")
+modifier_text = NodePath("MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/MarginContainer/RichTextLabel")
 description = NodePath("MarginContainer/VBoxContainer/MarginContainer/RichTextLabel")
 poi_buttons = NodePath("MarginContainer/VBoxContainer/GridContainer")
 
@@ -142,6 +143,25 @@ vertical_alignment = 1
 layout_mode = 2
 theme_override_constants/separation = 0
 theme_override_styles/separator = SubResource("StyleBoxLine_n4cpi")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "adasd
+asd
+asasdsad
+	
+dsa
+d"
+fit_content = true
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2

@@ -485,6 +485,7 @@ func _on_district_just_focused(district: District) -> void:
 		enabled = false
 		$Polygon2D.visible = false
 		$IconButton.visible = false
+		$IconButton.material.set_shader_parameter("enabled", false)
 
 """
 @brief Handles character state changes.

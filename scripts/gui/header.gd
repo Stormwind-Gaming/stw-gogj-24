@@ -37,17 +37,22 @@ func _ready():
 	EventBus.end_turn_complete.connect(_update_gui)
 	EventBus.character_recruitment_state_changed.connect(_on_agents_changed)
 	EventBus.action_created.connect(_on_new_assignment)
+	EventBus.character_sympathy_changed.connect(_update_on_character_sympathy_change)
 
 	var res = GameController.get_resistance_level()
 	resistance_bar.value = res
-	resistance_bar_label.text = "Resistance - %s" % str(res) + "%"
+	resistance_bar.max_value = Constants.RESISTANCE_ENDGAME_THRESHOLD + 1
+	resistance_bar_label.text = "Resistance"
+	# resistance_bar_label.text = "Resistance - %s" % str(res) + "%"
 
 	var heat = GameController.get_heat_level()
 	heat_bar.value = heat
-	heat_bar_label.text = "Heat - %s" % str(heat) + "%"
+	heat_bar.max_value = Constants.HEAT_ENDGAME_THRESHOLD + 1
+	heat_bar_label.text = "Heat"
+	# heat_bar_label.text = "Heat - %s" % str(heat) + "%"
 	date.text = GameController.calendar.get_date_string()
 
-	_update_gui(0)
+	_update_gui()
 
 #|==============================|
 #|      Event Handlers         |
@@ -59,7 +64,7 @@ Updates the GUI to reflect new game state.
 @param district The newly registered district
 """
 func _on_new_district_registered(district: District) -> void:
-	_update_gui(0)
+	_update_gui()
 
 """
 @brief Handles changes to agent status.
@@ -101,14 +106,19 @@ func _on_new_assignment(action: BaseAction) -> void:
 
 @param number Optional parameter for turn number
 """
-func _update_gui(number: int) -> void:
+func _update_gui(_number: int = 0) -> void:
 	date.text = GameController.calendar.get_date_string()
 
 	var res = GameController.get_resistance_level()
 	resistance_bar.value = res
-	resistance_bar_label.text = "Resistance - %s" % str(res) + "%"
+	resistance_bar_label.text = "Resistance"
+	# resistance_bar_label.text = "Resistance - %s" % str(res) + "%"
 	
 	var heat = GameController.get_heat_level()
 	heat_bar.value = heat
-	heat_bar_label.text = "Heat - %s" % str(heat) + "%"
+	heat_bar_label.text = "Heat"
+	# heat_bar_label.text = "Heat - %s" % str(heat) + "%"
 	_update_agents_gui()
+
+func _update_on_character_sympathy_change(character: Character) -> void:
+	_update_gui()

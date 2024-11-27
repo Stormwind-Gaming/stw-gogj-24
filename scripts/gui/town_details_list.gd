@@ -75,11 +75,15 @@ func _ready() -> void:
 	
 	var res = GameController.get_resistance_level()
 	resistance_bar.value = res
-	resistance_bar_label.text = "Resistance - %s" % str(res) + "%"
+	resistance_bar.max_value = Constants.RESISTANCE_ENDGAME_THRESHOLD + 1
+	resistance_bar_label.text = "Resistance"
+	# resistance_bar_label.text = "Resistance - %s" % str(res) + "%"
 	
 	var heat = GameController.get_heat_level()
 	heat_bar.value = heat
-	heat_bar_label.text = "Heat - %s" % str(heat) + "%"
+	heat_bar.max_value = Constants.HEAT_ENDGAME_THRESHOLD + 1
+	heat_bar_label.text = "Heat"
+	# heat_bar_label.text = "Heat - %s" % str(heat) + "%"
 
 	town_description.text = GameController.town_details.description
 
@@ -87,29 +91,35 @@ func _ready() -> void:
 
 	# active bonuses
 
-	var bonuses = GlobalRegistry.modifiers.get_list(GlobalRegistry.LIST_GLOBAL_MODIFIERS).filter(func(x): x.active == true)
+	var bonuses = GlobalRegistry.modifiers.get_list(GlobalRegistry.LIST_GLOBAL_MODIFIERS).filter(func(x): return x.active == true)
 	active_bonuses.text = ""
 	if bonuses.size() > 0:
-		active_bonuses.text += "[font_size=18]Active Bonuses:[/font_size]\n"
+		active_bonuses.text += "[font_size=20]Active Bonuses:[/font_size]\n"
 		for bonus in bonuses:
-			active_bonuses.text += "%s" % bonus.modifier_name
+			print(bonus)
+			active_bonuses.text += "%s - %s" % [bonus.modifier_name, bonus.get_modification_effect_text()]
 			active_bonuses.text += "\n"
 	
 	# world events
 	var events = GlobalRegistry.world_events.get_list(GlobalRegistry.LIST_WORLD_EVENTS)
 	active_world_events.text = ""
 	if events.size() > 0:
-		active_world_events.text += "[font_size=18]World Events:[/font_size]\n"
 		for event in events:
 			# check validity as previously free events that are not removed cause errors
 			if is_instance_valid(event):
+				if active_world_events.text != "":
+					active_world_events.text += "[font_size=20]World Events:[/font_size]\n"
+
 				active_world_events.text += "%s: %s Day" % [event.event_data.event_title, str(event.turn_to_end - GameController.turn_number)]
 				if (event.turn_to_end - GameController.turn_number) > 1:
 					active_world_events.text += "s"
 				active_world_events.text +=" left" + "\n"
+			else:
+				events.erase(event)
 	
 	if bonuses.size() == 0 and events.size() == 0:
 		active_bonuses.text = "No active bonuses or world events"
+		active_world_events.text = ""
 
 
 #|==============================|

@@ -112,3 +112,51 @@ func _on_end_turn_complete(_num: int) -> void:
 			"previous": was_active,
 			"current": active
 		})
+
+"""
+@brief Get the text for the modification effect
+"""
+func get_modification_effect_text() -> String:
+	var text = ""
+
+	if modifier_smarts_flat != 0:
+		text += "Smarts: +%s" % modifier_smarts_flat
+	if modifier_subtlety_flat != 0:
+		text += "Subtlety: +%s" % modifier_subtlety_flat
+	if modifier_charm_flat != 0:
+		text += "Charm: +%s" % modifier_charm_flat
+
+	if modifier_action_duration_flat != 0:
+		text += "Plan/Action Duration: +%s" % modifier_action_duration_flat
+	if modifier_intel_spawn_flat != 0:
+		text += "Intel Spawn: +%s" % modifier_intel_spawn_flat
+
+	if modifier_heat_multiplier > 1.0:
+		text += "Heat Multiplier: +%s" % _convert_decimal_to_percentage(modifier_heat_multiplier)
+	if modifier_sympathy_multiplier > 1.0:
+		text += "Sympathy Multiplier: +%s" % _convert_decimal_to_percentage(modifier_sympathy_multiplier)
+	if modifier_action_duration_multiplier > 1.0:
+		text += "Plan/Action Duration Multiplier: +%s" % _convert_decimal_to_percentage(modifier_action_duration_multiplier)
+	if modifier_intel_spawn_multiplier > 1.0:
+		text += "Intel Spawn Multiplier: +%s" % _convert_decimal_to_percentage(modifier_intel_spawn_multiplier)
+	if modifier_consequence_multiplier > 1.0:
+		text += "Chance of Injury: +%s" % _convert_decimal_to_percentage(modifier_consequence_multiplier)
+	
+	if modifier_heat_multiplier < 1.0:
+		text += "Heat Multiplier: %s" % _convert_decimal_to_percentage(modifier_heat_multiplier)
+	if modifier_sympathy_multiplier < 1.0:
+		text += "Sympathy Multiplier: %s" % _convert_decimal_to_percentage(modifier_sympathy_multiplier)
+	if modifier_action_duration_multiplier < 1.0:
+		text += "Plan/Action Duration Multiplier: %s" % _convert_decimal_to_percentage(modifier_action_duration_multiplier)
+	if modifier_intel_spawn_multiplier < 1.0:
+		text += "Intel Spawn Multiplier: %s" % _convert_decimal_to_percentage(modifier_intel_spawn_multiplier)
+	if modifier_consequence_multiplier < 1.0:
+		text += "Chance of Injury: %s" % _convert_decimal_to_percentage(modifier_consequence_multiplier)
+
+	return text
+
+"""
+@brief Convert a decimal value to a percentage string
+"""
+func _convert_decimal_to_percentage(value: float) -> String:
+	return "%s%%" % str((value - 1) * 100)
