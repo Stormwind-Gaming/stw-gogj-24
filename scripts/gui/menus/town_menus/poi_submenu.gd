@@ -113,4 +113,4 @@ func set_poi(poi: PointOfInterest) -> void:
 """
 func _on_focus_button_pressed() -> void:
 	EventBus.close_all_windows.emit()
-	poi.parent_district.district_clicked.emit(poi.parent_district)
+	EventBus.focus_on_poi.emit(poi)

@@ -96,6 +96,11 @@ signal poi_created(poi: PointOfInterest)
 """
 signal selected_radial_option(option: Enums.ActionType)
 
+"""
+@brief Emitted when a poi is focused
+"""
+signal focus_on_poi(poi: PointOfInterest)
+
 #|==============================|
 #|      District Management     |
 #|==============================|

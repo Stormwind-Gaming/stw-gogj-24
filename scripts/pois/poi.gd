@@ -177,6 +177,7 @@ func _ready() -> void:
 	EventBus.poi_created.emit(self)
 	EventBus.character_state_changed.connect(_character_state_changed)
 	EventBus.district_just_focused.connect(_on_district_just_focused)
+	EventBus.focus_on_poi.connect(_on_poi_focused)
 	EventBus.close_radial_menu.connect(_reset_poi_state)
 	
 	# Create the owner of the POI
@@ -340,6 +341,7 @@ func _on_mouse_entered():
 	
 	hovered = true
 	$Polygon2D.color = highlight_color
+	$IconButton.material.set_shader_parameter("enabled", true)
 	poi_icon.material.set_shader_parameter("transition", 1.0)
 	emit_signal("poi_hovered", self)
 
@@ -357,6 +359,8 @@ func _on_mouse_exited():
 	else:
 		$Polygon2D.color = selectable_color
 
+	# reset the hover effect
+	$IconButton.material.set_shader_parameter("enabled", false)
 	# set the icon colour to black
 	poi_icon.material.set_shader_parameter("transition", 0.0)
 
@@ -440,6 +444,22 @@ func _poi_clicked() -> void:
 	EventBus.open_new_radial_menu.emit(radial_menu_instance)
 	add_child(radial_menu_instance)
 	GameController.open_radial_menu(radial_menu_instance, self)
+
+"""
+@brief Handles poi focus changes.
+Updates POI state based on whether its district is focused.
+
+@param poi The newly focused POI
+"""
+func _on_poi_focused(poi: PointOfInterest) -> void:
+	if poi == self:
+		parent_district.district_clicked.emit(parent_district)
+
+		# set the hover effect
+		$IconButton.material.set_shader_parameter("enabled", true)
+	else:
+		# unset the hover effect
+		$IconButton.material.set_shader_parameter("enabled", false)
 
 """
 @brief Handles district focus changes.
