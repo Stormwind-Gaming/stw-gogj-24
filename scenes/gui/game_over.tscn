@@ -726,4 +726,5 @@ libraries = {
 "": SubResource("AnimationLibrary_6fhol")
 }
 
+[connection signal="pressed" from="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/PanelContainer/QuitToMenuButton" to="." method="_on_quit_to_menu_button_pressed"]
 [connection signal="pressed" from="LoseGame/CenterContainer2/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/QuitToMenuButton" to="." method="_on_quit_to_menu_button_pressed"]
