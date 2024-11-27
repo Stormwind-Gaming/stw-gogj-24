@@ -25,7 +25,7 @@ length = 0.001
 
 [sub_resource type="Animation" id="Animation_6037l"]
 resource_name = "fade_in"
-step = 0.5
+step = 0.25
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true

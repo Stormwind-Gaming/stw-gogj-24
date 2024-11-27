@@ -52,7 +52,13 @@ func _ready():
 	# heat_bar_label.text = "Heat - %s" % str(heat) + "%"
 	date.text = GameController.calendar.get_date_string()
 
+	
+
 	_update_gui()
+
+	# wait one second
+	await get_tree().create_timer(1.0).timeout
+	agents_wrapper.visible = true
 
 #|==============================|
 #|      Event Handlers         |
@@ -107,6 +113,7 @@ func _on_new_assignment(action: BaseAction) -> void:
 @param number Optional parameter for turn number
 """
 func _update_gui(_number: int = 0) -> void:
+	LogDuck.e("Header: Updating GUI")
 	date.text = GameController.calendar.get_date_string()
 
 	var res = GameController.get_resistance_level()
