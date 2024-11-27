@@ -97,7 +97,7 @@ Creates and displays the log list if not already visible.
 
 @param end_turn_button Whether this log list is being shown after ending a turn
 """
-func _on_show_log_list_button_pressed(_i: int):
+func _on_show_log_list_button_pressed(_i: int = -1):
 	# Instance the log list scene
 	var log_list_instance = Globals.log_list_scene.instantiate()
 	# if end_turn_button:
