@@ -193,7 +193,8 @@ func process_turn() -> void:
 	for character in injured_characters:
 		if not character.injured_return_on_turn or character.injured_return_on_turn <= turn_number:
 			character.char_state = Enums.CharacterState.AVAILABLE
-			var turn_log = TurnLog.new(character.get_full_name() + " has returned from injury", Enums.LogType.WORLD_INFO)
+			var message: String = "Good tidings: [u]%s[/u] has healed and rejoined our cause. Restored to health, they return with renewed determination." % character.get_full_name()
+			var turn_log = TurnLog.new(message, Enums.LogType.WORLD_INFO)
 			GlobalRegistry.turn_logs.add_item(str(GameController.turn_number), turn_log)
 			character.injured_return_on_turn = null
 

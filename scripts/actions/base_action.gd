@@ -96,7 +96,8 @@ func _on_turn_processing_initiated(num: int) -> void:
 			associated_plan.call_deferred("free")
 
 	else:
-		action_logs.append(TurnLog.new("Action in progress by " + _get_character_names(), Enums.LogType.ACTION_INFO))
+		var message: String = "[u]%s[/u] continues at [u]%s[/u], carried out by [u]%s[/u]. The task is ongoing, and the outcome remains uncertain. The shadows still hold their secrets." % [Enums.ActionType.keys()[action_type], poi.poi_name, _get_character_names()]
+		action_logs.append(TurnLog.new(message, Enums.LogType.ACTION_INFO))
 		
 	for step in danger_logs + action_logs:
 		GlobalRegistry.turn_logs.add_item(str(GameController.turn_number), step)
@@ -147,7 +148,7 @@ func _process_danger() -> Array[TurnLog]:
 	# Get cumulative stats for all characters involved
 	var stats: Dictionary = _get_stats()
 
-	logs.append(TurnLog.new("Processing danger for action at [u]" + str(poi.poi_name) + "[/u] by " + _get_character_names(), Enums.LogType.ACTION_INFO))
+	# logs.append(TurnLog.new("Processing danger for action at [u]" + str(poi.poi_name) + "[/u] by " + _get_character_names(), Enums.LogType.ACTION_INFO))
 
 	var statistic_check: StatisticCheck = StatisticCheck.new(characters, poi.parent_district, poi)
 
@@ -159,8 +160,8 @@ func _process_danger() -> Array[TurnLog]:
 	if (subtle_roll):
 		heat_added = statistic_check.heat_added(Constants.ACTION_EFFECT_SUCCESS_SUBTLETY_MIN, Constants.ACTION_EFFECT_SUCCESS_SUBTLETY_MAX)
 
-		log_message = "Succeeded subtlety check... heat increased by " + str(heat_added)
-		logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
+		# log_message = "Succeeded subtlety check... heat increased by " + str(heat_added)
+		# logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))
 		poi.parent_district.heat += heat_added
 
 	else:
@@ -177,35 +178,37 @@ func _process_danger() -> Array[TurnLog]:
 		var consequence_log_type: Enums.EventOutcomeType
 		match consequence_result.result:
 			Enums.CharacterState.ASSIGNED:
-				log_message = "No consequence"
+				pass
 			Enums.CharacterState.INJURED:
-				log_message = "One character is injured"
 				characters.shuffle()
 				characters[0].char_state = Enums.CharacterState.INJURED
 				consequence_log_type = Enums.EventOutcomeType.INJURED
+				log_message = "Grave news: [u]%s[/u] is injured. Their strength falters, but their spirit endures. Recovery is uncertain." % characters[0].char_full_name
 
 				# emit stats change
 				EventBus.stat_created.emit("injured", true)
 			Enums.CharacterState.MIA:
-				log_message = "One character is missing"
 				characters.shuffle()
 				characters[0].char_state = Enums.CharacterState.MIA
 				consequence_log_type = Enums.EventOutcomeType.MIA
+				log_message = "[u]%s[/u] is missing.  No word from them. We pray they remain safe, hidden from prying eyes." % characters[0].char_full_name
 
 				# emit stats change
 				EventBus.stat_created.emit("mia", true)
 			Enums.CharacterState.DECEASED:
-				log_message = "One character is deceased"
 				characters.shuffle()
 				characters[0].char_state = Enums.CharacterState.DECEASED
 				consequence_log_type = Enums.EventOutcomeType.DECEASED
+				log_message = "A somber note: [u]%s[/u] has fallen.  Their sacrifice will not be forgotten. We carry their torch forward." % characters[0].char_full_name
 
 				# emit stats change
 				EventBus.stat_created.emit("dead", true)
 			_:
-				log_message = "Unknown consequence"
+				pass
 
-		logs.append(TurnLog.new(log_message, Enums.LogType.CONSEQUENCE, poi, characters))
+		if log_message != "":
+			logs.append(TurnLog.new(log_message, Enums.LogType.CONSEQUENCE, poi, characters))
+
 		EventBus.create_new_event_panel.emit(consequence_log_type, characters, poi)
 
 	return logs

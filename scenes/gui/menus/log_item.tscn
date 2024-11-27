@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://bs2ll53v5b1bc"]
+
+[ext_resource type="Script" path="res://scripts/gui/menus/log_item.gd" id="1_4nqnb"]
+[ext_resource type="Texture2D" uid="uid://c77siraw7bwtg" path="res://assets/icons/logs/event.png" id="1_hto7u"]
+
+[node name="MarginContainer" type="MarginContainer"]
+offset_right = 55.0
+offset_bottom = 572.0
+script = ExtResource("1_4nqnb")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+texture = ExtResource("1_hto7u")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Label" type="RichTextLabel" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "Increased patrols in {district}. Our actions have been noticed by the authorities, they don’t know who we are yet, but they are on the lookout."
+fit_content = true
+autowrap_mode = 2
