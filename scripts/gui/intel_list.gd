@@ -169,6 +169,13 @@ func populate_rumour_list():
 				_check_create_plan_visibility()
 			)
 
+			if rumour.rumour_type == Enums.RumourType.MISSION and rumour.rumour_effect == Enums.IntelEffect.RESCUE_AGENT:
+				# check if there is anyone to rescue
+				var agents = GlobalRegistry.characters.get_list(GlobalRegistry.LIST_MIA)
+				if len(agents) == 0:
+					check_button.disabled = true
+
+
 			container.add_child(check_button)
 			container.add_child(HSeparator.new())
 		else:

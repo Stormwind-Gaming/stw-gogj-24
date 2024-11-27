@@ -27,6 +27,13 @@ static func create_rumour(config: RumourConfig) -> Rumour:
 	# Retrieve the rumour data based on the generated type
 	var rumour_data = Globals.get_rumour_data(rumour_type)
 
+	if rumour_data.subject == Enums.RumourSubject.MIA_CHARACTER:
+		# check if there are any MIA characters
+		var mia_characters = GlobalRegistry.characters.get_list(GlobalRegistry.LIST_MIA)
+		if mia_characters.size() == 0:
+			LogDuck.d("No MIA characters available, changing rumour subject to any character")
+			rumour_data.subject = Enums.RumourSubject.ANY_CHARACTER
+
 	LogDuck.d("Generated rumour type and data", {
 		"type": rumour_type,
 		"subject": rumour_data.subject,

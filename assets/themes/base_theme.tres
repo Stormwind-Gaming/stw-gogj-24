@@ -48,6 +48,7 @@ CheckButton/colors/font_pressed_color = Color(1, 1, 1, 1)
 CheckButton/font_sizes/font_size = 14
 CheckButton/icons/checked = ExtResource("4_43qrq")
 CheckButton/icons/unchecked = ExtResource("5_defve")
+CheckButton/icons/unchecked_disabled = ExtResource("5_defve")
 CheckButton/styles/hover = ExtResource("3_d8d26")
 Label/colors/font_color = Color(0, 0, 0, 1)
 Label/font_sizes/font_size = 18
