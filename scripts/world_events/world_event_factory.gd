@@ -18,7 +18,6 @@ static func randomise_world_event_from_heat(heat: int) -> WorldEvent:
 
 	LogDuck.d("Calculated event chance", {"chance": event_chance, "heat": heat})
 
-	event_chance = 100
 	if randf() * 100 < event_chance:
 		LogDuck.d("World event triggered")
 		# Determine event severity based on heat levels
@@ -49,8 +48,6 @@ static func randomise_world_event_from_heat(heat: int) -> WorldEvent:
 
 static func create_world_event(severity: Enums.WorldEventSeverity) -> WorldEvent:
 	LogDuck.d("Creating world event", {"severity": severity})
-
-	severity = Enums.WorldEventSeverity.MAJOR
 
 	var event_data = Globals.get_world_event_text(severity)
 	# check event text as can return null if no event text found
