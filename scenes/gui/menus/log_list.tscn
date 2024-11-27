@@ -43,6 +43,7 @@ theme_override_constants/margin_bottom = -81
 layout_mode = 2
 
 [node name="MarginContainer2" type="MarginContainer" parent="NinePatchRect"]
+visible = false
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0

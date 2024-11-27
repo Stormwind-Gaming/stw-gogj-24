@@ -12,7 +12,8 @@ func _process_action() -> Array[TurnLog]:
 	var logs: Array[TurnLog] = []
 	var log_message: String = ""
 
-	logs.append(TurnLog.new("Processing PLAN action at [u]" + str(poi.poi_name) + "[/u] by " + _get_character_names(), Enums.LogType.ACTION_INFO))
+	var message: String = "[u]PLAN[/u] undertaken by [u]%s[/u] at [u]%s[/u]." % [_get_character_names(), poi.poi_name]
+	logs.append(TurnLog.new(message, Enums.LogType.ACTION_INFO))
 
 	match associated_plan.plan_effect:
 		Enums.IntelEffect.BUILD_SYMPATHY:
@@ -52,7 +53,7 @@ func _build_sympathy() -> Array[TurnLog]:
 
 	associated_plan.plan_subject_character.char_sympathy += sympathy_added
 
-	log_message = associated_plan.plan_subject_character.char_full_name + " sympathy increased by " + str(sympathy_added)
+	log_message = "A breakthrough: [u]%s[/u] grows closer to our cause.  Their eyes now see the truth of the occupation, and their heart leans towards freedom." % associated_plan.plan_subject_character.char_full_name
 	logs.append(TurnLog.new(log_message, Enums.LogType.SUCCESS))
 
 	return logs
@@ -70,7 +71,7 @@ func _build_sympathy_all() -> Array[TurnLog]:
 
 		my_poi.poi_owner.char_sympathy += sympathy_added
 
-		log_message = my_poi.poi_owner.char_full_name + " sympathy increased by " + str(sympathy_added)
+		log_message = "The hearts of [u]%s[/u] have softened. A tide of sympathy washes through, bolstering our efforts." % associated_plan.plan_subject_poi.parent_district.district_name
 		logs.append(TurnLog.new(log_message, Enums.LogType.SUCCESS))
 
 	return logs
@@ -85,8 +86,8 @@ func _discover_all() -> Array[TurnLog]:
 	for my_poi in GlobalRegistry.pois.find_all_items(GlobalRegistry.LIST_ALL_POIS, "parent_district", poi.parent_district):
 		my_poi.poi_owner.char_recruitment_state = Enums.CharacterRecruitmentState.NON_SYMPATHISER_KNOWN
 
-		log_message = my_poi.poi_owner.char_full_name + " is now known to us"
-		logs.append(TurnLog.new(log_message, Enums.LogType.SUCCESS))
+	log_message = "Our knowledge deepens: all characters in [u]%s[/u] are now known. The veil has lifted, and their faces are no longer strangers to us." % associated_plan.plan_subject_poi.parent_district.district_name
+	logs.append(TurnLog.new(log_message, Enums.LogType.SUCCESS))
 
 	return logs
 
@@ -97,9 +98,10 @@ func _add_agent_slot() -> Array[TurnLog]:
 	var logs: Array[TurnLog] = []
 	var log_message: String = ""
 
+	#TODO: Fix this getting overwritten by the global max_agents
 	GameController.max_agents += 1
 
-	log_message = "Max agents increased by 1"
+	log_message = "A new ally can be called to our ranks. The network expands. Another brave soul joins the fight for freedom."
 	logs.append(TurnLog.new(log_message, Enums.LogType.SUCCESS))
 
 	return logs
@@ -114,7 +116,7 @@ func _rescue_agent() -> Array[TurnLog]:
 	associated_plan.plan_subject_character.char_state = Enums.CharacterState.AVAILABLE
 	associated_plan.plan_subject_character.char_recruitment_state = Enums.CharacterRecruitmentState.NON_SYMPATHISER_KNOWN
 
-	log_message = associated_plan.plan_subject_character.char_full_name + " has been rescued"
+	log_message = "[u]%s[/u] has been freed and welcomed back to the fold. Their liberation is a victory, and their spirit remains unbroken." % associated_plan.plan_subject_character.char_full_name
 	logs.append(TurnLog.new(log_message, Enums.LogType.SUCCESS))
 
 	return logs
@@ -127,16 +129,16 @@ func _wildcard_intel() -> Array[TurnLog]:
 	var log_message: String = ""
 
 	for i in range(0, 4):
-		IntelFactory.create_rumour(RumourConfig.new(33, 33, 33))
+		var rumour: Rumour = IntelFactory.create_rumour(RumourConfig.new(33, 33, 33))
 
-	log_message = "Added 4 rumours"
-	logs.append(TurnLog.new(log_message, Enums.LogType.SUCCESS))
+		log_message = "A new %s rumor reaches us. Whispers fill the air, weaving another thread into our growing web of intel." % Globals.get_intel_type_string(rumour.rumour_type)
+		logs.append(TurnLog.new(log_message, Enums.LogType.SUCCESS))
 
 	return logs
 
 
 """
-@brief Reduces the heat of a specific POI
+@brief Reduces the heat of a specific district
 """
 func _reduce_heat() -> Array[TurnLog]:
 	var logs: Array[TurnLog] = []
@@ -146,7 +148,7 @@ func _reduce_heat() -> Array[TurnLog]:
 
 	poi.parent_district.heat -= base_heat_reduced
 
-	log_message = poi.parent_district.district_name + " heat reduced by " + str(base_heat_reduced)
+	log_message = "The pressure eases in [u]%s[/u]. The eyes of the oppressors shift away, giving us precious breathing room." % associated_plan.plan_subject_poi.parent_district.district_name
 	logs.append(TurnLog.new(log_message, Enums.LogType.SUCCESS))
 
 	return logs
@@ -163,7 +165,7 @@ func _reduce_heat_all() -> Array[TurnLog]:
 
 		district.heat -= base_heat_reduced
 
-		log_message = district.district_name + " heat reduced by " + str(base_heat_reduced)
-		logs.append(TurnLog.new(log_message, Enums.LogType.SUCCESS))
+	log_message = "The burden lifts across all districts. A rare reprieve as the enemy's grip slackens, if only for a moment."
+	logs.append(TurnLog.new(log_message, Enums.LogType.SUCCESS))
 
 	return logs

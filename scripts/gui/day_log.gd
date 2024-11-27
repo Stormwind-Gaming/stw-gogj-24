@@ -7,7 +7,9 @@ extends PanelContainer
 """
 @brief Label that displays the log entries
 """
-@export var label: RichTextLabel
+# @export var label: RichTextLabel
+@export var world_container: Container
+@export var action_container: Container
 
 #|==============================|
 #|         Properties          |
@@ -60,24 +62,23 @@ func set_turn_logs(turn_number_attr: int) -> void:
 	var turn_logs = GlobalRegistry.turn_logs.get_list(str(turn_number))
 
 	self.name = GameController.calendar.get_date_string(turn_number - GameController.turn_number - 1, false)
-	
+
 	for turn_log in turn_logs:
-		if turn_log.log_type == Enums.LogType.WORLD_INFO:
-			label.text += "[color=yellow]" + turn_log.log_message + "[/color]\n"
-		elif turn_log.log_type == Enums.LogType.ACTION_INFO:
-			label.text += "[color=blue]" + turn_log.log_message + "[/color]\n"
-		elif turn_log.log_type == Enums.LogType.CONSEQUENCE:
-			label.text += "[color=red]" + turn_log.log_message + "[/color]\n"
-		elif turn_log.log_type == Enums.LogType.SUCCESS:
-			label.text += "[color=green]" + turn_log.log_message + "[/color]\n"
-		elif turn_log.log_type == Enums.LogType.WORLD_EVENT:
-			label.text += "[color=purple]" + turn_log.log_message + "[/color]\n"
-		else:
-			label.text += "[color=grey]" + turn_log.log_message + "[/color]\n"
+		var log_item = load("res://scenes/gui/menus/log_item.tscn").instantiate()
+		log_item.log_type = turn_log.log_type
+		log_item.log_message = turn_log.log_message
+
+		match turn_log.log_type:
+			Enums.LogType.WORLD_INFO, Enums.LogType.WORLD_EVENT:
+				world_container.add_child(log_item)
+			Enums.LogType.ACTION_INFO, Enums.LogType.CONSEQUENCE, Enums.LogType.SUCCESS:
+				action_container.add_child(log_item)
+			_:
+				pass
 	
 	# if no logs, display message
-	if len(turn_logs) == 0:
-		label.text = "No logs today."
+	# if len(turn_logs) == 0:
+	# 	label.text = "No logs today."
 
 """
 @brief Enables the typewriter effect for log display.

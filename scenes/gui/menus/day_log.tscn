@@ -2,24 +2,90 @@
 
 [ext_resource type="Script" path="res://scripts/gui/day_log.gd" id="1_pkh8c"]
 
-[node name="DayLog" type="PanelContainer" node_paths=PackedStringArray("label")]
+[node name="DayLog" type="PanelContainer" node_paths=PackedStringArray("world_container", "action_container")]
 script = ExtResource("1_pkh8c")
-label = NodePath("MarginContainer/LogListContainer/Label")
+world_container = NodePath("MarginContainer2/VBoxContainer/WorldContainer")
+action_container = NodePath("MarginContainer2/VBoxContainer/ActionContainer")
 metadata/_tab_index = 0
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 25
 theme_override_constants/margin_top = 25
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="LogListContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 
-[node name="Label" type="RichTextLabel" parent="MarginContainer/LogListContainer"]
+[node name="WorldLogContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Title" type="RichTextLabel" parent="MarginContainer/HBoxContainer/WorldLogContainer"]
+custom_minimum_size = Vector2(10, 30)
+layout_mode = 2
+bbcode_enabled = true
+text = "State of the Resistance"
+autowrap_mode = 2
+
+[node name="WorldLogs" type="RichTextLabel" parent="MarginContainer/HBoxContainer/WorldLogContainer"]
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
 size_flags_vertical = 3
 bbcode_enabled = true
+text = "Grootbos Residential district heat reduced by 5
+
+Increased patrols in Noordpoort Port District. Our actions have been noticed by the authorities, they don’t know who we are yet, but they are on the lookout."
 autowrap_mode = 2
+
+[node name="ActionLogContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ActionLogs" type="RichTextLabel" parent="MarginContainer/HBoxContainer/ActionLogContainer"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "Action Reports"
+autowrap_mode = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2"]
+layout_mode = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer2/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 20
+
+[node name="Label" type="RichTextLabel" parent="MarginContainer2/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[u]State of the Resistance[/u]"
+fit_content = true
+
+[node name="WorldContainer" type="VBoxContainer" parent="MarginContainer2/VBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="Label2" type="RichTextLabel" parent="MarginContainer2/VBoxContainer/MarginContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[u]Operation Reports[/u]"
+fit_content = true
+
+[node name="ActionContainer" type="VBoxContainer" parent="MarginContainer2/VBoxContainer"]
+layout_mode = 2
