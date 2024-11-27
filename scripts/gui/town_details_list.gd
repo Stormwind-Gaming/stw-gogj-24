@@ -67,7 +67,9 @@ var poi_submenu_scene = preload("res://scenes/gui/menus/town_menus/poi_submenu.t
 @brief Called when the node enters the scene tree
 """
 func _ready() -> void:
-	EventBus.open_poi_information.connect(_open_to_poi)
+	# connect signals
+	EventBus.open_district_window.connect(_open_to_district)
+	EventBus.open_poi_window.connect(_open_to_poi)
 
 	town_tab.name = GameController.town_details.town_name
 	town_name_label.text = GameController.town_details.town_name
@@ -154,8 +156,24 @@ func _on_tab_button_pressed(tab: int) -> void:
 	# remove all tabs after the tab that was clicked
 	for i in range(tab_container.get_tab_count() - 1, tab, -1):
 		tab_container.remove_child(tab_container.get_child(i))
-	
+
+"""
+@brief Opens the town details list to the given district
+
+@param district The district to open to
+"""
+func _open_to_district(district: District) -> void:
+	var district_submenu = district_submenu_scene.instantiate()
+	district_submenu.set_district(district)
+	tab_container.add_child(district_submenu)
+	tab_container.set_current_tab(tab_container.get_tab_count() - 1)
+	district_submenu.poi_selected.connect(_on_poi_button_pressed)
+
+"""
+@brief Opens the town details list to the given point of interest
+"""	
 func _open_to_poi(poi: PointOfInterest) -> void:
+	LogDuck.d("Opening to POI: %s" % poi)
 	# first open its district
 	var district_submenu = district_submenu_scene.instantiate()
 	district_submenu.set_district(poi.parent_district)

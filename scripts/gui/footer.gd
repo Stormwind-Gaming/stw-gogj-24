@@ -55,6 +55,10 @@ func _ready():
 
 	EventBus.end_turn_complete.connect(_on_show_log_list_button_pressed)
 
+	EventBus.open_character_window.connect(_on_show_character_list_button_pressed)
+	EventBus.open_action_window.connect(_on_show_actions_list_button_pressed)
+	EventBus.open_plan_window.connect(_on_show_intel_list_button_pressed)
+
 #|==============================|
 #|      Event Handlers         |
 #|==============================|
@@ -73,9 +77,11 @@ func _on_show_actions_list_button_pressed():
 @brief Handles the show intel list button press.
 Creates and displays the intel list if not already visible.
 """
-func _on_show_intel_list_button_pressed():
+func _on_show_intel_list_button_pressed(plan: bool = false):
 	# Instance the intel list scene
 	var intel_list_instance = Globals.intel_list_scene.instantiate()
+	if plan:
+		intel_list_instance.open_at_plan_page()
 	
 	# Add the instance to the scene tree
 	EventBus.open_new_window.emit(intel_list_instance)
@@ -87,7 +93,7 @@ Creates and displays the character list if not already visible.
 func _on_show_character_list_button_pressed():
 	# Instance the character list scene
 	var character_list_instance = Globals.character_list_scene.instantiate()
-	
+
 	# Add the instance to the scene tree
 	EventBus.open_new_window.emit(character_list_instance)
 

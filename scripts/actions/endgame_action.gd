@@ -12,7 +12,8 @@ func _process_action() -> Array[TurnLog]:
 	var logs: Array[TurnLog] = []
 	var log_message: String = ""
 
-	logs.append(TurnLog.new("Processing ENDGAME PLAN action at [u]" + str(poi.poi_name) + "[/u] by " + _get_character_names(), Enums.LogType.ACTION_INFO))
+	var id = GlobalRegistry.pois.get_all_items().find(poi)
+	logs.append(TurnLog.new(("Processing ENDGAME PLAN action at [url=poi:%s]" % id) + str(poi.poi_name) + "[/url] by " + _get_character_names(), Enums.LogType.ACTION_INFO))
 
 	if poi.poi_type == Enums.POIType.DOCKS:
 
@@ -64,7 +65,8 @@ func _process_action() -> Array[TurnLog]:
 func _process_danger() -> Array[TurnLog]:
 	var logs: Array[TurnLog] = []
 
-	logs.append(TurnLog.new("Processing danger for action at [u]" + str(poi.poi_name) + "[/u] by " + _get_character_names(), Enums.LogType.ACTION_INFO))
+	var id = GlobalRegistry.pois.get_all_items().find(poi)
+	logs.append(TurnLog.new(("Processing danger for action at [url=poi:%s]" % id) + str(poi.poi_name) + "[/url] by " + _get_character_names(), Enums.LogType.ACTION_INFO))
 
 	# Here we override the base action danger processing, for endgame actions there is a 100% chance of consequence on failure
 	var statistic_check: StatisticCheck = StatisticCheck.new(characters, poi.parent_district, poi)

@@ -94,6 +94,10 @@ extends Control
 """
 @export var left_behind_sympathisers: GridContainer
 
+"""
+@brief Escaped label
+"""
+@export var escaped_label: Label
 
 
 
@@ -160,6 +164,7 @@ func update_gui() -> void:
 		background_colour.texture.gradient.set_color(0, lose_endgame_colour)
 		fade_colour.texture.gradient.set_color(0, lose_endgame_colour)
 		self.theme = Globals.dark_theme
+		escaped_label.text = "Captured"
 
 
 	turns.text = str(GameStats.stats.turns)

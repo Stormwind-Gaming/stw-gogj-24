@@ -93,6 +93,11 @@ var rumour_config: RumourConfig = RumourConfig.new(25, 25, 25)
 var poi_type: Enums.POIType
 
 """
+@brief ID of this POI
+"""
+var poi_id: String = ""
+
+"""
 @brief Name of this POI
 """
 var poi_name: String = ""
@@ -515,10 +520,11 @@ func _on_action_created(action: BaseAction) -> void:
 			"action_type": action.action_type,
 			"character": action.characters[0].get_full_name()
 		})
-		var action_instance = Globals.action_scene.instantiate()
-		action_instance.set_meta("action_reference", action)
-		action_instance.get_node("Mask/TextureRect").texture = action.characters[0].char_picture
-		$ActionContainer.add_child(action_instance)
+		for character in action.characters:
+			var action_instance = Globals.action_scene.instantiate()
+			action_instance.set_meta("action_reference", action)
+			action_instance.get_node("Mask/TextureRect").texture = character.char_picture
+			$ActionContainer.add_child(action_instance)
 
 """
 @brief Handles action destruction events.

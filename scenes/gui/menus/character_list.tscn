@@ -14,7 +14,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_80ktr"]
 
-[node name="CharacterList" type="Window" node_paths=PackedStringArray("deceased_list_container", "mia_list_container", "known_character_list_container", "unknown_character_list_container", "sympathiser_list_container", "agent_list_container", "agents_label", "sort_option_button")]
+[node name="CharacterList" type="Window" node_paths=PackedStringArray("character_list_tab_container", "deceased_list_container", "mia_list_container", "known_character_list_container", "unknown_character_list_container", "sympathiser_list_container", "agent_list_container", "agents_label", "sort_option_button")]
 transparent_bg = true
 initial_position = 2
 size = Vector2i(800, 700)
@@ -23,6 +23,7 @@ borderless = true
 transparent = true
 theme = ExtResource("3_7dsct")
 script = ExtResource("1_dabvh")
+character_list_tab_container = NodePath("NinePatchRect/MarginContainer/TabContainer")
 deceased_list_container = NodePath("NinePatchRect/MarginContainer/TabContainer/Deceased/MarginContainer/ScrollContainer/GridContainer")
 mia_list_container = NodePath("NinePatchRect/MarginContainer/TabContainer/MIA/MarginContainer/ScrollContainer/GridContainer")
 known_character_list_container = NodePath("NinePatchRect/MarginContainer/TabContainer/Known Characters/MarginContainer/VBoxContainer/ScrollContainer/KnownGridContainer")

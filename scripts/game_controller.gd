@@ -216,7 +216,8 @@ func process_turn() -> void:
 	for character in injured_characters:
 		if not character.injured_return_on_turn or character.injured_return_on_turn <= turn_number:
 			character.char_state = Enums.CharacterState.AVAILABLE
-			var message: String = "Good tidings: [u]%s[/u] has healed and rejoined our cause. Restored to health, they return with renewed determination." % character.get_full_name()
+			var character_id = GlobalRegistry.characters.get_all_items().find(character)
+			var message: String = "Good tidings: [url=character:%s]%s[/url] has healed and rejoined our cause. Restored to health, they return with renewed determination." % [character_id, character.get_full_name()]
 			var turn_log = TurnLog.new(message, Enums.LogType.WORLD_INFO)
 			GlobalRegistry.turn_logs.add_item(str(GameController.turn_number), turn_log)
 			character.injured_return_on_turn = null
@@ -374,16 +375,9 @@ func open_radial_menu(radial_menu: RadialMenu, poi: PointOfInterest) -> void:
 """
 func _on_radial_option_selected(option: Enums.ActionType, poi_for_radial: PointOfInterest) -> void:
 	LogDuck.d("Radial option selected:", option)
-	# if not radial_menu_open:
-	# 	return
-
-	# radial_menu_open.hide()
 
 	# if quit, do nothing
 	if option == Enums.ActionType.NONE:
-		# create a tiny timer to get around erroneous clickthroughs
-		await get_tree().create_timer(0.1).timeout
-		# radial_menu_open = null
 		return
 	
 	# if info, show info
@@ -391,11 +385,7 @@ func _on_radial_option_selected(option: Enums.ActionType, poi_for_radial: PointO
 		var town_details_list_instance = Globals.town_details_list_scene.instantiate()
 		EventBus.open_new_window.emit(town_details_list_instance)
 		
-		EventBus.open_poi_information.emit(poi_for_radial)
-
-		# create a tiny timer to get around erroneous clickthroughs
-		await get_tree().create_timer(0.1).timeout
-		# radial_menu_open = null
+		EventBus.open_poi_window.emit(poi_for_radial)
 		return
 
 	# popup a post_radial_assignment menu

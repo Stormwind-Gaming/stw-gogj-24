@@ -4,6 +4,11 @@ extends Window
 #|      Exported Variables      |
 #|==============================|
 """
+@brief TabContainer for the character list
+"""
+@export var character_list_tab_container: TabContainer
+
+"""
 @brief Container for the list of deceased characters
 """
 @export var deceased_list_container: GridContainer
@@ -194,6 +199,9 @@ func populate_character_lists():
 		# special case
 		pass
 	
+func jump_to_page(page: int) -> void:
+	LogDuck.d("Jumping to page %s" % page)
+	character_list_tab_container.current_tab = page
 
 
 #|==============================|

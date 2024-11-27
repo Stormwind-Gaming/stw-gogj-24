@@ -96,7 +96,9 @@ func _on_turn_processing_initiated(num: int) -> void:
 			associated_plan.call_deferred("free")
 
 	else:
-		var message: String = "[u]%s[/u] continues at [u]%s[/u], carried out by [u]%s[/u]. The task is ongoing, and the outcome remains uncertain. The shadows still hold their secrets." % [Enums.ActionType.keys()[action_type], poi.poi_name, _get_character_names()]
+		var poi_id = GlobalRegistry.pois.get_all_items().find(poi)
+		var character_id = GlobalRegistry.characters.get_all_items().find(characters[0])
+		var message: String = "[u]%s[/u] continues at [url=poi:%s]%s[/url], carried out by [url=character:%s]%s[/url]. The task is ongoing, and the outcome remains uncertain. The shadows still hold their secrets." % [Enums.ActionType.keys()[action_type], poi_id, poi.poi_name, character_id, _get_character_names()]
 		action_logs.append(TurnLog.new(message, Enums.LogType.ACTION_INFO))
 		
 	for step in danger_logs + action_logs:
@@ -183,7 +185,9 @@ func _process_danger() -> Array[TurnLog]:
 				characters.shuffle()
 				characters[0].char_state = Enums.CharacterState.INJURED
 				consequence_log_type = Enums.EventOutcomeType.INJURED
-				log_message = "Grave news: [u]%s[/u] is injured. Their strength falters, but their spirit endures. Recovery is uncertain." % characters[0].char_full_name
+
+				var character_id = GlobalRegistry.characters.get_all_items().find(characters[0])
+				log_message = "Grave news: [url=character:%s]%s[/url] is injured. Their strength falters, but their spirit endures. Recovery is uncertain." % [character_id, characters[0].char_full_name]
 
 				# emit stats change
 				EventBus.stat_created.emit("injured", true)
@@ -191,7 +195,9 @@ func _process_danger() -> Array[TurnLog]:
 				characters.shuffle()
 				characters[0].char_state = Enums.CharacterState.MIA
 				consequence_log_type = Enums.EventOutcomeType.MIA
-				log_message = "[u]%s[/u] is missing.  No word from them. We pray they remain safe, hidden from prying eyes." % characters[0].char_full_name
+				
+				var character_id = GlobalRegistry.characters.get_all_items().find(characters[0])
+				log_message = "[url=character:%s]%s[/url] is missing.  No word from them. We pray they remain safe, hidden from prying eyes." % [character_id, characters[0].char_full_name]
 
 				# emit stats change
 				EventBus.stat_created.emit("mia", true)
@@ -199,7 +205,9 @@ func _process_danger() -> Array[TurnLog]:
 				characters.shuffle()
 				characters[0].char_state = Enums.CharacterState.DECEASED
 				consequence_log_type = Enums.EventOutcomeType.DECEASED
-				log_message = "A somber note: [u]%s[/u] has fallen.  Their sacrifice will not be forgotten. We carry their torch forward." % characters[0].char_full_name
+
+				var character_id = GlobalRegistry.characters.get_all_items().find(characters[0])
+				log_message = "A somber note: [url=character:%s]%s[/url] has fallen.  Their sacrifice will not be forgotten. We carry their torch forward." % [character_id, characters[0].char_full_name]
 
 				# emit stats change
 				EventBus.stat_created.emit("dead", true)
@@ -260,7 +268,8 @@ func _release_characters() -> void:
 func _get_character_names() -> String:
 	var names: String = ""
 	for character in characters:
-		names += "[u]" + character.char_full_name + "[/u], "
+		var character_id = GlobalRegistry.characters.get_all_items().find(character)
+		names += "[url=character:" + str(character_id) + "]" + character.char_full_name + "[/url], "
 
 	names = names.left(names.length() - 2)
 	return names

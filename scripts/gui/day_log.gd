@@ -1,6 +1,8 @@
 extends PanelContainer
 
 
+var log_item_scene = preload("res://scenes/gui/menus/log_item.tscn")
+
 #|==============================|
 #|     Exported Properties      |
 #|==============================|
@@ -64,17 +66,22 @@ func set_turn_logs(turn_number_attr: int) -> void:
 	self.name = GameController.calendar.get_date_string(turn_number - GameController.turn_number - 1, false)
 
 	for turn_log in turn_logs:
-		var log_item = load("res://scenes/gui/menus/log_item.tscn").instantiate()
+		var log_item = log_item_scene.instantiate()
 		log_item.log_type = turn_log.log_type
 		log_item.log_message = turn_log.log_message
 
 		match turn_log.log_type:
 			Enums.LogType.WORLD_INFO, Enums.LogType.WORLD_EVENT:
 				world_container.add_child(log_item)
-			Enums.LogType.ACTION_INFO, Enums.LogType.CONSEQUENCE, Enums.LogType.SUCCESS:
+			Enums.LogType.ACTION_INFO:
+				# if this is the first child, dont add a separator
+				if action_container.get_child_count() > 0:
+					action_container.add_child(HSeparator.new())
+				action_container.add_child(log_item)
+			Enums.LogType.CONSEQUENCE, Enums.LogType.SUCCESS:
 				action_container.add_child(log_item)
 			_:
-				pass
+				pass		
 	
 	# if no logs, display message
 	# if len(turn_logs) == 0:

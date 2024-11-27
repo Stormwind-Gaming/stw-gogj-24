@@ -91,6 +91,12 @@ func _ready():
 #|      Helper Functions       |
 #|==============================|
 """
+@brief Open at plan page
+"""
+func open_at_plan_page():
+	tab_container.current_tab = 1
+
+"""
 @brief Clears all child nodes from a container.
 
 @param container The container to clear

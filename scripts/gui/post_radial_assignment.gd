@@ -102,14 +102,22 @@ func set_option(poi: PointOfInterest, option_attr: Enums.ActionType) -> void:
 Sets up the assignment window and populates agent cards.
 """
 func _ready():
-	# calculate type
-	var type = ''
+	# calculate title
 	if option == Enums.ActionType.PLAN:
-		type = 'Plan'
+		var plan: Plan
+		var plans = GlobalRegistry.intel.get_list(GlobalRegistry.LIST_PLANS)
+		for available_plan in plans:
+			if available_plan.plan_subject_poi == poi:
+				var action = GlobalRegistry.actions.find_item(GlobalRegistry.LIST_ALL_ACTIONS, "associated_plan", available_plan)
+				if not action or not action.in_flight:
+					plan = available_plan
+					break
+
+		task_title.text = "%s - %s" % ['Plan', plan.plan_name]
 	else:
-		type = 'Action'
+		task_title.text = "%s - %s" % [Globals.get_action_type_string(option), 'Action']
 	# set title
-	task_title.text = "%s - %s" % [Globals.get_action_type_string(option), type]
+	
 
 	# populate the agents list
 	var agents: Array[Character] = []
@@ -142,7 +150,7 @@ func _ready():
 		_:
 			max_agents = 1
 
-	asigned_label.text = 'Assigned Agents (0/%s):' % max_agents
+	asigned_label.text = 'Assigned Agents (0/%s)' % max_agents
 
 	continue_button.disabled = true
 
@@ -211,7 +219,7 @@ func _calculate_stats():
 	var subtlety = 0
 	var smarts = 0
 	
-	asigned_label.text = 'Assigned Agents (%s/%s):' % [selected_agents.size(), max_agents]
+	asigned_label.text = 'Assigned Agents (%s/%s)' % [selected_agents.size(), max_agents]
 	
 	assigned_agents_label.text = ''
 	for agent in selected_agents:

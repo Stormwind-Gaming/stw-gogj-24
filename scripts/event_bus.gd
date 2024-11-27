@@ -161,11 +161,6 @@ signal close_window()
 """
 signal close_radial_menu()
 
-"""
-@brief Emitted when a poi information window is requested
-"""
-signal open_poi_information(poi: PointOfInterest)
-
 
 #|==============================|
 #|      World-event Management |
@@ -209,3 +204,33 @@ signal modifier_created(modifier: Modifier)
 @brief Emitted when a modifier is destroyed
 """
 signal modifier_destroyed(modifier: Modifier)
+
+
+
+#|==============================|
+#|    Open Specific Windows     |
+#|==============================|
+"""
+@brief Emitted when a district window is requested
+"""
+signal open_district_window(district: District)
+
+"""
+@brief Emitted when a poi window is requested
+"""
+signal open_poi_window(poi: PointOfInterest)
+
+"""
+@brief Emitted when a character window is requested
+"""
+signal open_character_window(character: Character)
+
+"""
+@brief Emitted when a action window is requested
+"""
+signal open_action_window(action: BaseAction)
+
+"""
+@brief Emitted when a plan window is requested
+"""
+signal open_plan_window(plan_page: bool)

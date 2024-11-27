@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://c0trxtgty6phy"]
 
 [ext_resource type="Script" path="res://scripts/pois/poi.gd" id="1_cwy0w"]
-[ext_resource type="Texture2D" uid="uid://dniextr4kn1uv" path="res://assets/PoI.png" id="2_y8567"]
+[ext_resource type="Texture2D" path="res://assets/PoI.png" id="2_y8567"]
 [ext_resource type="PackedScene" uid="uid://vl61or4exnyi" path="res://scenes/gui/popups/poi_popup.tscn" id="3_0f6jn"]
 [ext_resource type="Shader" path="res://assets/shaders/pulse.gdshader" id="3_pcwpl"]
 [ext_resource type="Texture2D" uid="uid://dgpupl2v1f58s" path="res://assets/icons/poi/base_poi_icon.png" id="4_i3ffn"]
