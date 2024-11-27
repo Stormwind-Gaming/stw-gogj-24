@@ -84,6 +84,7 @@ func set_existing_plan_card(plan_arg: Plan = null) -> void:
 	location_label.text = "District:\n%s - %s\n\nLocation:\n%s" % [plan.plan_subject_poi.parent_district.district_name, Globals.get_district_type_string(plan.plan_subject_poi.parent_district.district_type), plan.plan_subject_poi.poi_name]
 	mission_label.text = plan.plan_text
 	green_star_stamp.visible = true
+	$JumpToButton.visible = true
 
 """
 @brief Sets up an empty plan card for new plan creation.
@@ -174,3 +175,8 @@ Emits the create_plan signal.
 """
 func _on_create_plan_btn_pressed() -> void:
 	create_plan.emit()
+
+
+func _on_jump_to_button_pressed() -> void:
+	EventBus.close_all_windows.emit()
+	EventBus.focus_on_poi.emit(plan.plan_subject_poi)

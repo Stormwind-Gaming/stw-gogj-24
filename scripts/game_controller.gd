@@ -18,15 +18,15 @@ var town_name: String = ""
 """
 var district_focused: District = null
 
-"""
-@brief POI associated with current radial menu
-"""
-var poi_for_radial: PointOfInterest
+# """
+# @brief POI associated with current radial menu
+# """
+# var poi_for_radial: PointOfInterest
 
-"""
-@brief Currently open radial menu instance
-"""
-var radial_menu_open: RadialMenu
+# """
+# @brief Currently open radial menu instance
+# """
+# var radial_menu_open: RadialMenu
 
 """
 @brief Calendar instance for tracking game time
@@ -96,8 +96,9 @@ func reset() -> void:
 @brief Clears local data when all windows are closed
 """
 func _on_close_all_windows() -> void:
-	radial_menu_open = null
-	poi_for_radial = null
+	LogDuck.d("Closing all windows")
+	# radial_menu_open = null
+	# poi_for_radial = null
 
 
 #|==============================|
@@ -346,8 +347,8 @@ func set_district_focused(district: District) -> void:
 	LogDuck.d("Setting focused district to", district.district_name if district else "null")
 	district_focused = district
 	EventBus.district_just_focused.emit(district)
-	if district == null:
-		_on_radial_option_selected(Enums.ActionType.NONE)
+	# if district == null:
+	# 	_on_radial_option_selected(Enums.ActionType.NONE)
 
 
 #|==============================|
@@ -360,29 +361,29 @@ func set_district_focused(district: District) -> void:
 @param poi The POI the menu is for
 """
 func open_radial_menu(radial_menu: RadialMenu, poi: PointOfInterest) -> void:
-	if radial_menu_open:
+	# if radial_menu_open:
 		LogDuck.d("Radial menu already open, closing")
-		return
-	radial_menu_open = radial_menu
-	poi_for_radial = poi
+		# return
+	# radial_menu_open = radial_menu
+	# poi_for_radial = poi
 
 """
 @brief Handles radial option selection
 
 @param option The option selected
 """
-func _on_radial_option_selected(option: Enums.ActionType) -> void:
+func _on_radial_option_selected(option: Enums.ActionType, poi_for_radial: PointOfInterest) -> void:
 	LogDuck.d("Radial option selected:", option)
-	if not radial_menu_open:
-		return
+	# if not radial_menu_open:
+	# 	return
 
-	radial_menu_open.hide()
+	# radial_menu_open.hide()
 
 	# if quit, do nothing
 	if option == Enums.ActionType.NONE:
 		# create a tiny timer to get around erroneous clickthroughs
 		await get_tree().create_timer(0.1).timeout
-		radial_menu_open = null
+		# radial_menu_open = null
 		return
 	
 	# if info, show info
@@ -394,16 +395,16 @@ func _on_radial_option_selected(option: Enums.ActionType) -> void:
 
 		# create a tiny timer to get around erroneous clickthroughs
 		await get_tree().create_timer(0.1).timeout
-		radial_menu_open = null
+		# radial_menu_open = null
 		return
 
 	# popup a post_radial_assignment menu
 	var post_radial_assignment = Globals.post_radial_assignment_scene.instantiate()
-	post_radial_assignment.set_option(option)
-	post_radial_assignment.connect('post_radial_assignment_option', _on_post_radial_assignment_option_selected)
+	post_radial_assignment.set_option(poi_for_radial, option)
+	post_radial_assignment.post_radial_assignment_option.connect(_on_post_radial_assignment_option_selected)
 	EventBus.open_new_window.emit(post_radial_assignment)
 
-func _on_post_radial_assignment_option_selected(option: Enums.ActionType, selected_agents: Array[Character], _additions: Array) -> void:
+func _on_post_radial_assignment_option_selected(option: Enums.ActionType, selected_agents: Array[Character], poi_for_radial: PointOfInterest, _additions: Array) -> void:
 	LogDuck.d("Post-radial assignment selected:", option, "with", selected_agents.size(), "agents")
 	if option != Enums.ActionType.NONE and option != Enums.ActionType.INFO:
 		GameController.add_action(poi_for_radial, selected_agents, option)
@@ -412,4 +413,4 @@ func _on_post_radial_assignment_option_selected(option: Enums.ActionType, select
 	await get_tree().create_timer(0.1).timeout
 	EventBus.close_window.emit()
 	EventBus.close_radial_menu.emit()
-	radial_menu_open = null
+	# radial_menu_open = null

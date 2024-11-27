@@ -66,6 +66,11 @@ var max_agents: int = 1
 """
 var selected_agents: Array[Character] = []
 
+"""
+@brief Point of interest to assign actions to
+"""
+var poi: PointOfInterest
+
 #|==============================|
 #|          Signals            |
 #|==============================|
@@ -75,7 +80,7 @@ var selected_agents: Array[Character] = []
 @param agents Array of assigned agents
 @param additions Array of additional parameters
 """
-signal post_radial_assignment_option(option: Enums.ActionType, agents: Array[Character], additions: Array)
+signal post_radial_assignment_option(option: Enums.ActionType, agents: Array[Character], poi_for_radial: PointOfInterest, additions: Array)
 
 #|==============================|
 #|      Setters & Getters      |
@@ -85,8 +90,9 @@ signal post_radial_assignment_option(option: Enums.ActionType, agents: Array[Cha
 
 @param option_attr The type of action to assign
 """
-func set_option(option_attr: Enums.ActionType) -> void:
+func set_option(poi: PointOfInterest, option_attr: Enums.ActionType) -> void:
 	self.option = option_attr
+	self.poi = poi
 
 #|==============================|
 #|      Lifecycle Methods      |
@@ -119,9 +125,9 @@ func _ready():
 	for agent in agents:
 		var agent_instance = Globals.agent_card_scene.instantiate()
 		agent_instance.set_character(agent)
-		agent_instance.connect('agent_card_selected', _on_agent_card_selected)
+		agent_instance.agent_card_selected.connect(_on_agent_card_selected)
 		agent_card_grid.add_child(agent_instance)
-		agent_instance.check_assignment_selection(GameController.poi_for_radial, option)
+		agent_instance.check_assignment_selection(poi, option)
 	
 	# set max agents based on the action type
 	match option:
@@ -182,7 +188,7 @@ func _on_agent_card_selected(agent: Character, selected: bool):
 Emits the assignment completion signal.
 """
 func _on_button_pressed() -> void:
-	emit_signal('post_radial_assignment_option', option, selected_agents, [])
+	post_radial_assignment_option.emit(option, selected_agents, poi, [])
 	EventBus.close_window.emit()
 
 """
@@ -190,7 +196,7 @@ func _on_button_pressed() -> void:
 Emits a cancellation signal.
 """
 func _on_close_button_pressed() -> void:
-	emit_signal('post_radial_assignment_option', Enums.ActionType.NONE, selected_agents, [])
+	post_radial_assignment_option.emit(Enums.ActionType.NONE, selected_agents, poi, [])
 	EventBus.close_window.emit()
 
 #|==============================|
@@ -213,12 +219,12 @@ func _calculate_stats():
 
 	if selected_agents.size() > 0:
 
-		var statistic_check: StatisticCheck = StatisticCheck.new(selected_agents, GameController.poi_for_radial.parent_district, GameController.poi_for_radial)
+		var statistic_check: StatisticCheck = StatisticCheck.new(selected_agents, poi.parent_district, poi)
 		detection_label.text = "Chance of Detection: %s" % str(floor((1 - statistic_check.get_subtlety_chance()) * 100)) + "%"
 
 		if option == Enums.ActionType.PLAN:
 			# get the plan
-			var plan: Plan = GlobalRegistry.intel.find_item(GlobalRegistry.LIST_PLANS, "plan_subject_poi", GameController.poi_for_radial)
+			var plan: Plan = GlobalRegistry.intel.find_item(GlobalRegistry.LIST_PLANS, "plan_subject_poi", poi)
 
 			duration_label.text = "Duration: %s Turns" % str(statistic_check.action_duration(plan.plan_duration))
 		else:
@@ -249,7 +255,7 @@ func _calculate_stats():
 				success_label.text = "Chance of Success: %s" % str(floor((statistic_check.get_smarts_chance()) * 100)) + "%"
 			Enums.ActionType.ESPIONAGE:
 				# Get the stat for this poi espoionage
-				match GameController.poi_for_radial.stat_check_type:
+				match poi.stat_check_type:
 					Enums.StatCheckType.CHARM:
 						success_label.text = "Chance of Success: %s" % str(floor((statistic_check.get_charm_chance()) * 100)) + "%"
 					Enums.StatCheckType.SMARTS:

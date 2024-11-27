@@ -179,6 +179,8 @@ func _ready() -> void:
 	EventBus.district_just_focused.connect(_on_district_just_focused)
 	EventBus.focus_on_poi.connect(_on_poi_focused)
 	EventBus.close_radial_menu.connect(_reset_poi_state)
+
+	EventBus.open_new_radial_menu.connect(_on_open_new_radial_menu)
 	
 	# Create the owner of the POI
 	self.poi_owner = CharacterFactory.create_character()
@@ -323,7 +325,7 @@ func _on_mouse_entered():
 			LogDuck.d("POI hover ignored - disabled or window open")
 		return
 
-	if GameController.radial_menu_open != null:
+	if WindowHandler.any_windows_open():
 		if gui_debug:
 			LogDuck.d("POI hover ignored - radial menu open")
 		return
@@ -384,6 +386,7 @@ func _on_poi_clicked(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 
 func _reset_poi_state():
 	_on_district_just_focused(GameController.district_focused)
+	$IconButton.mouse_filter = Control.MOUSE_FILTER_STOP
 			
 """
 @brief Handles button click events.
@@ -407,7 +410,7 @@ func _poi_clicked() -> void:
 	
 	poi_popup.visible = false
 
-	if GameController.radial_menu_open != null:
+	if WindowHandler.any_windows_open():
 		if gui_debug:
 			LogDuck.d("POI click ignored - radial menu already open")
 		return
@@ -416,8 +419,6 @@ func _poi_clicked() -> void:
 		if gui_debug:
 			LogDuck.d("POI click ignored - district not focused")
 		return
-
-	$IconButton.visible = false
 	
 	var actions: Array[Enums.ActionType] = []
 	if not GameController.endgame_triggered:
@@ -440,7 +441,7 @@ func _poi_clicked() -> void:
 
 	var radial_menu_instance = Globals.radial_menu_scene.instantiate()
 	radial_menu_instance.position = get_local_mouse_position()
-	radial_menu_instance.set_optional_actions(actions)
+	radial_menu_instance.set_optional_actions(self, actions)
 	EventBus.open_new_radial_menu.emit(radial_menu_instance)
 	add_child(radial_menu_instance)
 	GameController.open_radial_menu(radial_menu_instance, self)
@@ -534,6 +535,13 @@ func _on_action_destroyed(action: BaseAction) -> void:
 			if child.get_meta("action_reference") == action:
 				child.queue_free()
 				break
+
+
+func _on_open_new_radial_menu(radial_menu_instance: RadialMenu) -> void:
+	# wait 0.1 seconds to ensure the radial menu is open
+	await get_tree().create_timer(0.1).timeout
+	$IconButton.mouse_filter = Control.MOUSE_FILTER_IGNORE
+
 
 #|==============================|
 #|      Helper Functions       |

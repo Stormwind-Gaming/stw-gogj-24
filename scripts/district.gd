@@ -540,7 +540,7 @@ func get_district_size() -> Vector2:
 Updates visual state and emits hover signal.
 """
 func _on_mouse_entered() -> void:
-	if GameController.radial_menu_open != null or WindowHandler.open_window:
+	if WindowHandler.any_windows_open():
 		if gui_debug:
 			LogDuck.d("District: Mouse entered ignored due to open menu/window")
 		return
@@ -568,7 +568,7 @@ Processes clicks and emits signals.
 """
 func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	# check if we have a radial menu instance, if so, don't expand
-	if GameController.radial_menu_open != null or WindowHandler.open_window:
+	if WindowHandler.any_windows_open():
 		return
 
 	if event is InputEventMouseButton:

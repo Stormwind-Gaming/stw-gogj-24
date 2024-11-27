@@ -63,12 +63,9 @@ func _close_all_windows_and_event_panels() -> void:
 func _close_all_windows() -> void:
 	LogDuck.d("WindowHandler: Closing all windows")
 	if open_window:
-		open_window.queue_free()
+		EventBus.close_window.emit()
 	if open_radial_menu:
-		open_radial_menu.queue_free()
-	
-	open_window = null
-	open_radial_menu = null
+		EventBus.close_radial_menu.emit()
 
 """
 @brief Closes the current window

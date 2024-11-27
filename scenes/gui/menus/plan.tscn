@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://c26h6uvgdpl7l"]
+[gd_scene load_steps=13 format=3 uid="uid://c26h6uvgdpl7l"]
 
 [ext_resource type="Theme" uid="uid://dexax20p2eewp" path="res://assets/themes/base_theme.tres" id="1_pfypv"]
 [ext_resource type="Texture2D" uid="uid://b2hufa4grdklc" path="res://assets/sprites/plan_sheet_background.png" id="1_v4sc6"]
@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://db4dufrobjxk2" path="res://assets/sprites/approve_stamp_dark.png" id="4_210nc"]
 [ext_resource type="Texture2D" uid="uid://ckgvy1jm1v5tb" path="res://assets/sprites/approve_stamp_white.png" id="5_4gih3"]
 [ext_resource type="Texture2D" uid="uid://ya4wdg5dlxcd" path="res://assets/sprites/green_star_stamp.png" id="7_nfj6u"]
+[ext_resource type="Texture2D" uid="uid://5t6xu00wsvwi" path="res://assets/icons/target.png" id="8_0rwso"]
+[ext_resource type="Texture2D" uid="uid://bcsjhr1sajkmw" path="res://assets/icons/target_hover.png" id="9_rcqfq"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_l5yse"]
 texture = ExtResource("1_v4sc6")
@@ -174,4 +176,18 @@ scale = Vector2(0.6, 0.6)
 texture = ExtResource("7_nfj6u")
 stretch_mode = 5
 
+[node name="JumpToButton" type="TextureButton" parent="."]
+visible = false
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+focus_mode = 0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("8_0rwso")
+texture_hover = ExtResource("9_rcqfq")
+ignore_texture_size = true
+stretch_mode = 0
+
 [connection signal="pressed" from="MarginContainer/CraftingContainer/MarginContainer2/CreatePlanBtn" to="." method="_on_create_plan_btn_pressed"]
+[connection signal="pressed" from="JumpToButton" to="." method="_on_jump_to_button_pressed"]

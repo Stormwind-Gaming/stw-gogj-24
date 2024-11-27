@@ -64,6 +64,11 @@ var options: Array[RadialOption]
 """
 var selected_cell = 0
 
+"""
+@brief Point of interest to assign actions to
+"""
+var poi: PointOfInterest
+
 #|==============================|
 #|      Lifecycle Methods      |
 #|==============================|
@@ -187,7 +192,7 @@ func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) 
 		var mouse_event = event as InputEventMouseButton
 		if mouse_event.button_index == MOUSE_BUTTON_LEFT and mouse_event.pressed:
 			EventBus.close_radial_menu.emit()
-			EventBus.selected_radial_option.emit(options[selected_cell].action_type)
+			EventBus.selected_radial_option.emit(options[selected_cell].action_type, poi)
 
 func _on_close_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if event is InputEventMouseButton:
@@ -203,6 +208,8 @@ func _on_close_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx:
 
 @param options_attr Array of action types to add
 """
-func set_optional_actions(options_attr: Array[Enums.ActionType] = []) -> void:
+func set_optional_actions(poi: PointOfInterest, options_attr: Array[Enums.ActionType] = []) -> void:
 	for option in options_attr:
 		options.append(RadialOption.new(option))
+	
+	self.poi = poi
