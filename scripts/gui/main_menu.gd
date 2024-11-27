@@ -11,6 +11,8 @@ func _on_new_game_button_pressed() -> void:
 	GlobalRegistry.reset()
 	# Reset the GameController
 	GameController.reset()
+	# Reset the GameStats
+	GameStats.reset()
 
 	var audio_tween = create_tween()
 	audio_tween.tween_property($AudioStreamPlayer2D, "volume_db", -80, 1.0).set_ease(Tween.EASE_OUT)

@@ -26,6 +26,7 @@ EventBus="*res://scripts/event_bus.gd"
 WindowHandler="*res://scripts/window_handler.gd"
 Constants="*res://scripts/constants.gd"
 GlobalMilestones="*res://scripts/modifiers/global_milestones.gd"
+GameStats="*res://scripts/fluff/game_stats.gd"
 
 [display]
 

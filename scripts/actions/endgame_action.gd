@@ -53,6 +53,8 @@ func _process_action() -> Array[TurnLog]:
 				logs += _resistance_endgame_3()
 			3:
 				logs += _resistance_endgame_4()
+			4:
+				logs += _resistance_endgame_5()
 			_:
 				printerr("Invalid resistance endgame step: ", GameController.resistance_endgame_step)
 
@@ -139,6 +141,8 @@ func _heat_endgame_port_1() -> Array[TurnLog]:
 		plan_properties.is_endgame_plan = true
 		Plan.new(plan_properties)
 
+		# popup new endgame event panel
+		EventBus.new_endgame_step.emit(Enums.EventOutcomeType.HEAT_PORT_02)
 
 	return logs
 
@@ -162,6 +166,9 @@ func _heat_endgame_port_2() -> Array[TurnLog]:
 		plan_properties.plan_subject_poi = docks_poi
 		plan_properties.is_endgame_plan = true
 		Plan.new(plan_properties)
+
+		# popup new endgame event panel
+		EventBus.new_endgame_step.emit(Enums.EventOutcomeType.HEAT_PORT_03)
 
 
 	return logs
@@ -187,6 +194,9 @@ func _heat_endgame_port_3() -> Array[TurnLog]:
 		plan_properties.is_endgame_plan = true
 		Plan.new(plan_properties)
 
+		# popup new endgame event panel
+		EventBus.new_endgame_step.emit(Enums.EventOutcomeType.HEAT_PORT_04)
+
 	return logs
 
 func _heat_endgame_port_4() -> Array[TurnLog]:
@@ -200,7 +210,10 @@ func _heat_endgame_port_4() -> Array[TurnLog]:
 	if smarts_roll:
 		# TODO: Add endgame victory screen
 		logs.append(TurnLog.new("YOU WIN! Heat endgame complete!", Enums.LogType.ACTION_INFO))
+		GameController.endgame_end_type = Enums.EventOutcomeType.HEAT_PORT_SUCCESS
+		EventBus.game_over.emit()
 	else:
+		GameController.endgame_end_type = Enums.EventOutcomeType.HEAT_PORT_FAILURE
 		EventBus.game_over.emit()
 
 
@@ -228,6 +241,9 @@ func _heat_endgame_train_1() -> Array[TurnLog]:
 		plan_properties.is_endgame_plan = true
 		Plan.new(plan_properties)
 
+		# popup new endgame event panel
+		EventBus.new_endgame_step.emit(Enums.EventOutcomeType.HEAT_TRAIN_02)
+
 
 	return logs
 
@@ -252,6 +268,9 @@ func _heat_endgame_train_2() -> Array[TurnLog]:
 		plan_properties.is_endgame_plan = true
 		Plan.new(plan_properties)
 
+		# popup new endgame event panel
+		EventBus.new_endgame_step.emit(Enums.EventOutcomeType.HEAT_TRAIN_03)
+
 	return logs
 
 func _heat_endgame_train_3() -> Array[TurnLog]:
@@ -275,6 +294,9 @@ func _heat_endgame_train_3() -> Array[TurnLog]:
 		plan_properties.is_endgame_plan = true
 		Plan.new(plan_properties)
 
+		# popup new endgame event panel
+		EventBus.new_endgame_step.emit(Enums.EventOutcomeType.HEAT_TRAIN_04)
+
 	return logs
 
 func _heat_endgame_train_4() -> Array[TurnLog]:
@@ -288,7 +310,10 @@ func _heat_endgame_train_4() -> Array[TurnLog]:
 	if charm_roll:
 		# TODO: Add endgame victory screen
 		logs.append(TurnLog.new("YOU WIN! Heat endgame complete!", Enums.LogType.ACTION_INFO))
+		GameController.endgame_end_type = Enums.EventOutcomeType.HEAT_TRAIN_SUCCESS
+		EventBus.game_over.emit()
 	else:
+		GameController.endgame_end_type = Enums.EventOutcomeType.HEAT_TRAIN_FAILURE
 		EventBus.game_over.emit()
 
 	return logs
@@ -313,6 +338,9 @@ func _resistance_endgame_1() -> Array[TurnLog]:
 		airbase_plan_properties.is_endgame_plan = true
 		Plan.new(airbase_plan_properties)
 
+		# popup new endgame event panel
+		EventBus.new_endgame_step.emit(Enums.EventOutcomeType.RESISTANCE_AIRFIELD_02)
+
 	return logs
 
 func _resistance_endgame_2() -> Array[TurnLog]:
@@ -334,6 +362,9 @@ func _resistance_endgame_2() -> Array[TurnLog]:
 		airbase_plan_properties.plan_subject_poi = airbase_poi
 		airbase_plan_properties.is_endgame_plan = true
 		Plan.new(airbase_plan_properties)
+
+		# popup new endgame event panel
+		EventBus.new_endgame_step.emit(Enums.EventOutcomeType.RESISTANCE_AIRFIELD_03)
 
 	return logs
 
@@ -357,6 +388,9 @@ func _resistance_endgame_3() -> Array[TurnLog]:
 		airbase_plan_properties.is_endgame_plan = true
 		Plan.new(airbase_plan_properties)
 
+		# popup new endgame event panel
+		EventBus.new_endgame_step.emit(Enums.EventOutcomeType.RESISTANCE_AIRFIELD_04)
+
 	return logs
 
 func _resistance_endgame_4() -> Array[TurnLog]:
@@ -379,6 +413,9 @@ func _resistance_endgame_4() -> Array[TurnLog]:
 		airbase_plan_properties.is_endgame_plan = true
 		Plan.new(airbase_plan_properties)
 
+		# popup new endgame event panel
+		EventBus.new_endgame_step.emit(Enums.EventOutcomeType.RESISTANCE_AIRFIELD_05)
+
 
 	return logs
 
@@ -392,9 +429,11 @@ func _resistance_endgame_5() -> Array[TurnLog]:
 
 	if charm_roll:
 		GameController.resistance_endgame_step = 5
-		# TODO: Add endgame victory screen
 		logs.append(TurnLog.new("YOU WIN! Resistance endgame complete!", Enums.LogType.ACTION_INFO))
+		GameController.endgame_end_type = Enums.EventOutcomeType.RESISTANCE_AIRFIELD_SUCCESS
+		EventBus.game_over.emit()
 	else:
+		GameController.endgame_end_type = Enums.EventOutcomeType.RESISTANCE_AIRFIELD_SUCCESS
 		EventBus.game_over.emit()
 
 	return logs

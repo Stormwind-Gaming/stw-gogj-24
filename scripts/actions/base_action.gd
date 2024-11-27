@@ -247,10 +247,12 @@ func _get_stats() -> Dictionary:
 """
 func _release_characters() -> void:
 	for character in characters:
-		# If the character is assigned to this action (e.g. not missing or deceased), set them to available
-		if character.char_state == Enums.CharacterState.ASSIGNED:
-			character.char_state = Enums.CharacterState.AVAILABLE
-			EventBus.character_state_changed.emit(character)
+		# check if the character object is still valid (not deleted)
+		if is_instance_valid(character):
+			# If the character is assigned to this action (e.g. not missing or deceased), set them to available
+			if character.char_state == Enums.CharacterState.ASSIGNED:
+				character.char_state = Enums.CharacterState.AVAILABLE
+				EventBus.character_state_changed.emit(character)
 
 """
 @brief Gets the names of the characters involved in the action

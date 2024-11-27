@@ -30,6 +30,8 @@ func _ready() -> void:
 	EventBus.create_new_event_panel.connect(_create_new_event_panel)
 	EventBus.world_event_created.connect(_create_new_world_event_panel)
 
+	EventBus.new_endgame_step.connect(_create_endgame_panel)
+
 #|==============================|
 #|      Methods     				   |
 #|==============================|
@@ -142,12 +144,29 @@ func _create_new_world_event_panel(world_event: WorldEvent, config: WorldEventCo
 @param poi The point of interest involved in the event
 """
 func _create_new_event_panel(event_type: Enums.EventOutcomeType, character: Array[Character], poi: PointOfInterest) -> void:
-	if event_type == Enums.EventOutcomeType.NONE:
-		LogDuck.d("WindowHandler: Skipping event panel creation for NONE type")
+	if event_type == Enums.EventOutcomeType.NONE or event_type >= 25:
+		LogDuck.d("WindowHandler: Skipping event panel creation for NONE and ENDGAME types")
 		return
 	LogDuck.d("WindowHandler: Creating new event panel of type: %s" % event_type)
 	var popup = Globals.event_panel_scene.instantiate()
 	popup.set_event_details(event_type, character, poi)
+	add_child(popup)
+	open_event_panels.append(popup)
+	popup.on_close.connect(_on_event_panel_closed)
+
+"""
+@brief Creates a new event panel
+
+@param event_type The type of event to create a panel for
+@param character The character involved in the event
+@param poi The point of interest involved in the event
+"""
+func _create_endgame_panel(endgame_type: Enums.EventOutcomeType) -> void:
+	if endgame_type < 25:
+		# not an endgame event
+		return
+	var popup = Globals.event_panel_scene.instantiate()
+	popup.set_event_endgame_event(endgame_type)
 	add_child(popup)
 	open_event_panels.append(popup)
 	popup.on_close.connect(_on_event_panel_closed)

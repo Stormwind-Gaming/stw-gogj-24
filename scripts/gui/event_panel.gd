@@ -92,7 +92,16 @@ func set_event_details_world_event(world_event: WorldEvent, config: WorldEventCo
 	if world_event.event_poi:
 		text_label.text = text_label.text.replace("{poi}", world_event.event_poi.poi_name)
 		title_label.text = title_label.text.replace("{poi}", world_event.event_poi.poi_name)
-	
+
+func set_event_endgame_event(event: Enums.EventOutcomeType) -> void:
+	# get the event type image
+	event_image.texture = Globals.endgame_event_images[event]
+	var event_outcome_text_object = Globals.event_outcome_text[event][0]
+	# set the title, text, and button text
+	title_label.text = event_outcome_text_object.title
+	text_label.text = event_outcome_text_object.text
+	button.text = event_outcome_text_object.button_text
+
 
 #|==============================|
 #|       Event Listeners        |

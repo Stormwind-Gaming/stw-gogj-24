@@ -41,10 +41,29 @@ event_industrial_milestone,Industrial Backbone Secured,"The factories and worksh
 sympathy_breakpoint_low,Support on the Rise,"The whispers of defiance have spread across {town}. Growing sympathy for the resistance has emboldened more individuals to step forward. With this momentum, we gain the capacity to bring another agent into the fold.",The resistance grows stronger
 sympathy_breakpoint_medium,Resistance Swells,"The resistance has become a force to be reckoned with. Across {town}, sympathizers now actively support our cause, providing critical resources and shelter. This growing network empowers us to bring another agent into the fight.",We stand united
 sympathy_breakpoint_high,The Tipping Point,"Our efforts have ignited a citywide movement. The resistance is no longer a shadowy force but a unified front with the people at its back. With this overwhelming support, we gain the strength to bring another agent into the fray.",The city stands with us
-heat_endgame,Heat Endgame Title,"The Secret police have discovered your safehouse and know who you are. The resistance here is over, you must flee the city to have any chance of survival. 
+heat_01,Flee the City,"The Secret police have discovered your safehouse and know who you are. The resistance here is over, you must flee the city to have any chance of survival. 
 Prepare to run!
 
 You have 2 options, you can leave via the port or via the train station, which do you choose?
 ",We must act quickly
-resistance_endgame,Resistance Endgame Title,"We’ve gathered enough intel to be able to infiltrate the airbase, and destroy the enemy airforce in this sector. Gather our explosives cache and our best agents, its time to strike a decisive blow and eliminate the fighter squadron.
+heat_port_02,Sneak into the Port,"You’re outside the Port perimeter, you need to get inside as soon as possible, the best way is to wait until dark then cut through the fence south of the pier.",Wait until dark
+heat_port_03,Board the ship,"We don’t have long before the patrols find the gap in the fence, we must get on the ship.",Get on the ship
+heat_port_04,Avoid the cabin search,"The ship is leaving in 30 minutes, but first we have to avoid the customs and border patrols checking papers in every cabin. We should hide below decks in the engine room, we should be safe amongst the stevedores.
+
+We only have one chance at this!",Hide below decks
+heat_train_02,Sneak into the train station,"You’re outside the Train station perimeter, you need to get inside as soon as possible, as you have the uniform of an oberlieutenant you should be able to walk through the front door.",Walk through the front door
+heat_train_03,Board a train,"I fear that this uniform has got us as far as we can go, we need to change and board a train as a member of the crew. There is a crew room on platform 3, lets try boarding as a stoker.",Change and board the train
+heat_train_04,Join the boiler crew without raising alarm,"The train is about to leave, you have to get aboard now. The stoker crew are on their way, infiltrate the team and persuade  them that you’ve been sent to join the train.
+
+We only have one chance at this!",Infiltrate the crew
+resistance_airfield_01,Assemble the team,"We’ve gathered enough intel to be able to infiltrate the airbase, and destroy the enemy airforce in this sector. Gather our explosives cache and our best agents, its time to strike a decisive blow and eliminate the fighter squadron.
 ",We must act quickly
+resistance_airfield_02,Infiltrate the airbase,"We made it through the checkpoint, but we are outside the fence, the best option we have is to get the truck through the west gate, its less busy and the guards will be tired from a night of duty",Head for the west gate
+resistance_airfield_03,Let’s plant some explosives,"We’re in! and quietly, no one knows we are here, so we have some time to plant the explosives. Get close to the aircraft and try to get near the fuel tank through the landing gear.",Plant the explosives
+resistance_airfield_04,"Hurry, we have to move fast","We made it in, but they know we’re here, and the alarm has sounded. Quickly head for the aircraft, plant explosives wherever we can, short fuses and lets hope we can make it work in the confusion.",Move quickly
+resistance_airfield_05,Lets get out,"It's time to get out, we’ve planted the explosives and the fuses are set, we will go via the east gate, away from the city and wait until the bombs go off. In the confusion and chaos we can get through the gate guards, or kill them.",Escape via the east gate
+resistance_general_01,Plan the assassination,"Our source in Gestapo HQ has told us that the regional general is visiting today, if we move quickly we will be able to assassinate him as he leaves a luncheon with the town commandant on the 3rd floor of the Gestapo HQ.",We must act quickly
+resistance_general_02,We have to get to the Civic centre,"{character} can pose as my driver, we will have to take the back streets to get into place near the Gestapo HQ",Take the back streets
+resistance_general_03,We’re in position,"We’re in place above the 3rd corridor window, we have a clear view as the General leaves the dining room and walks down the corridor to the stairs. We’re just waiting to take the shot…",Wait for the shot
+resistance_general_04,The sniper option is compromised,"Something has gone wrong, we will have to get close, we have our pistol, perhaps we can ambush him as his car leaves the HQ. Its much more dangerous but the opportunity is too good to pass up",Prepare for an ambush
+resistance_general_05,Lets get out,"We succeeded, the general is hit. We don’t know if its fatal yet, but we have to run. The gestapo are swarming out of the HQ and they know where we are. We have a safe house nearby, it’ll be better to stay close and hide behind the patrols than flee.",Hide in the safe house

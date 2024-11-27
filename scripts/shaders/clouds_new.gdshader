@@ -22,6 +22,6 @@ void fragment() {
     } else {
         alpha = (combinedNoise.r > threshold ? 1.0 : 0.0) * alpha_multiplier;
     }
-    
+
     COLOR = vec4(combinedNoise.rgb * brightness, alpha);
 }

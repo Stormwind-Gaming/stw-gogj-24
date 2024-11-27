@@ -19,7 +19,7 @@ var _registry: Dictionary = {}
 """
 func create_list(name: String) -> void:
 	if _registry.has(name):
-		LogDuck.error("Failed to create list - already exists", {"list": name})
+		LogDuck.e("Failed to create list - already exists", {"list": name})
 		push_error("List '%s' already exists" % name)
 		return
 	_registry[name] = []
@@ -33,7 +33,7 @@ func create_list(name: String) -> void:
 """
 func add_item(list_name: String, item) -> void:
 	if not _registry.has(list_name):
-		LogDuck.error("Failed to add item - list doesn't exist", {"list": list_name})
+		LogDuck.e("Failed to add item - list doesn't exist", {"list": list_name})
 		push_error("List '%s' does not exist" % list_name)
 		return
 	_registry[list_name].append(item)
@@ -57,7 +57,7 @@ func move_item(target_list_name: String, item: Object) -> void:
 			break
 	
 	if source_list_name == "":
-		LogDuck.error("Failed to move item - not found in any list", {
+		LogDuck.e("Failed to move item - not found in any list", {
 			"target_list": target_list_name,
 			"item_type": item.get_class()
 		})
@@ -65,7 +65,7 @@ func move_item(target_list_name: String, item: Object) -> void:
 		return
 	
 	if not _registry.has(target_list_name):
-		LogDuck.error("Failed to move item - target list doesn't exist", {"target_list": target_list_name})
+		LogDuck.e("Failed to move item - target list doesn't exist", {"target_list": target_list_name})
 		push_error("Target list '%s' does not exist" % target_list_name)
 		return
 
@@ -86,7 +86,7 @@ func move_item(target_list_name: String, item: Object) -> void:
 """
 func get_item(list_name: String, index: int):
 	if not _registry.has(list_name):
-		LogDuck.error("Failed to get item - list doesn't exist", {"list": list_name, "index": index})
+		LogDuck.e("Failed to get item - list doesn't exist", {"list": list_name, "index": index})
 		push_error("List '%s' does not exist" % list_name)
 		return null
 	LogDuck.d("Retrieved item from registry list", {"list": list_name, "index": index})
@@ -137,7 +137,7 @@ func get_random_item():
 """
 func get_random_item_from_list(list_name: String):
 	if not _registry.has(list_name):
-		LogDuck.error("Failed to get random item - list doesn't exist", {"list": list_name})
+		LogDuck.e("Failed to get random item - list doesn't exist", {"list": list_name})
 		push_error("List '%s' does not exist" % list_name)
 		return null
 		
@@ -186,7 +186,7 @@ func list_names() -> Array:
 """
 func find_item(list_name: String, property: String, value) -> Variant:
 	if not _registry.has(list_name):
-		LogDuck.error("Failed to find item - list doesn't exist", {
+		LogDuck.e("Failed to find item - list doesn't exist", {
 			"list": list_name,
 			"property": property,
 			"value": value
@@ -292,7 +292,7 @@ func remove_item(item) -> void:
 """
 func remove_list(list_name: String) -> void:
 	if not _registry.has(list_name):
-		LogDuck.error("Failed to remove list - doesn't exist", {"list": list_name})
+		LogDuck.e("Failed to remove list - doesn't exist", {"list": list_name})
 		push_error("List '%s' does not exist" % list_name)
 		return
 	_registry.erase(list_name)
@@ -305,7 +305,7 @@ func remove_list(list_name: String) -> void:
 """
 func clear_list(list_name: String) -> void:
 	if not _registry.has(list_name):
-		LogDuck.error("Failed to clear list - doesn't exist", {"list": list_name})
+		LogDuck.e("Failed to clear list - doesn't exist", {"list": list_name})
 		push_error("List '%s' does not exist" % list_name)
 		return
 	var previous_size = _registry[list_name].size()

@@ -1,9 +1,42 @@
-[gd_scene load_steps=9 format=3 uid="uid://ye7bufmlbcsu"]
+[gd_scene load_steps=18 format=3 uid="uid://ye7bufmlbcsu"]
 
 [ext_resource type="Texture2D" uid="uid://dybb78mhd11rj" path="res://assets/sprites/screens/game_over.png" id="1_f4e6p"]
 [ext_resource type="Theme" uid="uid://dexax20p2eewp" path="res://assets/themes/base_theme.tres" id="1_sacn4"]
 [ext_resource type="Script" path="res://scripts/gui/game_over.gd" id="2_lhdhb"]
-[ext_resource type="PackedScene" uid="uid://csjj4gfy5g6nw" path="res://scenes/debug/stats_container.tscn" id="4_2lmw8"]
+[ext_resource type="Texture2D" uid="uid://bs6sxq4xkk3la" path="res://assets/sprites/events/endgame/lose_port.webp" id="3_wweln"]
+
+[sub_resource type="Gradient" id="Gradient_kcw03"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.929412, 0.85098, 0.713726, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_kkfrk"]
+gradient = SubResource("Gradient_kcw03")
+width = 1
+
+[sub_resource type="Gradient" id="Gradient_uvq4k"]
+offsets = PackedFloat32Array(0, 0.738523)
+colors = PackedColorArray(0.929412, 0.85098, 0.713726, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_hgynd"]
+gradient = SubResource("Gradient_uvq4k")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8obfa"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ve0vd"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0yfor"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_x76dd"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6sfqw"]
 
@@ -12,7 +45,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("TextureRect:visible")
+tracks/0/path = NodePath("LoseGame/TextureRect:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -21,15 +54,51 @@ tracks/0/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("LoseGame:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Endgame:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Endgame:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_qxhma"]
-resource_name = "fade_in"
+resource_name = "fade_in_game_over"
 length = 0.5
 step = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("TextureRect:modulate")
+tracks/0/path = NodePath("LoseGame/TextureRect:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -41,7 +110,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CenterContainer2:modulate")
+tracks/1/path = NodePath("LoseGame/CenterContainer2:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -53,7 +122,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("TextureRect:visible")
+tracks/2/path = NodePath("LoseGame/TextureRect:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -65,7 +134,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("CenterContainer2:visible")
+tracks/3/path = NodePath("LoseGame/CenterContainer2:visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -74,14 +143,67 @@ tracks/3/keys = {
 "update": 1,
 "values": [false, true]
 }
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("LoseGame:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_aqe37"]
+resource_name = "fade_in_endgame"
+step = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LoseGame:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Endgame:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Endgame:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_6fhol"]
 _data = {
 "RESET": SubResource("Animation_wgge5"),
-"fade_in": SubResource("Animation_qxhma")
+"fade_in_endgame": SubResource("Animation_aqe37"),
+"fade_in_game_over": SubResource("Animation_qxhma")
 }
 
-[node name="GameOver" type="Control" node_paths=PackedStringArray("stats_panel")]
+[node name="GameOver" type="Control" node_paths=PackedStringArray("endgame_image", "endgame_text", "background_colour", "fade_colour", "turns", "time", "missions", "subtlety", "smarts", "charm", "espionage", "surveillance", "propaganda", "mia", "injured", "dead", "escaped_sympathisers", "left_behind_sympathisers")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -90,9 +212,464 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_sacn4")
 script = ExtResource("2_lhdhb")
-stats_panel = NodePath("CanvasLayer2/PanelContainer")
+endgame_image = NodePath("Endgame/HBoxContainer/EndgameImage")
+endgame_text = NodePath("Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/EndgameText")
+background_colour = NodePath("Endgame/HBoxContainer/TextureRect")
+fade_colour = NodePath("Endgame/HBoxContainer/EndgameImage/TextureRect")
+turns = NodePath("Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/Turns/Value")
+time = NodePath("Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/Time/Value")
+missions = NodePath("Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer2/GridContainer2/VBoxContainer/Missons/Value")
+subtlety = NodePath("Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer2/GridContainer2/VBoxContainer2/Subtlety/Value")
+smarts = NodePath("Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer2/GridContainer2/VBoxContainer2/Smarts/Value")
+charm = NodePath("Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer2/GridContainer2/VBoxContainer2/Charm/Value")
+espionage = NodePath("Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer2/GridContainer2/VBoxContainer/Espionage/Value")
+surveillance = NodePath("Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer2/GridContainer2/VBoxContainer/Surveillance/Value")
+propaganda = NodePath("Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer2/GridContainer2/VBoxContainer/Propaganda/Value")
+mia = NodePath("Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer3/GridContainer/VBoxContainer/MIAs/Value")
+injured = NodePath("Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer3/GridContainer/VBoxContainer/Injureds/Value")
+dead = NodePath("Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer3/GridContainer/VBoxContainer/Deaths/Value")
+escaped_sympathisers = NodePath("Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/AgentsSurvivedContainer/MarginContainer2/VBoxContainer/MarginContainer/SurvivedGridContainer")
+left_behind_sympathisers = NodePath("Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/AgentsMissingContainer/MarginContainer2/VBoxContainer/MarginContainer/LostGridContainer")
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="Endgame" type="Control" parent="."]
+visible = false
+modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Endgame"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="TextureRect" type="TextureRect" parent="Endgame/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = SubResource("GradientTexture1D_kkfrk")
+expand_mode = 5
+
+[node name="EndgameImage" type="TextureRect" parent="Endgame/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+texture = ExtResource("3_wweln")
+expand_mode = 3
+stretch_mode = 6
+
+[node name="TextureRect" type="TextureRect" parent="Endgame/HBoxContainer/EndgameImage"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+texture = SubResource("GradientTexture1D_hgynd")
+expand_mode = 5
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Endgame"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="CenterContainer2" type="MarginContainer" parent="Endgame/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Endgame/HBoxContainer2/CenterContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="Label" type="Label" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 44
+text = "The Aftermath"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EndgameText" type="RichTextLabel" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer"]
+layout_mode = 2
+text = "Not the ending you wanted for your resistance, but at least you’re out alive! You’ll have to regroup in another city and try to rebuild the movement there, but for now {town} is lost to the resistance. You only hope that your friends and sympathisers managed to get out too…"
+fit_content = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(0, 500)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="StatsContainer" type="PanelContainer" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8obfa")
+
+[node name="MarginContainer" type="MarginContainer" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Game Stats"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 9
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Turns" type="HBoxContainer" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/Turns"]
+layout_mode = 2
+text = "Turns:  "
+
+[node name="Value" type="Label" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/Turns"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+
+[node name="VSeparator" type="VSeparator" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Time" type="HBoxContainer" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/Time"]
+layout_mode = 2
+text = "Time Taken:  "
+
+[node name="Value" type="Label" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/Time"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+
+[node name="HSeparator2" type="HSeparator" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="GridContainer2" type="GridContainer" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+columns = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer2/GridContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Missons" type="HBoxContainer" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer2/GridContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer2/GridContainer2/VBoxContainer/Missons"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+text = "Total missons:"
+
+[node name="Value" type="Label" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer2/GridContainer2/VBoxContainer/Missons"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0/0"
+
+[node name="Espionage" type="HBoxContainer" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer2/GridContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer2/GridContainer2/VBoxContainer/Espionage"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+text = "Espionage:"
+
+[node name="Value" type="Label" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer2/GridContainer2/VBoxContainer/Espionage"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0/0"
+
+[node name="Surveillance" type="HBoxContainer" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer2/GridContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer2/GridContainer2/VBoxContainer/Surveillance"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+text = "Surveillance:"
+
+[node name="Value" type="Label" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer2/GridContainer2/VBoxContainer/Surveillance"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0/0"
+
+[node name="Propaganda" type="HBoxContainer" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer2/GridContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer2/GridContainer2/VBoxContainer/Propaganda"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+text = "Propaganda:"
+
+[node name="Value" type="Label" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer2/GridContainer2/VBoxContainer/Propaganda"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0/0"
+
+[node name="VSeparator" type="VSeparator" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer2/GridContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer2/GridContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Subtlety" type="HBoxContainer" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer2/GridContainer2/VBoxContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer2/GridContainer2/VBoxContainer2/Subtlety"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Subtlety:"
+
+[node name="Value" type="Label" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer2/GridContainer2/VBoxContainer2/Subtlety"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0/0"
+
+[node name="Charm" type="HBoxContainer" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer2/GridContainer2/VBoxContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer2/GridContainer2/VBoxContainer2/Charm"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Charm:"
+
+[node name="Value" type="Label" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer2/GridContainer2/VBoxContainer2/Charm"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0/0"
+
+[node name="Smarts" type="HBoxContainer" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer2/GridContainer2/VBoxContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer2/GridContainer2/VBoxContainer2/Smarts"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Smarts:"
+
+[node name="Value" type="Label" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer2/GridContainer2/VBoxContainer2/Smarts"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0/0"
+
+[node name="HSeparator3" type="HSeparator" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer3" type="MarginContainer" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="GridContainer" type="GridContainer" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer3"]
+layout_mode = 2
+size_flags_vertical = 3
+columns = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer3/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MIAs" type="HBoxContainer" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer3/GridContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer3/GridContainer/VBoxContainer/MIAs"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "MIAs:"
+
+[node name="Value" type="Label" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer3/GridContainer/VBoxContainer/MIAs"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+
+[node name="Injureds" type="HBoxContainer" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer3/GridContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer3/GridContainer/VBoxContainer/Injureds"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Injuries:"
+
+[node name="Value" type="Label" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer3/GridContainer/VBoxContainer/Injureds"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+
+[node name="Deaths" type="HBoxContainer" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer3/GridContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer3/GridContainer/VBoxContainer/Deaths"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Deaths:"
+
+[node name="Value" type="Label" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer3/GridContainer/VBoxContainer/Deaths"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+
+[node name="VSeparator" type="VSeparator" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer3/GridContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="VSeparator2" type="VSeparator" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer3/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/separator = SubResource("StyleBoxEmpty_ve0vd")
+
+[node name="AgentsSurvivedContainer" type="PanelContainer" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8obfa")
+
+[node name="MarginContainer2" type="MarginContainer" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/AgentsSurvivedContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/AgentsSurvivedContainer/MarginContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/AgentsSurvivedContainer/MarginContainer2/VBoxContainer"]
+layout_mode = 2
+text = "Escaped"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/AgentsSurvivedContainer/MarginContainer2/VBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/AgentsSurvivedContainer/MarginContainer2/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="SurvivedGridContainer" type="GridContainer" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/AgentsSurvivedContainer/MarginContainer2/VBoxContainer/MarginContainer"]
+layout_mode = 2
+columns = 3
+
+[node name="AgentsMissingContainer" type="PanelContainer" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8obfa")
+
+[node name="MarginContainer2" type="MarginContainer" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/AgentsMissingContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/AgentsMissingContainer/MarginContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/AgentsMissingContainer/MarginContainer2/VBoxContainer"]
+layout_mode = 2
+text = "Left Behind"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/AgentsMissingContainer/MarginContainer2/VBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/AgentsMissingContainer/MarginContainer2/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="LostGridContainer" type="GridContainer" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/AgentsMissingContainer/MarginContainer2/VBoxContainer/MarginContainer"]
+layout_mode = 2
+columns = 3
+
+[node name="PanelContainer" type="PanelContainer" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBoxEmpty_0yfor")
+
+[node name="QuitToMenuButton" type="Button" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/PanelContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Main Menu"
+
+[node name="Label2" type="Label" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer"]
+layout_mode = 2
+text = "Thanks for playing!"
+horizontal_alignment = 1
+
+[node name="VSeparator" type="VSeparator" parent="Endgame/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+theme_override_styles/separator = SubResource("StyleBoxEmpty_x76dd")
+
+[node name="LoseGame" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="LoseGame"]
 visible = false
 modulate = Color(0, 0, 0, 1)
 layout_mode = 1
@@ -103,7 +680,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_f4e6p")
 
-[node name="CenterContainer2" type="CenterContainer" parent="."]
+[node name="CenterContainer2" type="CenterContainer" parent="LoseGame"]
 visible = false
 modulate = Color(0, 0, 0, 1)
 layout_mode = 1
@@ -113,31 +690,31 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer2"]
+[node name="VBoxContainer" type="VBoxContainer" parent="LoseGame/CenterContainer2"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="CenterContainer2/VBoxContainer"]
+[node name="Label" type="Label" parent="LoseGame/CenterContainer2/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 25
 text = "All of your agents were apprehended"
 horizontal_alignment = 1
 
-[node name="PanelContainer" type="PanelContainer" parent="CenterContainer2/VBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="LoseGame/CenterContainer2/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_styles/panel = SubResource("StyleBoxEmpty_6sfqw")
 
-[node name="MarginContainer" type="MarginContainer" parent="CenterContainer2/VBoxContainer/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="LoseGame/CenterContainer2/VBoxContainer/PanelContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer2/VBoxContainer/PanelContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="LoseGame/CenterContainer2/VBoxContainer/PanelContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="QuitToMenuButton" type="Button" parent="CenterContainer2/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="QuitToMenuButton" type="Button" parent="LoseGame/CenterContainer2/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 text = "Main Menu
@@ -148,9 +725,4 @@ libraries = {
 "": SubResource("AnimationLibrary_6fhol")
 }
 
-[node name="CanvasLayer2" type="CanvasLayer" parent="."]
-
-[node name="PanelContainer" parent="CanvasLayer2" instance=ExtResource("4_2lmw8")]
-visible = false
-
-[connection signal="pressed" from="CenterContainer2/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/QuitToMenuButton" to="." method="_on_quit_to_menu_button_pressed"]
+[connection signal="pressed" from="LoseGame/CenterContainer2/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/QuitToMenuButton" to="." method="_on_quit_to_menu_button_pressed"]

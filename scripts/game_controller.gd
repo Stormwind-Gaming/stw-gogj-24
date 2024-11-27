@@ -4,6 +4,11 @@ extends Node
 #|         Properties          |
 #|==============================|
 """
+@brief Time elapsed since game start
+"""
+var time_elapsed: float = 0
+
+"""
 @brief Name of the town this map represents
 """
 var town_name: String = ""
@@ -52,6 +57,8 @@ var heat_endgame_port_step: int = 0
 var heat_endgame_train_step: int = 0
 var resistance_endgame_step: int = 0
 
+var endgame_end_type: Enums.EventOutcomeType
+
 #|==============================|
 #|      Lifecycle Methods      |
 #|==============================|
@@ -76,6 +83,7 @@ func reset() -> void:
 	heat_endgame_train_step = 0
 	resistance_endgame_step = 0
 	max_agents = Constants.INIT_MAX_AGENTS
+	endgame_end_type = Enums.EventOutcomeType.NONE
 
 
 #|==============================|
@@ -250,7 +258,7 @@ func _trigger_heat_endgame() -> void:
 	var turn_log = TurnLog.new("Heat endgame triggered - Check Intel for Plans", Enums.LogType.WORLD_EVENT)
 	GlobalRegistry.turn_logs.add_item(str(GameController.turn_number), turn_log)
 
-	EventBus.create_new_event_panel.emit(Enums.EventOutcomeType.HEAT_ENDGAME, [] as Array[Character], null)
+	EventBus.new_endgame_step.emit(Enums.EventOutcomeType.HEAT_01)
 
 	# Clear current intel and actions
 	GlobalRegistry.intel.clear_list(GlobalRegistry.LIST_PLANS)
@@ -294,7 +302,7 @@ func _trigger_resistance_endgame() -> void:
 	var turn_log = TurnLog.new("Resistance endgame triggered - Check Intel for Plans", Enums.LogType.WORLD_EVENT)
 	GlobalRegistry.turn_logs.add_item(str(GameController.turn_number), turn_log)
 
-	EventBus.create_new_event_panel.emit(Enums.EventOutcomeType.RESISTANCE_ENDGAME, [] as Array[Character], null)
+	EventBus.new_endgame_step.emit(Enums.EventOutcomeType.RESISTANCE_AIRFIELD_01)
 
 	# Clear current intel and actions
 	GlobalRegistry.intel.clear_list(GlobalRegistry.LIST_PLANS)
