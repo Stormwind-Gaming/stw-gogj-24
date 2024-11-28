@@ -31,7 +31,7 @@ func _show_new_game_screen(name: String) -> void:
 @brief Button to open the tutorial
 """
 func _on_tutorial_button_pressed() -> void:
-	pass # Replace with function body.
+	get_tree().change_scene_to_file("res://scenes/gui/tutorial/tutorial.tscn")
 
 """
 @brief Button to quit the game
