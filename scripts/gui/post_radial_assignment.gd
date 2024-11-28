@@ -230,9 +230,10 @@ func _calculate_stats():
 		var statistic_check: StatisticCheck = StatisticCheck.new(selected_agents, poi.parent_district, poi)
 		detection_label.text = "Chance of Detection: %s" % str(floor((1 - statistic_check.get_subtlety_chance()) * 100)) + "%"
 
+		var plan: Plan
 		if option == Enums.ActionType.PLAN:
 			# get the plan
-			var plan: Plan = GlobalRegistry.intel.find_item(GlobalRegistry.LIST_PLANS, "plan_subject_poi", poi)
+			plan = GlobalRegistry.intel.find_item(GlobalRegistry.LIST_PLANS, "plan_subject_poi", poi)
 
 			duration_label.text = "Duration: %s Turns" % str(statistic_check.action_duration(plan.plan_duration))
 		else:
@@ -268,10 +269,21 @@ func _calculate_stats():
 						success_label.text = "Chance of Success: %s" % str(floor((statistic_check.get_charm_chance()) * 100)) + "%"
 					Enums.StatCheckType.SMARTS:
 						success_label.text = "Chance of Success: %s" % str(floor((statistic_check.get_smarts_chance()) * 100)) + "%"
+			Enums.ActionType.PLAN:
+				if not GameController.endgame_triggered:
+					# Regular plans are 100% success chance
+					success_label.text = "Chance of Success: 100%"
+				else:
+					# Endgame plans have a chance of success based on the statistic check type
+					match plan.stat_check_type:
+						Enums.StatCheckType.CHARM:
+							success_label.text = "Chance of Success: %s" % str(floor((statistic_check.get_charm_chance()) * 100)) + "%"
+						Enums.StatCheckType.SMARTS:
+							success_label.text = "Chance of Success: %s" % str(floor((statistic_check.get_smarts_chance()) * 100)) + "%"
+						_:
+							success_label.text = "Chance of Success: ?"
 			_:
-				# TODO: Calculate which stat is going to be checked for the plan action
-			# Enums.ActionType.PLAN:
-				success_label.text = "Chance of Success: 100%"
+				success_label.text = "Chance of Success: ?"
 
 	else:
 		detection_label.text = "Chance of Detection: 0%"

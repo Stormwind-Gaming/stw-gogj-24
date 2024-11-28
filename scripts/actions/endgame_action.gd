@@ -141,6 +141,7 @@ func _heat_endgame_port_1() -> Array[TurnLog]:
 		plan_properties.plan_expiry = -1
 		plan_properties.plan_subject_poi = docks_poi
 		plan_properties.is_endgame_plan = true
+		plan_properties.stat_check_type = Enums.StatCheckType.SMARTS
 		Plan.new(plan_properties)
 
 		# popup new endgame event panel
@@ -167,6 +168,7 @@ func _heat_endgame_port_2() -> Array[TurnLog]:
 		plan_properties.plan_expiry = -1
 		plan_properties.plan_subject_poi = docks_poi
 		plan_properties.is_endgame_plan = true
+		plan_properties.stat_check_type = Enums.StatCheckType.CHARM
 		Plan.new(plan_properties)
 
 		# popup new endgame event panel
@@ -194,6 +196,7 @@ func _heat_endgame_port_3() -> Array[TurnLog]:
 		plan_properties.plan_expiry = -1
 		plan_properties.plan_subject_poi = docks_poi
 		plan_properties.is_endgame_plan = true
+		plan_properties.stat_check_type = Enums.StatCheckType.SMARTS
 		Plan.new(plan_properties)
 
 		# popup new endgame event panel
@@ -241,6 +244,7 @@ func _heat_endgame_train_1() -> Array[TurnLog]:
 		plan_properties.plan_expiry = -1
 		plan_properties.plan_subject_poi = train_poi
 		plan_properties.is_endgame_plan = true
+		plan_properties.stat_check_type = Enums.StatCheckType.CHARM
 		Plan.new(plan_properties)
 
 		# popup new endgame event panel
@@ -268,6 +272,7 @@ func _heat_endgame_train_2() -> Array[TurnLog]:
 		plan_properties.plan_expiry = -1
 		plan_properties.plan_subject_poi = train_poi
 		plan_properties.is_endgame_plan = true
+		plan_properties.stat_check_type = Enums.StatCheckType.SMARTS
 		Plan.new(plan_properties)
 
 		# popup new endgame event panel
@@ -294,6 +299,7 @@ func _heat_endgame_train_3() -> Array[TurnLog]:
 		plan_properties.plan_expiry = -1
 		plan_properties.plan_subject_poi = train_poi
 		plan_properties.is_endgame_plan = true
+		plan_properties.stat_check_type = Enums.StatCheckType.CHARM
 		Plan.new(plan_properties)
 
 		# popup new endgame event panel
@@ -338,6 +344,7 @@ func _resistance_endgame_1() -> Array[TurnLog]:
 		airbase_plan_properties.plan_expiry = -1
 		airbase_plan_properties.plan_subject_poi = airbase_poi
 		airbase_plan_properties.is_endgame_plan = true
+		airbase_plan_properties.stat_check_type = Enums.StatCheckType.CHARM
 		Plan.new(airbase_plan_properties)
 
 		# popup new endgame event panel
@@ -363,6 +370,7 @@ func _resistance_endgame_2() -> Array[TurnLog]:
 		airbase_plan_properties.plan_expiry = -1
 		airbase_plan_properties.plan_subject_poi = airbase_poi
 		airbase_plan_properties.is_endgame_plan = true
+		airbase_plan_properties.stat_check_type = Enums.StatCheckType.SMARTS
 		Plan.new(airbase_plan_properties)
 
 		# popup new endgame event panel
@@ -388,6 +396,7 @@ func _resistance_endgame_3() -> Array[TurnLog]:
 		airbase_plan_properties.plan_expiry = -1
 		airbase_plan_properties.plan_subject_poi = airbase_poi
 		airbase_plan_properties.is_endgame_plan = true
+		airbase_plan_properties.stat_check_type = Enums.StatCheckType.SMARTS
 		Plan.new(airbase_plan_properties)
 
 		# popup new endgame event panel
@@ -413,6 +422,7 @@ func _resistance_endgame_4() -> Array[TurnLog]:
 		airbase_plan_properties.plan_expiry = -1
 		airbase_plan_properties.plan_subject_poi = airbase_poi
 		airbase_plan_properties.is_endgame_plan = true
+		airbase_plan_properties.stat_check_type = Enums.StatCheckType.CHARM
 		Plan.new(airbase_plan_properties)
 
 		# popup new endgame event panel

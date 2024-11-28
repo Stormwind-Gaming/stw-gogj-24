@@ -288,6 +288,7 @@ func _trigger_heat_endgame() -> void:
 	docks_plan_properties.plan_expiry = -1
 	docks_plan_properties.plan_subject_poi = docks_poi
 	docks_plan_properties.is_endgame_plan = true
+	docks_plan_properties.stat_check_type = Enums.StatCheckType.CHARM
 	Plan.new(docks_plan_properties)
 
 
@@ -298,6 +299,7 @@ func _trigger_heat_endgame() -> void:
 	train_plan_properties.plan_expiry = -1
 	train_plan_properties.plan_subject_poi = train_poi
 	train_plan_properties.is_endgame_plan = true
+	train_plan_properties.stat_check_type = Enums.StatCheckType.SMARTS
 	Plan.new(train_plan_properties)
 
 
@@ -311,8 +313,6 @@ func _trigger_resistance_endgame() -> void:
 	endgame_triggered = true
 	EventBus.endgame_triggered.emit()
 
-	## TODO: this is causing a type error - Enums.WorldEventType doesnt exist
-	# WorldEventFactory.create_world_event(Enums.WorldEventType.ENDGAME)
 	IntelFactory.create_resistance_endgame_plan()
 
 	var turn_log = TurnLog.new("Resistance endgame triggered - Check Intel for Plans", Enums.LogType.WORLD_EVENT)
@@ -332,6 +332,7 @@ func _trigger_resistance_endgame() -> void:
 	airbase_plan_properties.plan_expiry = -1
 	airbase_plan_properties.plan_subject_poi = airbase_poi
 	airbase_plan_properties.is_endgame_plan = true
+	airbase_plan_properties.stat_check_type = Enums.StatCheckType.SMARTS
 	Plan.new(airbase_plan_properties)
 
 

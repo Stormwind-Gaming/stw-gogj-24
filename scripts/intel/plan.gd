@@ -17,6 +17,7 @@ class PlanProperties:
 	var plan_subject_poi: PointOfInterest
 	var plan_effect: Enums.IntelEffect
 	var is_endgame_plan: bool = false
+	var stat_check_type: Enums.StatCheckType
 
 
 #|==============================|
@@ -68,6 +69,11 @@ var plan_timing: String
 """
 var is_endgame_plan: bool = false
 
+"""
+@brief The statistic check type for the plan
+"""
+var stat_check_type: Enums.StatCheckType
+
 #|==============================|
 #|      Lifecycle Methods      |
 #|==============================|
@@ -84,7 +90,8 @@ func _init(properties: PlanProperties):
 		"character": properties.plan_subject_character.get_full_name() if properties.plan_subject_character else "None",
 		"poi": properties.plan_subject_poi.poi_name if properties.plan_subject_poi else "None",
 		"effect": properties.plan_effect,
-		"is_endgame": properties.is_endgame_plan
+		"is_endgame": properties.is_endgame_plan,
+		"stat_check_type": properties.stat_check_type
 	})
 
 	# Set properties
@@ -96,6 +103,7 @@ func _init(properties: PlanProperties):
 	plan_subject_poi = properties.plan_subject_poi
 	plan_effect = properties.plan_effect
 	is_endgame_plan = properties.is_endgame_plan
+	stat_check_type = properties.stat_check_type
 
 	plan_timing = GameController.calendar.get_date_string(plan_duration)
 	LogDuck.d("Plan timing set", {
