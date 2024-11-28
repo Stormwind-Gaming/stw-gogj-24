@@ -541,7 +541,6 @@ func _on_action_destroyed(action: BaseAction) -> void:
 		for child in $ActionContainer.get_children():
 			if child.get_meta("action_reference") == action:
 				child.queue_free()
-				break
 
 
 func _on_open_new_radial_menu(radial_menu_instance: RadialMenu) -> void:
@@ -577,7 +576,3 @@ func _has_plan() -> bool:
 				has_plan = true
 				break
 	return has_plan
-
-
-func _on_icon_button_pressed() -> void:
-	pass # Replace with function body.
