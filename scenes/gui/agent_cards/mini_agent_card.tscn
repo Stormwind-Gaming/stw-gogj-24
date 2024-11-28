@@ -3,6 +3,7 @@
 [ext_resource type="Material" uid="uid://c54ww8tfg8wh7" path="res://assets/materials/agent_card_shader_material.tres" id="1_3f0ao"]
 [ext_resource type="Script" path="res://scripts/gui/agent_card.gd" id="1_s8gp7"]
 [ext_resource type="Theme" uid="uid://c78hoq7n7ae54" path="res://assets/themes/typewriter_label_theme.tres" id="2_0b4ob"]
+[ext_resource type="StyleBox" uid="uid://g8socf6idhxu" path="res://assets/StyleBoxes/base_style_box.tres" id="2_qnx3n"]
 [ext_resource type="Shader" path="res://assets/shaders/image_weathering.gdshader" id="3_dds4p"]
 [ext_resource type="Texture2D" uid="uid://c0xlm4ebrvmg4" path="res://assets/profile_pictures/blank.png" id="3_hwy0e"]
 [ext_resource type="Texture2D" uid="uid://filfa2qem5i2" path="res://assets/icons/drama-masks.svg" id="4_leppq"]
@@ -13,18 +14,6 @@
 [ext_resource type="Texture2D" uid="uid://dym5qqj722706" path="res://assets/select_cover.png" id="9_yo54u"]
 [ext_resource type="Texture2D" uid="uid://5t6xu00wsvwi" path="res://assets/icons/target.png" id="10_v8gms"]
 [ext_resource type="Texture2D" uid="uid://bcsjhr1sajkmw" path="res://assets/icons/target_hover.png" id="11_hkkn2"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t1tds"]
-bg_color = Color(0.929412, 0.85098, 0.713726, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0, 0, 0, 1)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_15n0s"]
 
@@ -62,7 +51,7 @@ offset_right = 65.0
 offset_bottom = 58.5
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_t1tds")
+theme_override_styles/panel = ExtResource("2_qnx3n")
 script = ExtResource("1_s8gp7")
 character_texture = NodePath("MarginContainer/VBoxContainer/HBoxContainer/TextureRect")
 status_overlay = NodePath("StatusOverlay")

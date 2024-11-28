@@ -1,0 +1,1287 @@
+[gd_scene load_steps=16 format=3 uid="uid://b4wu3m6ipfv04"]
+
+[ext_resource type="Script" path="res://scripts/gui/tutorial/tutorial.gd" id="1_h74xk"]
+[ext_resource type="Theme" uid="uid://dexax20p2eewp" path="res://assets/themes/base_theme.tres" id="1_m3k0w"]
+[ext_resource type="PackedScene" uid="uid://c7y1ejxri1bfk" path="res://scenes/map.tscn" id="1_tojkg"]
+[ext_resource type="Texture2D" uid="uid://cc6mpisce6gm6" path="res://assets/sprites/HighlightSquare.png" id="2_33ppr"]
+[ext_resource type="StyleBox" uid="uid://g8socf6idhxu" path="res://assets/StyleBoxes/base_style_box.tres" id="4_5a76a"]
+[ext_resource type="Texture2D" uid="uid://bcqar7mnpuo5" path="res://assets/icons/arrow-right-bold-box-black.png" id="6_0pf4x"]
+[ext_resource type="Texture2D" uid="uid://bw1ftewpfdpc0" path="res://assets/sprites/tutorial/tutorial_characters_01.png" id="6_rs8jt"]
+[ext_resource type="Texture2D" uid="uid://qky515d65jgu" path="res://assets/icons/arrow-right-bold-box-white.png" id="7_0viiy"]
+[ext_resource type="Texture2D" uid="uid://dh8ka4okxy27d" path="res://assets/sprites/tutorial/tutorial_characters_02.png" id="7_r7o4p"]
+[ext_resource type="Texture2D" uid="uid://bdivwrthfn6b6" path="res://assets/sprites/tutorial/tutorial_town_01.png" id="8_c7tpx"]
+[ext_resource type="Texture2D" uid="uid://dvxs5k7lkhi1c" path="res://assets/sprites/tutorial/tutorial_plan_01.png" id="9_3mtha"]
+[ext_resource type="Texture2D" uid="uid://crtlqw8wdamcm" path="res://assets/sprites/tutorial/tutorial_map_01.png" id="10_hxyep"]
+[ext_resource type="Texture2D" uid="uid://bvgtx03sk34kg" path="res://assets/sprites/tutorial/tutorial_actions_01.png" id="11_p4d4l"]
+
+[sub_resource type="Gradient" id="Gradient_sm0fv"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_1fk0v"]
+gradient = SubResource("Gradient_sm0fv")
+
+[node name="Tutorial" type="Control" node_paths=PackedStringArray("screen_one", "screen_two", "screen_three", "screen_four", "screen_five", "screen_six", "screen_seven", "screen_eight", "screen_nine", "button_next", "button_previous")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_h74xk")
+screen_one = NodePath("CanvasLayer1/ScreenOne")
+screen_two = NodePath("CanvasLayer1/ScreenTwo")
+screen_three = NodePath("CanvasLayer1/ScreenThree")
+screen_four = NodePath("CanvasLayer1/ScreenFour")
+screen_five = NodePath("CanvasLayer1/ScreenFive")
+screen_six = NodePath("CanvasLayer1/ScreenSix")
+screen_seven = NodePath("CanvasLayer1/ScreenSeven")
+screen_eight = NodePath("CanvasLayer1/ScreenEight")
+screen_nine = NodePath("CanvasLayer1/ScreenNine")
+button_next = NodePath("CanvasLayer1/MarginContainer/HBoxContainer/NextButton")
+button_previous = NodePath("CanvasLayer1/MarginContainer/HBoxContainer/BackButton")
+
+[node name="Main" parent="." instance=ExtResource("1_tojkg")]
+
+[node name="CanvasLayer1" type="CanvasLayer" parent="."]
+layer = 5
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer1"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+texture = SubResource("GradientTexture1D_1fk0v")
+
+[node name="ScreenOne" type="Control" parent="CanvasLayer1"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_m3k0w")
+
+[node name="PanelOne" type="PanelContainer" parent="CanvasLayer1/ScreenOne"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -161.0
+offset_top = -189.5
+offset_right = 161.0
+offset_bottom = 189.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("4_5a76a")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer1/ScreenOne/PanelOne"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="CanvasLayer1/ScreenOne/PanelOne/MarginContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_direction = 1
+layout_mode = 2
+size_flags_horizontal = 4
+text = "You play the leader of a resistance movement in World War 2 Belgium, your goal is to grow the strength of your movement faster than the secret police can discover your agents.
+
+As your resistance grows, you gain access to greater bonuses, but so do the police as they  learn more about your actions.
+
+Will you grow fast enough to carry out a daring mission, or will you have to flee the city?
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="ScreenTwo" type="Control" parent="CanvasLayer1"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_m3k0w")
+
+[node name="DateNinePatchRect" type="NinePatchRect" parent="CanvasLayer1/ScreenTwo"]
+layout_mode = 0
+offset_left = 685.0
+offset_top = -2.0
+offset_right = 914.0
+offset_bottom = 34.0
+texture = ExtResource("2_33ppr")
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer1/ScreenTwo/DateNinePatchRect"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -52.5
+offset_right = 52.5
+offset_bottom = 43.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = ExtResource("4_5a76a")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer1/ScreenTwo/DateNinePatchRect/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="CanvasLayer1/ScreenTwo/DateNinePatchRect/PanelContainer/MarginContainer"]
+layout_direction = 1
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Turn Counter
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HeatResistanceNinePatchRect" type="NinePatchRect" parent="CanvasLayer1/ScreenTwo"]
+layout_mode = 0
+offset_left = 174.0
+offset_top = -2.0
+offset_right = 682.0
+offset_bottom = 50.0
+texture = ExtResource("2_33ppr")
+region_rect = Rect2(0, 0, 100, 100)
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer1/ScreenTwo/HeatResistanceNinePatchRect"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -201.0
+offset_right = 201.0
+offset_bottom = 67.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = ExtResource("4_5a76a")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer1/ScreenTwo/HeatResistanceNinePatchRect/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="CanvasLayer1/ScreenTwo/HeatResistanceNinePatchRect/PanelContainer/MarginContainer"]
+custom_minimum_size = Vector2(380, 0)
+layout_direction = 1
+layout_mode = 2
+size_flags_horizontal = 4
+text = "The current global heat and resistance in the city. Both are modified by your actions.
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="AgentsNinePatchRect" type="NinePatchRect" parent="CanvasLayer1/ScreenTwo"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 162.0
+offset_right = 143.0
+offset_bottom = 405.0
+texture = ExtResource("2_33ppr")
+region_rect = Rect2(0, 0, 100, 100)
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer1/ScreenTwo/AgentsNinePatchRect"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -52.5
+offset_right = 52.5
+offset_bottom = 43.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = ExtResource("4_5a76a")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer1/ScreenTwo/AgentsNinePatchRect/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="CanvasLayer1/ScreenTwo/AgentsNinePatchRect/PanelContainer/MarginContainer"]
+layout_direction = 1
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Active Agents"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MenuButtonsNinePatchRect" type="NinePatchRect" parent="CanvasLayer1/ScreenTwo"]
+layout_mode = 0
+offset_left = -1.0
+offset_top = 857.0
+offset_right = 718.0
+offset_bottom = 901.0
+texture = ExtResource("2_33ppr")
+region_rect = Rect2(0, 0, 100, 100)
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer1/ScreenTwo/MenuButtonsNinePatchRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -68.5
+offset_top = -43.0
+offset_right = 68.5
+grow_horizontal = 2
+theme_override_styles/panel = ExtResource("4_5a76a")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer1/ScreenTwo/MenuButtonsNinePatchRect/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="CanvasLayer1/ScreenTwo/MenuButtonsNinePatchRect/PanelContainer/MarginContainer"]
+layout_direction = 1
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Ledger"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TurnButtonNinePatchRect" type="NinePatchRect" parent="CanvasLayer1/ScreenTwo"]
+layout_mode = 0
+offset_left = 1448.0
+offset_top = 840.0
+offset_right = 1599.0
+offset_bottom = 899.0
+texture = ExtResource("2_33ppr")
+region_rect = Rect2(0, 0, 100, 100)
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer1/ScreenTwo/TurnButtonNinePatchRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -49.5
+offset_top = -43.0
+offset_right = 49.5
+grow_horizontal = 2
+theme_override_styles/panel = ExtResource("4_5a76a")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer1/ScreenTwo/TurnButtonNinePatchRect/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="CanvasLayer1/ScreenTwo/TurnButtonNinePatchRect/PanelContainer/MarginContainer"]
+layout_direction = 1
+layout_mode = 2
+size_flags_horizontal = 4
+text = "End Turn"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScreenThree" type="Control" parent="CanvasLayer1"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_m3k0w")
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer1/ScreenThree"]
+custom_minimum_size = Vector2(80, 700)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -350.0
+offset_right = 400.0
+offset_bottom = 350.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_rs8jt")
+
+[node name="TopPanelContainer" type="PanelContainer" parent="CanvasLayer1/ScreenThree"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -281.0
+offset_top = 6.0
+offset_right = 281.0
+offset_bottom = 97.0
+grow_horizontal = 2
+theme_override_styles/panel = ExtResource("4_5a76a")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer1/ScreenThree/TopPanelContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="CanvasLayer1/ScreenThree/TopPanelContainer/MarginContainer"]
+custom_minimum_size = Vector2(540, 0)
+layout_direction = 1
+layout_mode = 2
+size_flags_horizontal = 4
+text = "The Character log shows your current agents and sympathisers. To change an agent, click on their portrait. To assign a new agent, click on an available sympathiser."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="AgentsNinePatchRect" type="NinePatchRect" parent="CanvasLayer1/ScreenThree"]
+layout_mode = 0
+offset_left = 502.0
+offset_top = 541.0
+offset_right = 792.0
+offset_bottom = 592.0
+texture = ExtResource("2_33ppr")
+region_rect = Rect2(0, 0, 100, 100)
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer1/ScreenThree/AgentsNinePatchRect"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -548.0
+offset_top = -93.0
+offset_right = -146.0
+offset_bottom = 46.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = ExtResource("4_5a76a")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer1/ScreenThree/AgentsNinePatchRect/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="CanvasLayer1/ScreenThree/AgentsNinePatchRect/PanelContainer/MarginContainer"]
+custom_minimum_size = Vector2(380, 0)
+layout_direction = 1
+layout_mode = 2
+size_flags_horizontal = 4
+text = "This is the agent’s ability. From left, their Subtlety (chance of detection), Charm and Smarts. Different districts and missions use either Charm or Smarts , this skill level determines the chance of success.
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="InjuredNinePatchRect" type="NinePatchRect" parent="CanvasLayer1/ScreenThree"]
+layout_mode = 0
+offset_left = 787.0
+offset_top = 176.0
+offset_right = 909.0
+offset_bottom = 296.0
+texture = ExtResource("2_33ppr")
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer1/ScreenThree/InjuredNinePatchRect"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -69.5
+offset_right = 172.0
+offset_bottom = 69.5
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("4_5a76a")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer1/ScreenThree/InjuredNinePatchRect/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="CanvasLayer1/ScreenThree/InjuredNinePatchRect/PanelContainer/MarginContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_direction = 1
+layout_mode = 2
+size_flags_horizontal = 4
+text = "This agent is injured. They will be available again in 1 turn.
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="BottomPanelContainer" type="PanelContainer" parent="CanvasLayer1/ScreenThree"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -99.0
+offset_top = -119.0
+offset_right = 463.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = ExtResource("4_5a76a")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer1/ScreenThree/BottomPanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="CanvasLayer1/ScreenThree/BottomPanelContainer/MarginContainer"]
+custom_minimum_size = Vector2(540, 0)
+layout_direction = 1
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Detection and Success operate separately, and if you are detected there is a risk your agent is injured, killed or missing. Missing agents can be found using plans. 
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="AgentsNinePatchRect2" type="NinePatchRect" parent="CanvasLayer1/ScreenThree"]
+layout_mode = 0
+offset_left = 427.0
+offset_top = 862.0
+offset_right = 570.0
+offset_bottom = 903.0
+texture = ExtResource("2_33ppr")
+region_rect = Rect2(0, 0, 100, 100)
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="ScreenFour" type="Control" parent="CanvasLayer1"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_m3k0w")
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer1/ScreenFour"]
+custom_minimum_size = Vector2(80, 700)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -350.0
+offset_right = 400.0
+offset_bottom = 350.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_r7o4p")
+
+[node name="InjuredNinePatchRect" type="NinePatchRect" parent="CanvasLayer1/ScreenFour"]
+layout_mode = 0
+offset_left = 508.0
+offset_top = 501.0
+offset_right = 630.0
+offset_bottom = 621.0
+texture = ExtResource("2_33ppr")
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer1/ScreenFour/InjuredNinePatchRect"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -45.5
+offset_right = 322.0
+offset_bottom = 45.5
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("4_5a76a")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer1/ScreenFour/InjuredNinePatchRect/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="CanvasLayer1/ScreenFour/InjuredNinePatchRect/PanelContainer/MarginContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_direction = 1
+layout_mode = 2
+size_flags_horizontal = 4
+text = "These are unknown characters in the game. Conduct a surveillance mission to learn about their skills
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="AgentsNinePatchRect2" type="NinePatchRect" parent="CanvasLayer1/ScreenFour"]
+layout_mode = 0
+offset_left = 427.0
+offset_top = 862.0
+offset_right = 570.0
+offset_bottom = 903.0
+texture = ExtResource("2_33ppr")
+region_rect = Rect2(0, 0, 100, 100)
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="ScreenFive" type="Control" parent="CanvasLayer1"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_m3k0w")
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer1/ScreenFive"]
+custom_minimum_size = Vector2(80, 700)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -350.0
+offset_right = 400.0
+offset_bottom = 350.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_c7tpx")
+
+[node name="RightPanelOne" type="PanelContainer" parent="CanvasLayer1/ScreenFive"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -446.0
+offset_top = -277.0
+offset_right = -124.0
+offset_bottom = 6.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("4_5a76a")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer1/ScreenFive/RightPanelOne"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="CanvasLayer1/ScreenFive/RightPanelOne/MarginContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_direction = 1
+layout_mode = 2
+size_flags_horizontal = 4
+text = "As resistance grows in each district you can unlock powerful bonuses to support your movement. 
+
+As local  resistance levels grow, so to does the global resistance, and as you reach certain breakpoints you unlock additional agent slots increasing the number of actions you can take each turn.
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="LeftPanelOne" type="PanelContainer" parent="CanvasLayer1/ScreenFive"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 83.0
+offset_top = -352.0
+offset_right = 405.0
+offset_bottom = -93.0
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("4_5a76a")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer1/ScreenFive/LeftPanelOne"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="CanvasLayer1/ScreenFive/LeftPanelOne/MarginContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_direction = 1
+layout_mode = 2
+size_flags_horizontal = 4
+text = "This screen shows details on the town and the districts within the town. Heat and Resistance are different in each district, take care to move your agents around the map, as the higher the heat the higher the chance of detection. If heat gets too high the authorities will take extra actions to slow you down."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="CanvasLayer1/ScreenFive"]
+layout_mode = 0
+offset_left = 501.0
+offset_top = 106.0
+offset_right = 843.0
+offset_bottom = 146.0
+texture = ExtResource("2_33ppr")
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="NinePatchRect2" type="NinePatchRect" parent="CanvasLayer1/ScreenFive"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 860.0
+offset_right = 145.0
+offset_bottom = 901.0
+texture = ExtResource("2_33ppr")
+region_rect = Rect2(0, 0, 100, 100)
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="ScreenSix" type="Control" parent="CanvasLayer1"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_m3k0w")
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer1/ScreenSix"]
+custom_minimum_size = Vector2(80, 700)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -350.0
+offset_right = 400.0
+offset_bottom = 350.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("9_3mtha")
+
+[node name="LeftPanelOne" type="PanelContainer" parent="CanvasLayer1/ScreenSix"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 73.0
+offset_top = -286.0
+offset_right = 395.0
+offset_bottom = 45.0
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("4_5a76a")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer1/ScreenSix/LeftPanelOne"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="CanvasLayer1/ScreenSix/LeftPanelOne/MarginContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_direction = 1
+layout_mode = 2
+size_flags_horizontal = 4
+text = "This screen shows all the rumours you have gathered across the game. Rumours are time limited, and they do expire. You will need one rumour of each type in order to assemble a plan. 
+
+
+
+
+To assemble your plan select each rumour you want to use, so long as you select one from each type.
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="PlanNinePatchRect" type="NinePatchRect" parent="CanvasLayer1/ScreenSix"]
+layout_mode = 0
+offset_left = 775.0
+offset_top = 146.0
+offset_right = 1033.0
+offset_bottom = 452.0
+texture = ExtResource("2_33ppr")
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="RightPanelOne" type="PanelContainer" parent="CanvasLayer1/ScreenSix/PlanNinePatchRect"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -1.0
+offset_top = -85.0
+offset_right = 321.0
+offset_bottom = 30.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("4_5a76a")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer1/ScreenSix/PlanNinePatchRect/RightPanelOne"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="CanvasLayer1/ScreenSix/PlanNinePatchRect/RightPanelOne/MarginContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_direction = 1
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Once you have selected your rumours you’ll see the duration, location and effect of this mission here.
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="PlanNinePatchRect2" type="NinePatchRect" parent="CanvasLayer1/ScreenSix"]
+layout_mode = 0
+offset_left = 783.0
+offset_top = 634.0
+offset_right = 1025.0
+offset_bottom = 772.0
+texture = ExtResource("2_33ppr")
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="RightPanelOne" type="PanelContainer" parent="CanvasLayer1/ScreenSix/PlanNinePatchRect2"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -1.0
+offset_top = -59.33
+offset_right = 321.0
+offset_bottom = 55.67
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("4_5a76a")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer1/ScreenSix/PlanNinePatchRect2/RightPanelOne"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="CanvasLayer1/ScreenSix/PlanNinePatchRect2/RightPanelOne/MarginContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_direction = 1
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Click here to assemble your plan.
+
+You can then launch your plan like any action from the point of interest shown in the location.
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="AgentsNinePatchRect2" type="NinePatchRect" parent="CanvasLayer1/ScreenSix"]
+layout_mode = 0
+offset_left = 283.0
+offset_top = 860.0
+offset_right = 426.0
+offset_bottom = 901.0
+texture = ExtResource("2_33ppr")
+region_rect = Rect2(0, 0, 100, 100)
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="ScreenSeven" type="Control" parent="CanvasLayer1"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_m3k0w")
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer1/ScreenSeven"]
+custom_minimum_size = Vector2(80, 700)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_hxyep")
+
+[node name="LeftPanelOne" type="PanelContainer" parent="CanvasLayer1/ScreenSeven"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -312.0
+offset_top = -388.0
+offset_right = 310.0
+offset_bottom = -249.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("4_5a76a")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer1/ScreenSeven/LeftPanelOne"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="CanvasLayer1/ScreenSeven/LeftPanelOne/MarginContainer"]
+custom_minimum_size = Vector2(600, 0)
+layout_direction = 1
+layout_mode = 2
+size_flags_horizontal = 4
+text = "This screen shows details on the town and the districts within the town. Heat and Resistance are different in each district, take care to move your agents around the map, as the higher the heat the higher the chance of detection. If heat gets too high the authorities will take extra actions to slow you down.
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="RightPanelOne" type="PanelContainer" parent="CanvasLayer1/ScreenSeven"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -161.0
+offset_top = 267.2
+offset_right = 161.0
+offset_bottom = 406.2
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("4_5a76a")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer1/ScreenSeven/RightPanelOne"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="CanvasLayer1/ScreenSeven/RightPanelOne/MarginContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_direction = 1
+layout_mode = 2
+size_flags_horizontal = 4
+text = "From this screen you can set up actions for your agents each turn by clicking on the radial button for each location. 
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="ScreenEight" type="Control" parent="CanvasLayer1"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_m3k0w")
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer1/ScreenEight"]
+custom_minimum_size = Vector2(80, 700)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_hxyep")
+
+[node name="LeftPanelOne" type="PanelContainer" parent="CanvasLayer1/ScreenEight"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 977.0
+offset_top = 4.0
+offset_right = 1299.0
+offset_bottom = 71.0
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("4_5a76a")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer1/ScreenEight/LeftPanelOne"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="CanvasLayer1/ScreenEight/LeftPanelOne/MarginContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_direction = 1
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Click here to learn more about this location."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="LeftPanelOne4" type="PanelContainer" parent="CanvasLayer1/ScreenEight"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 501.0
+offset_top = -48.0
+offset_right = 823.0
+offset_bottom = 19.0
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("4_5a76a")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer1/ScreenEight/LeftPanelOne4"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="CanvasLayer1/ScreenEight/LeftPanelOne4/MarginContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_direction = 1
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Conduct espionage missions to gather more rumours.
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="LeftPanelOne3" type="PanelContainer" parent="CanvasLayer1/ScreenEight"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 469.0
+offset_top = 186.0
+offset_right = 791.0
+offset_bottom = 253.0
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("4_5a76a")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer1/ScreenEight/LeftPanelOne3"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="CanvasLayer1/ScreenEight/LeftPanelOne3/MarginContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_direction = 1
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Conduct propaganda missions to persuade the character to your cause.
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="LeftPanelOne2" type="PanelContainer" parent="CanvasLayer1/ScreenEight"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 961.0
+offset_top = 198.0
+offset_right = 1283.0
+offset_bottom = 337.0
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("4_5a76a")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer1/ScreenEight/LeftPanelOne2"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="CanvasLayer1/ScreenEight/LeftPanelOne2/MarginContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_direction = 1
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Conduct surveillance missions to identify who is available at this location, understand more about their abilities and sympathy to your cause.
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="ScreenNine" type="Control" parent="CanvasLayer1"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_m3k0w")
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer1/ScreenNine"]
+custom_minimum_size = Vector2(80, 700)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("11_p4d4l")
+
+[node name="AgentsNinePatchRect" type="NinePatchRect" parent="CanvasLayer1/ScreenNine"]
+layout_mode = 0
+offset_left = 141.0
+offset_top = 860.0
+offset_right = 284.0
+offset_bottom = 901.0
+texture = ExtResource("2_33ppr")
+region_rect = Rect2(0, 0, 100, 100)
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer1/ScreenNine"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -223.0
+offset_top = -412.0
+offset_right = 179.0
+offset_bottom = -321.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = ExtResource("4_5a76a")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer1/ScreenNine/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="CanvasLayer1/ScreenNine/PanelContainer/MarginContainer"]
+custom_minimum_size = Vector2(380, 0)
+layout_direction = 1
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Once you have assigned your agents, use the action tab to review your missions. You can cancel any actions from this screen."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="PanelContainer2" type="PanelContainer" parent="CanvasLayer1/ScreenNine"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 354.0
+offset_top = -256.0
+offset_right = 756.0
+offset_bottom = -189.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = ExtResource("4_5a76a")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer1/ScreenNine/PanelContainer2"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="CanvasLayer1/ScreenNine/PanelContainer2/MarginContainer"]
+custom_minimum_size = Vector2(380, 0)
+layout_direction = 1
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Once you’ve assigned all of your agents, Progress Time, and start to build resistance.
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer1"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -329.0
+offset_bottom = 150.0
+grow_horizontal = 0
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer1/MarginContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="BackButton" type="TextureButton" parent="CanvasLayer1/MarginContainer/HBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+size_flags_horizontal = 0
+texture_normal = ExtResource("6_0pf4x")
+texture_pressed = ExtResource("6_0pf4x")
+texture_hover = ExtResource("7_0viiy")
+ignore_texture_size = true
+stretch_mode = 0
+flip_h = true
+
+[node name="Label" type="Label" parent="CanvasLayer1/MarginContainer/HBoxContainer/BackButton"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -36.0
+offset_top = -59.0
+offset_right = 37.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "Back
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NextButton" type="TextureButton" parent="CanvasLayer1/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+texture_normal = ExtResource("6_0pf4x")
+texture_pressed = ExtResource("6_0pf4x")
+texture_hover = ExtResource("7_0viiy")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="CanvasLayer1/MarginContainer/HBoxContainer/NextButton"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -36.0
+offset_top = -59.0
+offset_right = 37.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "Continue"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="CanvasLayer1/MarginContainer/HBoxContainer/BackButton" to="." method="_on_previous_button_pressed"]
+[connection signal="pressed" from="CanvasLayer1/MarginContainer/HBoxContainer/NextButton" to="." method="_on_next_button_pressed"]

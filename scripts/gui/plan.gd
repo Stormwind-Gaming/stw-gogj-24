@@ -176,7 +176,10 @@ Emits the create_plan signal.
 func _on_create_plan_btn_pressed() -> void:
 	create_plan.emit()
 
-
+"""
+@brief Handles the jump to button press.
+Emits the focus_on_poi signal.
+"""
 func _on_jump_to_button_pressed() -> void:
 	EventBus.close_all_windows.emit()
 	EventBus.focus_on_poi.emit(plan.plan_subject_poi)

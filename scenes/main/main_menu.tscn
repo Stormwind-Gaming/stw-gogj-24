@@ -105,10 +105,10 @@ custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 text = "New Game"
 
-[node name="OptionsButton" type="Button" parent="CenterContainer/PanelContainer/VBoxContainer"]
+[node name="TutorialButton" type="Button" parent="CenterContainer/PanelContainer/VBoxContainer"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
-text = "Options"
+text = "Tutorial"
 
 [node name="QuitButton" type="Button" parent="CenterContainer/PanelContainer/VBoxContainer"]
 custom_minimum_size = Vector2(200, 0)
@@ -181,5 +181,5 @@ libraries = {
 }
 
 [connection signal="pressed" from="CenterContainer/PanelContainer/VBoxContainer/NewGameButton" to="." method="_on_new_game_button_pressed"]
-[connection signal="pressed" from="CenterContainer/PanelContainer/VBoxContainer/OptionsButton" to="." method="_on_options_button_pressed"]
+[connection signal="pressed" from="CenterContainer/PanelContainer/VBoxContainer/TutorialButton" to="." method="_on_tutorial_button_pressed"]
 [connection signal="pressed" from="CenterContainer/PanelContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
