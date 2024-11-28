@@ -26,6 +26,7 @@ func _ready() -> void:
 	EventBus.close_window.connect(_close_window)
 	EventBus.close_radial_menu.connect(_close_radial_menu)
 	EventBus.game_over.connect(_close_all_windows_and_event_panels)
+	EventBus.close_all_windows_and_event_panels.connect(_close_all_windows_and_event_panels)
 	
 	EventBus.create_new_event_panel.connect(_create_new_event_panel)
 	EventBus.world_event_created.connect(_create_new_world_event_panel)

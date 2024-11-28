@@ -152,6 +152,11 @@ signal create_new_event_panel(event_type: Enums.EventOutcomeType, characters: Ar
 signal close_all_windows()
 
 """
+@brief Emitted when all windows are closed
+"""
+signal close_all_windows_and_event_panels()
+
+"""
 @brief Emitted when a window is closed
 """
 signal close_window()

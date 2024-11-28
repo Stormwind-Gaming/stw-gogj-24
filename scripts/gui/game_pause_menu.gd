@@ -19,5 +19,7 @@ func _on_options_button_pressed() -> void:
 @brief Button to quit to the main menu
 """
 func _on_quit_to_menu_button_pressed() -> void:
-	# TODO: Reset the game state as currently it explodes on a new game 
+	# TODO: Reset the game state as currently it explodes on a new game
+	# close all windows
+	EventBus.close_all_windows_and_event_panels.emit()
 	get_tree().change_scene_to_file("res://scenes/main/main_menu.tscn")
