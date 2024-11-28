@@ -235,7 +235,9 @@ func process_turn() -> void:
 	# Emit the signal to begin processing the turn
 	EventBus.turn_processing_initiated.emit(turn_number)
 	
-	# ...actions will receive the signal and process themselves, adding logs, changing statuses, etc.
+	# We do this in a sequential manner to ensure that logs are added in the correct order
+	for action in GlobalRegistry.actions.get_all_items():
+		action._on_turn_processing_initiated(turn_number)
 
 	WorldEventFactory.randomise_world_event_from_heat(get_heat_level())
 

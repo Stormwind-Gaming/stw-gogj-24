@@ -72,7 +72,7 @@ func _init(config: ActionFactory.ActionConfig):
 
 		turn_to_end = GameController.turn_number + statistic_check.action_duration(self.associated_plan.plan_duration)
 
-	EventBus.turn_processing_initiated.connect(_on_turn_processing_initiated)
+	# EventBus.turn_processing_initiated.connect(_on_turn_processing_initiated)
 	EventBus.end_turn_complete.connect(_on_end_turn_completed)
 
 	EventBus.action_created.emit(self)
@@ -88,8 +88,8 @@ func _on_turn_processing_initiated(num: int) -> void:
 
 	if num >= turn_to_end:
 
-		danger_logs = _process_danger()
 		action_logs = _process_action()
+		danger_logs = _process_danger()
 
 		# Make sure the plan is removed at this point
 		if associated_plan and not associated_plan.is_endgame_plan:
@@ -101,7 +101,7 @@ func _on_turn_processing_initiated(num: int) -> void:
 		var message: String = "[u]%s[/u] continues at [url=poi:%s]%s[/url], carried out by [url=character:%s]%s[/url]. The task is ongoing, and the outcome remains uncertain. The shadows still hold their secrets." % [Enums.ActionType.keys()[action_type], poi_id, poi.poi_name, character_id, _get_character_names()]
 		action_logs.append(TurnLog.new(message, Enums.LogType.ACTION_INFO))
 		
-	for step in danger_logs + action_logs:
+	for step in action_logs + danger_logs:
 		GlobalRegistry.turn_logs.add_item(str(GameController.turn_number), step)
 		
 
