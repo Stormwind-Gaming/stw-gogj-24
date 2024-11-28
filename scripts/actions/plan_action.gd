@@ -119,7 +119,7 @@ func _rescue_agent() -> Array[TurnLog]:
 	var log_message: String = ""
 
 	associated_plan.plan_subject_character.char_state = Enums.CharacterState.AVAILABLE
-	associated_plan.plan_subject_character.char_recruitment_state = Enums.CharacterRecruitmentState.NON_SYMPATHISER_KNOWN
+	associated_plan.plan_subject_character.char_recruitment_state = Enums.CharacterRecruitmentState.SYMPATHISER_NOT_RECRUITED
 
 	var character_id = GlobalRegistry.characters.get_all_items().find(associated_plan.plan_subject_character)
 	log_message = "[url=character:%s]%s[/url] has been freed and welcomed back to the fold. Their liberation is a victory, and their spirit remains unbroken." % [character_id, associated_plan.plan_subject_character.char_full_name]
