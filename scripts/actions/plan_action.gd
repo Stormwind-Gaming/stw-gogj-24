@@ -19,21 +19,21 @@ func _process_action() -> Array[TurnLog]:
 
 	match associated_plan.plan_effect:
 		Enums.IntelEffect.BUILD_SYMPATHY:
-			return _build_sympathy()
+			logs += _build_sympathy()
 		Enums.IntelEffect.BUILD_SYMPATHY_ALL:
-			return _build_sympathy_all()
+			logs += _build_sympathy_all()
 		Enums.IntelEffect.DISCOVER_ALL:
-			return _discover_all()
+			logs += _discover_all()
 		Enums.IntelEffect.ADD_AGENT_SLOT:
-			return _add_agent_slot()
+			logs += _add_agent_slot()
 		Enums.IntelEffect.RESCUE_AGENT:
-			return _rescue_agent()
+			logs += _rescue_agent()
 		Enums.IntelEffect.WILDCARD_INTEL:
-			return _wildcard_intel()
+			logs += _wildcard_intel()
 		Enums.IntelEffect.REDUCE_HEAT:
-			return _reduce_heat()
+			logs += _reduce_heat()
 		Enums.IntelEffect.REDUCE_HEAT_ALL:
-			return _reduce_heat_all()
+			logs += _reduce_heat_all()
 		_:
 			log_message = "No effect for plan"
 			logs.append(TurnLog.new(log_message, Enums.LogType.ACTION_INFO))

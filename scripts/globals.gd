@@ -597,9 +597,9 @@ func get_intel_effect_string(effect, bbcode_enabled: bool = false) -> String:
 		Enums.IntelEffect.DISCOVER_ALL:
 			return "Reveal all Characters in District"
 		Enums.IntelEffect.INCREASE_DIFFICULTY:
-			return "Increased Difficulty"
+			return "None"
 		Enums.IntelEffect.REDUCE_DIFFICULTY:
-			return "Reduced Difficulty"
+			return "None"
 		Enums.IntelEffect.REDUCE_HEAT:
 			return "-20 District Heat"
 		Enums.IntelEffect.REDUCE_HEAT_ALL:
