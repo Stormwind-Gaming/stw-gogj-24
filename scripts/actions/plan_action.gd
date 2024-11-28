@@ -103,8 +103,7 @@ func _add_agent_slot() -> Array[TurnLog]:
 	var logs: Array[TurnLog] = []
 	var log_message: String = ""
 
-	#TODO: Fix this getting overwritten by the global max_agents
-	GameController.max_agents += 1
+	GameController.agent_modifier += 1
 
 	log_message = "A new ally can be called to our ranks. The network expands. Another brave soul joins the fight for freedom."
 	logs.append(TurnLog.new(log_message, Enums.LogType.SUCCESS))

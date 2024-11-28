@@ -81,17 +81,16 @@ func _check_milestones(_num: int) -> void:
 		global_sympathy_breakpoint_high = true
 		EventBus.create_new_event_panel.emit(Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_HIGH, [] as Array[Character], null)
 
-	# TODO: This needs to be slightly more robust because players can also get agents from plans
 	# Update max agents based on sympathy level
 	var previous_max_agents = GameController.max_agents
 	if global_sympathy_breakpoint_high:
-		GameController.max_agents = 5
+		GameController.max_agents = 5 + GameController.agent_modifier
 	elif global_sympathy_breakpoint_medium:
-		GameController.max_agents = 4
+		GameController.max_agents = 4 + GameController.agent_modifier	
 	elif global_sympathy_breakpoint_low:
-		GameController.max_agents = 3
+		GameController.max_agents = 3 + GameController.agent_modifier	
 	else:
-		GameController.max_agents = 2
+		GameController.max_agents = 2 + GameController.agent_modifier
 		
 	if previous_max_agents != GameController.max_agents:
 		LogDuck.d("Max agents updated", {

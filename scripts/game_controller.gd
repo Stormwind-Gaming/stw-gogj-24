@@ -44,6 +44,11 @@ var town_details: TownDetails
 @onready var max_agents: int = Constants.INIT_MAX_AGENTS
 
 """
+@brief The modifier to the max agents
+"""
+var agent_modifier: int = 0
+
+"""
 @brief Current turn number
 """
 var turn_number: int = 0
