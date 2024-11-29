@@ -68,7 +68,7 @@ func _build_sympathy_all() -> Array[TurnLog]:
 	var logs: Array[TurnLog] = []
 	var log_message: String = ""
 
-	for my_poi in ReferenceGetter.global_registry().poi.find_all_items(ReferenceGetter.global_registry().LIST_ALL_POIS, "parent_district", poi.parent_district):
+	for my_poi in ReferenceGetter.global_registry().pois.find_all_items(ReferenceGetter.global_registry().LIST_ALL_POIS, "parent_district", poi.parent_district):
 		var base_sympathy_added: int = MathHelpers.generate_bell_curve_stat(Constants.ACTION_EFFECT_PLAN_BUILD_SYMPATHY_ALL_MIN, Constants.ACTION_EFFECT_PLAN_BUILD_SYMPATHY_ALL_MAX)
 		var sympathy_added: int = base_sympathy_added
 
