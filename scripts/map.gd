@@ -50,6 +50,12 @@ Initializes the map, districts, and starting agents.
 func _ready() -> void:
 	LogDuck.d("Map: Initializing map scene")
 	randomize()
+
+	# check if the sound is enabled
+	if Globals.sound_enabled:
+		$WindEffect.play()
+		$StreetEffect.play()
+
 	$AnimationPlayer.play("fade_in")
 	#TODO: # randomise cloud noise (currently disabled due to jumping when scene loads)
 	$Clouds.material.get_shader_parameter("noiseTexture").noise.seed = randi()

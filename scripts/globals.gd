@@ -1005,3 +1005,12 @@ var poi_icons = {
 	Enums.POIType.AMMO_FACTORY: preload("res://assets/icons/poi/selected/ammo_factory_2.png"),
 	Enums.POIType.FOUNDRY: preload("res://assets/icons/poi/selected/foundry_1.png"),
 }
+
+
+#|==============================|
+#|      Variables				        |
+#|==============================|
+"""
+@brief Global variable for if the sound is enabled
+"""
+var sound_enabled = false

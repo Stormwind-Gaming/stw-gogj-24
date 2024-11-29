@@ -254,11 +254,9 @@ libraries = {
 
 [node name="WindEffect" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("13_lkxq1")
-autoplay = true
 parameters/looping = true
 
 [node name="StreetEffect" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("16_885ay")
 volume_db = -80.0
-autoplay = true
 parameters/looping = true

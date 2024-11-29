@@ -1,9 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://dvvh4sr7r1bqa"]
+[gd_scene load_steps=10 format=3 uid="uid://dvvh4sr7r1bqa"]
 
 [ext_resource type="Texture2D" uid="uid://cjwdr0csrq2sh" path="res://assets/main_menu_2.png" id="1_pv42o"]
 [ext_resource type="Theme" uid="uid://dexax20p2eewp" path="res://assets/themes/base_theme.tres" id="1_wqfno"]
 [ext_resource type="Script" path="res://scripts/gui/main_menu.gd" id="2_ty003"]
 [ext_resource type="AudioStream" uid="uid://c4syf8m45hwgj" path="res://assets/audio/intro.ogg" id="4_13kk4"]
+[ext_resource type="Texture2D" uid="uid://si4f6pseke5f" path="res://assets/icons/audio_off.png" id="4_whvwy"]
+[ext_resource type="Texture2D" uid="uid://c133cxw8sgeco" path="res://assets/icons/audio_off_white.png" id="5_27t4p"]
 
 [sub_resource type="Animation" id="Animation_cunl3"]
 length = 0.001
@@ -67,7 +69,7 @@ _data = {
 "fade_out": SubResource("Animation_1l6x1")
 }
 
-[node name="MainMenu" type="Control"]
+[node name="MainMenu" type="Control" node_paths=PackedStringArray("sound_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -76,6 +78,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_wqfno")
 script = ExtResource("2_ty003")
+sound_button = NodePath("CenterContainer/PanelContainer/VBoxContainer/MarginContainer/SoundButton")
 
 [node name="Background" type="TextureRect" parent="."]
 layout_mode = 1
@@ -100,6 +103,12 @@ layout_mode = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer"]
 layout_mode = 2
 
+[node name="MarginContainer2" type="MarginContainer" parent="CenterContainer/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(50, 70)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_top = 20
+
 [node name="NewGameButton" type="Button" parent="CenterContainer/PanelContainer/VBoxContainer"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
@@ -115,6 +124,21 @@ custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 text = "Quit
 "
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(50, 70)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_top = 20
+
+[node name="SoundButton" type="TextureButton" parent="CenterContainer/PanelContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+toggle_mode = true
+texture_normal = ExtResource("4_whvwy")
+texture_pressed = ExtResource("4_whvwy")
+texture_hover = ExtResource("5_27t4p")
+ignore_texture_size = true
+stretch_mode = 5
 
 [node name="MarginContainer5" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -172,7 +196,6 @@ text = "TinTuna"
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_13kk4")
-autoplay = true
 parameters/looping = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -183,3 +206,4 @@ libraries = {
 [connection signal="pressed" from="CenterContainer/PanelContainer/VBoxContainer/NewGameButton" to="." method="_on_new_game_button_pressed"]
 [connection signal="pressed" from="CenterContainer/PanelContainer/VBoxContainer/TutorialButton" to="." method="_on_tutorial_button_pressed"]
 [connection signal="pressed" from="CenterContainer/PanelContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="toggled" from="CenterContainer/PanelContainer/VBoxContainer/MarginContainer/SoundButton" to="." method="_on_sound_button_toggled"]
