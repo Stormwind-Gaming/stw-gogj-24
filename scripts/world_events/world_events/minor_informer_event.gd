@@ -7,8 +7,8 @@ var subject_character: Character
 func _init(config: WorldEventConfig) -> void:
 	LogDuck.d("Initializing minor informer event")
 
-	turn_to_end = GameController.turn_number + 1
-	var subject_characters = GlobalRegistry.characters.get_list(GlobalRegistry.LIST_NON_SYMPATHISER_UNKNOWN) + GlobalRegistry.characters.get_list(GlobalRegistry.LIST_NON_SYMPATHISER_KNOWN) + GlobalRegistry.characters.get_list(GlobalRegistry.LIST_SYMPATHISER_NOT_RECRUITED) + GlobalRegistry.characters.get_list(GlobalRegistry.LIST_SYMPATHISER_RECRUITED)
+	turn_to_end = ReferenceGetter.game_controller().turn_number + 1
+	var subject_characters = ReferenceGetter.global_registry().characters.get_list(ReferenceGetter.global_registry().LIST_NON_SYMPATHISER_UNKNOWN) + ReferenceGetter.global_registry().characters.get_list(ReferenceGetter.global_registry().LIST_NON_SYMPATHISER_KNOWN) + ReferenceGetter.global_registry().characters.get_list(ReferenceGetter.global_registry().LIST_SYMPATHISER_NOT_RECRUITED) + ReferenceGetter.global_registry().characters.get_list(ReferenceGetter.global_registry().LIST_SYMPATHISER_RECRUITED)
 	subject_character = subject_characters[randi() % subject_characters.size()]
 
 	LogDuck.d("Minor informer event setup", {

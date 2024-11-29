@@ -120,4 +120,4 @@ func _update_stat(stat: String, success: bool = false) -> void:
 			pass
 
 func _update_time() -> void:
-	stats.time = GameController.time_elapsed
+	stats.time = ReferenceGetter.game_controller().time_elapsed

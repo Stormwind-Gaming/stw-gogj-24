@@ -105,7 +105,7 @@ func _init(properties: PlanProperties):
 	is_endgame_plan = properties.is_endgame_plan
 	stat_check_type = properties.stat_check_type
 
-	plan_timing = GameController.calendar.get_date_string(plan_duration)
+	plan_timing = ReferenceGetter.game_controller().calendar.get_date_string(plan_duration)
 	LogDuck.d("Plan timing set", {
 		"name": plan_name,
 		"timing": plan_timing,
@@ -113,10 +113,10 @@ func _init(properties: PlanProperties):
 	})
 
 	if plan_expiry != -1:
-		expires_on_turn = GameController.turn_number + plan_expiry
+		expires_on_turn = ReferenceGetter.game_controller().turn_number + plan_expiry
 		LogDuck.d("Plan expiry set", {
 			"name": plan_name,
-			"current_turn": GameController.turn_number,
+			"current_turn": ReferenceGetter.game_controller().turn_number,
 			"expires_on": expires_on_turn,
 			"expiry_duration": plan_expiry
 		})

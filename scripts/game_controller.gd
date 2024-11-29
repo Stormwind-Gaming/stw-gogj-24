@@ -1,4 +1,5 @@
 extends Node
+class_name GameController
 
 #|==============================|
 #|         Properties          |
@@ -67,11 +68,10 @@ var endgame_end_type: Enums.EventOutcomeType = Enums.EventOutcomeType.NONE
 #|==============================|
 #|      Lifecycle Methods      |
 #|==============================|
-
 """
-@brief Called when the node enters the scene tree
+@brief Called when the node is added to the scene tree
 """
-func _ready() -> void:
+func _init() -> void:
 	LogDuck.d("GameController initialized")
 	calendar = Calendar.new()
 	town_details = TownDetails.new()
@@ -123,7 +123,7 @@ func get_town_name() -> String:
 """
 func get_resistance_level() -> int:
 	var level = 0
-	var characters = GlobalRegistry.characters.get_all_items()
+	var characters = ReferenceGetter.global_registry().characters.get_all_items()
 	for character in characters:
 		if character.char_sympathy:
 			level += character.char_sympathy
@@ -139,7 +139,7 @@ func get_resistance_level() -> int:
 """
 func get_heat_level() -> int:
 	var level = 0
-	var districts = GlobalRegistry.districts.get_all_items()
+	var districts = ReferenceGetter.global_registry().districts.get_all_items()
 	for district in districts:
 		level += district.heat
 
@@ -162,7 +162,7 @@ func get_heat_level() -> int:
 """
 func add_action(poi: PointOfInterest, characters: Array[Character], action_type: Enums.ActionType, additional_info: Dictionary = {}) -> void:
 	LogDuck.d("Adding new action", action_type, "at POI", poi.poi_name, "with", characters.size(), "characters")
-	var actions = GlobalRegistry.actions.get_all_items()
+	var actions = ReferenceGetter.global_registry().actions.get_all_items()
 
 	# check if this character is already assigned to an action
 	for action in actions:
@@ -185,7 +185,7 @@ func add_action(poi: PointOfInterest, characters: Array[Character], action_type:
 	#TODO: Not sure if this is the best way to handle this
 	if action_type == Enums.ActionType.PLAN:
 		# Find the plan associated with this POI
-		var plan = GlobalRegistry.intel.find_item(GlobalRegistry.LIST_PLANS, "plan_subject_poi", poi)
+		var plan = ReferenceGetter.global_registry().intel.find_item(ReferenceGetter.global_registry().LIST_PLANS, "plan_subject_poi", poi)
 		action_config.additional_info["associated_plan"] = plan
 
 	ActionFactory.create_action(action_config)
@@ -193,7 +193,7 @@ func add_action(poi: PointOfInterest, characters: Array[Character], action_type:
 
 func remove_all_actions_for_character(character: Character) -> void:
 	LogDuck.d("Removing all actions for character", character.get_full_name())
-	var actions = GlobalRegistry.actions.get_all_items()
+	var actions = ReferenceGetter.global_registry().actions.get_all_items()
 	for action in actions:
 		if character in action.characters:
 				# delete the previous action
@@ -214,42 +214,42 @@ func process_turn() -> void:
 	calendar.increment_day() # Increment the day
 
 	# Create the turn log list for this turn
-	GlobalRegistry.turn_logs.create_list(str(turn_number))
+	ReferenceGetter.global_registry().turn_logs.create_list(str(turn_number))
 
 	# Return injured characters to the pool
-	var injured_characters = GlobalRegistry.characters.find_items_across_lists("char_state", Enums.CharacterState.INJURED)
+	var injured_characters = ReferenceGetter.global_registry().characters.find_items_across_lists("char_state", Enums.CharacterState.INJURED)
 	for character in injured_characters:
 		if not character.injured_return_on_turn or character.injured_return_on_turn <= turn_number:
 			character.char_state = Enums.CharacterState.AVAILABLE
-			var character_id = GlobalRegistry.characters.get_all_items().find(character)
+			var character_id = ReferenceGetter.global_registry().characters.get_all_items().find(character)
 			var message: String = "Good tidings: [url=character:%s]%s[/url] has healed and rejoined our cause. Restored to health, they return with renewed determination." % [character_id, character.get_full_name()]
 			var turn_log = TurnLog.new(message, Enums.LogType.WORLD_INFO)
-			GlobalRegistry.turn_logs.add_item(str(GameController.turn_number), turn_log)
+			ReferenceGetter.global_registry().turn_logs.add_item(str(ReferenceGetter.game_controller().turn_number), turn_log)
 			character.injured_return_on_turn = null
 
 	# Districts with actions
 	var districts_with_actions = []
-	for action in GlobalRegistry.actions.get_all_items():
+	for action in ReferenceGetter.global_registry().actions.get_all_items():
 		districts_with_actions.append(action.poi.parent_district)
 
 	# Emit the signal to begin processing the turn
 	EventBus.turn_processing_initiated.emit(turn_number)
 	
 	# We do this in a sequential manner to ensure that logs are added in the correct order
-	for action in GlobalRegistry.actions.get_all_items():
+	for action in ReferenceGetter.global_registry().actions.get_all_items():
 		action._on_turn_processing_initiated(turn_number)
 
 	WorldEventFactory.randomise_world_event_from_heat(get_heat_level())
 
 	# Decrease the heat for each district where there are no actions
-	for district in GlobalRegistry.districts.get_all_items():
+	for district in ReferenceGetter.global_registry().districts.get_all_items():
 		if not districts_with_actions.has(district):
 			var reduction: int = MathHelpers.generate_bell_curve_stat(Constants.DISTRICT_HEAT_DECREASE_PER_TURN_MIN, Constants.DISTRICT_HEAT_DECREASE_PER_TURN_MAX)
 			district.heat -= reduction
 
 			if (reduction > 0):
 				var turn_log = TurnLog.new(district.district_name + " heat decreased by " + str(reduction), Enums.LogType.WORLD_INFO)
-				GlobalRegistry.turn_logs.add_item(str(GameController.turn_number), turn_log)
+				ReferenceGetter.global_registry().turn_logs.add_item(str(ReferenceGetter.game_controller().turn_number), turn_log)
 
 	# Check for endgame conditions
 	if not endgame_triggered:
@@ -259,11 +259,11 @@ func process_turn() -> void:
 			_trigger_resistance_endgame()
 
 	# check if player has any sympathisers left
-	var all_sympathisers = GlobalRegistry.characters.list_size(GlobalRegistry.LIST_SYMPATHISER_RECRUITED) + GlobalRegistry.characters.list_size(GlobalRegistry.LIST_SYMPATHISER_NOT_RECRUITED)
+	var all_sympathisers = ReferenceGetter.global_registry().characters.list_size(ReferenceGetter.global_registry().LIST_SYMPATHISER_RECRUITED) + ReferenceGetter.global_registry().characters.list_size(ReferenceGetter.global_registry().LIST_SYMPATHISER_NOT_RECRUITED)
 	if all_sympathisers == 0:
-		GameController.endgame_end_type = Enums.EventOutcomeType.GAME_OVER
+		ReferenceGetter.game_controller().endgame_end_type = Enums.EventOutcomeType.GAME_OVER
 		EventBus.game_over.emit()
-	elif GameController.endgame_end_type != Enums.EventOutcomeType.NONE:
+	elif ReferenceGetter.game_controller().endgame_end_type != Enums.EventOutcomeType.NONE:
 		# the game has ended
 		EventBus.game_over.emit()
 	else:
@@ -283,17 +283,17 @@ func _trigger_heat_endgame() -> void:
 	IntelFactory.create_heat_endgame_plan()
 
 	var turn_log = TurnLog.new("Heat endgame triggered - Check Intel for Plans", Enums.LogType.WORLD_EVENT)
-	GlobalRegistry.turn_logs.add_item(str(GameController.turn_number), turn_log)
+	ReferenceGetter.global_registry().turn_logs.add_item(str(ReferenceGetter.game_controller().turn_number), turn_log)
 
 	EventBus.new_endgame_step.emit(Enums.EventOutcomeType.HEAT_01)
 
 	# Clear current intel and actions
-	GlobalRegistry.intel.clear_list(GlobalRegistry.LIST_PLANS)
-	GlobalRegistry.intel.clear_list(GlobalRegistry.LIST_RUMOURS)
-	GlobalRegistry.actions.clear_list(GlobalRegistry.LIST_ALL_ACTIONS)
+	ReferenceGetter.global_registry().intel.clear_list(ReferenceGetter.global_registry().LIST_PLANS)
+	ReferenceGetter.global_registry().intel.clear_list(ReferenceGetter.global_registry().LIST_RUMOURS)
+	ReferenceGetter.global_registry().actions.clear_list(ReferenceGetter.global_registry().LIST_ALL_ACTIONS)
 
 	var docks_plan_properties = Plan.PlanProperties.new()
-	var docks_poi = GlobalRegistry.pois.find_item(GlobalRegistry.LIST_ALL_POIS, "poi_type", Enums.POIType.DOCKS)
+	var docks_poi = ReferenceGetter.global_registry().pois.find_item(ReferenceGetter.global_registry().LIST_ALL_POIS, "poi_type", Enums.POIType.DOCKS)
 	docks_plan_properties.plan_name = "Head for the port."
 	docks_plan_properties.plan_text = "Gather what you can and head for the port immediately, you’ll need to cross into the port district first. Avoid detection at the checkpoint."
 	docks_plan_properties.plan_expiry = -1
@@ -304,7 +304,7 @@ func _trigger_heat_endgame() -> void:
 
 
 	var train_plan_properties = Plan.PlanProperties.new()
-	var train_poi = GlobalRegistry.pois.find_item(GlobalRegistry.LIST_ALL_POIS, "poi_type", Enums.POIType.TRAIN_STATION)
+	var train_poi = ReferenceGetter.global_registry().pois.find_item(ReferenceGetter.global_registry().LIST_ALL_POIS, "poi_type", Enums.POIType.TRAIN_STATION)
 	train_plan_properties.plan_name = "Head for the station."
 	train_plan_properties.plan_text = "Gather what you can and head for the train station immediately, you’ll need to cross into the industry district first. Avoid detection at the checkpoint, there is a spare military uniform available, you can use that as a disguise!"
 	train_plan_properties.plan_expiry = -1
@@ -327,17 +327,17 @@ func _trigger_resistance_endgame() -> void:
 	IntelFactory.create_resistance_endgame_plan()
 
 	var turn_log = TurnLog.new("Resistance endgame triggered - Check Intel for Plans", Enums.LogType.WORLD_EVENT)
-	GlobalRegistry.turn_logs.add_item(str(GameController.turn_number), turn_log)
+	ReferenceGetter.global_registry().turn_logs.add_item(str(ReferenceGetter.game_controller().turn_number), turn_log)
 
 	EventBus.new_endgame_step.emit(Enums.EventOutcomeType.RESISTANCE_AIRFIELD_01)
 
 	# Clear current intel and actions
-	GlobalRegistry.intel.clear_list(GlobalRegistry.LIST_PLANS)
-	GlobalRegistry.intel.clear_list(GlobalRegistry.LIST_RUMOURS)
-	GlobalRegistry.actions.clear_list(GlobalRegistry.LIST_ALL_ACTIONS)
+	ReferenceGetter.global_registry().intel.clear_list(ReferenceGetter.global_registry().LIST_PLANS)
+	ReferenceGetter.global_registry().intel.clear_list(ReferenceGetter.global_registry().LIST_RUMOURS)
+	ReferenceGetter.global_registry().actions.clear_list(ReferenceGetter.global_registry().LIST_ALL_ACTIONS)
 
 	var airbase_plan_properties = Plan.PlanProperties.new()
-	var airbase_poi = GlobalRegistry.pois.find_item(GlobalRegistry.LIST_ALL_POIS, "poi_type", Enums.POIType.AIR_BASE)
+	var airbase_poi = ReferenceGetter.global_registry().pois.find_item(ReferenceGetter.global_registry().LIST_ALL_POIS, "poi_type", Enums.POIType.AIR_BASE)
 	airbase_plan_properties.plan_name = "Assemble the team."
 	airbase_plan_properties.plan_text = "Assemble the team,  collect the explosives and move to the military district. We acquired some uniforms previously, so we can go in disguise as an infantry patrol. We even have an old truck that can pass for a squad vehicle."
 	airbase_plan_properties.plan_expiry = -1
@@ -409,7 +409,7 @@ func _on_radial_option_selected(option: Enums.ActionType, poi_for_radial: PointO
 func _on_post_radial_assignment_option_selected(option: Enums.ActionType, selected_agents: Array[Character], poi_for_radial: PointOfInterest, _additions: Array) -> void:
 	LogDuck.d("Post-radial assignment selected:", option, "with", selected_agents.size(), "agents")
 	if option != Enums.ActionType.NONE and option != Enums.ActionType.INFO:
-		GameController.add_action(poi_for_radial, selected_agents, option)
+		ReferenceGetter.game_controller().add_action(poi_for_radial, selected_agents, option)
 
 	# create a tiny timer to get around erroneous clickthroughs
 	await get_tree().create_timer(0.1).timeout

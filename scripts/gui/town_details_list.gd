@@ -71,29 +71,29 @@ func _ready() -> void:
 	EventBus.open_district_window.connect(_open_to_district)
 	EventBus.open_poi_window.connect(_open_to_poi)
 
-	town_tab.name = GameController.town_details.town_name
-	town_name_label.text = GameController.town_details.town_name
-	town_population_label.text = "Pop: %s" % str(GameController.town_details.popupation)
+	town_tab.name = ReferenceGetter.game_controller().town_details.town_name
+	town_name_label.text = ReferenceGetter.game_controller().town_details.town_name
+	town_population_label.text = "Pop: %s" % str(ReferenceGetter.game_controller().town_details.popupation)
 	
-	var res = GameController.get_resistance_level()
+	var res = ReferenceGetter.game_controller().get_resistance_level()
 	resistance_bar.value = res
 	resistance_bar.max_value = Constants.RESISTANCE_ENDGAME_THRESHOLD + 1
 	resistance_bar_label.text = "Resistance"
 	# resistance_bar_label.text = "Resistance - %s" % str(res) + "%"
 	
-	var heat = GameController.get_heat_level()
+	var heat = ReferenceGetter.game_controller().get_heat_level()
 	heat_bar.value = heat
 	heat_bar.max_value = Constants.HEAT_ENDGAME_THRESHOLD + 1
 	heat_bar_label.text = "Heat"
 	# heat_bar_label.text = "Heat - %s" % str(heat) + "%"
 
-	town_description.text = GameController.town_details.description
+	town_description.text = ReferenceGetter.game_controller().town_details.description
 
 	tab_container.tab_changed.connect(_on_tab_button_pressed)
 
 	# active bonuses
 
-	var bonuses = GlobalRegistry.modifiers.get_list(GlobalRegistry.LIST_GLOBAL_MODIFIERS).filter(func(x): return x.active == true)
+	var bonuses = ReferenceGetter.global_registry().modifiers.get_list(ReferenceGetter.global_registry().LIST_GLOBAL_MODIFIERS).filter(func(x): return x.active == true)
 	active_bonuses.text = ""
 	if bonuses.size() > 0:
 		active_bonuses.text += "[font_size=20]Active Bonuses:[/font_size]\n"
@@ -103,7 +103,7 @@ func _ready() -> void:
 			active_bonuses.text += "\n"
 	
 	# world events
-	var events = GlobalRegistry.world_events.get_list(GlobalRegistry.LIST_WORLD_EVENTS)
+	var events = ReferenceGetter.global_registry().world_events.get_list(ReferenceGetter.global_registry().LIST_WORLD_EVENTS)
 	active_world_events.text = ""
 	if events.size() > 0:
 		for event in events:
@@ -112,8 +112,8 @@ func _ready() -> void:
 				if active_world_events.text != "":
 					active_world_events.text += "[font_size=20]World Events:[/font_size]\n"
 
-				active_world_events.text += "%s: %s Day" % [event.event_data.event_title, str(event.turn_to_end - GameController.turn_number)]
-				if (event.turn_to_end - GameController.turn_number) > 1:
+				active_world_events.text += "%s: %s Day" % [event.event_data.event_title, str(event.turn_to_end - ReferenceGetter.game_controller().turn_number)]
+				if (event.turn_to_end - ReferenceGetter.game_controller().turn_number) > 1:
 					active_world_events.text += "s"
 				active_world_events.text +=" left" + "\n"
 			else:
@@ -138,7 +138,7 @@ func _on_close_button_pressed() -> void:
 """
 func _on_district_button_pressed(district_enum: Enums.DistrictType) -> void:
 	var district_submenu = district_submenu_scene.instantiate()
-	district_submenu.set_district(GlobalRegistry.districts.find_item(GlobalRegistry.LIST_ALL_DISTRICTS, "district_type", district_enum))
+	district_submenu.set_district(ReferenceGetter.global_registry().districts.find_item(ReferenceGetter.global_registry().LIST_ALL_DISTRICTS, "district_type", district_enum))
 	tab_container.add_child(district_submenu)
 	tab_container.set_current_tab(tab_container.get_tab_count() - 1)
 	district_submenu.poi_selected.connect(_on_poi_button_pressed)

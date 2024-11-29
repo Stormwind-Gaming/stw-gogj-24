@@ -104,11 +104,11 @@ static func create_world_event(severity: Enums.WorldEventSeverity) -> WorldEvent
 	event.effect_text = event.event_data.effect_text
 	event.event_end_text = event.event_data.event_end_text
 
-	event.event_data.event_text = event.event_data.event_text.replace("{town}", GameController.town_details.town_name)
+	event.event_data.event_text = event.event_data.event_text.replace("{town}", ReferenceGetter.game_controller().town_details.town_name)
 	event.event_text = event.event_data.event_text
 
 
-	GlobalRegistry.turn_logs.add_item(str(GameController.turn_number), TurnLog.new(event.event_data.event_text, Enums.LogType.WORLD_EVENT))
+	ReferenceGetter.global_registry().turn_logs.add_item(str(ReferenceGetter.game_controller().turn_number), TurnLog.new(event.event_data.event_text, Enums.LogType.WORLD_EVENT))
 	LogDuck.d("World event created", {
 		"type": event.event_data.event_type,
 		"text": event.event_data.event_text,

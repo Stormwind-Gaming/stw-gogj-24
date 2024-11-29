@@ -7,8 +7,8 @@ var subject_district: District
 func _init(config: WorldEventConfig) -> void:
 	LogDuck.d("Initializing minor increased patrols event")
 
-	turn_to_end = GameController.turn_number + 5
-	subject_district = GlobalRegistry.districts.get_random_item()
+	turn_to_end = ReferenceGetter.game_controller().turn_number + 5
+	subject_district = ReferenceGetter.global_registry().districts.get_random_item()
 
 	LogDuck.d("Minor increased patrols event setup", {
 		"turn_to_end": turn_to_end,

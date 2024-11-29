@@ -29,7 +29,7 @@ static func create_rumour(config: RumourConfig) -> Rumour:
 
 	if rumour_data.subject == Enums.RumourSubject.MIA_CHARACTER:
 		# check if there are any MIA characters
-		var mia_characters = GlobalRegistry.characters.get_list(GlobalRegistry.LIST_MIA)
+		var mia_characters = ReferenceGetter.global_registry().characters.get_list(ReferenceGetter.global_registry().LIST_MIA)
 		if mia_characters.size() == 0:
 			LogDuck.d("No MIA characters available, changing rumour subject to any character")
 			rumour_data.subject = Enums.RumourSubject.ANY_CHARACTER
@@ -100,7 +100,7 @@ static func create_rumour(config: RumourConfig) -> Rumour:
 @returns A random Character object
 """
 static func _get_random_character() -> Character:
-	var characters = GlobalRegistry.get_all_objects(Enums.Registry_Category.CHARACTER)
+	var characters = ReferenceGetter.global_registry().get_all_objects(Enums.Registry_Category.CHARACTER)
 	var selected = characters[randi() % characters.size()]
 	LogDuck.d("Selected random character", {
 		"character": selected.get_full_name(),
@@ -114,7 +114,7 @@ static func _get_random_character() -> Character:
 @returns A random PointOfInterest object
 """
 static func _get_random_poi() -> PointOfInterest:
-	return GlobalRegistry.pois.get_random_item()
+	return ReferenceGetter.global_registry().pois.get_random_item()
 
 """
 @brief Retrieves a random non-sympathiser character from the global registry.
@@ -122,8 +122,8 @@ static func _get_random_poi() -> PointOfInterest:
 @returns A random Character object that is not a sympathiser
 """
 static func _get_random_non_sympathiser_character() -> Character:
-	var known = GlobalRegistry.characters.get_list(GlobalRegistry.LIST_NON_SYMPATHISER_KNOWN)
-	var unknown = GlobalRegistry.characters.get_list(GlobalRegistry.LIST_NON_SYMPATHISER_UNKNOWN)
+	var known = ReferenceGetter.global_registry().characters.get_list(ReferenceGetter.global_registry().LIST_NON_SYMPATHISER_KNOWN)
+	var unknown = ReferenceGetter.global_registry().characters.get_list(ReferenceGetter.global_registry().LIST_NON_SYMPATHISER_UNKNOWN)
 	var all_non_sympathisers = known + unknown
 	return all_non_sympathisers[randi() % all_non_sympathisers.size()]
 
@@ -133,8 +133,8 @@ static func _get_random_non_sympathiser_character() -> Character:
 @returns A random Character object that is a sympathiser
 """
 static func _get_random_sympathiser_character() -> Character:
-	var recruited = GlobalRegistry.characters.get_list(GlobalRegistry.LIST_SYMPATHISER_RECRUITED)
-	var not_recruited = GlobalRegistry.characters.get_list(GlobalRegistry.LIST_SYMPATHISER_NOT_RECRUITED)
+	var recruited = ReferenceGetter.global_registry().characters.get_list(ReferenceGetter.global_registry().LIST_SYMPATHISER_RECRUITED)
+	var not_recruited = ReferenceGetter.global_registry().characters.get_list(ReferenceGetter.global_registry().LIST_SYMPATHISER_NOT_RECRUITED)
 	var all_sympathisers = recruited + not_recruited
 	return all_sympathisers[randi() % all_sympathisers.size()]
 
@@ -144,7 +144,7 @@ static func _get_random_sympathiser_character() -> Character:
 @returns A random Character object that is MIA
 """
 static func _get_random_mia_character() -> Character:
-	return GlobalRegistry.characters.get_random_item_from_list(GlobalRegistry.LIST_MIA)
+	return ReferenceGetter.global_registry().characters.get_random_item_from_list(ReferenceGetter.global_registry().LIST_MIA)
 
 """
 @brief Retrieves a random injured character
@@ -152,7 +152,7 @@ static func _get_random_mia_character() -> Character:
 @returns A random Character object that is injured
 """
 static func _get_random_injured_character() -> Character:
-	return GlobalRegistry.characters.get_random_item_from_list(GlobalRegistry.LIST_INJURED)
+	return ReferenceGetter.global_registry().characters.get_random_item_from_list(ReferenceGetter.global_registry().LIST_INJURED)
 
 #|==============================|
 #|   Duration and Expiry Logic   |

@@ -66,7 +66,7 @@ func set_district(district: District) -> void:
 	self.district = district
 	self.name = "%s - %s" % [district.district_name, Globals.get_district_type_string(district.district_type)]
 	self.district_name.text = "%s - %s" % [district.district_name, Globals.get_district_type_string(district.district_type)]
-	self.description.text = GameController.town_details.get_district_description(district.district_type)
+	self.description.text = ReferenceGetter.game_controller().town_details.get_district_description(district.district_type)
 	
 	self.heat_bar.value = district.heat
 	self.heat_bar_label.text = "Heat"
@@ -86,7 +86,7 @@ func set_district(district: District) -> void:
 	self.resistance_bar_label.text = "Resistance"
 	# self.resistance_bar_label.text = "Resistance - %s" % str(district.sympathy) + "%"
 	
-	var bonuses = GlobalRegistry.modifiers.get_all_items().filter(func(x): return x.active == true and x.district == district)
+	var bonuses = ReferenceGetter.global_registry().modifiers.get_all_items().filter(func(x): return x.active == true and x.district == district)
 	modifier_text.text = ""
 	if bonuses.size() > 0:
 		modifier_text.text += "[font_size=20]Active Effects:[/font_size]\n"

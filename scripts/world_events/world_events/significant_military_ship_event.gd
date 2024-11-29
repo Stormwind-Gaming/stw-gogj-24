@@ -8,8 +8,8 @@ var modifier: Modifier = null
 func _init(config: WorldEventConfig) -> void:
 	LogDuck.d("Initializing significant military ship event")
 
-	turn_to_end = GameController.turn_number + Constants.WORLD_EVENT_SIGNIFICANT_MILITARY_SHIP_DURATION
-	subject_district = GlobalRegistry.districts.find_item(GlobalRegistry.LIST_ALL_DISTRICTS, "district_type", Enums.DistrictType.PORT)
+	turn_to_end = ReferenceGetter.game_controller().turn_number + Constants.WORLD_EVENT_SIGNIFICANT_MILITARY_SHIP_DURATION
+	subject_district = ReferenceGetter.global_registry().districts.find_item(ReferenceGetter.global_registry().LIST_ALL_DISTRICTS, "district_type", Enums.DistrictType.PORT)
 
 	LogDuck.d("Significant military ship event setup", {
 		"turn_to_end": turn_to_end,

@@ -8,9 +8,9 @@ var subject_district_civic: District
 func _init(config: WorldEventConfig) -> void:
 	LogDuck.d("Initializing major police commander event")
 
-	turn_to_end = GameController.turn_number + Constants.WORLD_EVENT_MAJOR_POLICE_COMMANDER_DURATION
-	subject_districts = GlobalRegistry.districts.get_list(GlobalRegistry.LIST_ALL_DISTRICTS)
-	subject_district_civic = GlobalRegistry.districts.find_item(GlobalRegistry.LIST_ALL_DISTRICTS, "district_type", Enums.DistrictType.CIVIC)
+	turn_to_end = ReferenceGetter.game_controller().turn_number + Constants.WORLD_EVENT_MAJOR_POLICE_COMMANDER_DURATION
+	subject_districts = ReferenceGetter.global_registry().districts.get_list(ReferenceGetter.global_registry().LIST_ALL_DISTRICTS)
+	subject_district_civic = ReferenceGetter.global_registry().districts.find_item(ReferenceGetter.global_registry().LIST_ALL_DISTRICTS, "district_type", Enums.DistrictType.CIVIC)
 
 	LogDuck.d("Major police commander event setup", {
 		"turn_to_end": turn_to_end,

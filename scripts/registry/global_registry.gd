@@ -1,4 +1,5 @@
 extends Node
+class_name GlobalRegistry
 
 #|==============================|
 #|         Overview            |
@@ -116,7 +117,6 @@ func _init():
 	modifiers.create_list(LIST_DISTRICT_MODIFIERS)
 	modifiers.create_list(LIST_GLOBAL_MODIFIERS)
 
-func _ready():
 	# Character events
 	EventBus.character_created.connect(_on_character_created)
 	EventBus.character_state_changed.connect(_on_character_changed)

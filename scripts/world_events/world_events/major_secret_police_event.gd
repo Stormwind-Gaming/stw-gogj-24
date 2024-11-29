@@ -9,11 +9,11 @@ var subject_district_military: District
 func _init(config: WorldEventConfig) -> void:
 	LogDuck.d("Initializing major secret police event")
 
-	turn_to_end = GameController.turn_number + Constants.WORLD_EVENT_MAJOR_SECRET_POLICE_DURATION
-	var subject_characters = GlobalRegistry.characters.get_list(GlobalRegistry.LIST_SYMPATHISER_NOT_RECRUITED) + GlobalRegistry.characters.get_list(GlobalRegistry.LIST_SYMPATHISER_RECRUITED)
+	turn_to_end = ReferenceGetter.game_controller().turn_number + Constants.WORLD_EVENT_MAJOR_SECRET_POLICE_DURATION
+	var subject_characters = ReferenceGetter.global_registry().characters.get_list(ReferenceGetter.global_registry().LIST_SYMPATHISER_NOT_RECRUITED) + ReferenceGetter.global_registry().characters.get_list(ReferenceGetter.global_registry().LIST_SYMPATHISER_RECRUITED)
 	subject_character = subject_characters[randi() % subject_characters.size()]
-	subject_district_civic = GlobalRegistry.districts.find_item(GlobalRegistry.LIST_ALL_DISTRICTS, "district_type", Enums.DistrictType.CIVIC)
-	subject_district_military = GlobalRegistry.districts.find_item(GlobalRegistry.LIST_ALL_DISTRICTS, "district_type", Enums.DistrictType.MILITARY)
+	subject_district_civic = ReferenceGetter.global_registry().districts.find_item(ReferenceGetter.global_registry().LIST_ALL_DISTRICTS, "district_type", Enums.DistrictType.CIVIC)
+	subject_district_military = ReferenceGetter.global_registry().districts.find_item(ReferenceGetter.global_registry().LIST_ALL_DISTRICTS, "district_type", Enums.DistrictType.MILITARY)
 
 	LogDuck.d("Major secret police event setup", {
 		"turn_to_end": turn_to_end,

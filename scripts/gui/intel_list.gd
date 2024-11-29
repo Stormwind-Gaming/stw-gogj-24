@@ -122,7 +122,7 @@ func populate_rumour_list():
 		Enums.RumourType.TIME: {"container": when_btn_grp_container, "button_group": ButtonGroup.new(), "description_label": when_description, "intel_type": Enums.RumourType.TIME}
 	}
 
-	var rumours = GlobalRegistry.intel.get_list(GlobalRegistry.LIST_RUMOURS)
+	var rumours = ReferenceGetter.global_registry().intel.get_list(ReferenceGetter.global_registry().LIST_RUMOURS)
 	for rumour in rumours:
 		var intel_data = intel_type_to_container.get(rumour.rumour_type)
 
@@ -134,7 +134,7 @@ func populate_rumour_list():
 			button_group.allow_unpress = true
 
 			var check_button = CheckButton.new()
-			check_button.text = rumour.rumour_text + " (Expires in " + str(rumour.expires_on_turn - GameController.turn_number) + " days)"
+			check_button.text = rumour.rumour_text + " (Expires in " + str(rumour.expires_on_turn - ReferenceGetter.game_controller().turn_number) + " days)"
 			check_button.set_button_group(button_group)
 			check_button.set_autowrap_mode(TextServer.AUTOWRAP_WORD_SMART)
 			check_button.focus_mode = 0
@@ -171,7 +171,7 @@ func populate_rumour_list():
 
 			if rumour.rumour_type == Enums.RumourType.MISSION and rumour.rumour_effect == Enums.IntelEffect.RESCUE_AGENT:
 				# check if there is anyone to rescue
-				var agents = GlobalRegistry.characters.get_list(GlobalRegistry.LIST_MIA)
+				var agents = ReferenceGetter.global_registry().characters.get_list(ReferenceGetter.global_registry().LIST_MIA)
 				if len(agents) == 0:
 					check_button.disabled = true
 
@@ -196,7 +196,7 @@ func populate_rumour_list():
 @param intel Dictionary of intel items to filter for plans
 """
 func populate_plan_list():
-	var plans = GlobalRegistry.intel.get_list(GlobalRegistry.LIST_PLANS)
+	var plans = ReferenceGetter.global_registry().intel.get_list(ReferenceGetter.global_registry().LIST_PLANS)
 
 	# Clear any existing elements in the plan_list_container
 	clear_container(plan_list_container)

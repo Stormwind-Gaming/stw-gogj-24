@@ -8,8 +8,8 @@ var modifier: Modifier = null
 func _init(config: WorldEventConfig) -> void:
 	LogDuck.d("Initializing minor secret police event")
 
-	turn_to_end = GameController.turn_number + 2
-	subject_district = GlobalRegistry.districts.get_random_item()
+	turn_to_end = ReferenceGetter.game_controller().turn_number + 2
+	subject_district = ReferenceGetter.global_registry().districts.get_random_item()
 
 	LogDuck.d("Minor secret police event setup", {
 		"turn_to_end": turn_to_end,

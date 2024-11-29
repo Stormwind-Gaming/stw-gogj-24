@@ -30,13 +30,13 @@ func _ready() -> void:
 @brief Checks if any milestones have been passed
 """
 func _check_milestones(_num: int) -> void:
-	var global_heat = GameController.get_heat_level()
-	var global_sympathy = GameController.get_resistance_level()
+	var global_heat = ReferenceGetter.game_controller().get_heat_level()
+	var global_sympathy = ReferenceGetter.game_controller().get_resistance_level()
 	
 	LogDuck.d("Checking global milestones", {
 		"heat": global_heat,
 		"sympathy": global_sympathy,
-		"current_max_agents": GameController.max_agents
+		"current_max_agents": ReferenceGetter.game_controller().max_agents
 	})
 
 	# Check heat milestones
@@ -82,19 +82,19 @@ func _check_milestones(_num: int) -> void:
 		EventBus.create_new_event_panel.emit(Enums.EventOutcomeType.SYMPATHY_BREAKPOINT_HIGH, [] as Array[Character], null)
 
 	# Update max agents based on sympathy level
-	var previous_max_agents = GameController.max_agents
+	var previous_max_agents = ReferenceGetter.game_controller().max_agents
 	if global_sympathy_breakpoint_high:
-		GameController.max_agents = 5 + GameController.agent_modifier
+		ReferenceGetter.game_controller().max_agents = 5 + ReferenceGetter.game_controller().agent_modifier
 	elif global_sympathy_breakpoint_medium:
-		GameController.max_agents = 4 + GameController.agent_modifier	
+		ReferenceGetter.game_controller().max_agents = 4 + ReferenceGetter.game_controller().agent_modifier	
 	elif global_sympathy_breakpoint_low:
-		GameController.max_agents = 3 + GameController.agent_modifier	
+		ReferenceGetter.game_controller().max_agents = 3 + ReferenceGetter.game_controller().agent_modifier	
 	else:
-		GameController.max_agents = 2 + GameController.agent_modifier
+		ReferenceGetter.game_controller().max_agents = 2 + ReferenceGetter.game_controller().agent_modifier
 		
-	if previous_max_agents != GameController.max_agents:
+	if previous_max_agents != ReferenceGetter.game_controller().max_agents:
 		LogDuck.d("Max agents updated", {
 			"previous": previous_max_agents,
-			"new": GameController.max_agents,
+			"new": ReferenceGetter.game_controller().max_agents,
 			"sympathy_level": global_sympathy
 		})

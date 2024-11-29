@@ -57,8 +57,8 @@ func set_event_details(event_type: Enums.EventOutcomeType, characters: Array[Cha
 		button.text = button_text_attr
 	
 	# replace the placeholders in the text
-	text_label.text = text_label.text.replace("{town}", GameController.town_details.town_name)
-	title_label.text = title_label.text.replace("{town}", GameController.town_details.town_name)
+	text_label.text = text_label.text.replace("{town}", ReferenceGetter.game_controller().town_details.town_name)
+	title_label.text = title_label.text.replace("{town}", ReferenceGetter.game_controller().town_details.town_name)
 	if characters.size() > 0:
 		text_label.text = text_label.text.replace("{character}", characters[0].get_full_name())
 		title_label.text = title_label.text.replace("{character}", characters[0].get_full_name())
@@ -81,8 +81,8 @@ func set_event_details_world_event(world_event: WorldEvent) -> void:
 	button.text = event_outcome_text_object.event_button_text
 	
 	# replace the placeholders in the text
-	text_label.text = text_label.text.replace("{town}", GameController.town_details.town_name)
-	title_label.text = title_label.text.replace("{town}", GameController.town_details.town_name)
+	text_label.text = text_label.text.replace("{town}", ReferenceGetter.game_controller().town_details.town_name)
+	title_label.text = title_label.text.replace("{town}", ReferenceGetter.game_controller().town_details.town_name)
 	if world_event.event_character:
 		text_label.text = text_label.text.replace("{character}", world_event.event_character.get_full_name())
 		title_label.text = title_label.text.replace("{character}", world_event.event_character.get_full_name())

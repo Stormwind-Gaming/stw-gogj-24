@@ -214,7 +214,7 @@ Handles popup visibility based on hover state.
 @param delta Time elapsed since the last frame
 """
 func _process(delta: float) -> void:
-	if hovered and !GameController.district_focused:
+	if hovered and !ReferenceGetter.game_controller().district_focused:
 		district_popup.visible = true
 		district_popup.set_position(get_viewport().get_mouse_position() + Vector2(10, 10))
 	else:

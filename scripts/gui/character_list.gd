@@ -87,21 +87,21 @@ func populate_character_lists():
 
 	var all_characters = []
 
-	var characters_mia = GlobalRegistry.characters.get_list(GlobalRegistry.LIST_MIA)
+	var characters_mia = ReferenceGetter.global_registry().characters.get_list(ReferenceGetter.global_registry().LIST_MIA)
 	for character in characters_mia:
 		var mini_agent_card_scene = Globals.mini_agent_card_scene.instantiate()
 		mini_agent_card_scene.set_character(character)
 		mini_agent_card_scene.connect("character_card_pressed", _on_character_button_pressed)
 		mia_list_container.add_child(mini_agent_card_scene)
 
-	var characters_deceased = GlobalRegistry.characters.get_list(GlobalRegistry.LIST_DECEASED)
+	var characters_deceased = ReferenceGetter.global_registry().characters.get_list(ReferenceGetter.global_registry().LIST_DECEASED)
 	for character in characters_deceased:
 		var mini_agent_card_scene = Globals.mini_agent_card_scene.instantiate()
 		mini_agent_card_scene.set_character(character)
 		mini_agent_card_scene.connect("character_card_pressed", _on_character_button_pressed)
 		deceased_list_container.add_child(mini_agent_card_scene)
 
-	var characters_known = GlobalRegistry.characters.get_list(GlobalRegistry.LIST_NON_SYMPATHISER_KNOWN)
+	var characters_known = ReferenceGetter.global_registry().characters.get_list(ReferenceGetter.global_registry().LIST_NON_SYMPATHISER_KNOWN)
 	# sort characters based on sort_option_button
 	match sort_option_button.selected:
 		0:
@@ -120,13 +120,13 @@ func populate_character_lists():
 		mini_agent_card_scene.set_character(character)
 		known_character_list_container.add_child(mini_agent_card_scene)
 
-	var characters_unknown = GlobalRegistry.characters.get_list(GlobalRegistry.LIST_NON_SYMPATHISER_UNKNOWN)
+	var characters_unknown = ReferenceGetter.global_registry().characters.get_list(ReferenceGetter.global_registry().LIST_NON_SYMPATHISER_UNKNOWN)
 	for character in characters_unknown:
 		var mini_agent_card_scene = Globals.mini_agent_card_scene.instantiate()
 		mini_agent_card_scene.set_character(character)
 		unknown_character_list_container.add_child(mini_agent_card_scene)
 
-	var characters_sympathiser_recruited = GlobalRegistry.characters.get_list(GlobalRegistry.LIST_SYMPATHISER_RECRUITED)
+	var characters_sympathiser_recruited = ReferenceGetter.global_registry().characters.get_list(ReferenceGetter.global_registry().LIST_SYMPATHISER_RECRUITED)
 	for character in characters_sympathiser_recruited:
 		var agent_card_scene = Globals.agent_card_scene.instantiate()
 		agent_card_scene.on_character_list_page()
@@ -134,16 +134,16 @@ func populate_character_lists():
 		agent_card_scene.connect("character_card_pressed", _on_character_button_pressed)
 		agent_list_container.add_child(agent_card_scene)
 	
-	var spare_agent_slots = GameController.max_agents - len(characters_sympathiser_recruited)
+	var spare_agent_slots = ReferenceGetter.game_controller().max_agents - len(characters_sympathiser_recruited)
 	for i in range(spare_agent_slots):
 		var agent_card_scene = Globals.blank_agent_card_scene.instantiate()
 		agent_list_container.add_child(agent_card_scene)
 
-	var characters_sympathiser = GlobalRegistry.characters.get_list(GlobalRegistry.LIST_SYMPATHISER_NOT_RECRUITED)
+	var characters_sympathiser = ReferenceGetter.global_registry().characters.get_list(ReferenceGetter.global_registry().LIST_SYMPATHISER_NOT_RECRUITED)
 	for character in characters_sympathiser:
 		var mini_agent_card_scene = Globals.mini_agent_card_scene.instantiate()
 		mini_agent_card_scene.set_character(character)
-		if not character.char_state == Enums.CharacterState.INJURED and not (len(characters_sympathiser_recruited) >= GameController.max_agents):
+		if not character.char_state == Enums.CharacterState.INJURED and not (len(characters_sympathiser_recruited) >= ReferenceGetter.game_controller().max_agents):
 			mini_agent_card_scene.on_character_list_page()
 			mini_agent_card_scene.connect("character_card_pressed", _on_character_button_pressed)
 			
@@ -218,7 +218,7 @@ func _on_character_button_pressed(character: Character) -> void:
 		character.char_recruitment_state = Enums.CharacterRecruitmentState.SYMPATHISER_NOT_RECRUITED
 	else:
 		# Check if we're at the agent limit
-		if GlobalRegistry.characters.list_size(GlobalRegistry.LIST_SYMPATHISER_RECRUITED) >= GameController.max_agents:
+		if ReferenceGetter.global_registry().characters.list_size(ReferenceGetter.global_registry().LIST_SYMPATHISER_RECRUITED) >= ReferenceGetter.game_controller().max_agents:
 			return
 		else:
 			character.char_recruitment_state = Enums.CharacterRecruitmentState.SYMPATHISER_RECRUITED
@@ -242,7 +242,7 @@ func _on_option_button_item_selected(index: int) -> void:
 	for child in known_character_list_container.get_children():
 		child.queue_free()
 
-	var characters_known = GlobalRegistry.characters.get_list(GlobalRegistry.LIST_NON_SYMPATHISER_KNOWN)
+	var characters_known = ReferenceGetter.global_registry().characters.get_list(ReferenceGetter.global_registry().LIST_NON_SYMPATHISER_KNOWN)
 	# sort characters based on sort_option_button
 	match index:
 		0:
@@ -292,6 +292,6 @@ func sort_ascending(a, b):
 """
 func _recalculate_agent_count() -> void:
 
-	var agent_count = GlobalRegistry.characters.list_size(GlobalRegistry.LIST_SYMPATHISER_RECRUITED)
+	var agent_count = ReferenceGetter.global_registry().characters.list_size(ReferenceGetter.global_registry().LIST_SYMPATHISER_RECRUITED)
 	
-	agents_label.text = "Agents (" + str(agent_count) + "/" + str(GameController.max_agents) + ")"
+	agents_label.text = "Agents (" + str(agent_count) + "/" + str(ReferenceGetter.game_controller().max_agents) + ")"

@@ -26,7 +26,7 @@ var char_subtlety: int
 var char_smarts: int
 
 #|==============================|
-#|        Hidden Stats Variables |
+#|   Hidden Stats Variables     |
 #|==============================|
 var char_sympathy: set = set_char_sympathy # 1-99 how likely is this character to join the resistance?
 
@@ -44,7 +44,6 @@ var injured_return_on_turn
 @param profile A dictionary containing the character's profile information.
 """
 func _init(profile: Dictionary):
-
 	# Assign profile variables
 	char_first_name = profile['first_name']
 	char_last_name = profile['last_name']
@@ -52,7 +51,7 @@ func _init(profile: Dictionary):
 	char_gender = profile['gender']
 	char_picture = profile['image_path']
 	char_national_id_number = profile['national_id_number']
-	char_dob = GameController.calendar.get_new_birthdate()
+	char_dob = ReferenceGetter.game_controller().calendar.get_new_birthdate()
 	char_profession = Enums.CharacterProfession.UNKNOWN
 
 	# Set default values
@@ -107,7 +106,7 @@ func set_char_sympathy(sympathy: int) -> void:
 		char_recruitment_state = Enums.CharacterRecruitmentState.SYMPATHISER_NOT_RECRUITED
 		
 		# If this is the first turn, don't create a new sympathiser event
-		if GameController.turn_number > 0:
+		if ReferenceGetter.game_controller().turn_number > 0:
 			EventBus.create_new_event_panel.emit(Enums.EventOutcomeType.NEW_SYMPATHISER, [self] as Array[Character], char_associated_poi)
 
 

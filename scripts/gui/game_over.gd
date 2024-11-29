@@ -116,7 +116,7 @@ var lose_endgame_colour: Color = Color.BLACK
 """
 func _ready() -> void:
 	EventBus.close_all_windows_and_event_panels.emit()
-	if GameController.endgame_end_type != Enums.EventOutcomeType.NONE and GameController.endgame_end_type != Enums.EventOutcomeType.GAME_OVER:
+	if ReferenceGetter.game_controller().endgame_end_type != Enums.EventOutcomeType.NONE and ReferenceGetter.game_controller().endgame_end_type != Enums.EventOutcomeType.GAME_OVER:
 		update_gui()
 		$AnimationPlayer.play("fade_in_endgame")
 	else:
@@ -141,9 +141,9 @@ func _on_quit_to_menu_button_pressed() -> void:
 """
 func update_gui() -> void:
 	# get endgame type
-	var endgame_type: Enums.EventOutcomeType = GameController.endgame_end_type
+	var endgame_type: Enums.EventOutcomeType = ReferenceGetter.game_controller().endgame_end_type
 	# set endgame text for this type
-	endgame_text.text = Globals.get_endgame_text(endgame_type).replace("{town}", GameController.town_details.town_name)
+	endgame_text.text = Globals.get_endgame_text(endgame_type).replace("{town}", ReferenceGetter.game_controller().town_details.town_name)
 	# set endgame image for this type
 	endgame_image.texture = Globals.endgame_page_images[endgame_type]
 
@@ -185,13 +185,13 @@ func update_gui() -> void:
 	for child in left_behind_sympathisers.get_children():
 		child.queue_free()
 
-	var sympathisers = GlobalRegistry.characters.get_list(GlobalRegistry.LIST_SYMPATHISER_NOT_RECRUITED) + GlobalRegistry.characters.get_list(GlobalRegistry.LIST_SYMPATHISER_RECRUITED)
+	var sympathisers = ReferenceGetter.global_registry().characters.get_list(ReferenceGetter.global_registry().LIST_SYMPATHISER_NOT_RECRUITED) + ReferenceGetter.global_registry().characters.get_list(ReferenceGetter.global_registry().LIST_SYMPATHISER_RECRUITED)
 	for sympathiser in sympathisers:
 		var mini_agent_scene = Globals.mini_agent_card_scene.instantiate()
 		mini_agent_scene.set_character(sympathiser)
 		escaped_sympathisers.add_child(mini_agent_scene)
 	
-	var other_sympathisers = GlobalRegistry.characters.get_list(GlobalRegistry.LIST_MIA) + GlobalRegistry.characters.get_list(GlobalRegistry.LIST_DECEASED)
+	var other_sympathisers = ReferenceGetter.global_registry().characters.get_list(ReferenceGetter.global_registry().LIST_MIA) + ReferenceGetter.global_registry().characters.get_list(ReferenceGetter.global_registry().LIST_DECEASED)
 	for sympathiser in other_sympathisers:
 		var mini_agent_scene = Globals.mini_agent_card_scene.instantiate()
 		mini_agent_scene.set_character(sympathiser)

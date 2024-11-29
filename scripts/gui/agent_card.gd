@@ -195,7 +195,7 @@ func _set_state_overlay(status: Enums.CharacterState) -> void:
 	if status == Enums.CharacterState.INJURED:
 		var label = Label.new()		
 		if character.injured_return_on_turn:
-			label.text = str(character.injured_return_on_turn - GameController.turn_number)
+			label.text = str(character.injured_return_on_turn - ReferenceGetter.game_controller().turn_number)
 		else:
 			label.text = '1'
 		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -219,7 +219,7 @@ func check_assignment_selection(poi: PointOfInterest, option: Enums.ActionType) 
 	# Check this character's status
 	if character.char_state == Enums.CharacterState.ASSIGNED:
 		# If the character is assigned, check if they are assigned to this POI and action
-		var actions = GlobalRegistry.actions.get_all_items()
+		var actions = ReferenceGetter.global_registry().actions.get_all_items()
 		for action in actions:
 			if action.characters.has(character) and action.poi == poi and action.action_type == option:
 				self.modulate = Color(1, 1, 1)

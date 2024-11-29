@@ -7,8 +7,8 @@ var subject_district: District
 func _init(config: WorldEventConfig) -> void:
 	LogDuck.d("Initializing significant weapons cache event")
 
-	turn_to_end = GameController.turn_number + Constants.WORLD_EVENT_SIGNIFICANT_WEAPONS_CACHE_DURATION
-	subject_district = GlobalRegistry.districts.get_random_item()
+	turn_to_end = ReferenceGetter.game_controller().turn_number + Constants.WORLD_EVENT_SIGNIFICANT_WEAPONS_CACHE_DURATION
+	subject_district = ReferenceGetter.global_registry().districts.get_random_item()
 
 	LogDuck.d("Significant weapons cache event setup", {
 		"turn_to_end": turn_to_end,
@@ -50,7 +50,7 @@ func _event_start() -> void:
 	# reduce all Intel (rumours) time remaining by 3 turns
 	var rumour_count = 0
 	var expired_count = 0
-	for rumour in GlobalRegistry.intel.get_list(GlobalRegistry.LIST_RUMOURS):
+	for rumour in ReferenceGetter.global_registry().intel.get_list(ReferenceGetter.global_registry().LIST_RUMOURS):
 		rumour.rumour_subject_expiry -= Constants.WORLD_EVENT_SIGNIFICANT_WEAPONS_CACHE_RUMOUR_DURATION_REDUCTION
 		rumour_count += 1
 		
@@ -60,7 +60,7 @@ func _event_start() -> void:
 				"rumour_text": rumour.rumour_text,
 				"previous_turns": rumour.rumour_subject_expiry + Constants.WORLD_EVENT_SIGNIFICANT_WEAPONS_CACHE_RUMOUR_DURATION_REDUCTION
 			})
-			GlobalRegistry.intel.remove_item(rumour)
+			ReferenceGetter.global_registry().intel.remove_item(rumour)
 			rumour.queue_free()
 			expired_count += 1
 

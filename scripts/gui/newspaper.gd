@@ -26,8 +26,8 @@ extends PopupPanel
 @brief Refresh the newspaper with the current town name and date
 """
 func _refresh_newspaper():
-	town_label.text = "%s, België" % GameController.get_town_name()
-	date_label.text = GameController.calendar.get_date_string()
+	town_label.text = "%s, België" % ReferenceGetter.game_controller().get_town_name()
+	date_label.text = ReferenceGetter.game_controller().calendar.get_date_string()
 
 #|==============================|
 #|      Helper Functions       |

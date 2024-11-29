@@ -40,7 +40,7 @@ func _generate_action_list() -> void:
 	for child in actions_list.get_children():
 		child.queue_free()
 	
-	var actions = GlobalRegistry.actions.get_list(GlobalRegistry.LIST_ALL_ACTIONS)
+	var actions = ReferenceGetter.global_registry().actions.get_list(ReferenceGetter.global_registry().LIST_ALL_ACTIONS)
 
 	# for each action, create a new action card
 	for action in actions:

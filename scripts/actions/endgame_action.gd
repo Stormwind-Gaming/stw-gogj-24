@@ -12,12 +12,12 @@ func _process_action() -> Array[TurnLog]:
 	var logs: Array[TurnLog] = []
 	var log_message: String = ""
 
-	var id = GlobalRegistry.pois.get_all_items().find(poi)
+	var id = ReferenceGetter.global_registry().pois.get_all_items().find(poi)
 	logs.append(TurnLog.new(("Processing ENDGAME PLAN action at [url=poi:%s]" % id) + str(poi.poi_name) + "[/url] by " + _get_character_names(), Enums.LogType.ACTION_INFO))
 
 	if poi.poi_type == Enums.POIType.DOCKS:
 
-		match GameController.heat_endgame_port_step:
+		match ReferenceGetter.game_controller().heat_endgame_port_step:
 			0:
 				logs += _heat_endgame_port_1()
 			1:
@@ -27,11 +27,11 @@ func _process_action() -> Array[TurnLog]:
 			3:
 				logs += _heat_endgame_port_4()
 			_:
-				printerr("Invalid heat endgame port step: ", GameController.heat_endgame_port_step)
+				printerr("Invalid heat endgame port step: ", ReferenceGetter.game_controller().heat_endgame_port_step)
 	
 	if poi.poi_type == Enums.POIType.TRAIN_STATION:
 
-		match GameController.heat_endgame_train_step:
+		match ReferenceGetter.game_controller().heat_endgame_train_step:
 			0:
 				logs += _heat_endgame_train_1()
 			1:
@@ -41,11 +41,11 @@ func _process_action() -> Array[TurnLog]:
 			3:
 				logs += _heat_endgame_train_4()
 			_:
-				printerr("Invalid heat endgame train step: ", GameController.heat_endgame_train_step)
+				printerr("Invalid heat endgame train step: ", ReferenceGetter.game_controller().heat_endgame_train_step)
 
 	if poi.poi_type == Enums.POIType.AIR_BASE:
 
-		match GameController.resistance_endgame_step:
+		match ReferenceGetter.game_controller().resistance_endgame_step:
 			0:
 				logs += _resistance_endgame_1()
 			1:
@@ -57,7 +57,7 @@ func _process_action() -> Array[TurnLog]:
 			4:
 				logs += _resistance_endgame_5()
 			_:
-				printerr("Invalid resistance endgame step: ", GameController.resistance_endgame_step)
+				printerr("Invalid resistance endgame step: ", ReferenceGetter.game_controller().resistance_endgame_step)
 
 	return logs
 
@@ -65,7 +65,7 @@ func _process_action() -> Array[TurnLog]:
 func _process_danger() -> Array[TurnLog]:
 	var logs: Array[TurnLog] = []
 
-	var id = GlobalRegistry.pois.get_all_items().find(poi)
+	var id = ReferenceGetter.global_registry().pois.get_all_items().find(poi)
 	logs.append(TurnLog.new(("Processing danger for action at [url=poi:%s]" % id) + str(poi.poi_name) + "[/url] by " + _get_character_names(), Enums.LogType.ACTION_INFO))
 
 	# Here we override the base action danger processing, for endgame actions there is a 100% chance of consequence on failure
@@ -77,7 +77,7 @@ func _process_danger() -> Array[TurnLog]:
 		
 	if (not subtle_roll):
 		# TODO: How do we add heat globally without it then being overwritten by the mean of all districts? I'll just do this for the time being...
-		var districts: Array = GlobalRegistry.districts.get_all_items()
+		var districts: Array = ReferenceGetter.global_registry().districts.get_all_items()
 		for district in districts:
 			district.heat += ceil(districts.size() / 5)
 
@@ -131,11 +131,11 @@ func _heat_endgame_port_1() -> Array[TurnLog]:
 	var charm_roll = statistic_check.charm_check()
 
 	if charm_roll:
-		GameController.heat_endgame_port_step = 1
-		GlobalRegistry.intel.clear_list(GlobalRegistry.LIST_PLANS)
+		ReferenceGetter.game_controller().heat_endgame_port_step = 1
+		ReferenceGetter.global_registry().intel.clear_list(ReferenceGetter.global_registry().LIST_PLANS)
 
 		var plan_properties = Plan.PlanProperties.new()
-		var docks_poi = GlobalRegistry.pois.find_item(GlobalRegistry.LIST_ALL_POIS, "poi_type", Enums.POIType.DOCKS)
+		var docks_poi = ReferenceGetter.global_registry().pois.find_item(ReferenceGetter.global_registry().LIST_ALL_POIS, "poi_type", Enums.POIType.DOCKS)
 		plan_properties.plan_name = "Sneak into the Port"
 		plan_properties.plan_text = "You’re outside the Port perimeter, you need to get inside as soon as possible, the best way is to wait until dark then cut through the fence south of the pier.  "
 		plan_properties.plan_expiry = -1
@@ -160,11 +160,11 @@ func _heat_endgame_port_2() -> Array[TurnLog]:
 	var smarts_roll = statistic_check.smarts_check()
 
 	if smarts_roll:
-		GameController.heat_endgame_port_step = 2
-		GlobalRegistry.intel.clear_list(GlobalRegistry.LIST_PLANS)
+		ReferenceGetter.game_controller().heat_endgame_port_step = 2
+		ReferenceGetter.global_registry().intel.clear_list(ReferenceGetter.global_registry().LIST_PLANS)
 
 		var plan_properties = Plan.PlanProperties.new()
-		var docks_poi = GlobalRegistry.pois.find_item(GlobalRegistry.LIST_ALL_POIS, "poi_type", Enums.POIType.DOCKS)
+		var docks_poi = ReferenceGetter.global_registry().pois.find_item(ReferenceGetter.global_registry().LIST_ALL_POIS, "poi_type", Enums.POIType.DOCKS)
 		plan_properties.plan_name = "Board the ship."
 		plan_properties.plan_text = "We don’t have long before the patrols find the gap in the fence, we must get on the ship."
 		plan_properties.plan_expiry = -1
@@ -190,11 +190,11 @@ func _heat_endgame_port_3() -> Array[TurnLog]:
 	var charm_roll = statistic_check.charm_check()
 
 	if charm_roll:
-		GameController.heat_endgame_port_step = 3
-		GlobalRegistry.intel.clear_list(GlobalRegistry.LIST_PLANS)
+		ReferenceGetter.game_controller().heat_endgame_port_step = 3
+		ReferenceGetter.global_registry().intel.clear_list(ReferenceGetter.global_registry().LIST_PLANS)
 
 		var plan_properties = Plan.PlanProperties.new()
-		var docks_poi = GlobalRegistry.pois.find_item(GlobalRegistry.LIST_ALL_POIS, "poi_type", Enums.POIType.DOCKS)
+		var docks_poi = ReferenceGetter.global_registry().pois.find_item(ReferenceGetter.global_registry().LIST_ALL_POIS, "poi_type", Enums.POIType.DOCKS)
 		plan_properties.plan_name = "Avoid the cabin search"
 		plan_properties.plan_text = "The ship is leaving in 30 minutes, but first we have to avoid the customs and border patrols checking papers in every cabin. We should hide below decks in the engine room, we should be safe amongst the stevedores.\n\nWe only have one chance at this!"
 		plan_properties.plan_expiry = -1
@@ -219,9 +219,9 @@ func _heat_endgame_port_4() -> Array[TurnLog]:
 	var smarts_roll = statistic_check.smarts_check()
 
 	if smarts_roll:
-		GameController.endgame_end_type = Enums.EventOutcomeType.HEAT_PORT_SUCCESS
+		ReferenceGetter.game_controller().endgame_end_type = Enums.EventOutcomeType.HEAT_PORT_SUCCESS
 	else:
-		GameController.endgame_end_type = Enums.EventOutcomeType.HEAT_PORT_FAILURE
+		ReferenceGetter.game_controller().endgame_end_type = Enums.EventOutcomeType.HEAT_PORT_FAILURE
 
 
 	return logs
@@ -235,11 +235,11 @@ func _heat_endgame_train_1() -> Array[TurnLog]:
 	var smarts_roll = statistic_check.smarts_check()
 
 	if smarts_roll:
-		GameController.heat_endgame_train_step = 1
-		GlobalRegistry.intel.clear_list(GlobalRegistry.LIST_PLANS)
+		ReferenceGetter.game_controller().heat_endgame_train_step = 1
+		ReferenceGetter.global_registry().intel.clear_list(ReferenceGetter.global_registry().LIST_PLANS)
 
 		var plan_properties = Plan.PlanProperties.new()
-		var train_poi = GlobalRegistry.pois.find_item(GlobalRegistry.LIST_ALL_POIS, "poi_type", Enums.POIType.TRAIN_STATION)
+		var train_poi = ReferenceGetter.global_registry().pois.find_item(ReferenceGetter.global_registry().LIST_ALL_POIS, "poi_type", Enums.POIType.TRAIN_STATION)
 		plan_properties.plan_name = "Sneak into the Train Station"
 		plan_properties.plan_text = "You’re outside the Train station perimeter, you need to get inside as soon as possible, as you have the uniform of an oberlieutenant you should be able to walk through the front door
 "
@@ -266,11 +266,11 @@ func _heat_endgame_train_2() -> Array[TurnLog]:
 	var charm_roll = statistic_check.charm_check()
 
 	if charm_roll:
-		GameController.heat_endgame_train_step = 2
-		GlobalRegistry.intel.clear_list(GlobalRegistry.LIST_PLANS)
+		ReferenceGetter.game_controller().heat_endgame_train_step = 2
+		ReferenceGetter.global_registry().intel.clear_list(ReferenceGetter.global_registry().LIST_PLANS)
 
 		var plan_properties = Plan.PlanProperties.new()
-		var train_poi = GlobalRegistry.pois.find_item(GlobalRegistry.LIST_ALL_POIS, "poi_type", Enums.POIType.TRAIN_STATION)
+		var train_poi = ReferenceGetter.global_registry().pois.find_item(ReferenceGetter.global_registry().LIST_ALL_POIS, "poi_type", Enums.POIType.TRAIN_STATION)
 		plan_properties.plan_name = "Board a train."
 		plan_properties.plan_text = "I fear that this uniform has got us as far as we can go, we need to change and board a train as a member of the crew. There is a crew room on platform 3, lets try boarding as a stoker."
 		plan_properties.plan_expiry = -1
@@ -295,11 +295,11 @@ func _heat_endgame_train_3() -> Array[TurnLog]:
 	var smarts_roll = statistic_check.smarts_check()
 
 	if smarts_roll:
-		GameController.heat_endgame_train_step = 3
-		GlobalRegistry.intel.clear_list(GlobalRegistry.LIST_PLANS)
+		ReferenceGetter.game_controller().heat_endgame_train_step = 3
+		ReferenceGetter.global_registry().intel.clear_list(ReferenceGetter.global_registry().LIST_PLANS)
 
 		var plan_properties = Plan.PlanProperties.new()
-		var train_poi = GlobalRegistry.pois.find_item(GlobalRegistry.LIST_ALL_POIS, "poi_type", Enums.POIType.TRAIN_STATION)
+		var train_poi = ReferenceGetter.global_registry().pois.find_item(ReferenceGetter.global_registry().LIST_ALL_POIS, "poi_type", Enums.POIType.TRAIN_STATION)
 		plan_properties.plan_name = "Join the boiler crew without raising alarm"
 		plan_properties.plan_text = "The train is about to leave, you have to get aboard now. The stoker crew are on their way, infiltrate the team and persuade  them that you’ve been sent to join the train.\n\nWe only have one chance at this!  "
 		plan_properties.plan_expiry = -1
@@ -324,9 +324,9 @@ func _heat_endgame_train_4() -> Array[TurnLog]:
 	var charm_roll = statistic_check.charm_check()
 
 	if charm_roll:
-		GameController.endgame_end_type = Enums.EventOutcomeType.HEAT_TRAIN_SUCCESS
+		ReferenceGetter.game_controller().endgame_end_type = Enums.EventOutcomeType.HEAT_TRAIN_SUCCESS
 	else:
-		GameController.endgame_end_type = Enums.EventOutcomeType.HEAT_TRAIN_FAILURE
+		ReferenceGetter.game_controller().endgame_end_type = Enums.EventOutcomeType.HEAT_TRAIN_FAILURE
 
 	return logs
 
@@ -339,10 +339,10 @@ func _resistance_endgame_1() -> Array[TurnLog]:
 	var smarts_roll = statistic_check.smarts_check()
 
 	if smarts_roll:
-		GameController.resistance_endgame_step = 1
+		ReferenceGetter.game_controller().resistance_endgame_step = 1
 
 		var airbase_plan_properties = Plan.PlanProperties.new()
-		var airbase_poi = GlobalRegistry.pois.find_item(GlobalRegistry.LIST_ALL_POIS, "poi_type", Enums.POIType.AIR_BASE)
+		var airbase_poi = ReferenceGetter.global_registry().pois.find_item(ReferenceGetter.global_registry().LIST_ALL_POIS, "poi_type", Enums.POIType.AIR_BASE)
 		airbase_plan_properties.plan_name = "Infiltrate the airbase"
 		airbase_plan_properties.plan_text = "We made it through the checkpoint, but we are outside the fence, the best option we have is to get the truck through the west gate, its less busy and the guards will be tired from a night of duty "
 		airbase_plan_properties.plan_expiry = -1
@@ -367,10 +367,10 @@ func _resistance_endgame_2() -> Array[TurnLog]:
 	var charm_roll = statistic_check.charm_check()
 
 	if charm_roll:
-		GameController.resistance_endgame_step = 2
+		ReferenceGetter.game_controller().resistance_endgame_step = 2
 
 		var airbase_plan_properties = Plan.PlanProperties.new()
-		var airbase_poi = GlobalRegistry.pois.find_item(GlobalRegistry.LIST_ALL_POIS, "poi_type", Enums.POIType.AIR_BASE)
+		var airbase_poi = ReferenceGetter.global_registry().pois.find_item(ReferenceGetter.global_registry().LIST_ALL_POIS, "poi_type", Enums.POIType.AIR_BASE)
 		airbase_plan_properties.plan_name = "Lets plant some explosives"
 		airbase_plan_properties.plan_text = "We’re in! and quietly, no one knows we are here, so we have some time to plant the explosives. Get close to the aircraft and try to get near the fuel tank through the landing gear."
 		airbase_plan_properties.plan_expiry = -1
@@ -395,10 +395,10 @@ func _resistance_endgame_3() -> Array[TurnLog]:
 	var smarts_roll = statistic_check.smarts_check()
 
 	if smarts_roll:
-		GameController.resistance_endgame_step = 4
+		ReferenceGetter.game_controller().resistance_endgame_step = 4
 
 		var airbase_plan_properties = Plan.PlanProperties.new()
-		var airbase_poi = GlobalRegistry.pois.find_item(GlobalRegistry.LIST_ALL_POIS, "poi_type", Enums.POIType.AIR_BASE)
+		var airbase_poi = ReferenceGetter.global_registry().pois.find_item(ReferenceGetter.global_registry().LIST_ALL_POIS, "poi_type", Enums.POIType.AIR_BASE)
 		airbase_plan_properties.plan_name = "Lets get out"
 		airbase_plan_properties.plan_text = "Its time to get out, we’ve planted the explosives and the fuses are set, we will go via the east gate, away from the city and wait until the bombs go off. In the confusion and chaos we can get through the gate guards, or kill them."
 		airbase_plan_properties.plan_expiry = -1
@@ -410,10 +410,10 @@ func _resistance_endgame_3() -> Array[TurnLog]:
 		# popup new endgame event panel
 		EventBus.new_endgame_step.emit(Enums.EventOutcomeType.RESISTANCE_AIRFIELD_05)
 	else:
-		GameController.resistance_endgame_step = 3
+		ReferenceGetter.game_controller().resistance_endgame_step = 3
 
 		var airbase_plan_properties = Plan.PlanProperties.new()
-		var airbase_poi = GlobalRegistry.pois.find_item(GlobalRegistry.LIST_ALL_POIS, "poi_type", Enums.POIType.AIR_BASE)
+		var airbase_poi = ReferenceGetter.global_registry().pois.find_item(ReferenceGetter.global_registry().LIST_ALL_POIS, "poi_type", Enums.POIType.AIR_BASE)
 		airbase_plan_properties.plan_name = "Hurry, we have to move fast"
 		airbase_plan_properties.plan_text = "We made it in, but they know we’re here, and the alarm has sounded. Quickly head for the aircraft, plant explosives whereever we can, short fuses and lets hope we can make it work in the confusion."
 		airbase_plan_properties.plan_expiry = -1
@@ -437,10 +437,10 @@ func _resistance_endgame_4() -> Array[TurnLog]:
 	var smarts_roll = statistic_check.smarts_check()
 
 	if smarts_roll:
-		GameController.resistance_endgame_step = 4
+		ReferenceGetter.game_controller().resistance_endgame_step = 4
 
 		var airbase_plan_properties = Plan.PlanProperties.new()
-		var airbase_poi = GlobalRegistry.pois.find_item(GlobalRegistry.LIST_ALL_POIS, "poi_type", Enums.POIType.AIR_BASE)
+		var airbase_poi = ReferenceGetter.global_registry().pois.find_item(ReferenceGetter.global_registry().LIST_ALL_POIS, "poi_type", Enums.POIType.AIR_BASE)
 		airbase_plan_properties.plan_name = "Lets get out"
 		airbase_plan_properties.plan_text = "Its time to get out, we’ve planted the explosives and the fuses are set, we will go via the east gate, away from the city and wait until the bombs go off. In the confusion and chaos we can get through the gate guards, or kill them."
 		airbase_plan_properties.plan_expiry = -1
@@ -452,7 +452,7 @@ func _resistance_endgame_4() -> Array[TurnLog]:
 		# popup new endgame event panel
 		EventBus.new_endgame_step.emit(Enums.EventOutcomeType.RESISTANCE_AIRFIELD_05)
 	else:
-		GameController.endgame_end_type = Enums.EventOutcomeType.GAME_OVER
+		ReferenceGetter.game_controller().endgame_end_type = Enums.EventOutcomeType.GAME_OVER
 
 	return logs
 
@@ -465,10 +465,10 @@ func _resistance_endgame_5() -> Array[TurnLog]:
 	var charm_roll = statistic_check.charm_check()
 
 	if charm_roll:
-		GameController.resistance_endgame_step = 5
+		ReferenceGetter.game_controller().resistance_endgame_step = 5
 		logs.append(TurnLog.new("YOU WIN! Resistance endgame complete!", Enums.LogType.ACTION_INFO))
-		GameController.endgame_end_type = Enums.EventOutcomeType.RESISTANCE_AIRFIELD_SUCCESS
+		ReferenceGetter.game_controller().endgame_end_type = Enums.EventOutcomeType.RESISTANCE_AIRFIELD_SUCCESS
 	else:
-		GameController.endgame_end_type = Enums.EventOutcomeType.RESISTANCE_AIRFIELD_SUCCESS
+		ReferenceGetter.game_controller().endgame_end_type = Enums.EventOutcomeType.RESISTANCE_AIRFIELD_SUCCESS
 
 	return logs

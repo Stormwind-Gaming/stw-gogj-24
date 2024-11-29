@@ -88,13 +88,13 @@ func _init(config: Dictionary, mods: Dictionary) -> void:
 func _on_end_turn_complete(_num: int) -> void:
 	LogDuck.d("Checking modifier end conditions", {
 		"name": modifier_name,
-		"current_turn": GameController.turn_number,
+		"current_turn": ReferenceGetter.game_controller().turn_number,
 		"end_turn": turn_to_end,
 		"active": active
 	})
 
 	# Check for end of modifier
-	if modifier_end_closure.call() or (GameController.turn_number >= turn_to_end and turn_to_end != -1):
+	if modifier_end_closure.call() or (ReferenceGetter.game_controller().turn_number >= turn_to_end and turn_to_end != -1):
 		LogDuck.d("Modifier ending", {
 			"name": modifier_name,
 			"reason": "end_closure" if modifier_end_closure.call() else "turn_limit_reached"

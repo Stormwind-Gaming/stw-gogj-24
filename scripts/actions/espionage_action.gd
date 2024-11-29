@@ -6,8 +6,8 @@ class_name EspionageAction
 func _process_action() -> Array[TurnLog]:
 	var logs: Array[TurnLog] = []
 	var log_message: String = ""
-	var id = GlobalRegistry.pois.get_all_items().find(poi)
-	var character_id = GlobalRegistry.characters.get_all_items().find(characters[0])
+	var id = ReferenceGetter.global_registry().pois.get_all_items().find(poi)
+	var character_id = ReferenceGetter.global_registry().characters.get_all_items().find(characters[0])
 	var message: String = "[u]ESPIONAGE[/u] undertaken by [url=character:%s]%s[/url] at [url=poi:%s]%s[/url]." % [character_id, _get_character_names(), id, poi.poi_name]
 	logs.append(TurnLog.new(message, Enums.LogType.ACTION_INFO))
 

@@ -44,7 +44,7 @@ func _notification(what: int) -> void:
 			"id": id,
 			"type": self.get_class()
 		})
-		GlobalRegistry.intel.remove_item(self)
+		ReferenceGetter.global_registry().intel.remove_item(self)
 
 #|==============================|
 #|      Event Handlers         |
@@ -63,7 +63,7 @@ func _expire_intel(turn_number: int) -> void:
 	})
 
 	# Check for associated action
-	var action = GlobalRegistry.actions.find_item(GlobalRegistry.LIST_ALL_ACTIONS, "associated_plan", self)
+	var action = ReferenceGetter.global_registry().actions.find_item(ReferenceGetter.global_registry().LIST_ALL_ACTIONS, "associated_plan", self)
 	if action and action.in_flight:
 		LogDuck.d("Intel expiration skipped - has active action", {
 			"id": id,

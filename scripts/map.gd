@@ -2,6 +2,19 @@ extends Node
 class_name Map
 
 #|==============================|
+#|     Game Logic Singletons    |
+#|==============================|
+"""
+@brief Reference to the game controller singleton
+"""
+var game_controller: GameController
+
+"""
+@brief Reference to the global registry singleton
+"""
+var global_registry: GlobalRegistry
+
+#|==============================|
 #|         Properties          |
 #|==============================|
 
@@ -23,6 +36,13 @@ class_name Map
 #|==============================|
 #|      Lifecycle Methods      |
 #|==============================|
+
+func _init() -> void:
+	# set up the game controller and global registry
+	game_controller = GameController.new()
+	global_registry = GlobalRegistry.new()
+	LogDuck.d("Map: Setting up game controller and global registry")
+
 """
 @brief Called when the node enters the scene tree.
 Initializes the map, districts, and starting agents.
@@ -42,7 +62,7 @@ func _ready() -> void:
 	LogDuck.d("Map: Setting up event bus connections")
 
 	LogDuck.d("Map: Initializing districts")
-	for district in GlobalRegistry.districts.get_all_items():
+	for district in ReferenceGetter.global_registry().districts.get_all_items():
 		_set_district_details(district)
 
 	LogDuck.d("Map: Generating initial population and agents")
@@ -62,7 +82,7 @@ Checks for middle/right click to clear district focus.
 @param delta Time elapsed since the last frame
 """
 func _process(delta: float) -> void:
-	if GameController.district_focused != null:
+	if ReferenceGetter.game_controller().district_focused != null:
 		if Input.is_mouse_button_pressed(MOUSE_BUTTON_MIDDLE) or Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
 			EventBus.close_all_windows.emit()
 			_clear_focus()
@@ -85,8 +105,8 @@ func _process(delta: float) -> void:
 """
 func _clear_focus(_i = null) -> void:
 	LogDuck.d("Map: Clearing district focus")
-	EventBus.district_unfocused.emit(GameController.district_focused)
-	GameController.set_district_focused(null)
+	EventBus.district_unfocused.emit(ReferenceGetter.game_controller().district_focused)
+	ReferenceGetter.game_controller().set_district_focused(null)
 	$Camera2D.camera_enabled = true
 
 	## Enabling clouds and sound
@@ -136,7 +156,7 @@ func _connect_district_signals(district: District) -> void:
 @param district The district being hovered
 """
 func _on_district_hovered(district: District) -> void:
-	if GameController.district_focused == null:
+	if ReferenceGetter.game_controller().district_focused == null:
 		district.set_highlight_color()
 
 """
@@ -144,7 +164,7 @@ func _on_district_hovered(district: District) -> void:
 @param district The district being unhovered
 """
 func _on_district_unhovered(district: District) -> void:
-	if GameController.district_focused == null:
+	if ReferenceGetter.game_controller().district_focused == null:
 		district.remove_highlight_color()
 
 """
@@ -153,17 +173,17 @@ func _on_district_unhovered(district: District) -> void:
 """
 func _on_district_clicked(district: District) -> void:
 	LogDuck.d("Map: District clicked: %s" % district.name)
-	if GameController.district_focused == district:
+	if ReferenceGetter.game_controller().district_focused == district:
 		LogDuck.d("Map: District already focused, ignoring click")
 		return
 
-	for d in GlobalRegistry.districts.get_all_items():
+	for d in ReferenceGetter.global_registry().districts.get_all_items():
 		d.remove_highlight_color()
 		d.unset_focus()
 	
 	district.set_focus()
 	$Camera2D.camera_enabled = false
-	GameController.set_district_focused(district)
+	ReferenceGetter.game_controller().set_district_focused(district)
 
 	## Disabling clouds and sound
 	# Access the material and shader
@@ -197,7 +217,7 @@ func _on_poi_unhovered() -> void:
 """
 func _disable_interaction(_i = 0) -> void:
 	LogDuck.d("Map: Disabling district interactions")
-	for district in GlobalRegistry.districts.get_all_items():
+	for district in ReferenceGetter.global_registry().districts.get_all_items():
 		district.set_disabled()
 
 """
@@ -205,7 +225,7 @@ func _disable_interaction(_i = 0) -> void:
 """
 func _enable_interaction() -> void:
 	LogDuck.d("Map: Enabling district interactions")
-	for district in GlobalRegistry.districts.get_all_items():
+	for district in ReferenceGetter.global_registry().districts.get_all_items():
 		district.set_enabled()
 
 """
@@ -233,7 +253,7 @@ func _show_game_over(_name: String) -> void:
 """
 func _generate_population() -> void:
 	LogDuck.d("Map: Generating initial population")
-	var population = GlobalRegistry.characters.get_all_items()
+	var population = ReferenceGetter.global_registry().characters.get_all_items()
 	# set one character to deceased and one to MIA
 	var deceased = population[randi() % population.size()]
 	deceased.char_state = Enums.CharacterState.DECEASED
@@ -249,7 +269,7 @@ func _generate_population() -> void:
 """
 func _setup_agents() -> void:
 	LogDuck.d("Map: Setting up initial agents")
-	var population = GlobalRegistry.characters.get_all_items().filter(func(x): return x.char_state == Enums.CharacterState.AVAILABLE)
+	var population = ReferenceGetter.global_registry().characters.get_all_items().filter(func(x): return x.char_state == Enums.CharacterState.AVAILABLE)
 	
 	# Pick three random characters to be initial agents
 	var agent1 = population[randi() % population.size()]

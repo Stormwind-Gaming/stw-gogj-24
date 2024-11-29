@@ -83,9 +83,9 @@ func _init(properties: RumourProperties):
 	rumour_subject_duration = properties.rumour_subject_duration
 	rumour_subject_expiry = properties.rumour_subject_expiry
 
-	expires_on_turn = GameController.turn_number + Constants.RUMOUR_EXPIRY_TURNS
+	expires_on_turn = ReferenceGetter.game_controller().turn_number + Constants.RUMOUR_EXPIRY_TURNS
 	LogDuck.d("Rumour expiry set", {
-		"current_turn": GameController.turn_number,
+		"current_turn": ReferenceGetter.game_controller().turn_number,
 		"expires_on": expires_on_turn,
 		"expiry_turns": Constants.RUMOUR_EXPIRY_TURNS
 	})

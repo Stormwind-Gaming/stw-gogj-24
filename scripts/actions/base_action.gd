@@ -65,12 +65,12 @@ func _init(config: ActionFactory.ActionConfig):
 
 	# Calculate the turn to end
 	var statistic_check: StatisticCheck = StatisticCheck.new(characters, poi.parent_district, poi)
-	turn_to_end = statistic_check.action_duration(GameController.turn_number + 1)
+	turn_to_end = statistic_check.action_duration(ReferenceGetter.game_controller().turn_number + 1)
 
 	if additional_info.has("associated_plan"):
 		self.associated_plan = config.additional_info["associated_plan"]
 
-		turn_to_end = GameController.turn_number + statistic_check.action_duration(self.associated_plan.plan_duration)
+		turn_to_end = ReferenceGetter.game_controller().turn_number + statistic_check.action_duration(self.associated_plan.plan_duration)
 
 	# EventBus.turn_processing_initiated.connect(_on_turn_processing_initiated)
 	EventBus.end_turn_complete.connect(_on_end_turn_completed)
@@ -97,13 +97,13 @@ func _on_turn_processing_initiated(num: int) -> void:
 			associated_plan.call_deferred("free")
 
 	else:
-		var poi_id = GlobalRegistry.pois.get_all_items().find(poi)
-		var character_id = GlobalRegistry.characters.get_all_items().find(characters[0])
+		var poi_id = ReferenceGetter.global_registry().pois.get_all_items().find(poi)
+		var character_id = ReferenceGetter.global_registry().characters.get_all_items().find(characters[0])
 		var message: String = "[u]%s[/u] continues at [url=poi:%s]%s[/url], carried out by [url=character:%s]%s[/url]. The task is ongoing, and the outcome remains uncertain. The shadows still hold their secrets." % [Enums.ActionType.keys()[action_type], poi_id, poi.poi_name, character_id, _get_character_names()]
 		action_logs.append(TurnLog.new(message, Enums.LogType.ACTION_INFO))
 		
 	for step in action_logs + danger_logs:
-		GlobalRegistry.turn_logs.add_item(str(GameController.turn_number), step)
+		ReferenceGetter.global_registry().turn_logs.add_item(str(ReferenceGetter.game_controller().turn_number), step)
 		
 
 """
@@ -132,7 +132,7 @@ Unregisters the action from the global registry.
 """
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE:
-		GlobalRegistry.actions.remove_item(self)
+		ReferenceGetter.global_registry().actions.remove_item(self)
 		EventBus.action_destroyed.emit(self)
 		_release_characters()
 
@@ -185,7 +185,7 @@ func _process_danger() -> Array[TurnLog]:
 				characters[0].char_state = Enums.CharacterState.INJURED
 				consequence_log_type = Enums.EventOutcomeType.INJURED
 
-				var character_id = GlobalRegistry.characters.get_all_items().find(characters[0])
+				var character_id = ReferenceGetter.global_registry().characters.get_all_items().find(characters[0])
 				log_message = "Grave news: [url=character:%s]%s[/url] is injured. Their strength falters, but their spirit endures. Recovery is uncertain." % [character_id, characters[0].char_full_name]
 
 				# emit stats change
@@ -195,7 +195,7 @@ func _process_danger() -> Array[TurnLog]:
 				characters[0].char_state = Enums.CharacterState.MIA
 				consequence_log_type = Enums.EventOutcomeType.MIA
 				
-				var character_id = GlobalRegistry.characters.get_all_items().find(characters[0])
+				var character_id = ReferenceGetter.global_registry().characters.get_all_items().find(characters[0])
 				log_message = "[url=character:%s]%s[/url] is missing.  No word from them. We pray they remain safe, hidden from prying eyes." % [character_id, characters[0].char_full_name]
 
 				# emit stats change
@@ -205,7 +205,7 @@ func _process_danger() -> Array[TurnLog]:
 				characters[0].char_state = Enums.CharacterState.DECEASED
 				consequence_log_type = Enums.EventOutcomeType.DECEASED
 
-				var character_id = GlobalRegistry.characters.get_all_items().find(characters[0])
+				var character_id = ReferenceGetter.global_registry().characters.get_all_items().find(characters[0])
 				log_message = "A somber note: [url=character:%s]%s[/url] has fallen.  Their sacrifice will not be forgotten. We carry their torch forward." % [character_id, characters[0].char_full_name]
 
 				# emit stats change
@@ -267,7 +267,7 @@ func _release_characters() -> void:
 func _get_character_names() -> String:
 	var names: String = ""
 	for character in characters:
-		var character_id = GlobalRegistry.characters.get_all_items().find(character)
+		var character_id = ReferenceGetter.global_registry().characters.get_all_items().find(character)
 		names += "[url=character:" + str(character_id) + "]" + character.char_full_name + "[/url], "
 
 	names = names.left(names.length() - 2)

@@ -207,7 +207,7 @@ Handles popup visibility based on hover state.
 @param delta Time elapsed since the last frame
 """
 func _process(delta: float) -> void:
-	if hovered and GameController.district_focused == parent_district and not WindowHandler.any_windows_open():
+	if hovered and ReferenceGetter.game_controller().district_focused == parent_district and not WindowHandler.any_windows_open():
 		if not poi_popup.visible:
 			poi_popup.visible = true
 			poi_popup.check_details()
@@ -335,7 +335,7 @@ func _on_mouse_entered():
 			LogDuck.d("POI hover ignored - radial menu open")
 		return
 
-	if GameController.district_focused != parent_district:
+	if ReferenceGetter.game_controller().district_focused != parent_district:
 		if gui_debug:
 			LogDuck.d("POI hover ignored - district not focused")
 		return
@@ -390,7 +390,7 @@ func _on_poi_clicked(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 			_poi_clicked()
 
 func _reset_poi_state():
-	_on_district_just_focused(GameController.district_focused)
+	_on_district_just_focused(ReferenceGetter.game_controller().district_focused)
 	$IconButton.mouse_filter = Control.MOUSE_FILTER_STOP
 			
 """
@@ -420,13 +420,13 @@ func _poi_clicked() -> void:
 			LogDuck.d("POI click ignored - radial menu already open")
 		return
 	
-	if GameController.district_focused != parent_district:
+	if ReferenceGetter.game_controller().district_focused != parent_district:
 		if gui_debug:
 			LogDuck.d("POI click ignored - district not focused")
 		return
 	
 	var actions: Array[Enums.ActionType] = []
-	if not GameController.endgame_triggered:
+	if not ReferenceGetter.game_controller().endgame_triggered:
 		actions.append(Enums.ActionType.ESPIONAGE)
 		
 		if not poi_owner.char_state in [Enums.CharacterState.DECEASED, Enums.CharacterState.MIA]:
@@ -449,7 +449,7 @@ func _poi_clicked() -> void:
 	radial_menu_instance.set_optional_actions(self, actions)
 	EventBus.open_new_radial_menu.emit(radial_menu_instance)
 	add_child(radial_menu_instance)
-	GameController.open_radial_menu(radial_menu_instance, self)
+	ReferenceGetter.game_controller().open_radial_menu(radial_menu_instance, self)
 
 """
 @brief Handles poi focus changes.
@@ -567,11 +567,11 @@ func _derive_poi_bonus() -> Enums.POIBonusType:
 @returns True if there are plans for this POI
 """
 func _has_plan() -> bool:
-	var plans = GlobalRegistry.intel.get_list(GlobalRegistry.LIST_PLANS)
+	var plans = ReferenceGetter.global_registry().intel.get_list(ReferenceGetter.global_registry().LIST_PLANS)
 	var has_plan = false
 	for plan in plans:
 		if plan.plan_subject_poi == self:
-			var action = GlobalRegistry.actions.find_item(GlobalRegistry.LIST_ALL_ACTIONS, "associated_plan", plan)
+			var action = ReferenceGetter.global_registry().actions.find_item(ReferenceGetter.global_registry().LIST_ALL_ACTIONS, "associated_plan", plan)
 			if not action or not action.in_flight:
 				has_plan = true
 				break

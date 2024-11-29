@@ -105,10 +105,10 @@ func _ready():
 	# calculate title
 	if option == Enums.ActionType.PLAN:
 		var plan: Plan
-		var plans = GlobalRegistry.intel.get_list(GlobalRegistry.LIST_PLANS)
+		var plans = ReferenceGetter.global_registry().intel.get_list(ReferenceGetter.global_registry().LIST_PLANS)
 		for available_plan in plans:
 			if available_plan.plan_subject_poi == poi:
-				var action = GlobalRegistry.actions.find_item(GlobalRegistry.LIST_ALL_ACTIONS, "associated_plan", available_plan)
+				var action = ReferenceGetter.global_registry().actions.find_item(ReferenceGetter.global_registry().LIST_ALL_ACTIONS, "associated_plan", available_plan)
 				if not action or not action.in_flight:
 					plan = available_plan
 					break
@@ -121,7 +121,7 @@ func _ready():
 
 	# populate the agents list
 	var agents: Array[Character] = []
-	var recruited_agents = GlobalRegistry.characters.get_list(GlobalRegistry.LIST_SYMPATHISER_RECRUITED)
+	var recruited_agents = ReferenceGetter.global_registry().characters.get_list(ReferenceGetter.global_registry().LIST_SYMPATHISER_RECRUITED)
 	for character in recruited_agents:
 		if character.char_state == Enums.CharacterState.AVAILABLE:
 		# if the character is available, add them to the list
@@ -168,7 +168,7 @@ func _on_agent_card_selected(agent: Character, selected: bool):
 	# check if the agent is already selected
 	if !selected:
 		selected_agents.erase(agent)
-		GameController.remove_all_actions_for_character(agent)
+		ReferenceGetter.game_controller().remove_all_actions_for_character(agent)
 
 		# enable all cards
 		for child in agent_card_grid.get_children():
@@ -233,7 +233,7 @@ func _calculate_stats():
 		var plan: Plan
 		if option == Enums.ActionType.PLAN:
 			# get the plan
-			plan = GlobalRegistry.intel.find_item(GlobalRegistry.LIST_PLANS, "plan_subject_poi", poi)
+			plan = ReferenceGetter.global_registry().intel.find_item(ReferenceGetter.global_registry().LIST_PLANS, "plan_subject_poi", poi)
 
 			duration_label.text = "Duration: %s Turns" % str(statistic_check.action_duration(plan.plan_duration))
 		else:
@@ -270,7 +270,7 @@ func _calculate_stats():
 					Enums.StatCheckType.SMARTS:
 						success_label.text = "Chance of Success: %s" % str(floor((statistic_check.get_smarts_chance()) * 100)) + "%"
 			Enums.ActionType.PLAN:
-				if not GameController.endgame_triggered:
+				if not ReferenceGetter.game_controller().endgame_triggered:
 					# Regular plans are 100% success chance
 					success_label.text = "Chance of Success: 100%"
 				else:

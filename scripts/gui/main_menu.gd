@@ -1,15 +1,15 @@
 extends Control
 
-func _ready() -> void:
-	_reset_game_state()
+# func _ready() -> void:
+# 	_reset_game_state()
 
-func _reset_game_state() -> void:
-	# Reset the registry ready for a new game
-	GlobalRegistry.reset()
-	# Reset the GameController
-	GameController.reset()
-	# Reset the GameStats
-	GameStats.reset()
+# func _reset_game_state() -> void:
+# 	# Reset the registry ready for a new game
+# 	ReferenceGetter.global_registry().reset()
+# 	# Reset the GameController
+# 	ReferenceGetter.game_controller().reset()
+# 	# Reset the GameStats
+# 	GameStats.reset()
 
 #|==============================|
 #|      Event Handlers          |

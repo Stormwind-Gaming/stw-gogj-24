@@ -61,9 +61,9 @@ func _process(delta: float) -> void:
 """
 func set_turn_logs(turn_number_attr: int) -> void:
 	turn_number = turn_number_attr
-	var turn_logs = GlobalRegistry.turn_logs.get_list(str(turn_number))
+	var turn_logs = ReferenceGetter.global_registry().turn_logs.get_list(str(turn_number))
 
-	self.name = GameController.calendar.get_date_string(turn_number - GameController.turn_number - 1, false)
+	self.name = ReferenceGetter.game_controller().calendar.get_date_string(turn_number - ReferenceGetter.game_controller().turn_number - 1, false)
 
 	for turn_log in turn_logs:
 		var log_item = log_item_scene.instantiate()

@@ -198,7 +198,7 @@ func intel_added(base_intel: int) -> int:
 	return base_intel
 
 func _get_all_modifiers() -> Array:
-	return GlobalRegistry.modifiers.get_all_items().filter(func(_modifier: Modifier) -> bool:
+	return ReferenceGetter.global_registry().modifiers.get_all_items().filter(func(_modifier: Modifier) -> bool:
 		if not _modifier.active:
 			return false
 

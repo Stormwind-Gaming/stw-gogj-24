@@ -8,8 +8,8 @@ var modifier: Modifier = null
 func _init(config: WorldEventConfig) -> void:
 	LogDuck.d("Initializing minor airbase event")
 
-	turn_to_end = GameController.turn_number + 7
-	subject_district = GlobalRegistry.districts.find_item(GlobalRegistry.LIST_ALL_DISTRICTS, "district_type", Enums.DistrictType.MILITARY)
+	turn_to_end = ReferenceGetter.game_controller().turn_number + 7
+	subject_district = ReferenceGetter.global_registry().districts.find_item(ReferenceGetter.global_registry().LIST_ALL_DISTRICTS, "district_type", Enums.DistrictType.MILITARY)
 
 	LogDuck.d("Minor airbase event setup", {
 		"turn_to_end": turn_to_end,

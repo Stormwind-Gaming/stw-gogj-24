@@ -149,7 +149,7 @@ func _process(delta):
 			previous_mouse_position = mouse_position
 	elif !camera_enabled:
 		# Calculate zoom to fit district
-		var district_size = GameController.district_focused.get_district_size()
+		var district_size = ReferenceGetter.game_controller().district_focused.get_district_size()
 		var viewport_size = get_viewport_rect().size
 		
 		# Calculate zoom with more padding for small districts
@@ -167,7 +167,7 @@ func _process(delta):
 		target_zoom = Vector2(target_zoom_value, target_zoom_value)
 		
 		# Focus on district centerpoint when camera is disabled
-		var point_to_focus_on = GameController.district_focused.get_district_centerpoint()
+		var point_to_focus_on = ReferenceGetter.game_controller().district_focused.get_district_centerpoint()
 		
 		# Subtract half the viewport size (accounting for zoom), but only apply half the offset
 		var viewport_offset = viewport_size / (2 * target_zoom_value)

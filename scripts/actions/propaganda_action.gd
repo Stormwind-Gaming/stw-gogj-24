@@ -7,8 +7,8 @@ func _process_action() -> Array[TurnLog]:
 	var logs: Array[TurnLog] = []
 	var log_message: String = ""
 
-	var id = GlobalRegistry.pois.get_all_items().find(poi)
-	var character_id = GlobalRegistry.characters.get_all_items().find(characters[0])
+	var id = ReferenceGetter.global_registry().pois.get_all_items().find(poi)
+	var character_id = ReferenceGetter.global_registry().characters.get_all_items().find(characters[0])
 	var message: String = "[u]PROPAGANDA[/u] undertaken by [url=character:%s]%s[/url] at [url=poi:%s]%s[/url]." % [character_id, _get_character_names(), id, poi.poi_name]
 	logs.append(TurnLog.new(message, Enums.LogType.ACTION_INFO))
 
@@ -24,7 +24,7 @@ func _process_action() -> Array[TurnLog]:
 
 		poi.poi_owner.char_sympathy += sympathy_added
 
-		var owner_character_id = GlobalRegistry.characters.get_all_items().find(poi.poi_owner)
+		var owner_character_id = ReferenceGetter.global_registry().characters.get_all_items().find(poi.poi_owner)
 		log_message = "A breakthrough: [url=character:%s]%s[/url] grows closer to our cause. Their eyes now see the truth of the occupation, and their heart leans towards freedom." % [owner_character_id, poi.poi_owner.char_full_name]
 		logs.append(TurnLog.new(log_message, Enums.LogType.SUCCESS))
 

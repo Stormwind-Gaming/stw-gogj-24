@@ -47,4 +47,4 @@ func _on_close_requested():
 @param name The unique identifier of the character to display
 """
 func set_character(id: String):
-	character = GlobalRegistry.get_object(Enums.Registry_Category.CHARACTER, id)
+	character = ReferenceGetter.global_registry().get_object(Enums.Registry_Category.CHARACTER, id)

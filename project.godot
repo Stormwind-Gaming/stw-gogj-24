@@ -22,13 +22,12 @@ config/icon="res://icon.svg"
 LogDuck="*res://addons/LogDuck/LogDuck.gd"
 Globals="*res://scripts/globals.gd"
 Enums="*res://scripts/enums.gd"
-GlobalRegistry="*res://scripts/registry/global_registry.gd"
-GameController="*res://scripts/game_controller.gd"
 EventBus="*res://scripts/event_bus.gd"
 WindowHandler="*res://scripts/window_handler.gd"
 Constants="*res://scripts/constants.gd"
 GlobalMilestones="*res://scripts/modifiers/global_milestones.gd"
 GameStats="*res://scripts/fluff/game_stats.gd"
+ReferenceGetter="*res://scripts/reference_getter.gd"
 
 [display]
 

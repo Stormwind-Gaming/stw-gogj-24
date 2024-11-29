@@ -8,8 +8,8 @@ var subject_characters: Array
 func _init(config: WorldEventConfig) -> void:
 	LogDuck.d("Initializing major safehouse discovered event")
 
-	turn_to_end = GameController.turn_number + Constants.WORLD_EVENT_MAJOR_SAFEHOUSE_DISCOVERED_DURATION
-	subject_district = GlobalRegistry.districts.get_random_item()
+	turn_to_end = ReferenceGetter.game_controller().turn_number + Constants.WORLD_EVENT_MAJOR_SAFEHOUSE_DISCOVERED_DURATION
+	subject_district = ReferenceGetter.global_registry().districts.get_random_item()
 
 	LogDuck.d("Major safehouse event setup", {
 		"turn_to_end": turn_to_end,
@@ -45,7 +45,7 @@ func _event_start() -> void:
 	subject_district.heat += Constants.WORLD_EVENT_MAJOR_SAFEHOUSE_DISCOVERED_HEAT_CHANGE
 
 	# Find all characters in the district
-	var all_sympathisers = GlobalRegistry.characters.get_list(GlobalRegistry.LIST_SYMPATHISER_NOT_RECRUITED) + GlobalRegistry.characters.get_list(GlobalRegistry.LIST_SYMPATHISER_RECRUITED)
+	var all_sympathisers = ReferenceGetter.global_registry().characters.get_list(ReferenceGetter.global_registry().LIST_SYMPATHISER_NOT_RECRUITED) + ReferenceGetter.global_registry().characters.get_list(ReferenceGetter.global_registry().LIST_SYMPATHISER_RECRUITED)
 	subject_characters = all_sympathisers.filter(
 		func(character): character.char_associated_poi.parent_district == subject_district
 	)

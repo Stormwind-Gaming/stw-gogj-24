@@ -61,7 +61,7 @@ func _init(init_severity: Enums.WorldEventSeverity) -> void:
 
 	LogDuck.d("World event initialized", {
 		"text": event_text,
-		"turn": GameController.turn_number,
+		"turn": ReferenceGetter.game_controller().turn_number,
 		"severity": severity
 	})
 
@@ -90,11 +90,11 @@ func _on_end_turn(turn_number: int) -> void:
 	if turn_number == turn_to_end:
 		LogDuck.d("World event ending", {
 			"event_end_text": event_end_text,
-			"turn": GameController.turn_number
+			"turn": ReferenceGetter.game_controller().turn_number
 		})
 
 		if event_data.event_end_text != "":
-			GlobalRegistry.turn_logs.add_item(str(GameController.turn_number), TurnLog.new(event_data.event_end_text, Enums.LogType.WORLD_EVENT))
+			ReferenceGetter.global_registry().turn_logs.add_item(str(ReferenceGetter.game_controller().turn_number), TurnLog.new(event_data.event_end_text, Enums.LogType.WORLD_EVENT))
 		
 		EventBus.world_event_ended.emit(self)
 		_event_end()

@@ -37,12 +37,12 @@ func _on_meta_clicked(meta: String) -> void:
 		"district":
 			var town_details_list_instance = Globals.town_details_list_scene.instantiate()
 			EventBus.open_new_window.emit(town_details_list_instance)
-			var district = GlobalRegistry.districts.get_item(GlobalRegistry.LIST_ALL_DISTRICTS, int(split_meta[1]))
+			var district = ReferenceGetter.global_registry().districts.get_item(ReferenceGetter.global_registry().LIST_ALL_DISTRICTS, int(split_meta[1]))
 			EventBus.open_district_window.emit(district)
 		"character":
 			var character_list_instance = Globals.character_list_scene.instantiate()
 			EventBus.open_new_window.emit(character_list_instance)
-			var character = GlobalRegistry.characters.get_all_items()[int(split_meta[1])]
+			var character = ReferenceGetter.global_registry().characters.get_all_items()[int(split_meta[1])]
 			match character.char_state:
 				Enums.CharacterState.AVAILABLE:
 					LogDuck.e("Character: %s" % character.char_recruitment_state)
@@ -69,7 +69,7 @@ func _on_meta_clicked(meta: String) -> void:
 		"poi":
 			var town_details_list_instance = Globals.town_details_list_scene.instantiate()
 			EventBus.open_new_window.emit(town_details_list_instance)
-			var poi = GlobalRegistry.pois.get_item(GlobalRegistry.LIST_ALL_POIS, int(split_meta[1]))
+			var poi = ReferenceGetter.global_registry().pois.get_item(ReferenceGetter.global_registry().LIST_ALL_POIS, int(split_meta[1]))
 			EventBus.open_poi_window.emit(poi)
 		"action":
 			EventBus.open_action_window.emit()

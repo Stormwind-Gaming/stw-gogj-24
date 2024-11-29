@@ -39,18 +39,18 @@ func _ready():
 	EventBus.action_created.connect(_on_new_assignment)
 	EventBus.character_sympathy_changed.connect(_update_on_character_sympathy_change)
 
-	var res = GameController.get_resistance_level()
+	var res = ReferenceGetter.game_controller().get_resistance_level()
 	resistance_bar.value = res
 	resistance_bar.max_value = Constants.RESISTANCE_ENDGAME_THRESHOLD + 1
 	resistance_bar_label.text = "Resistance"
 	# resistance_bar_label.text = "Resistance - %s" % str(res) + "%"
 
-	var heat = GameController.get_heat_level()
+	var heat = ReferenceGetter.game_controller().get_heat_level()
 	heat_bar.value = heat
 	heat_bar.max_value = Constants.HEAT_ENDGAME_THRESHOLD + 1
 	heat_bar_label.text = "Heat"
 	# heat_bar_label.text = "Heat - %s" % str(heat) + "%"
-	date.text = GameController.calendar.get_date_string()
+	date.text = ReferenceGetter.game_controller().calendar.get_date_string()
 
 	
 
@@ -87,7 +87,7 @@ func _update_agents_gui() -> void:
 		child.queue_free()
 
 	# get all recruited sympathisers
-	for character in GlobalRegistry.characters.get_list(GlobalRegistry.LIST_SYMPATHISER_RECRUITED):
+	for character in ReferenceGetter.global_registry().characters.get_list(ReferenceGetter.global_registry().LIST_SYMPATHISER_RECRUITED):
 		var agent_instance = Globals.mini_agent_card_scene.instantiate()
 		agent_instance.set_character(character)
 		agents_wrapper.add_child(agent_instance)
@@ -113,14 +113,14 @@ func _on_new_assignment(action: BaseAction) -> void:
 @param number Optional parameter for turn number
 """
 func _update_gui(_number: int = 0) -> void:
-	date.text = GameController.calendar.get_date_string()
+	date.text = ReferenceGetter.game_controller().calendar.get_date_string()
 
-	var res = GameController.get_resistance_level()
+	var res = ReferenceGetter.game_controller().get_resistance_level()
 	resistance_bar.value = res
 	resistance_bar_label.text = "Resistance"
 	# resistance_bar_label.text = "Resistance - %s" % str(res) + "%"
 	
-	var heat = GameController.get_heat_level()
+	var heat = ReferenceGetter.game_controller().get_heat_level()
 	heat_bar.value = heat
 	heat_bar_label.text = "Heat"
 	# heat_bar_label.text = "Heat - %s" % str(heat) + "%"

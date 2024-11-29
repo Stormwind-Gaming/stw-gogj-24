@@ -8,8 +8,8 @@ var subject_district: District
 func _init(config: WorldEventConfig) -> void:
 	LogDuck.d("Initializing significant sympathiser captured event")
 
-	turn_to_end = GameController.turn_number + Constants.WORLD_EVENT_SIGNIFICANT_SYMPATHISER_CAPTURED_DURATION
-	var subject_characters = GlobalRegistry.characters.get_list(GlobalRegistry.LIST_SYMPATHISER_NOT_RECRUITED) + GlobalRegistry.characters.get_list(GlobalRegistry.LIST_SYMPATHISER_RECRUITED)
+	turn_to_end = ReferenceGetter.game_controller().turn_number + Constants.WORLD_EVENT_SIGNIFICANT_SYMPATHISER_CAPTURED_DURATION
+	var subject_characters = ReferenceGetter.global_registry().characters.get_list(ReferenceGetter.global_registry().LIST_SYMPATHISER_NOT_RECRUITED) + ReferenceGetter.global_registry().characters.get_list(ReferenceGetter.global_registry().LIST_SYMPATHISER_RECRUITED)
 	#	filter out any characters that are injured
 	subject_characters = subject_characters.filter(func(c): return c.char_state != Enums.CharacterState.INJURED)
 	if subject_characters.size() == 0:
@@ -18,7 +18,7 @@ func _init(config: WorldEventConfig) -> void:
 		return
 
 	subject_character = subject_characters[randi() % subject_characters.size()]
-	subject_district = GlobalRegistry.districts.find_item(GlobalRegistry.LIST_ALL_DISTRICTS, "district_type", Enums.DistrictType.CIVIC)
+	subject_district = ReferenceGetter.global_registry().districts.find_item(ReferenceGetter.global_registry().LIST_ALL_DISTRICTS, "district_type", Enums.DistrictType.CIVIC)
 
 	LogDuck.d("Significant sympathiser captured event setup", {
 		"turn_to_end": turn_to_end,
@@ -50,10 +50,10 @@ func _event_start() -> void:
 	LogDuck.d("Setting character to injured state", {
 		"character": subject_character.get_full_name(),
 		"previous_state": subject_character.char_state,
-		"return_turn": GameController.turn_number + Constants.WORLD_EVENT_SIGNIFICANT_SYMPATHISER_CAPTURED_DURATION
+		"return_turn": ReferenceGetter.game_controller().turn_number + Constants.WORLD_EVENT_SIGNIFICANT_SYMPATHISER_CAPTURED_DURATION
 	})
 	subject_character.set_char_state(Enums.CharacterState.INJURED)
-	subject_character.injured_return_on_turn = GameController.turn_number + Constants.WORLD_EVENT_SIGNIFICANT_SYMPATHISER_CAPTURED_DURATION
+	subject_character.injured_return_on_turn = ReferenceGetter.game_controller().turn_number + Constants.WORLD_EVENT_SIGNIFICANT_SYMPATHISER_CAPTURED_DURATION
 
 	LogDuck.d("Modifying character sympathy", {
 		"character": subject_character.get_full_name(),

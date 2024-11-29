@@ -77,7 +77,7 @@ func set_action(action_attr: BaseAction) -> void:
 	title.text = "%s - %s" % [main_title, type]
 	
 	# Set the time remaining text
-	time_remaining.bbcode_text = "Time remaining: " + str(action.turn_to_end - GameController.turn_number) + " days"
+	time_remaining.bbcode_text = "Time remaining: " + str(action.turn_to_end - ReferenceGetter.game_controller().turn_number) + " days"
 
 	# set the District and PoI
 	var location_text = ''
