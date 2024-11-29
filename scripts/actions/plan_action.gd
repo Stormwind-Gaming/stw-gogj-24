@@ -88,7 +88,8 @@ func _discover_all() -> Array[TurnLog]:
 	var log_message: String = ""
 
 	for my_poi in ReferenceGetter.global_registry().pois.find_all_items(ReferenceGetter.global_registry().LIST_ALL_POIS, "parent_district", poi.parent_district):
-		my_poi.poi_owner.char_recruitment_state = Enums.CharacterRecruitmentState.NON_SYMPATHISER_KNOWN
+		if my_poi.poi_owner.char_recruitment_state == Enums.CharacterRecruitmentState.NON_SYMPATHISER_UNKNOWN:
+			my_poi.poi_owner.char_recruitment_state = Enums.CharacterRecruitmentState.NON_SYMPATHISER_KNOWN
 
 	var id = ReferenceGetter.global_registry().districts.get_all_items().find(associated_plan.plan_subject_poi.parent_district)
 	log_message = "Our knowledge deepens: all characters in [url=district:%s]%s[/url] are now known. The veil has lifted, and their faces are no longer strangers to us." % [id, associated_plan.plan_subject_poi.parent_district.district_name]
