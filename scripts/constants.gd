@@ -14,7 +14,7 @@ var INIT_MAX_AGENTS: int = 2
 """
 @brief Heat threshold for triggering the heat endgame
 """
-var HEAT_ENDGAME_THRESHOLD: int = 10
+var HEAT_ENDGAME_THRESHOLD: int = 40
 
 """
 @brief Resistance threshold for triggering the resistance endgame
@@ -606,7 +606,7 @@ func _ready():
 func _on_constants_loaded():
 	# Game Initialization
 	INIT_MAX_AGENTS = config.get_value("INIT_MAX_AGENTS", INIT_MAX_AGENTS)
-	# HEAT_ENDGAME_THRESHOLD = config.get_value("HEAT_ENDGAME_THRESHOLD", HEAT_ENDGAME_THRESHOLD)
+	HEAT_ENDGAME_THRESHOLD = config.get_value("HEAT_ENDGAME_THRESHOLD", HEAT_ENDGAME_THRESHOLD)
 	RESISTANCE_ENDGAME_THRESHOLD = config.get_value("RESISTANCE_ENDGAME_THRESHOLD", RESISTANCE_ENDGAME_THRESHOLD)
 	
 	# Character Initialization
