@@ -1,4 +1,4 @@
-extends RefCountedWithCleanup
+extends RefCounted
 
 #|==============================|
 #|         Properties           |
