@@ -146,6 +146,8 @@ func _heat_endgame_port_1() -> Array[TurnLog]:
 
 		# popup new endgame event panel
 		EventBus.new_endgame_step.emit(Enums.EventOutcomeType.HEAT_PORT_02)
+	else:
+		logs.append(TurnLog.new("We failed to avoid detection at the checkpoint, we'll have to try again tomorrow.", Enums.LogType.ACTION_INFO, poi, characters))
 
 	return logs
 
@@ -173,6 +175,8 @@ func _heat_endgame_port_2() -> Array[TurnLog]:
 
 		# popup new endgame event panel
 		EventBus.new_endgame_step.emit(Enums.EventOutcomeType.HEAT_PORT_03)
+	else:
+		logs.append(TurnLog.new("We failed to sneak into the port, we'll have to try again tomorrow.", Enums.LogType.ACTION_INFO, poi, characters))
 
 
 	return logs
@@ -201,6 +205,8 @@ func _heat_endgame_port_3() -> Array[TurnLog]:
 
 		# popup new endgame event panel
 		EventBus.new_endgame_step.emit(Enums.EventOutcomeType.HEAT_PORT_04)
+	else:
+		logs.append(TurnLog.new("We failed to board the ship, we'll have to try again tomorrow.", Enums.LogType.ACTION_INFO, poi, characters))
 
 	return logs
 
@@ -213,8 +219,6 @@ func _heat_endgame_port_4() -> Array[TurnLog]:
 	var smarts_roll = statistic_check.smarts_check()
 
 	if smarts_roll:
-		# TODO: Add endgame victory screen
-		logs.append(TurnLog.new("YOU WIN! Heat endgame complete!", Enums.LogType.ACTION_INFO))
 		GameController.endgame_end_type = Enums.EventOutcomeType.HEAT_PORT_SUCCESS
 		EventBus.game_over.emit()
 	else:
@@ -249,6 +253,8 @@ func _heat_endgame_train_1() -> Array[TurnLog]:
 
 		# popup new endgame event panel
 		EventBus.new_endgame_step.emit(Enums.EventOutcomeType.HEAT_TRAIN_02)
+	else:
+		logs.append(TurnLog.new("We failed to avoid detection at the checkpoint, we'll have to try again tomorrow.", Enums.LogType.ACTION_INFO, poi, characters))
 
 
 	return logs
@@ -262,7 +268,7 @@ func _heat_endgame_train_2() -> Array[TurnLog]:
 	var charm_roll = statistic_check.charm_check()
 
 	if charm_roll:
-		GameController.heat_endgame_train_step = 1
+		GameController.heat_endgame_train_step = 2
 		GlobalRegistry.intel.clear_list(GlobalRegistry.LIST_PLANS)
 
 		var plan_properties = Plan.PlanProperties.new()
@@ -277,6 +283,8 @@ func _heat_endgame_train_2() -> Array[TurnLog]:
 
 		# popup new endgame event panel
 		EventBus.new_endgame_step.emit(Enums.EventOutcomeType.HEAT_TRAIN_03)
+	else:
+		logs.append(TurnLog.new("We failed to sneak into the train station, we'll have to try again tomorrow.", Enums.LogType.ACTION_INFO, poi, characters))
 
 	return logs
 
@@ -289,7 +297,7 @@ func _heat_endgame_train_3() -> Array[TurnLog]:
 	var smarts_roll = statistic_check.smarts_check()
 
 	if smarts_roll:
-		GameController.heat_endgame_train_step = 1
+		GameController.heat_endgame_train_step = 3
 		GlobalRegistry.intel.clear_list(GlobalRegistry.LIST_PLANS)
 
 		var plan_properties = Plan.PlanProperties.new()
@@ -304,6 +312,8 @@ func _heat_endgame_train_3() -> Array[TurnLog]:
 
 		# popup new endgame event panel
 		EventBus.new_endgame_step.emit(Enums.EventOutcomeType.HEAT_TRAIN_04)
+	else:
+		logs.append(TurnLog.new("We failed to board the train, we'll have to try again tomorrow.", Enums.LogType.ACTION_INFO, poi, characters))
 
 	return logs
 
@@ -316,8 +326,6 @@ func _heat_endgame_train_4() -> Array[TurnLog]:
 	var charm_roll = statistic_check.charm_check()
 
 	if charm_roll:
-		# TODO: Add endgame victory screen
-		logs.append(TurnLog.new("YOU WIN! Heat endgame complete!", Enums.LogType.ACTION_INFO))
 		GameController.endgame_end_type = Enums.EventOutcomeType.HEAT_TRAIN_SUCCESS
 		EventBus.game_over.emit()
 	else:
@@ -339,7 +347,7 @@ func _resistance_endgame_1() -> Array[TurnLog]:
 
 		var airbase_plan_properties = Plan.PlanProperties.new()
 		var airbase_poi = GlobalRegistry.pois.find_item(GlobalRegistry.LIST_ALL_POIS, "poi_type", Enums.POIType.AIR_BASE)
-		airbase_plan_properties.plan_name = "Infiltrate the airbase "
+		airbase_plan_properties.plan_name = "Infiltrate the airbase"
 		airbase_plan_properties.plan_text = "We made it through the checkpoint, but we are outside the fence, the best option we have is to get the truck through the west gate, its less busy and the guards will be tired from a night of duty "
 		airbase_plan_properties.plan_expiry = -1
 		airbase_plan_properties.plan_subject_poi = airbase_poi
@@ -349,6 +357,8 @@ func _resistance_endgame_1() -> Array[TurnLog]:
 
 		# popup new endgame event panel
 		EventBus.new_endgame_step.emit(Enums.EventOutcomeType.RESISTANCE_AIRFIELD_02)
+	else:
+		logs.append(TurnLog.new("We failed to avoid detection at the checkpoint, we'll have to try again tomorrow.", Enums.LogType.ACTION_INFO, poi, characters))
 
 	return logs
 
@@ -375,6 +385,8 @@ func _resistance_endgame_2() -> Array[TurnLog]:
 
 		# popup new endgame event panel
 		EventBus.new_endgame_step.emit(Enums.EventOutcomeType.RESISTANCE_AIRFIELD_03)
+	else:
+		logs.append(TurnLog.new("We failed to infiltrate the airbase, we'll have to try again tomorrow.", Enums.LogType.ACTION_INFO, poi, characters))
 
 	return logs
 
@@ -387,6 +399,21 @@ func _resistance_endgame_3() -> Array[TurnLog]:
 	var smarts_roll = statistic_check.smarts_check()
 
 	if smarts_roll:
+		GameController.resistance_endgame_step = 4
+
+		var airbase_plan_properties = Plan.PlanProperties.new()
+		var airbase_poi = GlobalRegistry.pois.find_item(GlobalRegistry.LIST_ALL_POIS, "poi_type", Enums.POIType.AIR_BASE)
+		airbase_plan_properties.plan_name = "Lets get out"
+		airbase_plan_properties.plan_text = "Its time to get out, we’ve planted the explosives and the fuses are set, we will go via the east gate, away from the city and wait until the bombs go off. In the confusion and chaos we can get through the gate guards, or kill them."
+		airbase_plan_properties.plan_expiry = -1
+		airbase_plan_properties.plan_subject_poi = airbase_poi
+		airbase_plan_properties.is_endgame_plan = true
+		airbase_plan_properties.stat_check_type = Enums.StatCheckType.CHARM
+		Plan.new(airbase_plan_properties)
+
+		# popup new endgame event panel
+		EventBus.new_endgame_step.emit(Enums.EventOutcomeType.RESISTANCE_AIRFIELD_05)
+	else:
 		GameController.resistance_endgame_step = 3
 
 		var airbase_plan_properties = Plan.PlanProperties.new()
@@ -401,6 +428,7 @@ func _resistance_endgame_3() -> Array[TurnLog]:
 
 		# popup new endgame event panel
 		EventBus.new_endgame_step.emit(Enums.EventOutcomeType.RESISTANCE_AIRFIELD_04)
+		logs.append(TurnLog.new("We were caught planting the explosives! The alarm has been sounded!", Enums.LogType.ACTION_INFO, poi, characters))
 
 	return logs
 
@@ -427,7 +455,8 @@ func _resistance_endgame_4() -> Array[TurnLog]:
 
 		# popup new endgame event panel
 		EventBus.new_endgame_step.emit(Enums.EventOutcomeType.RESISTANCE_AIRFIELD_05)
-
+	else:
+		EventBus.game_over.emit()
 
 	return logs
 
