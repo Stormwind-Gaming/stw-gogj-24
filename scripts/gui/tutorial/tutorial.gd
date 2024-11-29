@@ -15,6 +15,19 @@ extends Control
 
 var current_screen: int = 0
 
+func _ready() -> void:
+	current_screen = 0
+	button_previous.visible = false
+	screen_one.visible = true
+	screen_two.visible = false
+	screen_three.visible = false
+	screen_four.visible = false
+	screen_five.visible = false
+	screen_six.visible = false
+	screen_seven.visible = false
+	screen_eight.visible = false
+	screen_nine.visible = false
+
 func _on_next_button_pressed() -> void:
 	match current_screen:
 		0:

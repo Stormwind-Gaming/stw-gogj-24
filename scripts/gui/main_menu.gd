@@ -1,5 +1,8 @@
 extends Control
 
+func _ready() -> void:
+	_reset_game_state()
+
 #|==============================|
 #|      Event Handlers          |
 #|==============================|
@@ -7,13 +10,6 @@ extends Control
 @brief Button to start a new game
 """
 func _on_new_game_button_pressed() -> void:
-	# Reset the registry ready for a new game
-	GlobalRegistry.reset()
-	# Reset the GameController
-	GameController.reset()
-	# Reset the GameStats
-	GameStats.reset()
-
 	var audio_tween = create_tween()
 	audio_tween.tween_property($AudioStreamPlayer2D, "volume_db", -80, 1.0).set_ease(Tween.EASE_OUT)
 	$AnimationPlayer.play("fade_out")
@@ -38,3 +34,12 @@ func _on_tutorial_button_pressed() -> void:
 """
 func _on_quit_button_pressed() -> void:
 	get_tree().quit()
+
+
+func _reset_game_state() -> void:
+	# Reset the registry ready for a new game
+	GlobalRegistry.reset()
+	# Reset the GameController
+	GameController.reset()
+	# Reset the GameStats
+	GameStats.reset()
