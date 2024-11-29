@@ -589,11 +589,14 @@ func get_intel_effect_string(effect, bbcode_enabled: bool = false) -> String:
 
 	match effect:
 		Enums.IntelEffect.ADD_AGENT_SLOT:
-			return "+1 Agent Slot"
+			return "An additional Agent slot"
+			# return "+1 Agent Slot"
 		Enums.IntelEffect.BUILD_SYMPATHY:
-			return "+20 Character Sympathy"
+			return "An increase in sympathy for a character"
+			# return "+20 Character Sympathy"
 		Enums.IntelEffect.BUILD_SYMPATHY_ALL:
-			return "+5 Character Sympathy in District"
+			return "A minor increase in sympathy across all characters in a district"
+			# return "+5 Character Sympathy in District"
 		Enums.IntelEffect.DISCOVER_ALL:
 			return "Reveal all Characters in District"
 		Enums.IntelEffect.INCREASE_DIFFICULTY:
@@ -601,13 +604,16 @@ func get_intel_effect_string(effect, bbcode_enabled: bool = false) -> String:
 		Enums.IntelEffect.REDUCE_DIFFICULTY:
 			return "None"
 		Enums.IntelEffect.REDUCE_HEAT:
-			return "-20 District Heat"
+			return "A reduction in heat in a district"
+			# return "-20 District Heat"
 		Enums.IntelEffect.REDUCE_HEAT_ALL:
-			return "-5 Heat in all District"
+			return "A minor reduction in heat across all districts"
+			# return "-5 Heat in all District"
 		Enums.IntelEffect.RESCUE_AGENT:
 			return "Rescue MIA Agent"
 		Enums.IntelEffect.WILDCARD_INTEL:
-			return "+1 Wildcard Intel"
+			return "Gather four random Intel"
+			# return "+1 Wildcard Intel"
 		Enums.IntelEffect.D_ONE_E_ONE:
 			if bbcode_enabled:
 				return "Duration: 1 Day\nExpiry: 1 Day"
