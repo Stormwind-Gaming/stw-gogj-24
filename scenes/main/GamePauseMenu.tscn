@@ -68,6 +68,7 @@ layout_mode = 2
 text = "Resume"
 
 [node name="OptionsButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 text = "Options"

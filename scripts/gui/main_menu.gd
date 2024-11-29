@@ -3,7 +3,6 @@ extends Control
 func _ready() -> void:
 	_reset_game_state()
 
-
 func _reset_game_state() -> void:
 	# Reset the registry ready for a new game
 	GlobalRegistry.reset()
