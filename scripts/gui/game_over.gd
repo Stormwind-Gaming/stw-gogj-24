@@ -115,7 +115,8 @@ var lose_endgame_colour: Color = Color.BLACK
 @brief Called when the node enters the scene tree for the first time
 """
 func _ready() -> void:
-	if GameController.endgame_end_type and GameController.endgame_end_type != Enums.EventOutcomeType.NONE:
+	EventBus.close_all_windows_and_event_panels.emit()
+	if GameController.endgame_end_type != Enums.EventOutcomeType.NONE and GameController.endgame_end_type != Enums.EventOutcomeType.GAME_OVER:
 		update_gui()
 		$AnimationPlayer.play("fade_in_endgame")
 	else:
@@ -142,7 +143,7 @@ func update_gui() -> void:
 	# get endgame type
 	var endgame_type: Enums.EventOutcomeType = GameController.endgame_end_type
 	# set endgame text for this type
-	endgame_text.text = Globals.get_endgame_text(endgame_type)
+	endgame_text.text = Globals.get_endgame_text(endgame_type).replace("{town}", GameController.town_details.town_name)
 	# set endgame image for this type
 	endgame_image.texture = Globals.endgame_page_images[endgame_type]
 

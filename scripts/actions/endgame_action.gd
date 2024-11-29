@@ -220,10 +220,8 @@ func _heat_endgame_port_4() -> Array[TurnLog]:
 
 	if smarts_roll:
 		GameController.endgame_end_type = Enums.EventOutcomeType.HEAT_PORT_SUCCESS
-		EventBus.game_over.emit()
 	else:
 		GameController.endgame_end_type = Enums.EventOutcomeType.HEAT_PORT_FAILURE
-		EventBus.game_over.emit()
 
 
 	return logs
@@ -327,10 +325,8 @@ func _heat_endgame_train_4() -> Array[TurnLog]:
 
 	if charm_roll:
 		GameController.endgame_end_type = Enums.EventOutcomeType.HEAT_TRAIN_SUCCESS
-		EventBus.game_over.emit()
 	else:
 		GameController.endgame_end_type = Enums.EventOutcomeType.HEAT_TRAIN_FAILURE
-		EventBus.game_over.emit()
 
 	return logs
 
@@ -456,7 +452,7 @@ func _resistance_endgame_4() -> Array[TurnLog]:
 		# popup new endgame event panel
 		EventBus.new_endgame_step.emit(Enums.EventOutcomeType.RESISTANCE_AIRFIELD_05)
 	else:
-		EventBus.game_over.emit()
+		GameController.endgame_end_type = Enums.EventOutcomeType.GAME_OVER
 
 	return logs
 
@@ -472,9 +468,7 @@ func _resistance_endgame_5() -> Array[TurnLog]:
 		GameController.resistance_endgame_step = 5
 		logs.append(TurnLog.new("YOU WIN! Resistance endgame complete!", Enums.LogType.ACTION_INFO))
 		GameController.endgame_end_type = Enums.EventOutcomeType.RESISTANCE_AIRFIELD_SUCCESS
-		EventBus.game_over.emit()
 	else:
 		GameController.endgame_end_type = Enums.EventOutcomeType.RESISTANCE_AIRFIELD_SUCCESS
-		EventBus.game_over.emit()
 
 	return logs

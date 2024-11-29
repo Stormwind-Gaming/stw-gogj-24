@@ -74,6 +74,7 @@ func _init(config: ActionFactory.ActionConfig):
 
 	# EventBus.turn_processing_initiated.connect(_on_turn_processing_initiated)
 	EventBus.end_turn_complete.connect(_on_end_turn_completed)
+	EventBus.game_over.connect(_release_characters)
 
 	EventBus.action_created.emit(self)
 
@@ -109,8 +110,6 @@ func _on_turn_processing_initiated(num: int) -> void:
 @brief Called when the turn ends
 """
 func _on_end_turn_completed(num: int) -> void:
-	print("Turn to end action: ", turn_to_end)
-
 	if num >= turn_to_end:
 		_release_characters()
 

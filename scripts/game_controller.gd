@@ -62,7 +62,7 @@ var heat_endgame_port_step: int = 0
 var heat_endgame_train_step: int = 0
 var resistance_endgame_step: int = 0
 
-var endgame_end_type: Enums.EventOutcomeType
+var endgame_end_type: Enums.EventOutcomeType = Enums.EventOutcomeType.NONE
 
 #|==============================|
 #|      Lifecycle Methods      |
@@ -261,6 +261,10 @@ func process_turn() -> void:
 	# check if player has any sympathisers left
 	var all_sympathisers = GlobalRegistry.characters.list_size(GlobalRegistry.LIST_SYMPATHISER_RECRUITED) + GlobalRegistry.characters.list_size(GlobalRegistry.LIST_SYMPATHISER_NOT_RECRUITED)
 	if all_sympathisers == 0:
+		GameController.endgame_end_type = Enums.EventOutcomeType.GAME_OVER
+		EventBus.game_over.emit()
+	elif GameController.endgame_end_type != Enums.EventOutcomeType.NONE:
+		# the game has ended
 		EventBus.game_over.emit()
 	else:
 		# Emit the signal to end the turn

@@ -157,7 +157,7 @@ func reset() -> void:
 	for character in characters.get_all_items():
 		if is_instance_valid(character):
 			character.queue_free()
-	
+
 	LogDuck.d("Freeing POI objects", {"count": pois.get_all_items().size()})
 	for poi in pois.get_all_items():
 		if is_instance_valid(poi):
@@ -182,6 +182,9 @@ func reset() -> void:
 	for modifier in modifiers.get_all_items():
 		if is_instance_valid(modifier):
 			modifier.queue_free()
+	
+	LogDuck.d("Freeing turn log objects", {"count": turn_logs.get_all_items().size()})
+	turn_logs = Registry.new()
 
 	# Clear the lists
 	LogDuck.d("Clearing all registry lists")
