@@ -412,7 +412,7 @@ func _on_post_radial_assignment_option_selected(option: Enums.ActionType, select
 		ReferenceGetter.game_controller().add_action(poi_for_radial, selected_agents, option)
 
 	# create a tiny timer to get around erroneous clickthroughs
-	await get_tree().create_timer(0.1).timeout
+	# await get_tree().create_timer(0.1).timeout
 	EventBus.close_window.emit()
 	EventBus.close_radial_menu.emit()
 	# radial_menu_open = null
