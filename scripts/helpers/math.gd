@@ -1,5 +1,5 @@
 # math_helpers.gd
-extends Object
+extends ObjectWithCleanup
 
 ## Mathematical helper functions for stats and random number generation
 class_name MathHelpers

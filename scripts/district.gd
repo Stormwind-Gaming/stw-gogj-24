@@ -1,4 +1,5 @@
-extends Node
+extends NodeWithCleanup
+
 class_name District
 
 #|==============================|

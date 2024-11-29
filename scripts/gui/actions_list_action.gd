@@ -1,4 +1,4 @@
-extends MarginContainer
+extends MarginContainerWithCleanup
 
 #|==============================|
 #|      Exported Variables      |

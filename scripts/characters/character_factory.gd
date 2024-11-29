@@ -1,4 +1,4 @@
-extends Object
+extends ObjectWithCleanup
 class_name CharacterFactory
 
 static func generate_random_profile() -> Dictionary:

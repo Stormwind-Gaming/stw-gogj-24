@@ -1,4 +1,4 @@
-extends Control
+extends ControlWithCleanup
 
 #|==============================|
 #|   Exported Properties       |

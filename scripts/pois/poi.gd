@@ -1,4 +1,4 @@
-extends Area2D
+extends Area2DWithCleanup
 class_name PointOfInterest
 
 #|==============================|

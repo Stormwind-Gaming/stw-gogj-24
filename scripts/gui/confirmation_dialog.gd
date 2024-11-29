@@ -1,4 +1,4 @@
-extends Window
+extends WindowWithCleanup
 
 """
 How to instanciate in another script:

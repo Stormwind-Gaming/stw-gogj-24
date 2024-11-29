@@ -1,14 +1,14 @@
 [gd_resource type="Theme" load_steps=16 format=3 uid="uid://phap6y47fk5n"]
 
 [ext_resource type="FontFile" uid="uid://djwj10bhtdik" path="res://assets/fonts/veteran typewriter.ttf" id="1_47xbe"]
-[ext_resource type="StyleBox" uid="uid://6241urkjslaf" path="res://assets/textures/tw_button_style_box_texture.tres" id="2_r76bf"]
-[ext_resource type="StyleBox" uid="uid://deqxdkxwpparc" path="res://assets/textures/tw_button_style_box_texture_hover.tres" id="3_jcxlr"]
+[ext_resource type="StyleBox" path="res://assets/textures/tw_button_style_box_texture.tres" id="2_r76bf"]
+[ext_resource type="StyleBox" path="res://assets/textures/tw_button_style_box_texture_hover.tres" id="3_jcxlr"]
 [ext_resource type="Texture2D" uid="uid://455da6nc8v33" path="res://assets/icons/ticked.png" id="4_jnkeh"]
 [ext_resource type="Texture2D" uid="uid://dqp5w62mpq7pt" path="res://assets/icons/unticked.png" id="5_dgr1w"]
 [ext_resource type="Texture2D" uid="uid://ci1j5kbaiq0u5" path="res://assets/icons/arrow-left-bold-box.png" id="6_3sv54"]
 [ext_resource type="Texture2D" uid="uid://bbur8c3oj6230" path="res://assets/icons/arrow-right-bold-box.png" id="7_8b6t8"]
 [ext_resource type="StyleBox" uid="uid://co18tu22sbler" path="res://assets/textures/folder_tab_box_texture_hover.tres" id="8_s17e2"]
-[ext_resource type="StyleBox" uid="uid://b4hyjh8fafst3" path="res://assets/textures/folder_tab_box_texture_selected.tres" id="9_6cm8p"]
+[ext_resource type="StyleBox" path="res://assets/textures/folder_tab_box_texture_selected.tres" id="9_6cm8p"]
 [ext_resource type="StyleBox" uid="uid://d1vg5m2df7td2" path="res://assets/textures/folder_tab_box_texture.tres" id="10_fla3f"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cfsho"]

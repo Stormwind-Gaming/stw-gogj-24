@@ -1,4 +1,4 @@
-extends Control
+extends ControlWithCleanup
 
 @export var screen_one: Control
 @export var screen_two: Control

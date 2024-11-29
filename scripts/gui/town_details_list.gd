@@ -1,4 +1,4 @@
-extends Window
+extends WindowWithCleanup
 
 var district_submenu_scene = preload("res://scenes/gui/menus/town_menus/district_submenu.tscn")
 var poi_submenu_scene = preload("res://scenes/gui/menus/town_menus/poi_submenu.tscn")

@@ -1,4 +1,4 @@
-extends Window
+extends WindowWithCleanup
 
 #|==============================|
 #|         Properties          |

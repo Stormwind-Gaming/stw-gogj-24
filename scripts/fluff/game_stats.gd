@@ -1,4 +1,4 @@
-extends Node
+extends NodeWithCleanup
 
 #|==============================|
 #|      Local Variables		      |

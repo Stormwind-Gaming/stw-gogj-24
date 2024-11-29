@@ -1,4 +1,4 @@
-extends Object
+extends ObjectWithCleanup
 class_name WorldEventFactory
 
 static func randomise_world_event_from_heat(heat: int) -> WorldEvent:

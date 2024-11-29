@@ -1,4 +1,4 @@
-extends MarginContainer
+extends MarginContainerWithCleanup
 
 @export var log_type: Enums.LogType
 @export var log_message: String
