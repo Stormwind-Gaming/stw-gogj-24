@@ -486,11 +486,14 @@ func _on_district_just_focused(district: District) -> void:
 		$Polygon2D.visible = true
 		$IconButton.visible = true
 	else:
+		await get_tree().create_timer(0.02).timeout
 		$Polygon2D.color = no_color
 		enabled = false
 		$Polygon2D.visible = false
 		$IconButton.visible = false
 		$IconButton.material.set_shader_parameter("enabled", false)
+
+
 
 """
 @brief Handles character state changes.
