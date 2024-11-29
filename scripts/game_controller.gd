@@ -261,9 +261,28 @@ func process_turn() -> void:
 	# check if player has any sympathisers left
 	var all_sympathisers = ReferenceGetter.global_registry().characters.list_size(ReferenceGetter.global_registry().LIST_SYMPATHISER_RECRUITED) + ReferenceGetter.global_registry().characters.list_size(ReferenceGetter.global_registry().LIST_SYMPATHISER_NOT_RECRUITED)
 	if all_sympathisers == 0:
+		Analytics.add_event("Game over", { "outcome": "no_sympathisers" })
 		ReferenceGetter.game_controller().endgame_end_type = Enums.EventOutcomeType.GAME_OVER
 		EventBus.game_over.emit()
 	elif ReferenceGetter.game_controller().endgame_end_type != Enums.EventOutcomeType.NONE:
+		match ReferenceGetter.game_controller().endgame_end_type:
+			Enums.EventOutcomeType.HEAT_PORT_SUCCESS:
+				Analytics.add_event("Game over", { "outcome": "heat_port_success" })
+			Enums.EventOutcomeType.HEAT_TRAIN_SUCCESS:
+				Analytics.add_event("Game over", { "outcome": "heat_train_success" })
+			Enums.EventOutcomeType.RESISTANCE_AIRFIELD_SUCCESS:
+				Analytics.add_event("Game over", { "outcome": "resistance_airfield_success" })
+			Enums.EventOutcomeType.RESISTANCE_GENERAL_SUCCESS:
+				Analytics.add_event("Game over", { "outcome": "resistance_general_success" })
+			Enums.EventOutcomeType.HEAT_TRAIN_FAILURE:
+				Analytics.add_event("Game over", { "outcome": "heat_train_failure" })
+			Enums.EventOutcomeType.HEAT_PORT_FAILURE:
+				Analytics.add_event("Game over", { "outcome": "heat_port_failure" })
+			Enums.EventOutcomeType.RESISTANCE_AIRFIELD_FAILURE:
+				Analytics.add_event("Game over", { "outcome": "resistance_airfield_failure" })
+			Enums.EventOutcomeType.RESISTANCE_GENERAL_FAILURE:
+				Analytics.add_event("Game over", { "outcome": "resistance_general_failure" })
+
 		# the game has ended
 		EventBus.game_over.emit()
 	else:
@@ -275,6 +294,7 @@ func process_turn() -> void:
 @brief Triggers the heat endgame
 """
 func _trigger_heat_endgame() -> void:
+	Analytics.add_event("Endgame triggered", { "endgame_type": "heat" })
 	LogDuck.d("Triggering heat endgame")
 	endgame_triggered = true
 	EventBus.endgame_triggered.emit()
@@ -320,6 +340,7 @@ func _trigger_heat_endgame() -> void:
 @brief Triggers the resistance endgame
 """
 func _trigger_resistance_endgame() -> void:
+	Analytics.add_event("Endgame triggered", { "endgame_type": "resistance" })
 	LogDuck.d("Triggering resistance endgame")
 	endgame_triggered = true
 	EventBus.endgame_triggered.emit()
