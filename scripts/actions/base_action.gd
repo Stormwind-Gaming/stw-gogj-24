@@ -136,6 +136,13 @@ func _notification(what: int) -> void:
 		EventBus.action_destroyed.emit(self)
 		_release_characters()
 
+		# disconnect signals
+		if EventBus.end_turn_complete.is_connected(_on_end_turn_completed):
+			EventBus.end_turn_complete.disconnect(_on_end_turn_completed)
+		if EventBus.game_over.is_connected(_release_characters):
+			EventBus.game_over.disconnect(_release_characters)
+
+
 #|==============================|
 #|      Action Processing      |
 #|==============================|
