@@ -1,8 +1,7 @@
-[gd_scene load_steps=16 format=3 uid="uid://b4wu3m6ipfv04"]
+[gd_scene load_steps=15 format=3 uid="uid://b4wu3m6ipfv04"]
 
 [ext_resource type="Script" path="res://scripts/gui/tutorial/tutorial.gd" id="1_h74xk"]
 [ext_resource type="Theme" uid="uid://dexax20p2eewp" path="res://assets/themes/base_theme.tres" id="1_m3k0w"]
-[ext_resource type="PackedScene" uid="uid://c7y1ejxri1bfk" path="res://scenes/map.tscn" id="1_tojkg"]
 [ext_resource type="Texture2D" uid="uid://cc6mpisce6gm6" path="res://assets/sprites/HighlightSquare.png" id="2_33ppr"]
 [ext_resource type="StyleBox" uid="uid://g8socf6idhxu" path="res://assets/StyleBoxes/base_style_box.tres" id="4_5a76a"]
 [ext_resource type="Texture2D" uid="uid://bcqar7mnpuo5" path="res://assets/icons/arrow-right-bold-box-black.png" id="6_0pf4x"]
@@ -40,8 +39,6 @@ screen_eight = NodePath("CanvasLayer1/ScreenEight")
 screen_nine = NodePath("CanvasLayer1/ScreenNine")
 button_next = NodePath("CanvasLayer1/MarginContainer/HBoxContainer/NextButton")
 button_previous = NodePath("CanvasLayer1/MarginContainer/HBoxContainer/BackButton")
-
-[node name="Main" parent="." instance=ExtResource("1_tojkg")]
 
 [node name="CanvasLayer1" type="CanvasLayer" parent="."]
 layer = 5

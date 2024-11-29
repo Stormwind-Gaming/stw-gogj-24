@@ -1,0 +1,268 @@
+[gd_scene load_steps=22 format=3 uid="uid://ln0b58v8v4wn"]
+
+[ext_resource type="Script" path="res://scripts/map.gd" id="1_n11dw"]
+[ext_resource type="Texture2D" uid="uid://dr1v7la7ll1bf" path="res://assets/new_costal_map_lg.png" id="2_iyrsn"]
+[ext_resource type="PackedScene" uid="uid://cdhfja2nolmpl" path="res://scenes/districts/district_port.tscn" id="3_ahajx"]
+[ext_resource type="PackedScene" uid="uid://d0a4qatowu8vq" path="res://scenes/districts/district_industrial.tscn" id="4_m7kem"]
+[ext_resource type="PackedScene" uid="uid://b1vvls3nbthm6" path="res://scenes/districts/district_civic.tscn" id="5_4pjns"]
+[ext_resource type="PackedScene" uid="uid://cee65vvqnqgwm" path="res://scenes/districts/district_military.tscn" id="6_61w82"]
+[ext_resource type="PackedScene" uid="uid://bnshi2p8ra26w" path="res://scenes/districts/district_residential.tscn" id="7_b62p6"]
+[ext_resource type="Script" path="res://scripts/gui/camera.gd" id="8_nrmgr"]
+[ext_resource type="Material" uid="uid://gin61bvv8xbw" path="res://assets/materials/cloud_shader_material.tres" id="9_c28km"]
+[ext_resource type="PackedScene" uid="uid://bv860whpjsldd" path="res://scenes/gui/footer.tscn" id="10_1mapy"]
+[ext_resource type="PackedScene" uid="uid://kgy3mx1cyya" path="res://scenes/gui/header.tscn" id="11_p0hpy"]
+[ext_resource type="PackedScene" uid="uid://csjj4gfy5g6nw" path="res://scenes/debug/stats_container.tscn" id="12_i7hq3"]
+[ext_resource type="PackedScene" uid="uid://vmpgdljfgrr3" path="res://scenes/main/GamePauseMenu.tscn" id="13_008u1"]
+[ext_resource type="AudioStream" uid="uid://85fe3hfa7hdg" path="res://assets/audio/cold-wind-sound-effect-127448.mp3" id="14_dreq4"]
+[ext_resource type="AudioStream" uid="uid://dkpbe25l0jh1i" path="res://assets/audio/street-night-calm-16893.mp3" id="15_e7cf2"]
+[ext_resource type="PackedScene" uid="uid://b4wu3m6ipfv04" path="res://scenes/gui/tutorial/tutorial.tscn" id="16_t8jn4"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_r6h60"]
+size = Vector2(20, 20)
+orientation = 2
+
+[sub_resource type="Animation" id="Animation_aor1t"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_6037l"]
+resource_name = "fade_in"
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer2:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Map/map_background:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Clouds:material:shader_parameter/alpha_multiplier")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.7]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Map:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("CanvasLayer2/Footer:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("CanvasLayer2/Header:modulate")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_wn1g1"]
+resource_name = "fade_out"
+length = 0.5
+step = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0, 0, 0, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = false
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CanvasLayer2:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("PauseMenuCanvasLayer:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Map/map_background:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_42scy"]
+_data = {
+"RESET": SubResource("Animation_aor1t"),
+"fade_in": SubResource("Animation_6037l"),
+"fade_out": SubResource("Animation_wn1g1")
+}
+
+[node name="Main" type="Node2D" node_paths=PackedStringArray("pause_menu", "footer", "stats_panel")]
+modulate = Color(0, 0, 0, 1)
+script = ExtResource("1_n11dw")
+pause_menu = NodePath("PauseMenuCanvasLayer/GamePauseMenu")
+footer = NodePath("CanvasLayer2/Footer")
+stats_panel = NodePath("CanvasLayer2/PanelContainer")
+
+[node name="Map" type="Node2D" parent="."]
+modulate = Color(0, 0, 0, 1)
+
+[node name="map_background" type="Sprite2D" parent="Map"]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(800, 450)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("2_iyrsn")
+
+[node name="Districts" type="Node2D" parent="Map"]
+
+[node name="District_Port" parent="Map/Districts" instance=ExtResource("3_ahajx")]
+
+[node name="District_Industrial" parent="Map/Districts" instance=ExtResource("4_m7kem")]
+
+[node name="District_Civic" parent="Map/Districts" instance=ExtResource("5_4pjns")]
+
+[node name="District_Military" parent="Map/Districts" instance=ExtResource("6_61w82")]
+
+[node name="District_Residential" parent="Map/Districts" instance=ExtResource("7_b62p6")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, -250)
+offset = Vector2(-400, -300)
+anchor_mode = 0
+zoom = Vector2(0.7, 0.7)
+limit_smoothed = true
+position_smoothing_enabled = true
+position_smoothing_speed = 4.0
+script = ExtResource("8_nrmgr")
+parallax_strength_x = 1100.0
+parallax_strength_y = 1500.0
+max_offset_y = 1200.0
+
+[node name="Clouds" type="MeshInstance2D" parent="."]
+light_mask = 0
+z_index = 5
+material = ExtResource("9_c28km")
+position = Vector2(795, 446.5)
+scale = Vector2(204.5, 204.45)
+mesh = SubResource("PlaneMesh_r6h60")
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+
+[node name="Footer" parent="CanvasLayer2" instance=ExtResource("10_1mapy")]
+modulate = Color(0, 0, 0, 1)
+
+[node name="Header" parent="CanvasLayer2" instance=ExtResource("11_p0hpy")]
+modulate = Color(0, 0, 0, 1)
+
+[node name="PanelContainer" parent="CanvasLayer2" instance=ExtResource("12_i7hq3")]
+visible = false
+
+[node name="PauseMenuCanvasLayer" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="GamePauseMenu" parent="PauseMenuCanvasLayer" instance=ExtResource("13_008u1")]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_42scy")
+}
+
+[node name="WindEffect" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("14_dreq4")
+autoplay = true
+parameters/looping = true
+
+[node name="StreetEffect" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("15_e7cf2")
+volume_db = -80.0
+autoplay = true
+parameters/looping = true
+
+[node name="Tutorial" parent="." instance=ExtResource("16_t8jn4")]
