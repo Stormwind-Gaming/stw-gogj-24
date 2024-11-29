@@ -15,6 +15,8 @@ var global_sympathy_breakpoint_low: bool = false # 30
 var global_sympathy_breakpoint_medium: bool = false # 45
 var global_sympathy_breakpoint_high: bool = false # 60
 
+var endgame_end_type: Enums.EventOutcomeType = Enums.EventOutcomeType.NONE
+
 #|==============================|
 #|      Lifecycle Methods       |
 #|==============================|
@@ -98,3 +100,20 @@ func _check_milestones(_num: int) -> void:
 			"new": ReferenceGetter.game_controller().max_agents,
 			"sympathy_level": global_sympathy
 		})
+
+#|==============================|
+#|      Public Methods          |
+#|==============================|
+"""
+@brief Resets the global milestones
+"""
+func reset() -> void:
+	global_heat_breakpoint_low = true
+	global_heat_breakpoint_medium = false
+	global_heat_breakpoint_high = false
+
+	global_sympathy_breakpoint_low = false
+	global_sympathy_breakpoint_medium = false
+	global_sympathy_breakpoint_high = false
+
+	endgame_end_type = Enums.EventOutcomeType.NONE

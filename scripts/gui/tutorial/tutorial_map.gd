@@ -1,5 +1,5 @@
 extends Node
-class_name Map
+class_name Tutorial_Map
 
 #|==============================|
 #|     Game Logic Singletons    |

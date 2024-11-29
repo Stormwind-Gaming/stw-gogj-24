@@ -1,5 +1,5 @@
 extends Node
-class_name Tutorial_Map
+class_name Map
 
 #|==============================|
 #|     Game Logic Singletons    |
@@ -234,6 +234,7 @@ func _enable_interaction() -> void:
 func _game_over() -> void:
 	LogDuck.d("Map: Game over triggered")
 	EventBus.close_all_windows_and_event_panels.emit()
+	_reset()
 	_disable_interaction(0)
 	$AnimationPlayer.play("fade_out")
 	$AnimationPlayer.animation_finished.connect(_show_game_over)
@@ -243,6 +244,29 @@ func _game_over() -> void:
 """
 func _show_game_over(_name: String) -> void:
 	get_tree().change_scene_to_file("res://scenes/gui/game_over.tscn")
+
+"""
+@brief Resets the map scene and children
+"""
+func _reset() -> void:
+	LogDuck.d("Map: Resetting map scene")
+	
+	# reset 
+	game_controller.reset()
+	global_registry.reset()
+
+	# disconnect signals
+	if EventBus.end_turn_initiated.is_connected(_clear_focus):
+		EventBus.end_turn_initiated.disconnect(_clear_focus)
+	if EventBus.open_new_window.is_connected(_disable_interaction):
+		EventBus.open_new_window.disconnect(_disable_interaction)
+	if EventBus.close_all_windows.is_connected(_enable_interaction):
+		EventBus.close_all_windows.disconnect(_enable_interaction)
+	if EventBus.close_window.is_connected(_enable_interaction):
+		EventBus.close_window.disconnect(_enable_interaction)
+	if EventBus.game_over.is_connected(_game_over):
+		EventBus.game_over.disconnect(_game_over)
+
 
 
 #|==============================|

@@ -5,9 +5,9 @@ class_name GameController
 #|         Properties          |
 #|==============================|
 """
-@brief Time elapsed since game start
+@brief The start time of the game
 """
-var time_elapsed: float = 0
+var start_time: float = 0
 
 """
 @brief Name of the town this map represents
@@ -63,8 +63,6 @@ var heat_endgame_port_step: int = 0
 var heat_endgame_train_step: int = 0
 var resistance_endgame_step: int = 0
 
-var endgame_end_type: Enums.EventOutcomeType = Enums.EventOutcomeType.NONE
-
 #|==============================|
 #|      Lifecycle Methods      |
 #|==============================|
@@ -78,6 +76,8 @@ func _init() -> void:
 	EventBus.selected_radial_option.connect(_on_radial_option_selected)
 	EventBus.close_all_windows.connect(_on_close_all_windows)
 
+	start_time = Time.get_ticks_msec()
+
 """
 @brief Resets the GameController
 """
@@ -89,8 +89,12 @@ func reset() -> void:
 	heat_endgame_train_step = 0
 	resistance_endgame_step = 0
 	max_agents = Constants.INIT_MAX_AGENTS
-	endgame_end_type = Enums.EventOutcomeType.NONE
 
+	# disconnect signals
+	if EventBus.selected_radial_option.is_connected(_on_radial_option_selected):
+		EventBus.selected_radial_option.disconnect(_on_radial_option_selected)
+	if EventBus.close_all_windows.is_connected(_on_close_all_windows):
+		EventBus.close_all_windows.disconnect(_on_close_all_windows)
 
 
 #|==============================|
@@ -260,12 +264,8 @@ func process_turn() -> void:
 
 	# check if player has any sympathisers left
 	var all_sympathisers = ReferenceGetter.global_registry().characters.list_size(ReferenceGetter.global_registry().LIST_SYMPATHISER_RECRUITED) + ReferenceGetter.global_registry().characters.list_size(ReferenceGetter.global_registry().LIST_SYMPATHISER_NOT_RECRUITED)
-	if all_sympathisers == 0:
-		Analytics.add_event("Game over", { "outcome": "no_sympathisers" })
-		ReferenceGetter.game_controller().endgame_end_type = Enums.EventOutcomeType.GAME_OVER
-		EventBus.game_over.emit()
-	elif ReferenceGetter.game_controller().endgame_end_type != Enums.EventOutcomeType.NONE:
-		match ReferenceGetter.game_controller().endgame_end_type:
+	if GlobalMilestones.endgame_end_type != Enums.EventOutcomeType.NONE:
+		match GlobalMilestones.endgame_end_type:
 			Enums.EventOutcomeType.HEAT_PORT_SUCCESS:
 				Analytics.add_event("Game over", { "outcome": "heat_port_success" })
 			Enums.EventOutcomeType.HEAT_TRAIN_SUCCESS:
@@ -284,6 +284,10 @@ func process_turn() -> void:
 				Analytics.add_event("Game over", { "outcome": "resistance_general_failure" })
 
 		# the game has ended
+		EventBus.game_over.emit()
+	elif all_sympathisers == 0:
+		Analytics.add_event("Game over", { "outcome": "no_sympathisers" })
+		GlobalMilestones.endgame_end_type = Enums.EventOutcomeType.GAME_OVER
 		EventBus.game_over.emit()
 	else:
 		# Emit the signal to end the turn
@@ -411,6 +415,7 @@ func _on_radial_option_selected(option: Enums.ActionType, poi_for_radial: PointO
 
 	# if quit, do nothing
 	if option == Enums.ActionType.NONE:
+		LogDuck.e("Radial option selected was NONE")
 		return
 	
 	# if info, show info
@@ -419,7 +424,10 @@ func _on_radial_option_selected(option: Enums.ActionType, poi_for_radial: PointO
 		EventBus.open_new_window.emit(town_details_list_instance)
 		
 		EventBus.open_poi_window.emit(poi_for_radial)
+		LogDuck.e("Showing POI info for", poi_for_radial.poi_name)
 		return
+
+	LogDuck.e("Radial option selected was", option, "for", poi_for_radial.poi_name)
 
 	# popup a post_radial_assignment menu
 	var post_radial_assignment = Globals.post_radial_assignment_scene.instantiate()
@@ -433,7 +441,5 @@ func _on_post_radial_assignment_option_selected(option: Enums.ActionType, select
 		ReferenceGetter.game_controller().add_action(poi_for_radial, selected_agents, option)
 
 	# create a tiny timer to get around erroneous clickthroughs
-	# await get_tree().create_timer(0.1).timeout
 	EventBus.close_window.emit()
 	EventBus.close_radial_menu.emit()
-	# radial_menu_open = null

@@ -116,7 +116,7 @@ var lose_endgame_colour: Color = Color.BLACK
 """
 func _ready() -> void:
 	EventBus.close_all_windows_and_event_panels.emit()
-	if ReferenceGetter.game_controller().endgame_end_type != Enums.EventOutcomeType.NONE and ReferenceGetter.game_controller().endgame_end_type != Enums.EventOutcomeType.GAME_OVER:
+	if GlobalMilestones.endgame_end_type != Enums.EventOutcomeType.NONE and GlobalMilestones.endgame_end_type != Enums.EventOutcomeType.GAME_OVER:
 		update_gui()
 		$AnimationPlayer.play("fade_in_endgame")
 	else:
@@ -141,7 +141,7 @@ func _on_quit_to_menu_button_pressed() -> void:
 """
 func update_gui() -> void:
 	# get endgame type
-	var endgame_type: Enums.EventOutcomeType = ReferenceGetter.game_controller().endgame_end_type
+	var endgame_type: Enums.EventOutcomeType = GlobalMilestones.endgame_end_type
 	# set endgame text for this type
 	endgame_text.text = Globals.get_endgame_text(endgame_type).replace("{town}", ReferenceGetter.game_controller().town_details.town_name)
 	# set endgame image for this type

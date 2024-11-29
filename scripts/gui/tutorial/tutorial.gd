@@ -56,6 +56,7 @@ func _on_next_button_pressed() -> void:
 			screen_eight.visible = false
 			screen_nine.visible = true
 		_:
+			ReferenceGetter.map_node()._reset()
 			get_tree().change_scene_to_file("res://scenes/main/main_menu.tscn")
 	
 	current_screen += 1
@@ -93,4 +94,4 @@ func _on_previous_button_pressed() -> void:
 	current_screen -= 1
 	if current_screen < 0:
 		current_screen = 0
-	
+		

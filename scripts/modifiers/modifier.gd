@@ -85,7 +85,7 @@ func _init(config: Dictionary, mods: Dictionary) -> void:
 	EventBus.modifier_created.emit(self)
 	EventBus.end_turn_complete.connect(_on_end_turn_complete)
 
-func _on_end_turn_complete(_num: int) -> void:
+func _on_end_turn_complete(_num: int) -> void:	
 	LogDuck.d("Checking modifier end conditions", {
 		"name": modifier_name,
 		"current_turn": ReferenceGetter.game_controller().turn_number,

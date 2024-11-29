@@ -146,6 +146,42 @@ func _init():
 """
 func reset() -> void:
 	LogDuck.d("Resetting GlobalRegistry")
+
+	# disconnect all signals
+	# Character events
+	if EventBus.character_created.is_connected(_on_character_created):
+		EventBus.character_created.disconnect(_on_character_created)
+	if EventBus.character_state_changed.is_connected(_on_character_changed):
+		EventBus.character_state_changed.disconnect(_on_character_changed)
+	if EventBus.character_recruitment_state_changed.is_connected(_on_character_changed):
+		EventBus.character_recruitment_state_changed.disconnect(_on_character_changed)
+
+	# Intel events
+	if EventBus.rumour_created.is_connected(_on_rumour_created):
+		EventBus.rumour_created.disconnect(_on_rumour_created)
+	if EventBus.plan_created.is_connected(_on_plan_created):
+		EventBus.plan_created.disconnect(_on_plan_created)
+	
+	# POI events
+	if EventBus.poi_created.is_connected(_on_poi_created):
+		EventBus.poi_created.disconnect(_on_poi_created)
+	
+	# Action events
+	if EventBus.action_created.is_connected(_on_action_created):
+		EventBus.action_created.disconnect(_on_action_created)
+	
+	# District events
+	if EventBus.district_created.is_connected(_on_district_created):
+		EventBus.district_created.disconnect(_on_district_created)
+	
+	# World-event events
+	if EventBus.world_event_created.is_connected(_on_world_event_created):
+		EventBus.world_event_created.disconnect(_on_world_event_created)
+	
+	# Modifier events
+	if EventBus.modifier_created.is_connected(_on_modifier_created):
+		EventBus.modifier_created.disconnect(_on_modifier_created)
+	
 	
 	# Free all objects before clearing lists
 	LogDuck.d("Freeing district objects", {"count": districts.get_all_items().size()})

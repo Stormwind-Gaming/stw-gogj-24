@@ -120,4 +120,6 @@ func _update_stat(stat: String, success: bool = false) -> void:
 			pass
 
 func _update_time() -> void:
-	stats.time = ReferenceGetter.game_controller().time_elapsed
+	var start_time = ReferenceGetter.game_controller().start_time
+	var end_time = Time.get_ticks_msec()
+	stats.time = Time.get_time_string_from_unix_time(start_time - end_time)

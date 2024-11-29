@@ -44,7 +44,11 @@ func _notification(what: int) -> void:
 			"id": id,
 			"type": self.get_class()
 		})
-		ReferenceGetter.global_registry().intel.remove_item(self)
+		if ReferenceGetter.global_registry():
+			ReferenceGetter.global_registry().intel.remove_item(self)
+		
+		if EventBus.end_turn_complete.is_connected(_expire_intel):
+			EventBus.end_turn_complete.disconnect(_expire_intel)
 
 #|==============================|
 #|      Event Handlers         |
