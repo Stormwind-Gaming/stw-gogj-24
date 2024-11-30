@@ -53,12 +53,12 @@ func _ready() -> void:
 
 	# check if the sound is enabled
 	if Globals.sound_enabled:
-		$WindEffect.play()
-		$StreetEffect.play()
+		$Game/WindEffect.play()
+		$Game/StreetEffect.play()
 
-	$AnimationPlayer.play("fade_in")
+	$Game/AnimationPlayer.play("fade_in")
 	#TODO: # randomise cloud noise (currently disabled due to jumping when scene loads)
-	$Clouds.material.get_shader_parameter("noiseTexture").noise.seed = randi()
+	$Game/Clouds.material.get_shader_parameter("noiseTexture").noise.seed = randi()
 	EventBus.end_turn_initiated.connect(_clear_focus)
 	EventBus.open_new_window.connect(_disable_interaction)
 	EventBus.close_all_windows.connect(_enable_interaction)
@@ -113,20 +113,20 @@ func _clear_focus(_i = null) -> void:
 	LogDuck.d("Map: Clearing district focus")
 	EventBus.district_unfocused.emit(ReferenceGetter.game_controller().district_focused)
 	ReferenceGetter.game_controller().set_district_focused(null)
-	$Camera2D.camera_enabled = true
+	$Game/Camera2D.camera_enabled = true
 
 	## Enabling clouds and sound
 	# Access the material and shader
-	var material = $Clouds.material
+	var material = $Game/Clouds.material
 	# Create a tween to animate the shader's alpha_multiplier property
 	var clouds_tween = create_tween()
 	clouds_tween.tween_property(material, "shader_parameter/alpha_multiplier", 0.7, 1.0).set_ease(Tween.EASE_IN)
 
 	var wind_tween = create_tween()
-	wind_tween.tween_property($WindEffect, "volume_db", 0, 1.0).set_ease(Tween.EASE_IN)
+	wind_tween.tween_property($Game/WindEffect, "volume_db", 0, 1.0).set_ease(Tween.EASE_IN)
 
 	var street_tween = create_tween()
-	street_tween.tween_property($StreetEffect, "volume_db", -80, 1.0).set_ease(Tween.EASE_OUT)
+	street_tween.tween_property($Game/StreetEffect, "volume_db", -80, 1.0).set_ease(Tween.EASE_OUT)
 
 """
 @brief Sets up a district with random name and description
@@ -188,21 +188,21 @@ func _on_district_clicked(district: District) -> void:
 		d.unset_focus()
 	
 	district.set_focus()
-	$Camera2D.camera_enabled = false
+	$Game/Camera2D.camera_enabled = false
 	ReferenceGetter.game_controller().set_district_focused(district)
 
 	## Disabling clouds and sound
 	# Access the material and shader
-	var material = $Clouds.material
+	var material = $Game/Clouds.material
 	# Create a tween to animate the shader's alpha_multiplier property
 	var clouds_tween = create_tween()
 	clouds_tween.tween_property(material, "shader_parameter/alpha_multiplier", 0.0, 1.0).set_ease(Tween.EASE_IN)
 
 	var wind_tween = create_tween()
-	wind_tween.tween_property($WindEffect, "volume_db", -80, 1.0).set_ease(Tween.EASE_OUT)
+	wind_tween.tween_property($Game/WindEffect, "volume_db", -80, 1.0).set_ease(Tween.EASE_OUT)
 
 	var street_tween = create_tween()
-	street_tween.tween_property($StreetEffect, "volume_db", -10, 1.0).set_ease(Tween.EASE_IN)
+	street_tween.tween_property($Game/StreetEffect, "volume_db", -10, 1.0).set_ease(Tween.EASE_IN)
 
 
 """
@@ -240,21 +240,31 @@ func _enable_interaction() -> void:
 func _game_over() -> void:
 	LogDuck.d("Map: Game over triggered")
 	EventBus.close_all_windows_and_event_panels.emit()
-	_reset()
 	_disable_interaction(0)
-	$AnimationPlayer.play("fade_out")
-	$AnimationPlayer.animation_finished.connect(_show_game_over)
+	$Game/AnimationPlayer.play("fade_out")
+	$Game/AnimationPlayer.animation_finished.connect(_show_game_over)
 
 """
 @brief Shows the game over screen
 """
 func _show_game_over(_name: String) -> void:
-	get_tree().change_scene_to_file("res://scenes/gui/game_over.tscn")
+	# hide Game and UI
+	$Game.hide()
+	$UI/Footer.hide()
+	$UI/Header.hide()
+	# disable both audio effects
+	$Game/WindEffect.stop()
+	$Game/StreetEffect.stop()
+	# show game over screen
+	var game_over_scene = Globals.game_over_scene.instantiate()
+	# add the scene to the UI
+	$UI.add_child(game_over_scene)
+
 
 """
 @brief Resets the map scene and children
 """
-func _reset() -> void:
+func reset() -> void:
 	LogDuck.d("Map: Resetting map scene")
 	
 	# reset 

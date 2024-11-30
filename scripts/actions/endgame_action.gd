@@ -219,9 +219,9 @@ func _heat_endgame_port_4() -> Array[TurnLog]:
 	var smarts_roll = statistic_check.smarts_check()
 
 	if smarts_roll:
-		GlobalMilestones.endgame_end_type = Enums.EventOutcomeType.HEAT_PORT_SUCCESS
+		ReferenceGetter.game_controller().endgame_end_type = Enums.EventOutcomeType.HEAT_PORT_SUCCESS
 	else:
-		GlobalMilestones.endgame_end_type = Enums.EventOutcomeType.HEAT_PORT_FAILURE
+		ReferenceGetter.game_controller().endgame_end_type = Enums.EventOutcomeType.HEAT_PORT_FAILURE
 
 
 	return logs
@@ -324,9 +324,9 @@ func _heat_endgame_train_4() -> Array[TurnLog]:
 	var charm_roll = statistic_check.charm_check()
 
 	if charm_roll:
-		GlobalMilestones.endgame_end_type = Enums.EventOutcomeType.HEAT_TRAIN_SUCCESS
+		ReferenceGetter.game_controller().endgame_end_type = Enums.EventOutcomeType.HEAT_TRAIN_SUCCESS
 	else:
-		GlobalMilestones.endgame_end_type = Enums.EventOutcomeType.HEAT_TRAIN_FAILURE
+		ReferenceGetter.game_controller().endgame_end_type = Enums.EventOutcomeType.HEAT_TRAIN_FAILURE
 
 	return logs
 
@@ -452,7 +452,7 @@ func _resistance_endgame_4() -> Array[TurnLog]:
 		# popup new endgame event panel
 		EventBus.new_endgame_step.emit(Enums.EventOutcomeType.RESISTANCE_AIRFIELD_05)
 	else:
-		GlobalMilestones.endgame_end_type = Enums.EventOutcomeType.GAME_OVER
+		ReferenceGetter.game_controller().endgame_end_type = Enums.EventOutcomeType.GAME_OVER
 
 	return logs
 
@@ -467,8 +467,8 @@ func _resistance_endgame_5() -> Array[TurnLog]:
 	if charm_roll:
 		ReferenceGetter.game_controller().resistance_endgame_step = 5
 		logs.append(TurnLog.new("YOU WIN! Resistance endgame complete!", Enums.LogType.ACTION_INFO))
-		GlobalMilestones.endgame_end_type = Enums.EventOutcomeType.RESISTANCE_AIRFIELD_SUCCESS
+		ReferenceGetter.game_controller().endgame_end_type = Enums.EventOutcomeType.RESISTANCE_AIRFIELD_SUCCESS
 	else:
-		GlobalMilestones.endgame_end_type = Enums.EventOutcomeType.RESISTANCE_AIRFIELD_SUCCESS
+		ReferenceGetter.game_controller().endgame_end_type = Enums.EventOutcomeType.RESISTANCE_AIRFIELD_SUCCESS
 
 	return logs

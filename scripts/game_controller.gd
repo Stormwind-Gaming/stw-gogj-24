@@ -63,6 +63,8 @@ var heat_endgame_port_step: int = 0
 var heat_endgame_train_step: int = 0
 var resistance_endgame_step: int = 0
 
+var endgame_end_type: Enums.EventOutcomeType = Enums.EventOutcomeType.NONE
+
 #|==============================|
 #|      Lifecycle Methods      |
 #|==============================|
@@ -89,6 +91,7 @@ func reset() -> void:
 	heat_endgame_train_step = 0
 	resistance_endgame_step = 0
 	max_agents = Constants.INIT_MAX_AGENTS
+	endgame_end_type = Enums.EventOutcomeType.NONE
 
 	# disconnect signals
 	if EventBus.selected_radial_option.is_connected(_on_radial_option_selected):
@@ -264,8 +267,8 @@ func process_turn() -> void:
 
 	# check if player has any sympathisers left
 	var all_sympathisers = ReferenceGetter.global_registry().characters.list_size(ReferenceGetter.global_registry().LIST_SYMPATHISER_RECRUITED) + ReferenceGetter.global_registry().characters.list_size(ReferenceGetter.global_registry().LIST_SYMPATHISER_NOT_RECRUITED)
-	if GlobalMilestones.endgame_end_type != Enums.EventOutcomeType.NONE:
-		match GlobalMilestones.endgame_end_type:
+	if endgame_end_type != Enums.EventOutcomeType.NONE:
+		match endgame_end_type:
 			Enums.EventOutcomeType.HEAT_PORT_SUCCESS:
 				Analytics.add_event("Game over", { "outcome": "heat_port_success" })
 			Enums.EventOutcomeType.HEAT_TRAIN_SUCCESS:
@@ -287,7 +290,7 @@ func process_turn() -> void:
 		EventBus.game_over.emit()
 	elif all_sympathisers == 0:
 		Analytics.add_event("Game over", { "outcome": "no_sympathisers" })
-		GlobalMilestones.endgame_end_type = Enums.EventOutcomeType.GAME_OVER
+		endgame_end_type = Enums.EventOutcomeType.GAME_OVER
 		EventBus.game_over.emit()
 	else:
 		# Emit the signal to end the turn

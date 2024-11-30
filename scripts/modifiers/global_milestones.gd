@@ -15,7 +15,6 @@ var global_sympathy_breakpoint_low: bool = false # 30
 var global_sympathy_breakpoint_medium: bool = false # 45
 var global_sympathy_breakpoint_high: bool = false # 60
 
-var endgame_end_type: Enums.EventOutcomeType = Enums.EventOutcomeType.NONE
 
 #|==============================|
 #|      Lifecycle Methods       |
@@ -115,5 +114,3 @@ func reset() -> void:
 	global_sympathy_breakpoint_low = false
 	global_sympathy_breakpoint_medium = false
 	global_sympathy_breakpoint_high = false
-
-	endgame_end_type = Enums.EventOutcomeType.NONE
