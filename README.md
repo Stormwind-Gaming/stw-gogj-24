@@ -2,10 +2,10 @@
 Classified: Top Secret is a strategic game of espionage, courage, and resistance set in the heart of occupied Belgium during World War II. Take command of a covert resistance network as you fight to undermine the occupying forces, gather vital intelligence, and protect your fellow citizens.
 
 ## Game Features
-Historical Setting: Immerse yourself in the tension and danger of 1942 Belgium, divided into five distinct districts.
-Strategic Gameplay: Recruit operatives, and plan missions to disrupt enemy plans and aid the resistance.
-Dynamic Resistance Network: Adapt to ever-changing threats and challenges as your choices shape the course of the resistance.
-Compelling Storytelling: Follow gripping narratives of bravery and sacrifice inspired by real historical events.
+* Historical Setting: Immerse yourself in the tension and danger of 1942 Belgium, divided into five distinct districts.
+* Strategic Gameplay: Recruit operatives, and plan missions to disrupt enemy plans and aid the resistance.
+* Dynamic Resistance Network: Adapt to ever-changing threats and challenges as your choices shape the course of the resistance.
+* Compelling Storytelling: Follow gripping narratives of bravery and sacrifice inspired by real historical events.
 
 ## How to Play
 In Classified: Top Secret, you’ll engage in a cycle of actions to grow your network and push back against the occupying forces:
