@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://cycbgoiurr4vt"]
+[gd_scene load_steps=21 format=3 uid="uid://cycbgoiurr4vt"]
 
 [ext_resource type="Material" uid="uid://c54ww8tfg8wh7" path="res://assets/materials/agent_card_shader_material.tres" id="1_3f0ao"]
 [ext_resource type="Script" path="res://scripts/gui/agent_card.gd" id="1_s8gp7"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://dym5qqj722706" path="res://assets/select_cover.png" id="9_yo54u"]
 [ext_resource type="Texture2D" uid="uid://5t6xu00wsvwi" path="res://assets/icons/target.png" id="10_v8gms"]
 [ext_resource type="Texture2D" uid="uid://bcsjhr1sajkmw" path="res://assets/icons/target_hover.png" id="11_hkkn2"]
+[ext_resource type="Texture2D" uid="uid://rljmkal1w4vw" path="res://assets/icons/home-circle.png" id="15_gvqeb"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_15n0s"]
 
@@ -37,7 +38,7 @@ bg_color = Color(0, 0.727352, 0.11733, 1)
 
 [sub_resource type="ImageTexture" id="ImageTexture_j0uh2"]
 
-[node name="AgentCard" type="PanelContainer" node_paths=PackedStringArray("character_texture", "status_overlay", "gender_label", "dob_label", "nationality_label", "profession_label", "national_id_label", "sympathy_progress", "charm_label", "subtlety_label", "smarts_label", "assignment_button", "set_unset_agent_button", "popup_button")]
+[node name="AgentCard" type="PanelContainer" node_paths=PackedStringArray("character_texture", "status_overlay", "gender_label", "dob_label", "nationality_label", "profession_label", "national_id_label", "sympathy_progress", "charm_label", "subtlety_label", "smarts_label", "assignment_button", "set_unset_agent_button", "popup_button", "jump_to_button")]
 material = ExtResource("1_3f0ao")
 clip_contents = true
 anchors_preset = 8
@@ -67,6 +68,7 @@ smarts_label = NodePath("MarginContainer/VBoxContainer/HBoxContainer/StatsVBoxCo
 assignment_button = NodePath("AssignmentButton")
 set_unset_agent_button = NodePath("CharacterPageButton")
 popup_button = NodePath("PopupButton")
+jump_to_button = NodePath("JumpToButton")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -303,6 +305,7 @@ layout_mode = 2
 theme_override_constants/margin_top = 1
 
 [node name="ProgressBar" type="ProgressBar" parent="MarginContainer/VBoxContainer/Sympathy"]
+visible = false
 layout_mode = 2
 theme_override_styles/fill = SubResource("StyleBoxFlat_vppwv")
 min_value = 1.0
@@ -356,6 +359,16 @@ texture_normal = ExtResource("10_v8gms")
 texture_hover = ExtResource("11_hkkn2")
 ignore_texture_size = true
 stretch_mode = 0
+
+[node name="TextureRect" type="TextureRect" parent="."]
+visible = false
+custom_minimum_size = Vector2(15, 15)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+texture = ExtResource("15_gvqeb")
+expand_mode = 1
+stretch_mode = 5
 
 [connection signal="toggled" from="AssignmentButton" to="." method="_on_assignment_button_toggled"]
 [connection signal="pressed" from="CharacterPageButton" to="." method="_on_set_unset_agent_button_pressed"]

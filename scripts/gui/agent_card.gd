@@ -21,6 +21,9 @@ extends PanelContainer
 @export var set_unset_agent_button: TextureButton
 @export var popup_button: TextureButton
 
+@export var jump_to_button: TextureButton
+@export var owner_icon: TextureRect
+
 var character: set = set_character
 
 #|==============================|
@@ -62,8 +65,12 @@ func set_character(my_character: Character):
 	subtlety_label.text = stats.subtlety
 	smarts_label.text = stats.smarts
 
-	if character.char_state == Enums.CharacterRecruitmentState.NON_SYMPATHISER_KNOWN:
+	if character.char_recruitment_state == Enums.CharacterRecruitmentState.NON_SYMPATHISER_KNOWN:
 		sympathy_progress.visible = true
+
+func set_owner_icon() -> void:
+	jump_to_button.visible = false
+	owner_icon.visible = true
 
 #|==============================|
 #|       Event Listeners        |
