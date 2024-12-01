@@ -9,7 +9,7 @@ var _values: Dictionary = {}
 
 # Google Sheets API configuration
 const SHEET_ID = "1TzJdWg-OfYQHSuT3lqEoHVVVSNJ7cnjfNcGScg9whpg"
-const API_KEY = "AIzaSyDsYeyBZPlQbxacdjJOfrwfdtClzqQpVks"
+const API_KEY = "AIzaSyDsYeyBZPlQbxacdjJOfrwfdtClzqQpVks" # This key is obsolete
 const BASE_URL = "https://sheets.googleapis.com/v4/spreadsheets/%s/values/%s?key=%s"
 
 func _ready():
