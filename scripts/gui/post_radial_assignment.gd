@@ -133,8 +133,15 @@ func _ready():
 	for agent in agents:
 		var agent_instance = Globals.agent_card_scene.instantiate()
 		agent_instance.set_character(agent)
+		
 		agent_instance.agent_card_selected.connect(_on_agent_card_selected)
 		agent_card_grid.add_child(agent_instance)
+		
+		# check if this agent is the owner of the poi
+		if poi.poi_owner == agent:
+			agent_instance.set_owner_icon()
+			# move this agent to the front of the list
+			agent_card_grid.move_child(agent_instance, 0)
 		agent_instance.check_assignment_selection(poi, option)
 	
 	# set max agents based on the action type
