@@ -125,7 +125,7 @@ func _process(delta):
 			position.y = clamp(position.y, initial_position.y - max_offset_y, initial_position.y + max_offset_y)
 	
 	# Check if the right mouse button is held down
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_MIDDLE) or Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
+	if (Input.is_mouse_button_pressed(MOUSE_BUTTON_MIDDLE) or Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT) and not mouse_off_screen):
 		if WindowHandler.any_windows_open():
 			EventBus.close_all_windows.emit()
 		if camera_enabled:
@@ -187,3 +187,14 @@ func _process(delta):
 	if current_zoom != initial_zoom:
 		current_zoom = current_zoom.lerp(initial_zoom, 0.05)
 		self.zoom = current_zoom
+
+
+var mouse_off_screen = false
+"""
+@brief Called when the mouse enters or leaves the viewport
+"""
+func _notification(what):
+	if what == NOTIFICATION_WM_MOUSE_ENTER:
+		mouse_off_screen = false
+	elif what == NOTIFICATION_WM_MOUSE_EXIT:
+		mouse_off_screen = true
