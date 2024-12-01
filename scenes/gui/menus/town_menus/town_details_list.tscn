@@ -1,10 +1,12 @@
-[gd_scene load_steps=19 format=3 uid="uid://ddpshfqye7g1r"]
+[gd_scene load_steps=21 format=3 uid="uid://ddpshfqye7g1r"]
 
 [ext_resource type="Theme" uid="uid://dexax20p2eewp" path="res://assets/themes/base_theme.tres" id="1_1hyes"]
 [ext_resource type="Script" path="res://scripts/gui/town_details_list.gd" id="2_3xmns"]
 [ext_resource type="Texture2D" uid="uid://cymum3g0jnd7l" path="res://assets/sprites/popup_panel_background_75.png" id="3_hspss"]
+[ext_resource type="Script" path="res://scripts/gui/heat_progress_bar.gd" id="4_6rntw"]
 [ext_resource type="Texture2D" uid="uid://ctiq8sa8m5iv" path="res://assets/sprites/close_ribbon_black.png" id="4_y64no"]
 [ext_resource type="Texture2D" uid="uid://5vk04yychida" path="res://assets/sprites/close_ribbon_white.png" id="5_c8dr7"]
+[ext_resource type="Script" path="res://scripts/gui/resistance_progress_bar.gd" id="5_ovnqc"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t22im"]
 
@@ -169,6 +171,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_l6pk6")
 step = 1.0
 value = 50.0
 show_percentage = false
+script = ExtResource("4_6rntw")
 
 [node name="Label" type="Label" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/ScrollContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/HeatProgressBar"]
 layout_mode = 1
@@ -190,6 +193,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_5js80")
 step = 1.0
 value = 50.0
 show_percentage = false
+script = ExtResource("5_ovnqc")
 
 [node name="Label" type="Label" parent="NinePatchRect/MarginContainer/VBoxContainer/TabContainer/Town/MarginContainer/ScrollContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/ResistanceProgressBar"]
 layout_mode = 1

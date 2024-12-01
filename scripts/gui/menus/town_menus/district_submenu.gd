@@ -86,12 +86,16 @@ func set_district(district: District) -> void:
 	self.resistance_bar_label.text = "District Resistance"
 	# self.resistance_bar_label.text = "Resistance - %s" % str(district.sympathy) + "%"
 	
-	var bonuses = ReferenceGetter.global_registry().modifiers.get_all_items().filter(func(x): return x.active == true and x.district == district)
+	var all_bonuses = ReferenceGetter.global_registry().modifiers.get_all_items()
+	var bonuses = []
+	for bonus in all_bonuses:
+		if is_instance_valid(bonus) and bonus.district == district:
+			bonuses.append(bonus)
+
 	modifier_text.text = ""
 	if bonuses.size() > 0:
 		modifier_text.text += "[font_size=20]Active Effects:[/font_size]\n"
 		for bonus in bonuses:
-			print(bonus)
 			modifier_text.text += "%s - %s" % [bonus.modifier_name, bonus.get_modification_effect_text()]
 			modifier_text.text += "\n"
 
