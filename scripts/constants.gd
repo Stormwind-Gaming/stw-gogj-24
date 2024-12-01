@@ -14,12 +14,12 @@ var INIT_MAX_AGENTS: int = 2
 """
 @brief Heat threshold for triggering the heat endgame
 """
-var HEAT_ENDGAME_THRESHOLD: int = 40
+var HEAT_ENDGAME_THRESHOLD: int = 60
 
 """
 @brief Resistance threshold for triggering the resistance endgame
 """
-var RESISTANCE_ENDGAME_THRESHOLD: int = 40
+var RESISTANCE_ENDGAME_THRESHOLD: int = 60
 
 #|==============================|
 #|    Character Initialization  |
@@ -70,7 +70,7 @@ var CHARACTER_INIT_SMARTS_MAX: int = 10
 """
 @brief Number of turns to wait before a rumour expires
 """
-var RUMOUR_EXPIRY_TURNS: int = 3
+var RUMOUR_EXPIRY_TURNS: int = 5
 
 #|==============================|
 #|    District Initialization   |
@@ -78,7 +78,7 @@ var RUMOUR_EXPIRY_TURNS: int = 3
 """
 @brief Minimum initial heat value for new districts
 """
-var DISTRICT_INIT_HEAT_MIN: int = 39
+var DISTRICT_INIT_HEAT_MIN: int = 10
 
 """
 @brief Maximum initial heat value for new districts
@@ -102,7 +102,7 @@ var DISTRICT_HEAT_DECREASE_PER_TURN_MAX: int = 0
 """
 @brief Maximum number of agents that can be assigned to a surveillance action
 """
-var ACTION_SURVEILLANCE_MAX_AGENTS: int = 1
+var ACTION_SURVEILLANCE_MAX_AGENTS: int = 2
 
 """
 @brief Maximum number of agents that can be assigned to a propaganda action
@@ -112,7 +112,7 @@ var ACTION_PROPAGANDA_MAX_AGENTS: int = 2
 """
 @brief Maximum number of agents that can be assigned to an espionage action
 """
-var ACTION_ESPIONAGE_MAX_AGENTS: int = 3
+var ACTION_ESPIONAGE_MAX_AGENTS: int = 2
 
 """
 @brief Maximum number of agents that can be assigned to a plan action (also includes endgame plans)
@@ -122,62 +122,62 @@ var ACTION_PLAN_MAX_AGENTS: int = 5
 """
 @brief Minimum amount of heat added to a district when an action fails
 """
-var ACTION_EFFECT_FAILED_SUBTLETY_MIN: int = 2
+var ACTION_EFFECT_FAILED_SUBTLETY_MIN: int = 3
 
 """
 @brief Maximum amount of heat added to a district when an action fails
 """
-var ACTION_EFFECT_FAILED_SUBTLETY_MAX: int = 4
+var ACTION_EFFECT_FAILED_SUBTLETY_MAX: int = 6
 
 """
 @brief Minimum amount of heat added to a district when an action succeeds
 """
-var ACTION_EFFECT_SUCCESS_SUBTLETY_MIN: int = 1
+var ACTION_EFFECT_SUCCESS_SUBTLETY_MIN: int = 2
 
 """
 @brief Maximum amount of heat added to a district when an action succeeds
 """
-var ACTION_EFFECT_SUCCESS_SUBTLETY_MAX: int = 2
+var ACTION_EFFECT_SUCCESS_SUBTLETY_MAX: int = 4
 
 """
 @brief Minimum amount of sympathy added to a character when a propaganda action is completed
 """
-var ACTION_EFFECT_PROPAGANDA_SYMPATHY_MIN: int = 10
+var ACTION_EFFECT_PROPAGANDA_SYMPATHY_MIN: int = 25
 
 """
 @brief Maximum amount of sympathy added to a character when a propaganda action is completed
 """
-var ACTION_EFFECT_PROPAGANDA_SYMPATHY_MAX: int = 20
+var ACTION_EFFECT_PROPAGANDA_SYMPATHY_MAX: int = 35
 
 """
 @brief Minimum amount of sympathy added to a character when executing BUILD_SYMPATHY plans
 """
-var ACTION_EFFECT_PLAN_BUILD_SYMPATHY_MIN: int = 35
+var ACTION_EFFECT_PLAN_BUILD_SYMPATHY_MIN: int = 50
 
 """
 @brief Maximum amount of sympathy added to a character when executing BUILD_SYMPATHY plans
 """
-var ACTION_EFFECT_PLAN_BUILD_SYMPATHY_MAX: int = 45
+var ACTION_EFFECT_PLAN_BUILD_SYMPATHY_MAX: int = 75
 
 """
 @brief Minimum amount of sympathy added to all characters in a district when executing BUILD_SYMPATHY_ALL plans
 """
-var ACTION_EFFECT_PLAN_BUILD_SYMPATHY_ALL_MIN: int = 8
+var ACTION_EFFECT_PLAN_BUILD_SYMPATHY_ALL_MIN: int = 25
 
 """
 @brief Maximum amount of sympathy added to all characters in a district when executing BUILD_SYMPATHY_ALL plans
 """
-var ACTION_EFFECT_PLAN_BUILD_SYMPATHY_ALL_MAX: int = 12
+var ACTION_EFFECT_PLAN_BUILD_SYMPATHY_ALL_MAX: int = 30
 
 """
 @brief Minimum amount of heat reduced from a district when executing REDUCE_HEAT plans
 """
-var ACTION_EFFECT_PLAN_REDUCE_HEAT_MIN: int = 15
+var ACTION_EFFECT_PLAN_REDUCE_HEAT_MIN: int = 20
 
 """
 @brief Maximum amount of heat reduced from a district when executing REDUCE_HEAT plans
 """
-var ACTION_EFFECT_PLAN_REDUCE_HEAT_MAX: int = 25
+var ACTION_EFFECT_PLAN_REDUCE_HEAT_MAX: int = 30
 
 """
 @brief Minimum amount of heat reduced from all districts when executing REDUCE_HEAT_ALL plans
@@ -252,10 +252,10 @@ DECEASED: 0.150 / 0.775 = 0.194   (19.4%)
 Total:                   1.000   (100%)
 """
 
-var FAILURE_CONSEQUENCE_NONE: float = 0.80
-var FAILURE_CONSEQUENCE_INJURED: float = 0.1
-var FAILURE_CONSEQUENCE_MIA: float = 0.05
-var FAILURE_CONSEQUENCE_DECEASED: float = 0.05
+var FAILURE_CONSEQUENCE_NONE: float = 0.70
+var FAILURE_CONSEQUENCE_INJURED: float = 0.22
+var FAILURE_CONSEQUENCE_MIA: float = 0.06
+var FAILURE_CONSEQUENCE_DECEASED: float = 0.02
 
 var FAILURE_HEAT_MOD_NONE: float = 0.5
 var FAILURE_HEAT_MOD_INJURED: float = 0.1
@@ -267,12 +267,12 @@ var FAILURE_HEAT_MOD_DECEASED: float = 0.1
 #| 		Global Sympathy	/ Heat		|
 #|==============================|
 
-var GLOBAL_SYMPATHY_BREAKPOINT_LOW: int = 40
-var GLOBAL_SYMPATHY_BREAKPOINT_MEDIUM: int = 50
-var GLOBAL_SYMPATHY_BREAKPOINT_HIGH: int = 60
+var GLOBAL_SYMPATHY_BREAKPOINT_LOW: int = 35
+var GLOBAL_SYMPATHY_BREAKPOINT_MEDIUM: int = 45
+var GLOBAL_SYMPATHY_BREAKPOINT_HIGH: int = 55
 
 var GLOBAL_HEAT_BREAKPOINT_MEDIUM: int = 35
-var GLOBAL_HEAT_BREAKPOINT_HIGH: int = 70
+var GLOBAL_HEAT_BREAKPOINT_HIGH: int = 50
 
 
 #|==============================|
@@ -379,7 +379,7 @@ var PORT_DISTRICT_BONUS_BREAKPOINT: int = 66
 @brief Minimum chance bounding (%) for a world event check to trigger
 Used in sigmoid probability calculation for event occurrence
 """
-var WORLD_EVENT_CHECK_MIN_CHANCE: float = 10.0
+var WORLD_EVENT_CHECK_MIN_CHANCE: float = 20.0
 
 """
 @brief Maximum chance bounding (%) for a world event check to trigger
@@ -430,7 +430,7 @@ var NEW_SYMPATHISER_THRESHOLD: int = 80
 """
 @brief Minimum possible success chance for subtlety checks (%)
 """
-var SUBTLETY_CHECK_MIN_CHANCE: float = 20.0
+var SUBTLETY_CHECK_MIN_CHANCE: float = 25.0
 
 """
 @brief Maximum possible success chance for subtlety checks (%)
@@ -440,7 +440,7 @@ var SUBTLETY_CHECK_MAX_CHANCE: float = 80.0
 """
 @brief Minimum possible success chance for smarts checks (%)
 """
-var SMARTS_CHECK_MIN_CHANCE: float = 20.0
+var SMARTS_CHECK_MIN_CHANCE: float = 25.0
 
 """
 @brief Maximum possible success chance for smarts checks (%)
@@ -450,7 +450,7 @@ var SMARTS_CHECK_MAX_CHANCE: float = 80.0
 """
 @brief Minimum possible success chance for charm checks (%)
 """
-var CHARM_CHECK_MIN_CHANCE: float = 20.0
+var CHARM_CHECK_MIN_CHANCE: float = 25.0
 
 """
 @brief Maximum possible success chance for charm checks (%)
@@ -599,9 +599,11 @@ var WORLD_EVENT_MAJOR_SAFEHOUSE_DISCOVERED_HEAT_CHANGE: int = 40
 
 
 func _ready():
-	config = ConfigLoader.new()
-	add_child(config)
-	config.connect("constants_loaded", _on_constants_loaded)
+	# Uncomment this to load from Google Sheets
+	return
+	# config = ConfigLoader.new()
+	# add_child(config)
+	# config.connect("constants_loaded", _on_constants_loaded)
 
 func _on_constants_loaded():
 	# Game Initialization
