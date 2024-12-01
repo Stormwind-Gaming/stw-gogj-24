@@ -150,7 +150,10 @@ func _on_turn_button_pressed():
 			popup.on_confirmed.connect(_on_turn_confirmed)
 			add_child(popup)
 			return
-	_on_turn_confirmed()
+	var popup = Globals.confirmation_dialog_scene.instantiate()
+	popup.setup_dialog("Are you sure you want to end the turn?", "End Turn", "Cancel")
+	popup.on_confirmed.connect(_on_turn_confirmed)
+	add_child(popup)
 
 """
 @brief Handles the turn confirmation.

@@ -30,6 +30,7 @@ visible = false
 [node name="pois" type="Node2D" parent="."]
 
 [node name="Poi_Ammo_Factory" parent="pois" instance=ExtResource("3_c5tls")]
+z_index = 3
 poi_static = true
 poi_static_type = 27
 poi_static_name = "Ammo Factory"
@@ -44,6 +45,7 @@ timing_static_chance = 10
 polygon = PackedVector2Array(588, -78, 674, -72, 674, -164, 611, -177)
 
 [node name="Poi_Post_Office" parent="pois" instance=ExtResource("3_c5tls")]
+z_index = 3
 poi_static = true
 poi_static_type = 4
 poi_static_name = "Post Office"
@@ -59,6 +61,7 @@ stat_check_type = 2
 polygon = PackedVector2Array(325, -99, 392, -91, 405, -208, 344, -216)
 
 [node name="Poi_Police_Station" parent="pois" instance=ExtResource("3_c5tls")]
+z_index = 3
 poi_static = true
 poi_static_type = 5
 poi_static_name = "Police Station"
@@ -73,6 +76,7 @@ timing_static_chance = 20
 polygon = PackedVector2Array(577, 12, 556, 66, 617, 89, 638, 90, 641, 83, 772, 58, 765, 26, 754, 3, 734, -5, 705, -14, 693, -17, 680, -11, 680, 21, 685, 29, 686, 42, 686, 50, 636, 46, 640, 30)
 
 [node name="Poi3" parent="pois" instance=ExtResource("3_c5tls")]
+z_index = 3
 poi_static_type = 4
 poi_static_name = " Post Office"
 poi_static_description = "This is a Post Office"
@@ -81,6 +85,7 @@ poi_static_description = "This is a Post Office"
 polygon = PackedVector2Array(226, -311, 278, -307, 291, -401, 236, -405)
 
 [node name="Poi4" parent="pois" instance=ExtResource("3_c5tls")]
+z_index = 3
 poi_static_type = 4
 poi_static_name = " Post Office"
 poi_static_description = "This is a Post Office"
@@ -90,6 +95,7 @@ polygon = PackedVector2Array(226, -301, 279, -294, 275, -231, 211, -239)
 
 [node name="Poi5" parent="pois" instance=ExtResource("3_c5tls")]
 visible = false
+z_index = 3
 poi_static_type = 4
 poi_static_name = " Post Office"
 poi_static_description = "This is a Post Office"
@@ -99,6 +105,7 @@ polygon = PackedVector2Array(210, -226, 268, -218, 257, -159, 197, -166)
 
 [node name="Poi6" parent="pois" instance=ExtResource("3_c5tls")]
 visible = false
+z_index = 3
 poi_static_type = 4
 poi_static_name = " Post Office"
 poi_static_description = "This is a Post Office"
@@ -108,6 +115,7 @@ polygon = PackedVector2Array(170, -85, 192, -73, 207, -115, 219, -123, 242, -112
 
 [node name="Poi7" parent="pois" instance=ExtResource("3_c5tls")]
 visible = false
+z_index = 3
 poi_static_type = 4
 poi_static_name = " Post Office"
 poi_static_description = "This is a Post Office"
@@ -117,6 +125,7 @@ polygon = PackedVector2Array(600, -180, 592, -123, 527, -125, 535, -194)
 
 [node name="Poi8" parent="pois" instance=ExtResource("3_c5tls")]
 visible = false
+z_index = 3
 poi_static_type = 4
 poi_static_name = " Post Office"
 poi_static_description = "This is a Post Office"
@@ -126,6 +135,7 @@ polygon = PackedVector2Array(525, -116, 589, -112, 575, -36, 508, -47)
 
 [node name="Poi9" parent="pois" instance=ExtResource("3_c5tls")]
 visible = false
+z_index = 3
 poi_static_type = 4
 poi_static_name = " Post Office"
 poi_static_description = "This is a Post Office"
@@ -135,6 +145,7 @@ polygon = PackedVector2Array(508, -41, 568, -28, 559, 6, 570, 10, 554, 55, 483, 
 
 [node name="Poi10" parent="pois" instance=ExtResource("3_c5tls")]
 visible = false
+z_index = 3
 poi_static_type = 4
 poi_static_name = " Post Office"
 poi_static_description = "This is a Post Office"
@@ -144,6 +155,7 @@ polygon = PackedVector2Array(587, -73, 583, -29, 671, -27, 673, -68)
 
 [node name="Poi11" parent="pois" instance=ExtResource("3_c5tls")]
 visible = false
+z_index = 3
 poi_static_type = 4
 poi_static_name = " Post Office"
 poi_static_description = "This is a Post Office"
@@ -153,6 +165,7 @@ polygon = PackedVector2Array(578, -22, 570, 3, 649, 6, 646, 38, 671, 42, 674, -1
 
 [node name="Poi12" parent="pois" instance=ExtResource("3_c5tls")]
 visible = false
+z_index = 3
 poi_static_type = 4
 poi_static_name = " Post Office"
 poi_static_description = "This is a Post Office"
@@ -162,6 +175,7 @@ polygon = PackedVector2Array(268, -157, 321, -151, 333, -217, 281, -226)
 
 [node name="Poi13" parent="pois" instance=ExtResource("3_c5tls")]
 visible = false
+z_index = 3
 poi_static_type = 4
 poi_static_name = " Post Office"
 poi_static_description = "This is a Post Office"

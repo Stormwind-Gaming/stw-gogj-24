@@ -30,6 +30,7 @@ visible = false
 [node name="pois" type="Node2D" parent="."]
 
 [node name="Poi_Train_Station" parent="pois" instance=ExtResource("4_c6rks")]
+z_index = 3
 poi_static = true
 poi_static_type = 6
 poi_static_name = "Train Station"
@@ -44,6 +45,7 @@ timing_static_chance = 33
 polygon = PackedVector2Array(650, 754, 677, 741, 686, 742, 693, 745, 700, 755, 711, 757, 786, 746, 869, 724, 897, 727, 878, 550, 866, 537, 722, 565, 735, 646, 669, 654, 662, 690, 635, 742)
 
 [node name="Poi_Foundry" parent="pois" instance=ExtResource("4_c6rks")]
+z_index = 3
 poi_static = true
 poi_static_type = 28
 poi_static_name = "Foundry"
@@ -59,6 +61,7 @@ stat_check_type = 2
 polygon = PackedVector2Array(527, 724, 537, 749, 560, 782, 539, 809, 505, 807, 427, 836, 400, 774)
 
 [node name="Poi2" parent="pois" instance=ExtResource("4_c6rks")]
+z_index = 3
 poi_static_type = 6
 poi_static_name = "Train Station"
 poi_static_description = "This is The Train Station"
@@ -67,6 +70,7 @@ poi_static_description = "This is The Train Station"
 polygon = PackedVector2Array(446, 742, 515, 718, 485, 630, 424, 646)
 
 [node name="Poi3" parent="pois" instance=ExtResource("4_c6rks")]
+z_index = 3
 poi_static_type = 6
 poi_static_name = "Train Station"
 poi_static_description = "This is The Train Station"
@@ -75,6 +79,7 @@ poi_static_description = "This is The Train Station"
 polygon = PackedVector2Array(436, 747, 394, 758, 363, 669, 410, 650)
 
 [node name="Poi4" parent="pois" instance=ExtResource("4_c6rks")]
+z_index = 3
 poi_static_type = 6
 poi_static_name = "Train Station"
 poi_static_description = "This is The Train Station"
@@ -84,6 +89,7 @@ polygon = PackedVector2Array(316, 743, 366, 722, 350, 671, 303, 688)
 
 [node name="Poi5" parent="pois" instance=ExtResource("4_c6rks")]
 visible = false
+z_index = 3
 poi_static_type = 6
 poi_static_name = "Train Station"
 poi_static_description = "This is The Train Station"
@@ -93,6 +99,7 @@ polygon = PackedVector2Array(294, 691, 253, 706, 251, 717, 258, 761, 309, 744)
 
 [node name="Poi7" parent="pois" instance=ExtResource("4_c6rks")]
 visible = false
+z_index = 3
 poi_static_type = 6
 poi_static_name = "Train Station"
 poi_static_description = "This is The Train Station"
@@ -102,6 +109,7 @@ polygon = PackedVector2Array(391, 778, 400, 804, 300, 842, 291, 817)
 
 [node name="Poi8" parent="pois" instance=ExtResource("4_c6rks")]
 visible = false
+z_index = 3
 poi_static_type = 6
 poi_static_name = "Train Station"
 poi_static_description = "This is The Train Station"
@@ -111,6 +119,7 @@ polygon = PackedVector2Array(241, 837, 280, 820, 302, 869, 312, 901, 254, 932, 2
 
 [node name="Poi9" parent="pois" instance=ExtResource("4_c6rks")]
 visible = false
+z_index = 3
 poi_static_type = 6
 poi_static_name = "Train Station"
 poi_static_description = "This is The Train Station"
@@ -120,6 +129,7 @@ polygon = PackedVector2Array(413, 843, 316, 882, 300, 842, 400, 804)
 
 [node name="Poi11" parent="pois" instance=ExtResource("4_c6rks")]
 visible = false
+z_index = 3
 poi_static_type = 6
 poi_static_name = "Train Station"
 poi_static_description = "This is The Train Station"
@@ -129,6 +139,7 @@ polygon = PackedVector2Array(503, 811, 534, 812, 466, 897, 450, 905, 425, 843)
 
 [node name="Poi12" parent="pois" instance=ExtResource("4_c6rks")]
 visible = false
+z_index = 3
 poi_static_type = 6
 poi_static_name = "Train Station"
 poi_static_description = "This is The Train Station"
@@ -138,6 +149,7 @@ polygon = PackedVector2Array(521, 713, 503, 670, 494, 627, 566, 614, 570, 624, 5
 
 [node name="Poi13" parent="pois" instance=ExtResource("4_c6rks")]
 visible = false
+z_index = 3
 poi_static_type = 6
 poi_static_name = "Train Station"
 poi_static_description = "This is The Train Station"
@@ -147,6 +159,7 @@ polygon = PackedVector2Array(536, 722, 554, 762, 565, 777, 574, 771, 579, 763, 5
 
 [node name="Poi14" parent="pois" instance=ExtResource("4_c6rks")]
 visible = false
+z_index = 3
 poi_static_type = 6
 poi_static_name = "Train Station"
 poi_static_description = "This is The Train Station"
@@ -156,6 +169,7 @@ polygon = PackedVector2Array(579, 750, 582, 757, 589, 755, 600, 746, 610, 730, 6
 
 [node name="Poi15" parent="pois" instance=ExtResource("4_c6rks")]
 visible = false
+z_index = 3
 poi_static_type = 6
 poi_static_name = "Train Station"
 poi_static_description = "This is The Train Station"

@@ -69,7 +69,7 @@ func set_district(district: District) -> void:
 	self.description.text = ReferenceGetter.game_controller().town_details.get_district_description(district.district_type)
 	
 	self.heat_bar.value = district.heat
-	self.heat_bar_label.text = "Heat"
+	self.heat_bar_label.text = "District Heat"
 	# self.heat_bar_label.text = "Heat - %s" % str(district.heat) + "%"
 	self.resistance_bar.value = district.sympathy
 	match district.district_type:
@@ -83,7 +83,7 @@ func set_district(district: District) -> void:
 			self.resistance_bar.max_value = Constants.MILITARY_DISTRICT_BONUS_BREAKPOINT + 1
 		Enums.DistrictType.PORT:
 			self.resistance_bar.max_value = Constants.PORT_DISTRICT_BONUS_BREAKPOINT + 1
-	self.resistance_bar_label.text = "Resistance"
+	self.resistance_bar_label.text = "District Resistance"
 	# self.resistance_bar_label.text = "Resistance - %s" % str(district.sympathy) + "%"
 	
 	var bonuses = ReferenceGetter.global_registry().modifiers.get_all_items().filter(func(x): return x.active == true and x.district == district)

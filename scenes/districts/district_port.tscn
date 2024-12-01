@@ -30,6 +30,7 @@ visible = false
 [node name="pois" type="Node2D" parent="."]
 
 [node name="Poi_Docks" parent="pois" instance=ExtResource("4_wxf62")]
+z_index = 3
 poi_static = true
 poi_static_type = 7
 poi_static_name = "Docks"
@@ -45,6 +46,7 @@ stat_check_type = 2
 polygon = PackedVector2Array(111, 735, 223, 708, 265, 691, 262, 679, 255, 680, 231, 585, 187, 542, 163, 544, 164, 563, 127, 568, 87, 575, 55, 353, 44, 354, 31, 441, 48, 576, -80, 597, -243, 611, -266, 606, -272, 623, -266, 643, -252, 651, -197, 647, -123, 636, -46, 627, -1, 626, 32, 629, 47, 641, 68, 665, 82, 690, 92, 721, 97, 736)
 
 [node name="Poi2" parent="pois" instance=ExtResource("4_wxf62")]
+z_index = 3
 poi_static_type = 7
 poi_static_name = "Docks"
 poi_static_description = "Here are some docks"
@@ -53,6 +55,7 @@ poi_static_description = "Here are some docks"
 polygon = PackedVector2Array(268, 683, 274, 685, 285, 684, 338, 661, 343, 658, 344, 649, 337, 639, 330, 635, 322, 619, 311, 623, 290, 584, 259, 603, 251, 612, 256, 648)
 
 [node name="Poi3" parent="pois" instance=ExtResource("4_wxf62")]
+z_index = 3
 poi_static_type = 7
 poi_static_name = "Docks"
 poi_static_description = "Here are some docks"
@@ -61,6 +64,7 @@ poi_static_description = "Here are some docks"
 polygon = PackedVector2Array(290, 573, 310, 601, 313, 615, 320, 615, 326, 610, 330, 616, 342, 632, 346, 641, 349, 656, 357, 656, 368, 649, 386, 644, 399, 641, 408, 634, 415, 639, 423, 630, 379, 587, 375, 574, 368, 569, 371, 565, 345, 539, 325, 521)
 
 [node name="Poi4" parent="pois" instance=ExtResource("4_wxf62")]
+z_index = 3
 poi_static_type = 7
 poi_static_name = "Docks"
 poi_static_description = "Here are some docks"
@@ -70,6 +74,7 @@ polygon = PackedVector2Array(404, 567, 396, 581, 404, 591, 415, 603, 432, 612, 4
 
 [node name="Poi5" parent="pois" instance=ExtResource("4_wxf62")]
 visible = false
+z_index = 3
 poi_static_type = 7
 poi_static_name = "Docks"
 poi_static_description = "Here are some docks"
@@ -79,6 +84,7 @@ polygon = PackedVector2Array(408, 560, 437, 574, 484, 582, 498, 580, 512, 538, 4
 
 [node name="Poi6" parent="pois" instance=ExtResource("4_wxf62")]
 visible = false
+z_index = 3
 poi_static_type = 7
 poi_static_name = "Docks"
 poi_static_description = "Here are some docks"
@@ -88,6 +94,7 @@ polygon = PackedVector2Array(424, 519, 474, 528, 518, 528, 523, 508, 526, 489, 5
 
 [node name="Poi7" parent="pois" instance=ExtResource("4_wxf62")]
 visible = false
+z_index = 3
 poi_static_type = 7
 poi_static_name = "Docks"
 poi_static_description = "Here are some docks"
@@ -97,6 +104,7 @@ polygon = PackedVector2Array(432, 483, 460, 484, 522, 482, 528, 462, 528, 438, 5
 
 [node name="Poi8" parent="pois" instance=ExtResource("4_wxf62")]
 visible = false
+z_index = 3
 poi_static_type = 7
 poi_static_name = "Docks"
 poi_static_description = "Here are some docks"
@@ -105,6 +113,7 @@ poi_static_description = "Here are some docks"
 polygon = PackedVector2Array(438, 422, 422, 484, 364, 466, 383, 406)
 
 [node name="Poi9" parent="pois" instance=ExtResource("4_wxf62")]
+z_index = 3
 poi_static_type = 7
 poi_static_name = "Docks"
 poi_static_description = "Here are some docks"

@@ -576,7 +576,7 @@ custom_minimum_size = Vector2(300, 0)
 layout_direction = 1
 layout_mode = 2
 size_flags_horizontal = 4
-text = "These are unknown characters in the game. Conduct a surveillance mission to learn about their skills
+text = "These are unknown characters in the game. Conduct a surveillance mission to learn about their skills and use propaganda actions to recruit them to your cause.
 "
 horizontal_alignment = 1
 vertical_alignment = 1

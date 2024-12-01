@@ -140,10 +140,10 @@ var highlight_color = Color(1, 1, 1, 0.5)
 
 # black color
 var black_color = Color(0, 0, 0, 0.5)
-# grey color
-var unknown_color = Color(0.5, 0.5, 0.5, 0.5)
-# yellow color
-var known_color = Color(1, 1, 0, 0.5)
+# soft blue color
+var unknown_color = Color(0, 0, 1, 0.2)
+# soft yellow color
+var known_color = Color(1, 1, 0, 0.4)
 # green color
 var sympathiser_color = Color(0.133333, 0.545098, 0.133333, 0.5)
 

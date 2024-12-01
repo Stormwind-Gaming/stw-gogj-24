@@ -150,7 +150,7 @@ func populate_rumour_list():
 						Enums.RumourType.MISSION:
 							plan_scene.set_mission_text(Globals.get_intel_effect_string(rumour_ref.rumour_effect, true))
 						Enums.RumourType.LOCATION:
-							plan_scene.set_location_text(Globals.get_intel_effect_string(rumour_ref.rumour_effect, true))
+							plan_scene.set_location_text("District:\n%s - %s\n\nLocation:\n%s" % [rumour.rumour_subject_poi.parent_district.district_name, Globals.get_district_type_string(rumour.rumour_subject_poi.parent_district.district_type), rumour.rumour_subject_poi.poi_name])
 						Enums.RumourType.TIME:
 							plan_scene.set_time_text(Globals.get_intel_effect_string(rumour_ref.rumour_effect, true))
 						_:
