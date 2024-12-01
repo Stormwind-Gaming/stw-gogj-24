@@ -363,10 +363,12 @@ size_flags_horizontal = 3
 text = "0"
 
 [node name="VSeparator" type="VSeparator" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+visible = false
 layout_mode = 2
 theme_override_constants/separation = 20
 
 [node name="Time" type="HBoxContainer" parent="Endgame/HBoxContainer2/CenterContainer2/VBoxContainer/ScrollContainer/VBoxContainer/StatsContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
