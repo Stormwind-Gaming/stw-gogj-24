@@ -66,6 +66,8 @@ func _close_all_windows() -> void:
 	if open_window:
 		EventBus.close_window.emit()
 	if open_radial_menu:
+		# wait 0.1 seconds
+		await get_tree().create_timer(0.1).timeout
 		EventBus.close_radial_menu.emit()
 
 """

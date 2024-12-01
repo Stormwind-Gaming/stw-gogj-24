@@ -403,8 +403,8 @@ func set_district_focused(district: District) -> void:
 """
 func open_radial_menu(radial_menu: RadialMenu, poi: PointOfInterest) -> void:
 	# if radial_menu_open:
-		LogDuck.d("Radial menu already open, closing")
-		# return
+		# LogDuck.d("Radial menu already open, closing")
+		return
 	# radial_menu_open = radial_menu
 	# poi_for_radial = poi
 

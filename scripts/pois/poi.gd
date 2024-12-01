@@ -435,13 +435,22 @@ func _poi_clicked() -> void:
 	
 	var actions: Array[Enums.ActionType] = []
 	if not ReferenceGetter.game_controller().endgame_triggered:
-		actions.append(Enums.ActionType.ESPIONAGE)
+		# check if any actions are in flight for this POI
+		var created_actions = ReferenceGetter.global_registry().actions.get_list(ReferenceGetter.global_registry().LIST_ALL_ACTIONS).filter(func(action): return (action.poi == self) and action.in_flight)
+		
+		# if any actions in flight are ESPIONAGE dont add the ESPIONAGE action
+		if created_actions.size() == 0 or not created_actions.find(func(action): return action.action_type == Enums.ActionType.ESPIONAGE):
+			actions.append(Enums.ActionType.ESPIONAGE)
 		
 		if not poi_owner.char_state in [Enums.CharacterState.DECEASED, Enums.CharacterState.MIA]:
 			if poi_owner.char_recruitment_state < Enums.CharacterRecruitmentState.SYMPATHISER_NOT_RECRUITED:
-				actions.append(Enums.ActionType.PROPAGANDA)
+				# if any actions in flight are PROPAGANDA dont add the PROPAGANDA action
+				if created_actions.size() == 0 or not created_actions.find(func(action): return action.action_type == Enums.ActionType.PROPAGANDA):
+					actions.append(Enums.ActionType.PROPAGANDA)
 			if poi_owner.char_recruitment_state == Enums.CharacterRecruitmentState.NON_SYMPATHISER_UNKNOWN:
-				actions.append(Enums.ActionType.SURVEILLANCE)
+				# if any actions in flight are SURVEILLANCE dont add the SURVEILLANCE action
+				if created_actions.size() == 0 or not created_actions.find(func(action): return action.action_type == Enums.ActionType.SURVEILLANCE):
+					actions.append(Enums.ActionType.SURVEILLANCE)
 
 	if (_has_plan()):
 		actions.append(Enums.ActionType.PLAN)
@@ -457,7 +466,7 @@ func _poi_clicked() -> void:
 	radial_menu_instance.set_optional_actions(self, actions)
 	EventBus.open_new_radial_menu.emit(radial_menu_instance)
 	add_child(radial_menu_instance)
-	ReferenceGetter.game_controller().open_radial_menu(radial_menu_instance, self)
+	# ReferenceGetter.game_controller().open_radial_menu(radial_menu_instance, self)
 
 """
 @brief Handles poi focus changes.
