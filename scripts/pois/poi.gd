@@ -136,8 +136,16 @@ var most_likely_intel_type: String
 @brief Visual state colors
 """
 var no_color = Color(0, 0, 0, 0)
-var selectable_color = Color(0.133333, 0.545098, 0.133333, 0.5)
 var highlight_color = Color(1, 1, 1, 0.5)
+
+# black color
+var black_color = Color(0, 0, 0, 0.5)
+# grey color
+var unknown_color = Color(0.5, 0.5, 0.5, 0.5)
+# yellow color
+var known_color = Color(1, 1, 0, 0.5)
+# green color
+var sympathiser_color = Color(0.133333, 0.545098, 0.133333, 0.5)
 
 """
 @brief Whether the mouse is currently hovering over this POI
@@ -364,7 +372,7 @@ func _on_mouse_exited():
 			_on_mouse_exited()
 		return
 	else:
-		$Polygon2D.color = selectable_color
+		$Polygon2D.color = get_poi_color()
 
 	# reset the hover effect
 	$IconButton.material.set_shader_parameter("enabled", false)
@@ -480,7 +488,7 @@ func _on_district_just_focused(district: District) -> void:
 	})
 	
 	if district == parent_district:
-		$Polygon2D.color = selectable_color
+		$Polygon2D.color = get_poi_color()
 		await get_tree().create_timer(0.01).timeout
 		enabled = true
 		$Polygon2D.visible = true
@@ -579,3 +587,17 @@ func _has_plan() -> bool:
 				has_plan = true
 				break
 	return has_plan
+
+func get_poi_color() -> Color:
+	if poi_owner.char_state == Enums.CharacterState.DECEASED:
+		return black_color
+	if poi_owner.char_recruitment_state == Enums.CharacterRecruitmentState.NON_SYMPATHISER_UNKNOWN:
+		return unknown_color
+	if poi_owner.char_recruitment_state == Enums.CharacterRecruitmentState.NON_SYMPATHISER_KNOWN:
+		return known_color
+	if poi_owner.char_recruitment_state == Enums.CharacterRecruitmentState.SYMPATHISER_RECRUITED:
+		return sympathiser_color
+	if poi_owner.char_recruitment_state == Enums.CharacterRecruitmentState.SYMPATHISER_NOT_RECRUITED:
+		return sympathiser_color
+	return unknown_color
+		
