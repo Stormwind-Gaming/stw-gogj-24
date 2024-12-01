@@ -193,6 +193,7 @@ func _ready() -> void:
 	EventBus.focus_on_poi.connect(_on_poi_focused)
 	EventBus.close_radial_menu.connect(_reset_poi_state)
 	EventBus.plan_created.connect(_show_plan_icon)
+	EventBus.end_turn_complete.connect(_on_end_turn)
 
 	EventBus.open_new_radial_menu.connect(_on_open_new_radial_menu)
 	
