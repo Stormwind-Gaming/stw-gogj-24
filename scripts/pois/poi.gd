@@ -192,6 +192,7 @@ func _ready() -> void:
 	EventBus.district_just_focused.connect(_on_district_just_focused)
 	EventBus.focus_on_poi.connect(_on_poi_focused)
 	EventBus.close_radial_menu.connect(_reset_poi_state)
+	EventBus.plan_created.connect(_show_plan_icon)
 
 	EventBus.open_new_radial_menu.connect(_on_open_new_radial_menu)
 	
@@ -251,7 +252,8 @@ func setup_poi_visuals():
 		"vertices": vertices.size()
 	})
 	
-	$ActionContainer.position = center
+	# center the action container plus a y offset of 25
+	$ActionContainer.position = center + Vector2(0, 50)
 	$Polygon2D.visible = false
 	$IconButton.position = center - $IconButton.size / 2
 	$IconButton.visible = false
@@ -400,7 +402,25 @@ func _on_poi_clicked(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 func _reset_poi_state():
 	_on_district_just_focused(ReferenceGetter.game_controller().district_focused)
 	$IconButton.mouse_filter = Control.MOUSE_FILTER_STOP
-			
+
+"""
+@brief Handles plan creation events.
+Shows the plan icon if a plan is associated with this POI.
+
+@param plan The plan that was created
+"""
+func _show_plan_icon(plan: Plan):
+	if plan.plan_subject_poi == self:
+		$IconButton/PlanIcon.visible = true
+
+"""
+@brief Handles end turn events.
+Shows the plan icon if a plan is associated with this POI.
+"""
+func _on_end_turn():
+	if _has_plan():
+		$IconButton/PlanIcon.visible = true
+
 """
 @brief Handles button click events.
 Opens the POI radial menu when the button is clicked.
