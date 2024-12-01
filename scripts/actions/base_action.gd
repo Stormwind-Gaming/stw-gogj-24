@@ -75,6 +75,7 @@ func _init(config: ActionFactory.ActionConfig):
 	# EventBus.turn_processing_initiated.connect(_on_turn_processing_initiated)
 	EventBus.end_turn_complete.connect(_on_end_turn_completed)
 	EventBus.game_over.connect(_release_characters)
+	EventBus.endgame_triggered.connect(_on_endgame_triggered)
 
 	EventBus.action_created.emit(self)
 
@@ -116,6 +117,15 @@ func _on_end_turn_completed(num: int) -> void:
 		# Delete the action
 		self.queue_free()
 
+"""
+@brief Called when the endgame is triggered
+"""
+func _on_endgame_triggered() -> void:
+	# Release characters
+	_release_characters()
+	# Delete the action
+	self.queue_free()
+
 # Child classes must implement this method
 func _process_action() -> Array[TurnLog]:
 	push_error("_process_action() must be implemented by child classes")
@@ -141,6 +151,8 @@ func _notification(what: int) -> void:
 			EventBus.end_turn_complete.disconnect(_on_end_turn_completed)
 		if EventBus.game_over.is_connected(_release_characters):
 			EventBus.game_over.disconnect(_release_characters)
+		if EventBus.endgame_triggered.is_connected(_on_endgame_triggered):
+			EventBus.endgame_triggered.disconnect(_on_endgame_triggered)
 
 
 #|==============================|
