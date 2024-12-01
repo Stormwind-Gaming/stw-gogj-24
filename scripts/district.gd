@@ -362,8 +362,13 @@ func _setup_modifiers() -> void:
 
 		# Residential district modifiers
 		Enums.DistrictType.RESIDENTIAL:
-
-			# --- There is no base modifier for residential districts ---
+			var _base_residential_district_modifier: Modifier = Modifier.new({
+				"scope": Enums.ModifierScope.DISTRICT,
+				"district": self,
+				"modifier_name": "Residential District Effect"
+			}, {
+				"modifier_subtlety_multiplier": Constants.RESIDENTIAL_DISTRICT_MODIFIER_BASE
+			})
 
 			# First create the variable
 			var _bonus_residential_district_modifier: Modifier

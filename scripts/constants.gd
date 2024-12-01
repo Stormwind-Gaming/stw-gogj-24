@@ -341,7 +341,7 @@ var INDUSTRIAL_DISTRICT_BONUS_BREAKPOINT: int = 66
 @brief negative effect of performing an action in a residential district
 """
 # +10% subtlety check failure risk
-var RESIDENTIAL_DISTRICT_MODIFIER_BASE: float = 1.1
+var RESIDENTIAL_DISTRICT_MODIFIER_BASE: float = 0.9
 # const RESIDENTIAL_DISTRICT_MODIFIER_STAT: subtlety check
 
 """

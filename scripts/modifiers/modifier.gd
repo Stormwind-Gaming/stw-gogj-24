@@ -25,6 +25,7 @@ var modifier_sympathy_multiplier: float = 1.0
 var modifier_action_duration_multiplier: float = 1.0
 var modifier_intel_spawn_multiplier: float = 1.0
 var modifier_consequence_multiplier: float = 1.0
+var modifier_subtlety_multiplier: float = 1.0
 
 func _init(config: Dictionary, mods: Dictionary) -> void:
 	LogDuck.d("Creating new modifier", {
@@ -81,6 +82,7 @@ func _init(config: Dictionary, mods: Dictionary) -> void:
 	modifier_action_duration_multiplier = mods.get("modifier_action_duration_multiplier", 1.0)
 	modifier_intel_spawn_multiplier = mods.get("modifier_intel_spawn_multiplier", 1.0)
 	modifier_consequence_multiplier = mods.get("modifier_consequence_multiplier", 1.0)
+	modifier_subtlety_multiplier = mods.get("modifier_subtlety_multiplier", 1.0)
 
 	EventBus.modifier_created.emit(self)
 	EventBus.end_turn_complete.connect(_on_end_turn_complete)
@@ -141,6 +143,8 @@ func get_modification_effect_text() -> String:
 		text += "Intel Spawn Multiplier: +%s" % _convert_decimal_to_percentage(modifier_intel_spawn_multiplier)
 	if modifier_consequence_multiplier > 1.0:
 		text += "Chance of Injury: +%s" % _convert_decimal_to_percentage(modifier_consequence_multiplier)
+	if modifier_subtlety_multiplier > 1.0:
+		text += "Subtlety Multiplier: +%s" % _convert_decimal_to_percentage(modifier_subtlety_multiplier)
 	
 	if modifier_heat_multiplier < 1.0:
 		text += "Heat Multiplier: %s" % _convert_decimal_to_percentage(modifier_heat_multiplier)
@@ -152,6 +156,8 @@ func get_modification_effect_text() -> String:
 		text += "Intel Spawn Multiplier: %s" % _convert_decimal_to_percentage(modifier_intel_spawn_multiplier)
 	if modifier_consequence_multiplier < 1.0:
 		text += "Chance of Injury: %s" % _convert_decimal_to_percentage(modifier_consequence_multiplier)
+	if modifier_subtlety_multiplier < 1.0:
+		text += "Subtlety Multiplier: %s" % _convert_decimal_to_percentage(modifier_subtlety_multiplier)
 
 	return text
 

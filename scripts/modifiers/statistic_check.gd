@@ -39,11 +39,14 @@ func subtlety_check() -> bool:
 
 	for modifier in modifiers:
 		subtlety_check_value += modifier.modifier_subtlety_flat
+		subtlety_check_value *= modifier.modifier_subtlety_multiplier
 		LogDuck.d("Applied subtlety modifier", {
 			"modifier": modifier.modifier_name,
 			"flat_bonus": modifier.modifier_subtlety_flat,
+			"multiplier": modifier.modifier_subtlety_multiplier,
 			"new_value": subtlety_check_value
 		})
+
 
 	if poi == characters[0].char_associated_poi:
 		LogDuck.d("Applying home POI bonus", {
