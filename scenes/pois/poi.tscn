@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://c0trxtgty6phy"]
+[gd_scene load_steps=10 format=3 uid="uid://c0trxtgty6phy"]
 
 [ext_resource type="Script" path="res://scripts/pois/poi.gd" id="1_cwy0w"]
 [ext_resource type="PackedScene" uid="uid://vl61or4exnyi" path="res://scenes/gui/popups/poi_popup.tscn" id="3_0f6jn"]
 [ext_resource type="Shader" path="res://assets/shaders/pulse.gdshader" id="3_pcwpl"]
 [ext_resource type="Texture2D" uid="uid://dgpupl2v1f58s" path="res://assets/icons/poi/base_poi_icon.png" id="4_i3ffn"]
 [ext_resource type="Texture2D" uid="uid://unpsmyhxomh8" path="res://assets/icons/poi/selected/aerodrome_3.png" id="4_rtet5"]
+[ext_resource type="Texture2D" uid="uid://di0qr7pprmqwe" path="res://assets/icons/poi/plan_poi_icon.png" id="6_k64bh"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cpofp"]
 resource_local_to_scene = true
@@ -43,13 +44,42 @@ poi_static_type = 3
 modulate = Color(1, 1, 1, 0.882353)
 material = SubResource("ShaderMaterial_cpofp")
 custom_minimum_size = Vector2(50, 50)
-offset_right = 50.0
-offset_bottom = 50.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = -25.0
+offset_right = 25.0
+offset_bottom = 25.0
 grow_horizontal = 2
 grow_vertical = 2
 texture_normal = ExtResource("4_i3ffn")
 ignore_texture_size = true
 stretch_mode = 0
+
+[node name="PlanIcon" type="TextureRect" parent="IconButton"]
+visible = false
+z_index = 2
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -12.5
+offset_top = -75.82
+offset_right = 12.5
+offset_bottom = -50.82
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 0
+texture = ExtResource("6_k64bh")
+expand_mode = 3
+stretch_mode = 5
 
 [node name="MarginContainer" type="MarginContainer" parent="IconButton"]
 layout_mode = 1
@@ -72,8 +102,17 @@ expand_mode = 3
 [node name="ActionContainer" type="HBoxContainer" parent="."]
 top_level = true
 z_index = 10
-offset_right = 50.0
-offset_bottom = 50.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -800.0
+offset_top = -450.0
+offset_right = -750.0
+offset_bottom = -400.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 
 [node name="PoIPopup" parent="." instance=ExtResource("3_0f6jn")]
