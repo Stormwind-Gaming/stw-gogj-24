@@ -42,7 +42,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CanvasLayer2:visible")
+tracks/1/path = NodePath("UI:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -54,7 +54,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Map/map_background:modulate")
+tracks/2/path = NodePath("Game/Map/map_background:modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -66,7 +66,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Clouds:material:shader_parameter/alpha_multiplier")
+tracks/3/path = NodePath("Game/Clouds:material:shader_parameter/alpha_multiplier")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -78,7 +78,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Map:modulate")
+tracks/4/path = NodePath("Game/Map:modulate")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -90,7 +90,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("CanvasLayer2/Footer:modulate")
+tracks/5/path = NodePath("UI/Footer:modulate")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -102,7 +102,7 @@ tracks/5/keys = {
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("CanvasLayer2/Header:modulate")
+tracks/6/path = NodePath("UI/Header:modulate")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
@@ -143,7 +143,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("CanvasLayer2:visible")
+tracks/2/path = NodePath("UI:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -155,7 +155,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("PauseMenuCanvasLayer:visible")
+tracks/3/path = NodePath("Game/PauseMenuCanvasLayer:visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -167,7 +167,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Map/map_background:modulate")
+tracks/4/path = NodePath("Game/Map/map_background:modulate")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -187,32 +187,34 @@ _data = {
 [node name="Main" type="Node2D" node_paths=PackedStringArray("pause_menu", "footer", "stats_panel")]
 modulate = Color(0, 0, 0, 1)
 script = ExtResource("1_n11dw")
-pause_menu = NodePath("PauseMenuCanvasLayer/GamePauseMenu")
-footer = NodePath("CanvasLayer2/Footer")
-stats_panel = NodePath("CanvasLayer2/PanelContainer")
+pause_menu = NodePath("Game/PauseMenuCanvasLayer/GamePauseMenu")
+footer = NodePath("UI/Footer")
+stats_panel = NodePath("UI/PanelContainer")
 
-[node name="Map" type="Node2D" parent="."]
+[node name="Game" type="Node2D" parent="."]
+
+[node name="Map" type="Node2D" parent="Game"]
 modulate = Color(0, 0, 0, 1)
 
-[node name="map_background" type="Sprite2D" parent="Map"]
+[node name="map_background" type="Sprite2D" parent="Game/Map"]
 modulate = Color(0, 0, 0, 1)
 position = Vector2(800, 450)
 scale = Vector2(1.5, 1.5)
 texture = ExtResource("2_iyrsn")
 
-[node name="Districts" type="Node2D" parent="Map"]
+[node name="Districts" type="Node2D" parent="Game/Map"]
 
-[node name="District_Port" parent="Map/Districts" instance=ExtResource("3_ahajx")]
+[node name="District_Port" parent="Game/Map/Districts" instance=ExtResource("3_ahajx")]
 
-[node name="District_Industrial" parent="Map/Districts" instance=ExtResource("4_m7kem")]
+[node name="District_Industrial" parent="Game/Map/Districts" instance=ExtResource("4_m7kem")]
 
-[node name="District_Civic" parent="Map/Districts" instance=ExtResource("5_4pjns")]
+[node name="District_Civic" parent="Game/Map/Districts" instance=ExtResource("5_4pjns")]
 
-[node name="District_Military" parent="Map/Districts" instance=ExtResource("6_61w82")]
+[node name="District_Military" parent="Game/Map/Districts" instance=ExtResource("6_61w82")]
 
-[node name="District_Residential" parent="Map/Districts" instance=ExtResource("7_b62p6")]
+[node name="District_Residential" parent="Game/Map/Districts" instance=ExtResource("7_b62p6")]
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="Game"]
 position = Vector2(0, -250)
 offset = Vector2(-400, -300)
 anchor_mode = 0
@@ -225,7 +227,7 @@ parallax_strength_x = 1100.0
 parallax_strength_y = 1500.0
 max_offset_y = 1200.0
 
-[node name="Clouds" type="MeshInstance2D" parent="."]
+[node name="Clouds" type="MeshInstance2D" parent="Game"]
 light_mask = 0
 z_index = 5
 material = ExtResource("9_c28km")
@@ -233,36 +235,37 @@ position = Vector2(795, 446.5)
 scale = Vector2(204.5, 204.45)
 mesh = SubResource("PlaneMesh_r6h60")
 
-[node name="CanvasLayer2" type="CanvasLayer" parent="."]
-
-[node name="Footer" parent="CanvasLayer2" instance=ExtResource("10_1mapy")]
-modulate = Color(0, 0, 0, 1)
-
-[node name="Header" parent="CanvasLayer2" instance=ExtResource("11_p0hpy")]
-modulate = Color(0, 0, 0, 1)
-
-[node name="PanelContainer" parent="CanvasLayer2" instance=ExtResource("12_i7hq3")]
+[node name="PauseMenuCanvasLayer" type="CanvasLayer" parent="Game"]
 visible = false
 
-[node name="PauseMenuCanvasLayer" type="CanvasLayer" parent="."]
-visible = false
+[node name="GamePauseMenu" parent="Game/PauseMenuCanvasLayer" instance=ExtResource("13_008u1")]
 
-[node name="GamePauseMenu" parent="PauseMenuCanvasLayer" instance=ExtResource("13_008u1")]
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Game"]
+root_node = NodePath("../..")
 libraries = {
 "": SubResource("AnimationLibrary_42scy")
 }
 
-[node name="WindEffect" type="AudioStreamPlayer2D" parent="."]
+[node name="WindEffect" type="AudioStreamPlayer2D" parent="Game"]
 stream = ExtResource("14_dreq4")
 autoplay = true
 parameters/looping = true
 
-[node name="StreetEffect" type="AudioStreamPlayer2D" parent="."]
+[node name="StreetEffect" type="AudioStreamPlayer2D" parent="Game"]
 stream = ExtResource("15_e7cf2")
 volume_db = -80.0
 autoplay = true
 parameters/looping = true
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Footer" parent="UI" instance=ExtResource("10_1mapy")]
+modulate = Color(0, 0, 0, 1)
+
+[node name="Header" parent="UI" instance=ExtResource("11_p0hpy")]
+modulate = Color(0, 0, 0, 1)
+
+[node name="PanelContainer" parent="UI" instance=ExtResource("12_i7hq3")]
+visible = false
 
 [node name="Tutorial" parent="." instance=ExtResource("16_t8jn4")]

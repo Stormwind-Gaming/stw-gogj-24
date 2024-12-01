@@ -51,7 +51,7 @@ var port_description: String = ""
 """
 @brief Called when the node enters the scene tree
 """
-func _ready() -> void:
+func _init() -> void:
 	town_name = Globals.town_names[randi() % Globals.town_names.size()]
 	popupation = randi_range(15000, 50000)
 	description = "Nestled along the coast where the river meets the sea, %s thrives as a hub of trade and industry. Its docks echo with the clamor of fishermen and laborers, while warehouses line the riverside, brimming with goods destined for the heart of Europe. Beyond the crowded harbor lies a patchwork of narrow streets and modest homes, shadowed by a towering church spire that watches over the town. Farmlands stretch to the horizon, feeding both the people and the occupiers who have made this town a critical cog in their wartime machine. Beneath its industrious surface, whispers of resistance linger, hidden in plain sight among the market squares and quiet alleys." % town_name
